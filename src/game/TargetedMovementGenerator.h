@@ -25,7 +25,7 @@
 #include "PathFinder.h"
 #include "Unit.h"
 
-class STRAWBERRY_DLL_SPEC TargetedMovementGeneratorBase
+class TargetedMovementGeneratorBase
 {
     public:
         TargetedMovementGeneratorBase(Unit &target) { i_target.link(&target, this); }
@@ -35,7 +35,7 @@ class STRAWBERRY_DLL_SPEC TargetedMovementGeneratorBase
 };
 
 template<class T, typename D>
-class STRAWBERRY_DLL_SPEC TargetedMovementGeneratorMedium
+class TargetedMovementGeneratorMedium
 : public MovementGeneratorMedium< T, D >, public TargetedMovementGeneratorBase
 {
     protected:
@@ -73,7 +73,7 @@ class STRAWBERRY_DLL_SPEC TargetedMovementGeneratorMedium
 };
 
 template<class T>
-class STRAWBERRY_DLL_SPEC ChaseMovementGenerator : public TargetedMovementGeneratorMedium<T, ChaseMovementGenerator<T> >
+class ChaseMovementGenerator : public TargetedMovementGeneratorMedium<T, ChaseMovementGenerator<T> >
 {
     public:
         ChaseMovementGenerator(Unit &target)
@@ -97,7 +97,7 @@ class STRAWBERRY_DLL_SPEC ChaseMovementGenerator : public TargetedMovementGenera
 };
 
 template<class T>
-class STRAWBERRY_DLL_SPEC FollowMovementGenerator : public TargetedMovementGeneratorMedium<T, FollowMovementGenerator<T> >
+class FollowMovementGenerator : public TargetedMovementGeneratorMedium<T, FollowMovementGenerator<T> >
 {
     public:
         FollowMovementGenerator(Unit &target)

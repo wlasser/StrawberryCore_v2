@@ -36,7 +36,7 @@
 #include "Language.h"
 #include "World.h"
 #include "GameEventMgr.h"
-#include "ScriptMgr.h"
+#include "EventScripts.h"
 #include "SpellMgr.h"
 #include "MapPersistentStateMgr.h"
 #include "AccountMgr.h"

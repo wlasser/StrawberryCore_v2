@@ -47,7 +47,7 @@
 #include "LootMgr.h"
 #include "ItemEnchantmentMgr.h"
 #include "MapManager.h"
-#include "ScriptMgr.h"
+#include "EventScripts.h"
 #include "CreatureAIRegistry.h"
 #include "Policies/SingletonImp.h"
 #include "BattleGroundMgr.h"
@@ -68,6 +68,7 @@
 #include "CreatureLinkingMgr.h"
 #include "Vehicle.h"
 #include "WardenDataStorage.h"
+#include "ScriptMgr.h"
 
 INSTANTIATE_SINGLETON_1( World );
 
@@ -966,7 +967,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr.SetDBCLocaleIndex(GetDefaultDbcLocale());    // Get once for all the locale index of DBC language (console/broadcasts)
 
     sLog.outString( "Loading Script Names...");
-    sScriptMgr.LoadScriptNames();
+    sEventScriptMgr.LoadScriptNames();
 
     sLog.outString( "Loading WorldTemplate..." );
     sObjectMgr.LoadWorldTemplate();
@@ -1145,10 +1146,10 @@ void World::SetInitialWorldSettings()
     sObjectMgr.LoadTavernAreaTriggers();
 
     sLog.outString( "Loading AreaTrigger script names..." );
-    sScriptMgr.LoadAreaTriggerScripts();
+    sEventScriptMgr.LoadAreaTriggerScripts();
 
     sLog.outString( "Loading event id script names..." );
-    sScriptMgr.LoadEventIdScripts();
+    sEventScriptMgr.LoadEventIdScripts();
 
     sLog.outString( "Loading Graveyard-zone links...");
     sObjectMgr.LoadGraveyardZones();
@@ -1218,7 +1219,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr.LoadNpcGossips();                            // must be after load Creature and LoadGossipText
 
     sLog.outString( "Loading Gossip scripts..." );
-    sScriptMgr.LoadGossipScripts();                         // must be before gossip menu options
+    sEventScriptMgr.LoadGossipScripts();                         // must be before gossip menu options
 
     sObjectMgr.LoadGossipMenus();
 
@@ -1231,7 +1232,7 @@ void World::SetInitialWorldSettings()
     sObjectMgr.LoadTrainers();                              // must be after load CreatureTemplate, TrainerTemplate
 
     sLog.outString( "Loading Waypoint scripts..." );        // before loading from creature_movement
-    sScriptMgr.LoadCreatureMovementScripts();
+    sEventScriptMgr.LoadCreatureMovementScripts();
 
     sLog.outString( "Loading Waypoints..." );
     sLog.outString();
@@ -1292,16 +1293,16 @@ void World::SetInitialWorldSettings()
     ///- Load and initialize scripts
     sLog.outString( "Loading Scripts..." );
     sLog.outString();
-    sScriptMgr.LoadQuestStartScripts();                         // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
-    sScriptMgr.LoadQuestEndScripts();                           // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
-    sScriptMgr.LoadSpellScripts();                              // must be after load Creature/Gameobject(Template/Data)
-    sScriptMgr.LoadGameObjectScripts();                         // must be after load Creature/Gameobject(Template/Data)
-    sScriptMgr.LoadEventScripts();                              // must be after load Creature/Gameobject(Template/Data)
+    sEventScriptMgr.LoadQuestStartScripts();                         // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
+    sEventScriptMgr.LoadQuestEndScripts();                           // must be after load Creature/Gameobject(Template/Data) and QuestTemplate
+    sEventScriptMgr.LoadSpellScripts();                              // must be after load Creature/Gameobject(Template/Data)
+    sEventScriptMgr.LoadGameObjectScripts();                         // must be after load Creature/Gameobject(Template/Data)
+    sEventScriptMgr.LoadEventScripts();                              // must be after load Creature/Gameobject(Template/Data)
     sLog.outString( ">>> Scripts loaded" );
     sLog.outString();
 
     sLog.outString( "Loading Scripts text locales..." );    // must be after Load*Scripts calls
-    sScriptMgr.LoadDbScriptStrings();
+    sEventScriptMgr.LoadDbScriptStrings();
 
     sLog.outString( "Loading CreatureEventAI Texts...");
     sEventAIMgr.LoadCreatureEventAI_Texts(false);       // false, will checked in LoadCreatureEventAI_Scripts
@@ -1313,7 +1314,7 @@ void World::SetInitialWorldSettings()
     sEventAIMgr.LoadCreatureEventAI_Scripts();
 
     sLog.outString("Initializing Scripts...");
-    switch(sScriptMgr.LoadScriptLibrary(STRAWBERRY_SCRIPT_NAME))
+    switch(sEventScriptMgr.LoadScriptLibrary(STRAWBERRY_SCRIPT_NAME))
     {
         case SCRIPT_LOAD_OK:
             sLog.outString("Scripting library loaded.");
@@ -1404,6 +1405,8 @@ void World::SetInitialWorldSettings()
 
     sLog.outString("Initialize AuctionHouseBot...");
     sAuctionBot.Initialize();
+
+    sScriptMgr.InitScriptLibrary();
 
     sLog.outString( "WORLD: World initialized" );
 

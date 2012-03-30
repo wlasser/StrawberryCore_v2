@@ -12,3 +12,7 @@
 #include "GuildMgr.h"
 #include "ObjectMgr.h"
 #include "ScriptMgr.h"
+#include "sc_creature.h"
+#include "sc_gossip.h"
+#include "sc_grid_searchers.h"
+#include "sc_instance.h"

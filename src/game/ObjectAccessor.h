@@ -84,7 +84,7 @@ class HashMapHolder
         static MapType  m_objectMap;
 };
 
-class STRAWBERRY_DLL_DECL ObjectAccessor : public Strawberry::Singleton<ObjectAccessor, Strawberry::ClassLevelLockable<ObjectAccessor, ACE_Thread_Mutex> >
+class ObjectAccessor : public Strawberry::Singleton<ObjectAccessor, Strawberry::ClassLevelLockable<ObjectAccessor, ACE_Thread_Mutex> >
 {
     friend class Strawberry::OperatorNew<ObjectAccessor>;
 

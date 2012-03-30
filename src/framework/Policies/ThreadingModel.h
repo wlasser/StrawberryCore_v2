@@ -30,7 +30,7 @@
 namespace Strawberry
 {
     template<typename MUTEX>
-    class STRAWBERRY_DLL_DECL GeneralLock
+    class GeneralLock
     {
         public:
 
@@ -53,7 +53,7 @@ namespace Strawberry
     };
 
     template<class T>
-    class STRAWBERRY_DLL_DECL SingleThreaded
+    class SingleThreaded
     {
         public:
 
@@ -73,7 +73,7 @@ namespace Strawberry
     };
 
     template<class T, class MUTEX>
-    class STRAWBERRY_DLL_DECL ObjectLevelLockable
+    class ObjectLevelLockable
     {
         public:
 
@@ -108,7 +108,7 @@ namespace Strawberry
     };
 
     template<class T, class MUTEX>
-    class STRAWBERRY_DLL_DECL ClassLevelLockable
+    class ClassLevelLockable
     {
         public:
 
@@ -153,6 +153,6 @@ namespace Strawberry
 template<class T, class MUTEX> MUTEX Strawberry::ClassLevelLockable<T, MUTEX>::si_mtx;
 
 #define INSTANTIATE_CLASS_MUTEX(CTYPE, MUTEX) \
-    template class STRAWBERRY_DLL_DECL Strawberry::ClassLevelLockable<CTYPE, MUTEX>
+    template class Strawberry::ClassLevelLockable<CTYPE, MUTEX>
 
 #endif

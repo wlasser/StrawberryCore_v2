@@ -606,7 +606,7 @@ struct GameObjectDisplayInfoEntry;
 
 #define GO_ANIMPROGRESS_DEFAULT 0xFF
 
-class STRAWBERRY_DLL_SPEC GameObject : public WorldObject
+class GameObject : public WorldObject
 {
     public:
         explicit GameObject();

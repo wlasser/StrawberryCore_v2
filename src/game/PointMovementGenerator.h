@@ -25,7 +25,7 @@
 #include "Creature.h"
 
 template<class T>
-class STRAWBERRY_DLL_SPEC PointMovementGenerator
+class PointMovementGenerator
 : public MovementGeneratorMedium< T, PointMovementGenerator<T> >
 {
     public:
@@ -49,7 +49,7 @@ class STRAWBERRY_DLL_SPEC PointMovementGenerator
         bool m_generatePath;
 };
 
-class STRAWBERRY_DLL_SPEC AssistanceMovementGenerator
+class AssistanceMovementGenerator
 : public PointMovementGenerator<Creature>
 {
     public:

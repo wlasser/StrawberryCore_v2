@@ -60,7 +60,7 @@ enum CastFlags
     CAST_AURA_NOT_PRESENT       = 0x20,                     //Only casts the spell if the target does not have an aura from the spell
 };
 
-class STRAWBERRY_DLL_SPEC CreatureAI
+class CreatureAI
 {
     public:
         explicit CreatureAI(Creature* creature) : m_creature(creature) {}

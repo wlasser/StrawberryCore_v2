@@ -26,7 +26,7 @@
 
 class Creature;
 
-class STRAWBERRY_DLL_DECL AggressorAI : public CreatureAI
+class AggressorAI : public CreatureAI
 {
     enum AggressorState
     {

@@ -207,7 +207,7 @@ struct ContainerMapList<TypeList<H, T> >
  */
 
 template<class OBJECT_TYPES>
-class STRAWBERRY_DLL_DECL TypeMapContainer
+class TypeMapContainer
 {
     public:
 

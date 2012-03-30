@@ -24,7 +24,7 @@
 #include "Timer.h"
 
 template<class T>
-class STRAWBERRY_DLL_SPEC ConfusedMovementGenerator
+class ConfusedMovementGenerator
 : public MovementGeneratorMedium< T, ConfusedMovementGenerator<T> >
 {
     public:

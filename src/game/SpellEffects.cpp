@@ -52,7 +52,7 @@
 #include "VMapFactory.h"
 #include "Util.h"
 #include "TemporarySummon.h"
-#include "ScriptMgr.h"
+#include "EventScripts.h"
 #include "SkillDiscovery.h"
 #include "Formulas.h"
 #include "GridNotifiers.h"
@@ -3359,11 +3359,11 @@ void Spell::EffectDummy(SpellEffectEntry const* effect)
     // Script based implementation. Must be used only for not good for implementation in core spell effects
     // So called only for not processed cases
     if (gameObjTarget)
-        sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, SpellEffectIndex(effect->EffectIndex), gameObjTarget);
+        sEventScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, SpellEffectIndex(effect->EffectIndex), gameObjTarget);
     else if (unitTarget && unitTarget->GetTypeId() == TYPEID_UNIT)
-        sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, SpellEffectIndex(effect->EffectIndex), (Creature*)unitTarget);
+        sEventScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, SpellEffectIndex(effect->EffectIndex), (Creature*)unitTarget);
     else if (itemTarget)
-        sScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, SpellEffectIndex(effect->EffectIndex), itemTarget);
+        sEventScriptMgr.OnEffectDummy(m_caster, m_spellInfo->Id, SpellEffectIndex(effect->EffectIndex), itemTarget);
 }
 
 void Spell::EffectTriggerSpellWithValue(SpellEffectEntry const* effect)
@@ -3942,7 +3942,7 @@ void Spell::EffectSendEvent(SpellEffectEntry const* effect)
     */
     DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell ScriptStart %u for spellid %u in EffectSendEvent ", effect->EffectMiscValue, m_spellInfo->Id);
 
-    if (!sScriptMgr.OnProcessEvent(effect->EffectMiscValue, m_caster, focusObject, true))
+    if (!sEventScriptMgr.OnProcessEvent(effect->EffectMiscValue, m_caster, focusObject, true))
         m_caster->GetMap()->ScriptsStart(sEventScripts, effect->EffectMiscValue, m_caster, focusObject);
 }
 

@@ -57,7 +57,7 @@
 #include "Chat.h"
 #include "Database/DatabaseImpl.h"
 #include "Spell.h"
-#include "ScriptMgr.h"
+#include "EventScripts.h"
 #include "SocialMgr.h"
 #include "AchievementMgr.h"
 #include "Mail.h"
@@ -13829,14 +13829,14 @@ void Player::AddQuest( Quest const *pQuest, Object *questGiver )
         switch (questGiver->GetTypeId())
         {
             case TYPEID_UNIT:
-                sScriptMgr.OnQuestAccept(this, (Creature*)questGiver, pQuest);
+                sEventScriptMgr.OnQuestAccept(this, (Creature*)questGiver, pQuest);
                 break;
             case TYPEID_ITEM:
             case TYPEID_CONTAINER:
-                sScriptMgr.OnQuestAccept(this, (Item*)questGiver, pQuest);
+                sEventScriptMgr.OnQuestAccept(this, (Item*)questGiver, pQuest);
                 break;
             case TYPEID_GAMEOBJECT:
-                sScriptMgr.OnQuestAccept(this, (GameObject*)questGiver, pQuest);
+                sEventScriptMgr.OnQuestAccept(this, (GameObject*)questGiver, pQuest);
                 break;
         }
 
@@ -14051,10 +14051,10 @@ void Player::RewardQuest(Quest const *pQuest, uint32 reward, Object* questGiver,
     switch(questGiver->GetTypeId())
     {
         case TYPEID_UNIT:
-            handled = sScriptMgr.OnQuestRewarded(this, (Creature*)questGiver, pQuest);
+            handled = sEventScriptMgr.OnQuestRewarded(this, (Creature*)questGiver, pQuest);
             break;
         case TYPEID_GAMEOBJECT:
-            handled = sScriptMgr.OnQuestRewarded(this, (GameObject*)questGiver, pQuest);
+            handled = sEventScriptMgr.OnQuestRewarded(this, (GameObject*)questGiver, pQuest);
             break;
     }
 

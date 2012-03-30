@@ -183,7 +183,7 @@ class GridMap
 };
 
 template<typename Countable>
-class STRAWBERRY_DLL_SPEC Referencable
+class Referencable
 {
 public:
     Referencable() { m_count = 0; }
@@ -209,7 +209,7 @@ typedef ACE_Atomic_Op<ACE_Thread_Mutex, long> AtomicLong;
 #define DEFAULT_WATER_SEARCH      50.0f                     // default search distance to case detection water level
 
 //class for sharing and managin GridMap objects
-class STRAWBERRY_DLL_SPEC TerrainInfo : public Referencable<AtomicLong>
+class TerrainInfo : public Referencable<AtomicLong>
 {
 public:
     TerrainInfo(uint32 mapid);
@@ -275,7 +275,7 @@ private:
 };
 
 //class for managing TerrainData object and all sort of geometry querying operations
-class STRAWBERRY_DLL_DECL TerrainManager : public Strawberry::Singleton<TerrainManager, Strawberry::ClassLevelLockable<TerrainManager, ACE_Thread_Mutex> >
+class TerrainManager : public Strawberry::Singleton<TerrainManager, Strawberry::ClassLevelLockable<TerrainManager, ACE_Thread_Mutex> >
 {
     typedef UNORDERED_MAP<uint32,  TerrainInfo *> TerrainDataMap;
     friend class Strawberry::OperatorNew<TerrainManager>;

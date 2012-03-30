@@ -37,7 +37,7 @@ namespace Movement
 
     /*  Initializes and launches spline movement
      */
-    class STRAWBERRY_DLL_SPEC MoveSplineInit
+    class MoveSplineInit
     {
     public:
 

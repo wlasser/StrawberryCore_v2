@@ -903,7 +903,7 @@ struct InstancePlayerBind
     InstancePlayerBind() : state(NULL), perm(false) {}
 };
 
-class STRAWBERRY_DLL_SPEC PlayerTaxi
+class PlayerTaxi
 {
     public:
         PlayerTaxi();
@@ -1038,7 +1038,7 @@ class TradeData
         ObjectGuid m_items[TRADE_SLOT_COUNT];               // traded itmes from m_player side including non-traded slot
 };
 
-class STRAWBERRY_DLL_SPEC Player : public Unit
+class Player : public Unit
 {
     friend class WorldSession;
     friend void Item::AddToUpdateQueueOf(Player *player);

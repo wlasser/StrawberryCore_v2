@@ -22,7 +22,7 @@
 
 #include "CreatureAI.h"
 
-class STRAWBERRY_DLL_DECL NullCreatureAI : public CreatureAI
+class NullCreatureAI : public CreatureAI
 {
     public:
 

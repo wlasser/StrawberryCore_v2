@@ -36,7 +36,7 @@
 #endif
 
 //MySQL prepared statement class
-class STRAWBERRY_DLL_SPEC MySqlPreparedStatement : public SqlPreparedStatement
+class MySqlPreparedStatement : public SqlPreparedStatement
 {
 public:
     MySqlPreparedStatement(const std::string& fmt, SqlConnection& conn, MYSQL * mysql);
@@ -67,7 +67,7 @@ private:
     MYSQL_RES *m_pResultMetadata;
 };
 
-class STRAWBERRY_DLL_SPEC MySQLConnection : public SqlConnection
+class MySQLConnection : public SqlConnection
 {
     public:
         MySQLConnection(Database& db) : SqlConnection(db), mMysql(NULL) {}
@@ -95,7 +95,7 @@ class STRAWBERRY_DLL_SPEC MySQLConnection : public SqlConnection
         MYSQL *mMysql;
 };
 
-class STRAWBERRY_DLL_SPEC DatabaseMysql : public Database
+class DatabaseMysql : public Database
 {
     friend class Strawberry::OperatorNew<DatabaseMysql>;
 

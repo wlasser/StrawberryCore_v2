@@ -30,7 +30,7 @@
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
 #include "World.h"
-#include "ScriptMgr.h"
+#include "EventScripts.h"
 #include "Group.h"
 #include "MapRefManager.h"
 #include "DBCEnums.h"
@@ -44,7 +44,7 @@ Map::~Map()
     UnloadAll(true);
 
     if(!m_scriptSchedule.empty())
-        sScriptMgr.DecreaseScheduledScriptCount(m_scriptSchedule.size());
+        sEventScriptMgr.DecreaseScheduledScriptCount(m_scriptSchedule.size());
 
     if (m_persistentState)
         m_persistentState->SetUsedByMapState(NULL);         // field pointer can be deleted after this
@@ -1165,7 +1165,7 @@ void Map::CreateInstanceData(bool load)
     if (!i_script_id)
         return;
 
-    i_data = sScriptMgr.CreateInstanceData(this);
+    i_data = sEventScriptMgr.CreateInstanceData(this);
     if(!i_data)
         return;
 
@@ -1185,7 +1185,7 @@ void Map::CreateInstanceData(bool load)
             const char* data = fields[0].GetString();
             if (data)
             {
-                DEBUG_LOG("Loading instance data for `%s` (Map: %u Instance: %u)", sScriptMgr.GetScriptName(i_script_id), GetId(), i_InstanceId);
+                DEBUG_LOG("Loading instance data for `%s` (Map: %u Instance: %u)", sEventScriptMgr.GetScriptName(i_script_id), GetId(), i_InstanceId);
                 i_data->Load(data);
             }
             delete result;
@@ -1199,7 +1199,7 @@ void Map::CreateInstanceData(bool load)
     }
     else
     {
-        DEBUG_LOG("New instance data, \"%s\" ,initialized!", sScriptMgr.GetScriptName(i_script_id));
+        DEBUG_LOG("New instance data, \"%s\" ,initialized!", sEventScriptMgr.GetScriptName(i_script_id));
         i_data->Initialize();
     }
 }
@@ -1634,7 +1634,7 @@ void Map::ScriptsStart(ScriptMapMap const& scripts, uint32 id, Object* source, O
         if (iter->first == 0)
             immedScript = true;
 
-        sScriptMgr.IncreaseScheduledScriptsCount();
+        sEventScriptMgr.IncreaseScheduledScriptsCount();
     }
     ///- If one of the effects should be immediate, launch the script execution
     if (immedScript)
@@ -1658,7 +1658,7 @@ void Map::ScriptCommandStart(ScriptInfo const& script, uint32 delay, Object* sou
     sa.script = &script;
     m_scriptSchedule.insert(ScriptScheduleMap::value_type(time_t(sWorld.GetGameTime() + delay), sa));
 
-    sScriptMgr.IncreaseScheduledScriptsCount();
+    sEventScriptMgr.IncreaseScheduledScriptsCount();
 
     ///- If effects should be immediate, launch the script execution
     if(delay == 0)
@@ -3047,7 +3047,7 @@ void Map::ScriptsProcess()
         m_scriptSchedule.erase(iter);
         iter = m_scriptSchedule.begin();
 
-        sScriptMgr.DecreaseScheduledScriptCount();
+        sEventScriptMgr.DecreaseScheduledScriptCount();
     }
 }
 

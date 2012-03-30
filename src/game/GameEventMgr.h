@@ -131,6 +131,6 @@ class GameEventMgr
 
 #define sGameEventMgr Strawberry::Singleton<GameEventMgr>::Instance()
 
-STRAWBERRY_DLL_SPEC bool IsHolidayActive(HolidayIds id);
+bool IsHolidayActive(HolidayIds id);
 
 #endif

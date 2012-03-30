@@ -58,7 +58,7 @@ struct VehicleAccessory
 typedef std::vector<VehicleAccessory> VehicleAccessoryList;
 typedef std::map<uint32, VehicleAccessoryList> VehicleAccessoryMap;
 
-class STRAWBERRY_DLL_SPEC VehicleKit
+class VehicleKit
 {
     public:
         explicit VehicleKit(Unit* base);

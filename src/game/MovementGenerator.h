@@ -29,7 +29,7 @@
 
 class Unit;
 
-class STRAWBERRY_DLL_SPEC MovementGenerator
+class MovementGenerator
 {
     public:
         virtual ~MovementGenerator();
@@ -64,7 +64,7 @@ class STRAWBERRY_DLL_SPEC MovementGenerator
 };
 
 template<class T, class D>
-class STRAWBERRY_DLL_SPEC MovementGeneratorMedium : public MovementGenerator
+class MovementGeneratorMedium : public MovementGenerator
 {
     public:
         void Initialize(Unit &u)

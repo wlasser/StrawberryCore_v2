@@ -29,7 +29,7 @@
 #include "CellImpl.h"
 #include "GridDefines.h"
 
-class STRAWBERRY_DLL_DECL ObjectGridRespawnMover
+class ObjectGridRespawnMover
 {
     public:
         ObjectGridRespawnMover() {}

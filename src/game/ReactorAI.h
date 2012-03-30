@@ -25,7 +25,7 @@
 
 class Unit;
 
-class STRAWBERRY_DLL_DECL ReactorAI : public CreatureAI
+class ReactorAI : public CreatureAI
 {
     public:
 

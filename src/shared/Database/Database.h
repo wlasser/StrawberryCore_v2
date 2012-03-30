@@ -39,7 +39,7 @@ class Database;
 #define MAX_QUERY_LEN   32*1024
 
 //
-class STRAWBERRY_DLL_SPEC SqlConnection
+class SqlConnection
 {
     public:
         virtual ~SqlConnection() {}
@@ -101,7 +101,7 @@ class STRAWBERRY_DLL_SPEC SqlConnection
         StmtHolder m_holder;
 };
 
-class STRAWBERRY_DLL_SPEC Database
+class Database
 {
     public:
         virtual ~Database();
@@ -235,7 +235,7 @@ class STRAWBERRY_DLL_SPEC Database
         //factory method to create SqlDelayThread objects
         virtual SqlDelayThread * CreateDelayThread();
 
-        class STRAWBERRY_DLL_SPEC TransHelper
+        class TransHelper
         {
             public:
                 TransHelper() : m_pTrans(NULL) {}

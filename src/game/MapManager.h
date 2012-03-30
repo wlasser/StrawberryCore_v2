@@ -30,7 +30,7 @@
 class Transport;
 class BattleGround;
 
-struct STRAWBERRY_DLL_DECL MapID
+struct MapID
 {
     explicit MapID(uint32 id) : nMapId(id), nInstanceId(0) {}
     MapID(uint32 id, uint32 instid) : nMapId(id), nInstanceId(instid) {}
@@ -49,7 +49,7 @@ struct STRAWBERRY_DLL_DECL MapID
     uint32 nInstanceId;
 };
 
-class STRAWBERRY_DLL_DECL MapManager : public Strawberry::Singleton<MapManager, Strawberry::ClassLevelLockable<MapManager, ACE_Recursive_Thread_Mutex> >
+class MapManager : public Strawberry::Singleton<MapManager, Strawberry::ClassLevelLockable<MapManager, ACE_Recursive_Thread_Mutex> >
 {
     friend class Strawberry::OperatorNew<MapManager>;
 
