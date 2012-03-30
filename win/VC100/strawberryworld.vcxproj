@@ -197,7 +197,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>..\..\dep\include\gsoap;..\..\dep\include;..\..\src\framework;..\..\src\shared;..\..\src\game\ScriptBase\Event;..\..\src\game;..\..\src\strawberryworld;..\..\dep\ACE_wrappers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SC434-DEV;WIN32;NDEBUG;_CONSOLE;ENABLE_CLI;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      zz<StringPooling>true</StringPooling>
+      <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
