@@ -446,6 +446,21 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
 
     if (flags & UPDATEFLAG_UNK4)
         *data << uint16(0) << uint16(0) << uint16(0);
+
+    if((flags & UPDATEFLAG_LIVING) == 0)
+    {
+       *data << ((WorldObject*)this)->GetPositionZ();
+       *data << ((WorldObject*)this)->GetPositionX();
+       *data << ((WorldObject*)this)->GetPositionY();
+       *data << ((WorldObject*)this)->GetOrientation();
+    }
+
+    // 0x80
+    if (flags & UPDATEFLAG_VEHICLE)
+    {
+        *data << float(((Creature*)this)->GetOrientation());                // facing adjustment
+        *data << uint32(((Unit*)this)->GetVehicleInfo()->GetEntry()->m_ID); // vehicle id
+    }
 }
 
 void Object::BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask *updateMask, Player *target) const

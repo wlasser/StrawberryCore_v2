@@ -508,7 +508,7 @@ enum eContainerFields
     CONTAINER_FIELD_NUM_SLOTS = ITEM_END + 0x0,
     CONTAINER_ALIGN_PAD = ITEM_END + 0x1,
     CONTAINER_FIELD_SLOT_1 = ITEM_END + 0x2,
-    CONTAINER_END = ITEM_END + 0x3
+    CONTAINER_END = ITEM_END + 0x4A
 };
 enum eGameObjectFields
 {
