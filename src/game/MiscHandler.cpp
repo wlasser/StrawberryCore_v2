@@ -1168,33 +1168,41 @@ void WorldSession::HandleInspectHonorStatsOpcode(WorldPacket& recv_data)
 
 void WorldSession::HandleWorldTeleportOpcode(WorldPacket& recv_data)
 {
-    // write in client console: worldport 469 452 6454 2536 180 or /console worldport 469 452 6454 2536 180
-    // Received opcode CMSG_WORLD_TELEPORT
-    // Time is ***, map=469, x=452.000000, y=6454.000000, z=2536.000000, orient=3.141593
-
-    uint32 time;
     uint32 mapid;
     float PositionX;
     float PositionY;
     float PositionZ;
     float Orientation;
 
-    recv_data >> time;                                      // time in m.sec.
     recv_data >> mapid;
-    recv_data >> PositionX;
+    recv_data >> Orientation;
     recv_data >> PositionY;
+    recv_data >> PositionX;
     recv_data >> PositionZ;
-    recv_data >> Orientation;                               // o (3.141593 = 180 degrees)
 
-    //DEBUG_LOG("Received opcode CMSG_WORLD_TELEPORT");
+    BitStream mask = recv_data.ReadBitStream(8);
+    ByteBuffer bytes(8, true);
+
+    if (mask[3]) bytes[6] = recv_data.ReadUInt8() ^ 1;
+    if (mask[2]) bytes[0] = recv_data.ReadUInt8() ^ 1;
+    if (mask[7]) bytes[2] = recv_data.ReadUInt8() ^ 1;
+    if (mask[6]) bytes[7] = recv_data.ReadUInt8() ^ 1;
+    if (mask[0]) bytes[5] = recv_data.ReadUInt8() ^ 1;
+    if (mask[1]) bytes[1] = recv_data.ReadUInt8() ^ 1;
+    if (mask[5]) bytes[4] = recv_data.ReadUInt8() ^ 1;
+    if (mask[4]) bytes[3] = recv_data.ReadUInt8() ^ 1;
+
+    uint64 playerGuid = BitConverter::ToUInt64(bytes);
+
+    DEBUG_LOG("Received opcode CMSG_WORLD_TELEPORT");
 
     if(GetPlayer()->IsTaxiFlying())
     {
-        DEBUG_LOG("Player '%s' (GUID: %u) in flight, ignore worldport command.",GetPlayer()->GetName(),GetPlayer()->GetGUIDLow());
+        DEBUG_LOG("Player '%s' (GUID: %u) in flight, ignore worldport command.", GetPlayer()->GetName(), playerGuid);
         return;
     }
 
-    DEBUG_LOG("Time %u sec, map=%u, x=%f, y=%f, z=%f, orient=%f", time/1000, mapid, PositionX, PositionY, PositionZ, Orientation);
+    DEBUG_LOG("Map=%u, x=%f, y=%f, z=%f, orient=%f", mapid, PositionX, PositionY, PositionZ, Orientation);
 
     if (GetSecurity() >= SEC_ADMINISTRATOR)
         GetPlayer()->TeleportTo(mapid, PositionX, PositionY, PositionZ, Orientation);
