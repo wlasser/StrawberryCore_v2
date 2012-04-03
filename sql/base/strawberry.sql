@@ -1034,6 +1034,33 @@ CREATE TABLE `creature_template_addon` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `custom_texts`
+-- ----------------------------
+DROP TABLE IF EXISTS `custom_texts`;
+CREATE TABLE `custom_texts` (
+  `entry` mediumint(8) NOT NULL,
+  `content_default` text NOT NULL,
+  `content_loc1` text,
+  `content_loc2` text,
+  `content_loc3` text,
+  `content_loc4` text,
+  `content_loc5` text,
+  `content_loc6` text,
+  `content_loc7` text,
+  `content_loc8` text,
+  `sound` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `language` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `emote` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `comment` text,
+  PRIMARY KEY (`entry`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Custom Texts';
+
+-- ----------------------------
+-- Records of custom_texts
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `db_script_string`
 -- ----------------------------
 DROP TABLE IF EXISTS `db_script_string`;
@@ -1665,6 +1692,29 @@ CREATE TABLE `gossip_scripts` (
 
 -- ----------------------------
 -- Records of gossip_scripts
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `gossip_texts`
+-- ----------------------------
+DROP TABLE IF EXISTS `gossip_texts`;
+CREATE TABLE `gossip_texts` (
+  `entry` mediumint(8) NOT NULL,
+  `content_default` text NOT NULL,
+  `content_loc1` text,
+  `content_loc2` text,
+  `content_loc3` text,
+  `content_loc4` text,
+  `content_loc5` text,
+  `content_loc6` text,
+  `content_loc7` text,
+  `content_loc8` text,
+  `comment` text,
+  PRIMARY KEY (`entry`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Gossip Texts';
+
+-- ----------------------------
+-- Records of gossip_texts
 -- ----------------------------
 
 -- ----------------------------
@@ -17247,6 +17297,45 @@ CREATE TABLE `scripted_areatrigger` (
 -- ----------------------------
 -- Records of scripted_areatrigger
 -- ----------------------------
+INSERT INTO `scripted_areatrigger` VALUES ('4591', 'at_coilfang_waterfall');
+INSERT INTO `scripted_areatrigger` VALUES ('4560', 'at_legion_teleporter');
+INSERT INTO `scripted_areatrigger` VALUES ('3066', 'at_ravenholdt');
+INSERT INTO `scripted_areatrigger` VALUES ('4871', 'at_warsong_farms');
+INSERT INTO `scripted_areatrigger` VALUES ('4872', 'at_warsong_farms');
+INSERT INTO `scripted_areatrigger` VALUES ('4873', 'at_warsong_farms');
+INSERT INTO `scripted_areatrigger` VALUES ('5046', 'at_waygate');
+INSERT INTO `scripted_areatrigger` VALUES ('5047', 'at_waygate');
+INSERT INTO `scripted_areatrigger` VALUES ('5284', 'at_aldurthar_gate');
+INSERT INTO `scripted_areatrigger` VALUES ('5285', 'at_aldurthar_gate');
+INSERT INTO `scripted_areatrigger` VALUES ('5286', 'at_aldurthar_gate');
+INSERT INTO `scripted_areatrigger` VALUES ('5287', 'at_aldurthar_gate');
+INSERT INTO `scripted_areatrigger` VALUES ('4112', 'at_naxxramas');
+INSERT INTO `scripted_areatrigger` VALUES ('4113', 'at_naxxramas');
+INSERT INTO `scripted_areatrigger` VALUES ('5108', 'at_stormwright_shelf');
+INSERT INTO `scripted_areatrigger` VALUES ('3546', 'at_childrens_week_spot');
+INSERT INTO `scripted_areatrigger` VALUES ('3547', 'at_childrens_week_spot');
+INSERT INTO `scripted_areatrigger` VALUES ('3548', 'at_childrens_week_spot');
+INSERT INTO `scripted_areatrigger` VALUES ('3549', 'at_childrens_week_spot');
+INSERT INTO `scripted_areatrigger` VALUES ('3550', 'at_childrens_week_spot');
+INSERT INTO `scripted_areatrigger` VALUES ('3552', 'at_childrens_week_spot');
+INSERT INTO `scripted_areatrigger` VALUES ('2026', 'at_blackrock_spire');
+INSERT INTO `scripted_areatrigger` VALUES ('2046', 'at_blackrock_spire');
+INSERT INTO `scripted_areatrigger` VALUES ('5030', 'at_spearborn_encampment');
+INSERT INTO `scripted_areatrigger` VALUES ('3958', 'at_zulgurub');
+INSERT INTO `scripted_areatrigger` VALUES ('3960', 'at_zulgurub');
+INSERT INTO `scripted_areatrigger` VALUES ('3626', 'at_vaelastrasz');
+INSERT INTO `scripted_areatrigger` VALUES ('4937', 'at_sunwell_plateau');
+INSERT INTO `scripted_areatrigger` VALUES ('4524', 'at_shattered_halls');
+INSERT INTO `scripted_areatrigger` VALUES ('522', 'at_twiggy_flathead');
+INSERT INTO `scripted_areatrigger` VALUES ('1526', 'at_ring_of_law');
+INSERT INTO `scripted_areatrigger` VALUES ('4752', 'at_nats_landing');
+INSERT INTO `scripted_areatrigger` VALUES ('4778', 'at_ancient_male_vrykul');
+INSERT INTO `scripted_areatrigger` VALUES ('4497', 'at_commander_dawnforge');
+INSERT INTO `scripted_areatrigger` VALUES ('4016', 'at_shade_of_eranikus');
+INSERT INTO `scripted_areatrigger` VALUES ('4853', 'at_madrigosa');
+INSERT INTO `scripted_areatrigger` VALUES ('4991', 'at_skadi');
+INSERT INTO `scripted_areatrigger` VALUES ('5140', 'at_svala_intro');
+INSERT INTO `scripted_areatrigger` VALUES ('1447', 'at_zulfarrak');
 
 -- ----------------------------
 -- Table structure for `scripted_event_id`
@@ -17260,6 +17349,75 @@ CREATE TABLE `scripted_event_id` (
 
 -- ----------------------------
 -- Records of scripted_event_id
+-- ----------------------------
+INSERT INTO `scripted_event_id` VALUES ('8328', 'npc_kroshius');
+INSERT INTO `scripted_event_id` VALUES ('5618', 'event_spell_gandling_shadow_portal');
+INSERT INTO `scripted_event_id` VALUES ('5619', 'event_spell_gandling_shadow_portal');
+INSERT INTO `scripted_event_id` VALUES ('5620', 'event_spell_gandling_shadow_portal');
+INSERT INTO `scripted_event_id` VALUES ('5621', 'event_spell_gandling_shadow_portal');
+INSERT INTO `scripted_event_id` VALUES ('5622', 'event_spell_gandling_shadow_portal');
+INSERT INTO `scripted_event_id` VALUES ('5623', 'event_spell_gandling_shadow_portal');
+INSERT INTO `scripted_event_id` VALUES ('13513', 'event_spell_soul_captured_credit');
+INSERT INTO `scripted_event_id` VALUES ('13514', 'event_spell_soul_captured_credit');
+INSERT INTO `scripted_event_id` VALUES ('13515', 'event_spell_soul_captured_credit');
+INSERT INTO `scripted_event_id` VALUES ('13516', 'event_spell_soul_captured_credit');
+INSERT INTO `scripted_event_id` VALUES ('3094', 'event_antalarion_statue_activation');
+INSERT INTO `scripted_event_id` VALUES ('3095', 'event_antalarion_statue_activation');
+INSERT INTO `scripted_event_id` VALUES ('3097', 'event_antalarion_statue_activation');
+INSERT INTO `scripted_event_id` VALUES ('3098', 'event_antalarion_statue_activation');
+INSERT INTO `scripted_event_id` VALUES ('3099', 'event_antalarion_statue_activation');
+INSERT INTO `scripted_event_id` VALUES ('3100', 'event_antalarion_statue_activation');
+INSERT INTO `scripted_event_id` VALUES ('8502', 'event_avatar_of_hakkar');
+INSERT INTO `scripted_event_id` VALUES ('2228', 'event_spell_altar_boss_aggro');
+INSERT INTO `scripted_event_id` VALUES ('2268', 'event_spell_altar_boss_aggro');
+INSERT INTO `scripted_event_id` VALUES ('9735', 'event_spell_saronite_barrier');
+INSERT INTO `scripted_event_id` VALUES ('11225', 'event_taxi_stormcrow');
+INSERT INTO `scripted_event_id` VALUES ('2488', 'event_go_zulfarrak_gong');
+
+-- ----------------------------
+-- Table structure for `script_texts`
+-- ----------------------------
+DROP TABLE IF EXISTS `script_texts`;
+CREATE TABLE `script_texts` (
+  `entry` mediumint(8) NOT NULL,
+  `content_default` text NOT NULL,
+  `content_loc1` text,
+  `content_loc2` text,
+  `content_loc3` text,
+  `content_loc4` text,
+  `content_loc5` text,
+  `content_loc6` text,
+  `content_loc7` text,
+  `content_loc8` text,
+  `sound` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `language` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `emote` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `comment` text,
+  PRIMARY KEY (`entry`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Script Texts';
+
+-- ----------------------------
+-- Records of script_texts
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `script_waypoint`
+-- ----------------------------
+DROP TABLE IF EXISTS `script_waypoint`;
+CREATE TABLE `script_waypoint` (
+  `entry` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'creature_template entry',
+  `pointid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `location_x` float NOT NULL DEFAULT '0',
+  `location_y` float NOT NULL DEFAULT '0',
+  `location_z` float NOT NULL DEFAULT '0',
+  `waittime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'waittime in millisecs',
+  `point_comment` text,
+  PRIMARY KEY (`entry`,`pointid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Script Creature waypoints';
+
+-- ----------------------------
+-- Records of script_waypoint
 -- ----------------------------
 
 -- ----------------------------
@@ -20734,3 +20892,7 @@ CREATE TABLE `world_template` (
 -- ----------------------------
 -- Records of world_template
 -- ----------------------------
+INSERT INTO `world_template` VALUES ('0', 'world_map_eastern_kingdoms');
+INSERT INTO `world_template` VALUES ('1', 'world_map_kalimdor');
+INSERT INTO `world_template` VALUES ('530', 'world_map_outland');
+INSERT INTO `world_template` VALUES ('571', 'world_map_northrend');

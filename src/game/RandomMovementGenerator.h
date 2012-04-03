@@ -23,7 +23,7 @@
 #include "MovementGenerator.h"
 
 template<class T>
-class STRAWBERRY_DLL_SPEC RandomMovementGenerator
+class RandomMovementGenerator
 : public MovementGeneratorMedium< T, RandomMovementGenerator<T> >
 {
     public:

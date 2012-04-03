@@ -24,7 +24,7 @@
 #include "ObjectGuid.h"
 
 template<class T>
-class STRAWBERRY_DLL_SPEC FleeingMovementGenerator
+class FleeingMovementGenerator
 : public MovementGeneratorMedium< T, FleeingMovementGenerator<T> >
 {
     public:
@@ -46,7 +46,7 @@ class STRAWBERRY_DLL_SPEC FleeingMovementGenerator
         TimeTracker i_nextCheckTime;
 };
 
-class STRAWBERRY_DLL_SPEC TimedFleeingMovementGenerator
+class TimedFleeingMovementGenerator
 : public FleeingMovementGenerator<Creature>
 {
     public:

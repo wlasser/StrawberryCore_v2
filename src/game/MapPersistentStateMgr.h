@@ -329,7 +329,7 @@ class DungeonResetScheduler
         ResetTimeQueue m_resetTimeQueue;
 };
 
-class STRAWBERRY_DLL_DECL MapPersistentStateManager : public Strawberry::Singleton<MapPersistentStateManager, Strawberry::ClassLevelLockable<MapPersistentStateManager, ACE_Thread_Mutex> >
+class MapPersistentStateManager : public Strawberry::Singleton<MapPersistentStateManager, Strawberry::ClassLevelLockable<MapPersistentStateManager, ACE_Thread_Mutex> >
 {
     friend class DungeonResetScheduler;
     public:                                                 // constructors

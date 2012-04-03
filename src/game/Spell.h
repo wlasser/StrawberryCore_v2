@@ -418,7 +418,7 @@ class Spell
         bool CheckTarget( Unit* target, SpellEffectIndex eff );
         bool CanAutoCast(Unit* target);
 
-        static void STRAWBERRY_DLL_SPEC SendCastResult(Player* caster, SpellEntry const* spellInfo, uint8 cast_count, SpellCastResult result);
+        static void SendCastResult(Player* caster, SpellEntry const* spellInfo, uint8 cast_count, SpellCastResult result);
         void SendCastResult(SpellCastResult result);
         void SendSpellStart();
         void SendSpellGo();
@@ -662,7 +662,7 @@ enum ReplenishType
 
 namespace Strawberry
 {
-    struct STRAWBERRY_DLL_DECL SpellNotifierPlayer
+    struct SpellNotifierPlayer
     {
         Spell::UnitList &i_data;
         Spell &i_spell;
@@ -697,7 +697,7 @@ namespace Strawberry
         template<class SKIP> void Visit(GridRefManager<SKIP> &) {}
     };
 
-    struct STRAWBERRY_DLL_DECL SpellNotifierCreatureAndPlayer
+    struct SpellNotifierCreatureAndPlayer
     {
         Spell::UnitList *i_data;
         Spell &i_spell;

@@ -246,9 +246,9 @@ class Log : public Strawberry::Singleton<Log, Strawberry::ClassLevelLockable<Log
     ERROR_DB_FILTER_LOG(LOG_FILTER_DB_STRICTED_CHECK, __VA_ARGS__)
 
 // primary for script library
-void STRAWBERRY_DLL_SPEC outstring_log(const char * str, ...) ATTR_PRINTF(1,2);
-void STRAWBERRY_DLL_SPEC detail_log(const char * str, ...) ATTR_PRINTF(1,2);
-void STRAWBERRY_DLL_SPEC debug_log(const char * str, ...) ATTR_PRINTF(1,2);
-void STRAWBERRY_DLL_SPEC error_log(const char * str, ...) ATTR_PRINTF(1,2);
-void STRAWBERRY_DLL_SPEC error_db_log(const char * str, ...) ATTR_PRINTF(1,2);
+void outstring_log(const char * str, ...) ATTR_PRINTF(1,2);
+void detail_log(const char * str, ...) ATTR_PRINTF(1,2);
+void debug_log(const char * str, ...) ATTR_PRINTF(1,2);
+void error_log(const char * str, ...) ATTR_PRINTF(1,2);
+void error_db_log(const char * str, ...) ATTR_PRINTF(1,2);
 #endif

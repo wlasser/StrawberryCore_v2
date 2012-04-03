@@ -26,7 +26,7 @@
 #include "ObjectAccessor.h"
 #include "Language.h"
 #include "AccountMgr.h"
-#include "ScriptMgr.h"
+#include "EventScripts.h"
 #include "SystemConfig.h"
 #include "revision.h"
 #include "revision_nr.h"
@@ -103,9 +103,9 @@ bool ChatHandler::HandleServerInfoCommand(char* /*args*/)
         full = _FULLVERSION(REVISION_DATE,REVISION_TIME,REVISION_NR,REVISION_ID);
     SendSysMessage(full);
 
-    if (sScriptMgr.IsScriptLibraryLoaded())
+    if (sEventScriptMgr.IsScriptLibraryLoaded())
     {
-        char const* ver = sScriptMgr.GetScriptLibraryVersion();
+        char const* ver = sEventScriptMgr.GetScriptLibraryVersion();
         if (ver && *ver)
             PSendSysMessage(LANG_USING_SCRIPT_LIB, ver);
         else

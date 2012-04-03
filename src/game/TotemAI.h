@@ -27,7 +27,7 @@
 class Creature;
 class Totem;
 
-class STRAWBERRY_DLL_DECL TotemAI : public CreatureAI
+class TotemAI : public CreatureAI
 {
     public:
 

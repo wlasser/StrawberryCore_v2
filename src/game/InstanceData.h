@@ -29,7 +29,7 @@ class Player;
 class GameObject;
 class Creature;
 
-class STRAWBERRY_DLL_SPEC InstanceData
+class InstanceData
 {
     public:
 

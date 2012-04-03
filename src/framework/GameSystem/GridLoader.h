@@ -41,7 +41,7 @@ class ACTIVE_OBJECT,
 class WORLD_OBJECT_TYPES,
 class GRID_OBJECT_TYPES
 >
-class STRAWBERRY_DLL_DECL GridLoader
+class GridLoader
 {
     public:
 

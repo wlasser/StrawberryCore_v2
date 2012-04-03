@@ -42,7 +42,7 @@
 
 typedef ACE_SHLIB_HANDLE STRAWBERRY_LIBRARY_HANDLE;
 
-#define STRAWBERRY_SCRIPT_NAME "StrawberryScript"
+#define STRAWBERRY_SCRIPT_NAME "StrawberryScripts"
 #define STRAWBERRY_SCRIPT_SUFFIX ACE_DLL_SUFFIX
 #define STRAWBERRY_SCRIPT_PREFIX ACE_DLL_PREFIX
 #define STRAWBERRY_LOAD_LIBRARY(libname)    ACE_OS::dlopen(libname)
@@ -63,30 +63,6 @@ typedef ACE_SHLIB_HANDLE STRAWBERRY_LIBRARY_HANDLE;
 #  else
 #    define STRAWBERRY_IMPORT __attribute__ ((cdecl))
 #  endif //__APPLE_CC__ && BIG_ENDIAN
-#endif //PLATFORM
-
-#if PLATFORM == PLATFORM_WINDOWS
-#  ifdef STRAWBERRY_WIN32_DLL_IMPORT
-#    define STRAWBERRY_DLL_DECL __declspec(dllimport)
-#  else //!STRAWBERRY_WIN32_DLL_IMPORT
-#    ifdef STRAWBERRY_WIND_DLL_EXPORT
-#      define STRAWBERRY_DLL_DECL __declspec(dllexport)
-#    else //!STRAWBERRY_WIND_DLL_EXPORT
-#      define STRAWBERRY_DLL_DECL
-#    endif //STRAWBERRY_WIND_DLL_EXPORT
-#  endif //STRAWBERRY_WIN32_DLL_IMPORT
-#else //PLATFORM != PLATFORM_WINDOWS
-#  define STRAWBERRY_DLL_DECL
-#endif //PLATFORM
-
-#if PLATFORM == PLATFORM_WINDOWS
-#  define STRAWBERRY_DLL_SPEC __declspec(dllexport)
-#  ifndef DECLSPEC_NORETURN
-#    define DECLSPEC_NORETURN __declspec(noreturn)
-#  endif //DECLSPEC_NORETURN
-#else //PLATFORM != PLATFORM_WINDOWS
-#  define STRAWBERRY_DLL_SPEC
-#  define DECLSPEC_NORETURN
 #endif //PLATFORM
 
 #if !defined(DEBUG)

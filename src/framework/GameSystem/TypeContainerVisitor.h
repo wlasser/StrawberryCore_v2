@@ -67,7 +67,7 @@ void VisitorHelper(VISITOR &v, TypeMapContainer<OBJECT_TYPES> &c)
 }
 
 template<class VISITOR, class TYPE_CONTAINER>
-class STRAWBERRY_DLL_DECL TypeContainerVisitor
+class TypeContainerVisitor
 {
     public:
 

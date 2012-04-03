@@ -37,7 +37,7 @@ namespace Strawberry
     class CreatePolicy = Strawberry::OperatorNew<T>,
     class LifeTimePolicy = Strawberry::ObjectLifeTime<T>
     >
-    class STRAWBERRY_DLL_DECL Singleton
+    class Singleton
     {
         public:
 

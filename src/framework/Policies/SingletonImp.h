@@ -70,22 +70,22 @@ void Strawberry::Singleton<T, ThreadingModel, CreatePolicy, LifeTimePolicy>::Des
 }
 
 #define INSTANTIATE_SINGLETON_1(TYPE) \
-    template class STRAWBERRY_DLL_DECL Strawberry::Singleton<TYPE, Strawberry::SingleThreaded<TYPE>, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >; \
+    template class Strawberry::Singleton<TYPE, Strawberry::SingleThreaded<TYPE>, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >; \
     template<> TYPE* Strawberry::Singleton<TYPE, Strawberry::SingleThreaded<TYPE>, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >::si_instance = 0; \
     template<> bool Strawberry::Singleton<TYPE, Strawberry::SingleThreaded<TYPE>, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >::si_destroyed = false
 
 #define INSTANTIATE_SINGLETON_2(TYPE, THREADINGMODEL) \
-    template class STRAWBERRY_DLL_DECL Strawberry::Singleton<TYPE, THREADINGMODEL, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >; \
+    template class Strawberry::Singleton<TYPE, THREADINGMODEL, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >; \
     template<> TYPE* Strawberry::Singleton<TYPE, THREADINGMODEL, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >::si_instance = 0; \
     template<> bool Strawberry::Singleton<TYPE, THREADINGMODEL, Strawberry::OperatorNew<TYPE>, Strawberry::ObjectLifeTime<TYPE> >::si_destroyed = false
 
 #define INSTANTIATE_SINGLETON_3(TYPE, THREADINGMODEL, CREATIONPOLICY ) \
-    template class STRAWBERRY_DLL_DECL Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, Strawberry::ObjectLifeTime<TYPE> >; \
+    template class Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, Strawberry::ObjectLifeTime<TYPE> >; \
     template<> TYPE* Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, Strawberry::ObjectLifeTime<TYPE> >::si_instance = 0; \
     template<> bool Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, Strawberry::ObjectLifeType<TYPE> >::si_destroyed = false
 
 #define INSTANTIATE_SINGLETON_4(TYPE, THREADINGMODEL, CREATIONPOLICY, OBJECTLIFETIME) \
-    template class STRAWBERRY_DLL_DECL Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, OBJECTLIFETIME >; \
+    template class Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, OBJECTLIFETIME >; \
     template<> TYPE* Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, OBJECTLIFETIME >::si_instance = 0; \
     template<> bool Strawberry::Singleton<TYPE, THREADINGMODEL, CREATIONPOLICY, OBJECTLIFETIME >::si_destroyed = false
 

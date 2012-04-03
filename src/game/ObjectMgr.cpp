@@ -26,7 +26,7 @@
 #include "Log.h"
 #include "MapManager.h"
 #include "ObjectGuid.h"
-#include "ScriptMgr.h"
+#include "EventScripts.h"
 #include "SpellMgr.h"
 #include "UpdateMask.h"
 #include "World.h"
@@ -452,7 +452,7 @@ struct SQLCreatureLoader : public SQLStorageLoaderBase<SQLCreatureLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char const *src, D &dst)
     {
-        dst = D(sScriptMgr.GetScriptId(src));
+        dst = D(sEventScriptMgr.GetScriptId(src));
     }
 };
 
@@ -1848,7 +1848,7 @@ struct SQLItemLoader : public SQLStorageLoaderBase<SQLItemLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char const *src, D &dst)
     {
-        dst = D(sScriptMgr.GetScriptId(src));
+        dst = D(sEventScriptMgr.GetScriptId(src));
     }
 };
 
@@ -4706,7 +4706,7 @@ struct SQLInstanceLoader : public SQLStorageLoaderBase<SQLInstanceLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char const *src, D &dst)
     {
-        dst = D(sScriptMgr.GetScriptId(src));
+        dst = D(sEventScriptMgr.GetScriptId(src));
     }
 };
 
@@ -4767,7 +4767,7 @@ struct SQLWorldLoader : public SQLStorageLoaderBase<SQLWorldLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char const *src, D &dst)
     {
-        dst = D(sScriptMgr.GetScriptId(src));
+        dst = D(sEventScriptMgr.GetScriptId(src));
     }
 };
 
@@ -5900,7 +5900,7 @@ struct SQLGameObjectLoader : public SQLStorageLoaderBase<SQLGameObjectLoader>
     template<class D>
     void convert_from_str(uint32 /*field_pos*/, char const *src, D &dst)
     {
-        dst = D(sScriptMgr.GetScriptId(src));
+        dst = D(sEventScriptMgr.GetScriptId(src));
     }
 };
 

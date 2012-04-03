@@ -25,10 +25,10 @@
 class Creature;
 
 template < class T >
-class STRAWBERRY_DLL_SPEC HomeMovementGenerator;
+class HomeMovementGenerator;
 
 template <>
-class STRAWBERRY_DLL_SPEC HomeMovementGenerator<Creature>
+class HomeMovementGenerator<Creature>
 : public MovementGeneratorMedium< Creature, HomeMovementGenerator<Creature> >
 {
     public:

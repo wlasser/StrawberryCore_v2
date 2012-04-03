@@ -31,7 +31,7 @@ class TemporarySummon : public Creature
 
         void Update(uint32 update_diff, uint32 time) override;
         void Summon(TempSummonType type, uint32 lifetime);
-        void STRAWBERRY_DLL_SPEC UnSummon();
+        void UnSummon();
         void SaveToDB();
         ObjectGuid const& GetSummonerGuid() const { return m_summoner ; }
         Unit* GetSummoner() const { return ObjectAccessor::GetUnit(*this, m_summoner); }
