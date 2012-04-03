@@ -274,6 +274,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         data->WriteBit(interPolatedTurning);
         data->WriteBit(!(unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_SPLINE_ELEVATION));
         data->WriteGuidMask(Guid2, GuidMask2, 1, 2);
+        data->WriteBit(player && player->isInFlight());
 
         if (player && player->isInFlight())
         {
@@ -298,10 +299,13 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         }
 
         data->WriteGuidMask(Guid2, GuidMask2, 1, 4);
-        data->WriteBit(interPolatedTurning);
+
+        if(interPolatedTurning)
+            data->WriteBit(jumping);
+
         data->WriteBit(!(unit->m_movementInfo.GetMovementFlags()));
         data->WriteBit(!unit->m_movementInfo.GetMovementFlags2());
-        data->WriteBit(false);
+        data->WriteBit(!false);
         data->WriteGuidMask(Guid2, GuidMask2, 1, 5);
 
         if(unit->m_movementInfo.GetMovementFlags2())
@@ -327,9 +331,9 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
 
     if (flags & UPDATEFLAG_UNK4)
     {
-        data->WriteBit(true);
-        data->WriteBit(true);
-        data->WriteBit(true);
+        data->WriteBit(!true);
+        data->WriteBit(!true);
+        data->WriteBit(!true);
     }
 
     data->FlushBits();
@@ -349,12 +353,8 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         *data << ((Unit*)this)->GetSpeed(MOVE_WALK);
 
         if (player && player->isInFlight())
-        {
-            data->WriteBit(isSplineEnabled);
-
             if (isSplineEnabled)
                 Movement::PacketBuilder::WriteData(*unit->movespline, *data);
-        }
 
         if (flags & UPDATEFLAG_TRANSPORT)
         {
@@ -372,7 +372,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
                 *data << uint32(0);
 
             data->WriteGuidBytes(tGuid, guidBytes, 3, 0);
-            // uint32 skip...
+            // uint32 transTime3;
             data->WriteGuidBytes(tGuid, guidBytes, 2, 3);
             *data << ((Unit*)this)->GetTransOffsetX();
             *data << ((Unit*)this)->GetTransOffsetZ();
@@ -417,12 +417,16 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         *data << ((Unit*)this)->GetSpeed(MOVE_RUN_BACK);
         *data << ((Unit*)this)->GetPositionX();
         *data << ((Unit*)this)->GetSpeed(MOVE_SWIM_BACK);
-        data->WriteGuidBytes(Guid3, GuidBytes3, 3, 2);
+         data->WriteGuidBytes(Guid3, GuidBytes3, 1, 2);
+        *data << ((Unit*)this)->GetPositionZ();
+        data->WriteGuidBytes(Guid3, GuidBytes3, 2, 3);
         *data << ((Unit*)this)->GetSpeed(MOVE_FLIGHT);
         *data << ((Unit*)this)->GetSpeed(MOVE_SWIM);
         data->WriteGuidBytes(Guid3, GuidBytes3, 3, 5);
         *data << ((Unit*)this)->GetPositionY();
-        *data << uint32(WorldTimer::getMSTime());
+
+        if(flags & UPDATEFLAG_TRANSPORT)
+            *data << uint32(WorldTimer::getMSTime());
 
         if (flags & UPDATEFLAG_ROTATION)
             *data << ((Unit*)this)->GetOrientation();

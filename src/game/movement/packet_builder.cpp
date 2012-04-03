@@ -149,13 +149,13 @@ namespace Movement
 
     void PacketBuilder::WriteBytes(const MoveSpline& move_spline, ByteBuffer& data)
     {
+        MoveSplineFlag splineFlags = move_spline.splineflags;
+        uint32 nodes = move_spline.getPath().size();
+
         data.WriteBit(false);
         data.WriteBits(SPLINEMODE_LINEAR, 2);
         data.WriteBit(false);
         data.WriteBits(SPLINETYPE_NORMAL, 2);
-
-        MoveSplineFlag splineFlags = move_spline.splineflags;
-        uint32 nodes = move_spline.getPath().size();
 
         if (splineFlags.walkmode)
         {
@@ -173,8 +173,12 @@ namespace Movement
         MoveSplineFlag splineFlags = move_spline.splineflags;
         uint32 nodes = move_spline.getPath().size();
 
-        // X, Z, Y
-        data.append<Vector3>(&move_spline.getPath()[0], nodes);
+        for (uint32 i = 0; i < nodes; i++)
+        {
+            data << move_spline.getPath()[0].x;
+            data << move_spline.getPath()[0].z;
+            data << move_spline.getPath()[0].y;
+        }
 
         if (splineFlags.walkmode)
         {
@@ -185,9 +189,8 @@ namespace Movement
         if(splineFlags.flying)
             data << move_spline.facing.f.z << move_spline.facing.f.y << move_spline.facing.f.x;
 
-        data << splineFlags.raw();
-        data << move_spline.timePassed();
-        data << float(1.f);
+        data << move_spline.Duration();
+        data << float(0.f);
         data << float(0.f);
         data << move_spline.GetId();
 
@@ -196,7 +199,7 @@ namespace Movement
 
         data << move_spline.FinalDestination().y;
         data << move_spline.FinalDestination().x;
-        data << move_spline.Duration();
-        data << move_spline.FinalDestination().x;
+        data << move_spline.timePassed();
+        data << move_spline.FinalDestination().z;
     }
 }
