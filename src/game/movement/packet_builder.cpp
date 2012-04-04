@@ -192,7 +192,7 @@ namespace Movement
         data << move_spline.Duration();
         data << float(0.f);
         data << float(0.f);
-        data << move_spline.GetId();
+        data << uint32(0);
 
         if (splineFlags.orientationFixed)
             data << move_spline.facing.angle;

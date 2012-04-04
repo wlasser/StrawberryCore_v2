@@ -329,6 +329,24 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
             data->WriteBits(0, 8);
     }
 
+    /*if (flags & UPDATEFLAG_HAS_POSITION)
+    {
+        const Unit* unit = ((Unit*)this);
+
+        uint64 tGuid = 0;
+        if (unit->GetVehicle())
+            tGuid = uint64(unit->GetVehicle()->GetBase()->GetObjectGuid());
+        else if (unit->GetTransport())
+            tGuid = uint64(unit->GetTransport()->GetObjectGuid());
+
+        uint8 tGuidMask[] = { 1, 4, 5, 0, 6, 7, 3, 2 };
+
+        data->WriteBit(false);  // TransportTime2
+        data->WriteGuidMask(tGuid, tGuidMask, 7, 0);
+        data->WriteBit(false);  // TransportTime3
+        data->WriteGuidMask(tGuid, tGuidMask, 1, 7);
+    }*/
+
     if (flags & UPDATEFLAG_UNK4)
     {
         data->WriteBit(!true);
@@ -353,8 +371,10 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         *data << ((Unit*)this)->GetSpeed(MOVE_WALK);
 
         if (player && player->isInFlight())
+        {
             if (isSplineEnabled)
                 Movement::PacketBuilder::WriteData(*unit->movespline, *data);
+        }
 
         if (flags & UPDATEFLAG_TRANSPORT)
         {
@@ -431,6 +451,31 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         if (flags & UPDATEFLAG_ROTATION)
             *data << ((Unit*)this)->GetOrientation();
     }
+
+    /*if (flags & UPDATEFLAG_HAS_POSITION)
+    {
+        const Unit* unit = ((Unit*)this);
+        
+        uint64 tGuid = 0;
+        if (unit->GetVehicle())
+            tGuid = unit->GetVehicle()->GetBase()->GetObjectGuid();
+        else if (unit->GetTransport())
+            tGuid = unit->GetTransport()->GetObjectGuid();
+
+        uint8 guidBytes[] = { 6, 5, 4, 2, 7, 1, 0, 3 };
+
+        data->WriteGuidBytes(tGuid, guidBytes, 2, 0);
+        *data << unit->GetTransOffsetY();
+        data->WriteGuidBytes(tGuid, guidBytes, 2, 2);
+        //uint32 TransportTime3;
+        *data << unit->GetTransOffsetO();
+        *data << unit->GetTransOffsetZ();
+        //uint32 TransPortTime2;
+        *data << unit->GetTransSeat();
+        data->WriteGuidBytes(tGuid, guidBytes, 4, 4);
+        *data << unit->GetTransOffsetX();
+        *data << unit->GetTransTime();
+    }*/
 
     if(flags & UPDATEFLAG_HAS_ATTACKING_TARGET)
     {

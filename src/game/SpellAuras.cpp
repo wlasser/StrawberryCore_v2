@@ -681,7 +681,7 @@ void AreaAura::Update(uint32 diff)
                 }
             }
 
-            for(Spell::UnitList::iterator tIter = targets.begin(); tIter != targets.end(); tIter++)
+            for(Spell::UnitList::iterator tIter = targets.begin(); tIter != targets.end(); ++tIter)
             {
                 // flag for seelction is need apply aura to current iteration target
                 bool apply = true;
@@ -1138,24 +1138,40 @@ void Aura::TriggerSpell()
                     }
                     case 23184:                             // Mark of Frost
                     case 25041:                             // Mark of Nature
+                    case 37125:                             // Mark of Death
                     {
                         std::list<Player*> targets;
 
                         // spells existed in 1.x.x; 23183 - mark of frost; 25042 - mark of nature; both had radius of 100.0 yards in 1.x.x DBC
                         // spells are used by Azuregos and the Emerald dragons in order to put a stun debuff on the players which resurrect during the encounter
                         // in order to implement the missing spells we need to make a grid search for hostile players and check their auras; if they are marked apply debuff
+                        // spell 37127 used for the Mark of Death, is used server side, so it needs to be implemented here
+ 
+                        uint32 markSpellId = 0;
+                        uint32 debuffSpellId = 0;
 
-                        // Mark of Frost or Mark of Nature
-                        uint32 markSpellId = auraId == 23184 ? 23182 : 25040;
-                        // Aura of Frost or Aura of Nature
-                        uint32 debufSpellId = auraId == 23184 ? 23186 : 25043;
+                        switch (auraId)
+                        {
+                            case 23184:
+                                markSpellId = 23182;
+                                debuffSpellId = 23186;
+                                break;
+                            case 25041:
+                                markSpellId = 25040;
+                                debuffSpellId = 25043;
+                                break;
+                            case 37125:
+                                markSpellId = 37128;
+                                debuffSpellId = 37131;
+                                break;
+                        }
 
                         Strawberry::AnyPlayerInObjectRangeWithAuraCheck u_check(GetTarget(), 100.0f, markSpellId);
                         Strawberry::PlayerListSearcher<Strawberry::AnyPlayerInObjectRangeWithAuraCheck > checker(targets, u_check);
                         Cell::VisitWorldObjects(GetTarget(), checker, 100.0f);
 
                         for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
-                            (*itr)->CastSpell((*itr), debufSpellId, true, NULL, NULL, casterGUID);
+                            (*itr)->CastSpell((*itr), debuffSpellId, true, NULL, NULL, casterGUID);
 
                         return;
                     }
@@ -2883,8 +2899,9 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                             target->PlayDirectSound(14972, (Player *)target);
                     }
                     return;
-                case 40131:
+                case 10848:
                 case 27978:
+                case 40131:
                     if (apply)
                         target->m_AuraFlags |= UNIT_AURAFLAG_ALIVE_INVISIBLE;
                     else
@@ -7434,7 +7451,7 @@ void Aura::PeriodicTick()
                 // max value
                 uint32 maxmana = pCaster->GetMaxPower(power)  * pdamage * 2 / 100;
                 pdamage = target->GetMaxPower(power) * pdamage / 100;
-                if(pdamage > maxmana)
+                if (pdamage > maxmana)
                     pdamage = maxmana;
             }
 
@@ -7449,7 +7466,7 @@ void Aura::PeriodicTick()
 
             target->ModifyPower(power, -drain_amount);
 
-            float gain_multiplier = 0;
+            float gain_multiplier = 0.0f;
 
             if(pCaster->GetMaxPower(power) > 0)
             {
@@ -7472,6 +7489,32 @@ void Aura::PeriodicTick()
                             pCaster->CastCustomSpell(pCaster, 32554, &pet_gain, NULL, NULL, true);
 
                 target->AddThreat(pCaster, float(gain) * 0.5f, pInfo.critical, GetSpellSchoolMask(spellProto), spellProto);
+            }
+
+            // Some special cases
+            switch (GetId())
+            {
+                case 32960:                                 // Mark of Kazzak
+                {
+                    if (target->GetTypeId() == TYPEID_PLAYER && target->getPowerType() == POWER_MANA)
+                    {
+                        // Drain 5% of target's mana
+                        pdamage = target->GetMaxPower(POWER_MANA) * 5 / 100;
+                        drain_amount = target->GetPower(POWER_MANA) > pdamage ? pdamage : target->GetPower(POWER_MANA);
+                        target->ModifyPower(POWER_MANA, -drain_amount);
+
+                        SpellPeriodicAuraLogInfo pInfo(this, drain_amount, 0, 0, 0, 0.0f);
+                        target->SendPeriodicAuraLog(&pInfo);
+                    }
+                    // no break here
+                }
+                case 21056:                                 // Mark of Kazzak
+                    if (target->GetTypeId() == TYPEID_PLAYER && target->GetPower(power) == 0)
+                    {
+                        target->CastSpell(target, 21058, true, NULL, this);
+                        target->RemoveAurasDueToSpell(GetId());
+                    }
+                    break;
             }
             break;
         }
