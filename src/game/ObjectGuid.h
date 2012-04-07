@@ -91,8 +91,8 @@ class ObjectGuid
     public:                                                 // constructors
         ObjectGuid() : m_guid(0) {}
         explicit ObjectGuid(uint64 guid) : m_guid(guid) {}
-        ObjectGuid(HighGuid hi, uint32 entry, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 52) : 0) {}
-        ObjectGuid(HighGuid hi, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(hi) << 52) : 0) {}
+        ObjectGuid(HighGuid hi, uint32 entry, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 48) : 0) {}
+        ObjectGuid(HighGuid hi, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(hi) << 48) : 0) {}
 
         operator uint64() const { return m_guid; }
     private:
@@ -109,7 +109,7 @@ class ObjectGuid
         PackedGuid WriteAsPacked() const;
     public:                                                 // accessors
         uint64   GetRawValue() const { return m_guid; }
-        HighGuid GetHigh() const { return HighGuid((m_guid >> 52) & 0x00000FFF); }
+        HighGuid GetHigh() const { return HighGuid((m_guid >> 48) & 0x00000FFF); }
         uint32   GetEntry() const { return HasEntry() ? uint32((m_guid >> 24) & UI64LIT(0x0000000000FFFFFF)) : 0; }
         uint32   GetCounter()  const
         {

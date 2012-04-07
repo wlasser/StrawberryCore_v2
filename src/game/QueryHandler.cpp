@@ -167,6 +167,7 @@ void WorldSession::HandleCreatureStatsOpcode( WorldPacket & recv_data )
         data << uint32(entry);                              // creature entry
         data << name;
         data << uint8(0) << uint8(0) << uint8(0);           // name2, name3, name4, always empty
+        data << uint8(0) << uint8(0) << uint8(0) << uint8(0);
         data << subName;
         data << ci->IconName;                               // "Directions" for guard, string for Icons 2.3.0
 

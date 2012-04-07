@@ -243,11 +243,21 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     data->WriteBit(flags & UPDATEFLAG_VEHICLE);
     data->WriteBits(0, 24);                                 // Byte Counter
     data->WriteBit((flags & UPDATEFLAG_LIVING) == 0);
-    data->WriteGuidMask(Guid, GuidMask, 2, 0);
+
+    if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
+        data->WriteGuidMask(Guid, GuidMask, 2, 0);
+    else
+        data->WriteBits(false, 2);
+
     data->WriteBit(flags & UPDATEFLAG_TRANSPORT);
     data->WriteBit(false);
-    data->WriteGuidMask(Guid, GuidMask, 3, 2);
-    data->WriteBit(false);                                  // flags & UPDATEFLAG_HAS_POSITION
+
+    if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
+        data->WriteGuidMask(Guid, GuidMask, 3, 2);
+    else
+        data->WriteBits(false, 3);
+
+    data->WriteBit(false);                                  // flags & UPDATEFLAG_HAS_POSITION Game Object Position
     data->WriteBit(flags & UPDATEFLAG_UNK4);                // AnimKits
     data->WriteBit(flags & UPDATEFLAG_ROTATION);
 
