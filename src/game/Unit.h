@@ -1235,7 +1235,7 @@ class Unit : public WorldObject
         {
             ChrClassesEntry const* m_class = sChrClassesStore.LookupEntry(classId);
 
-            STRAWBERRY_ASSERT(m_class && "Class not found");
+            //STRAWBERRY_ASSERT(m_class && "Class not found");
 
             uint32 index = 0;
 
@@ -1261,9 +1261,9 @@ class Unit : public WorldObject
         {
             ChrClassesEntry const* m_class = sChrClassesStore.LookupEntry(classId);
 
-            STRAWBERRY_ASSERT(m_class && "Class not found");
+            //STRAWBERRY_ASSERT(m_class && "Class not found");
 
-            STRAWBERRY_ASSERT(index > 4 && "Not Existing Index");
+            //STRAWBERRY_ASSERT(index > 4 && "Not Existing Index");
 
             uint32 index2 = 0;
 

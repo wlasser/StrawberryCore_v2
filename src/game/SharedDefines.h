@@ -3006,9 +3006,9 @@ enum EncounterCreditType
 
 // we need to stick to 1 version or half of the stuff will work for someone
 // others will not and opposite
-// will only support WoW, WoW:TBC, WoW:WotLK and WoW:Cataclysm 4.3.3 client build 15354...
+// will only support WoW, WoW:TBC, WoW:WotLK and WoW:Cataclysm 4.3.4 client build 15595...
 
-#define EXPECTED_STRAWBERRYWORLD_CLIENT_BUILD        {15354, 0}
+#define EXPECTED_STRAWBERRYWORLD_CLIENT_BUILD        {15595, 0}
 
 // max supported expansion level in StrawberryWorld
 // NOTE: not set it more that supported by targeted client version with all expansions installed

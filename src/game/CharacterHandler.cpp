@@ -151,6 +151,7 @@ void WorldSession::HandleResponseCharacterEnum(QueryResult * result)
     ByteBuffer buffer;
 
     data.WriteBits(0, 23);
+    data.WriteBit(1);
     data.WriteBits(result ? (*result).GetRowCount() : 0 , 17);
 
     std::vector<charEnumInfo> charInfoList;
@@ -204,22 +205,22 @@ void WorldSession::HandleResponseCharacterEnum(QueryResult * result)
             {
                 switch (i)
                 {
-                    case 0:
+                    case 14:
                         data.WriteBit(Guid0 ? 1 : 0);
                         break;
-                    case 15:
+                    case 10:
                         data.WriteBit(Guid1 ? 1 : 0);
                         break;
-                    case 5:
+                    case 15:
                         data.WriteBit(Guid2 ? 1 : 0);
                         break;
-                    case 2:
+                    case 0:
                         data.WriteBit(Guid3 ? 1 : 0);
                         break;
-                    case 7:
+                    case 4:
                         data.WriteBits(charInfoList[counter].nameLenghts, 7);
                         break;
-                    case 4:
+                    case 13:
                         data.WriteBit(charInfoList[counter].firstLogin ? 1 : 0);
                         break;
                     default:
@@ -231,7 +232,6 @@ void WorldSession::HandleResponseCharacterEnum(QueryResult * result)
             counter++;
         }
 
-        data.WriteBit(1);
         data.FlushBits();
         data.append(buffer);
     }
@@ -650,14 +650,14 @@ void WorldSession::HandlePlayerLoginOpcode( WorldPacket & recv_data )
 
     ByteBuffer bytes(8, true);
 
-    if (mask[5]) bytes[1] = recv_data.ReadUInt8() ^ 1;
-    if (mask[2]) bytes[4] = recv_data.ReadUInt8() ^ 1;
-    if (mask[1]) bytes[7] = recv_data.ReadUInt8() ^ 1;
-    if (mask[7]) bytes[2] = recv_data.ReadUInt8() ^ 1;
-    if (mask[6]) bytes[3] = recv_data.ReadUInt8() ^ 1;
-    if (mask[0]) bytes[6] = recv_data.ReadUInt8() ^ 1;
-    if (mask[4]) bytes[0] = recv_data.ReadUInt8() ^ 1;
-    if (mask[3]) bytes[5] = recv_data.ReadUInt8() ^ 1;
+    if (mask[0]) bytes[2] = recv_data.ReadUInt8() ^ 1;
+    if (mask[7]) bytes[7] = recv_data.ReadUInt8() ^ 1;
+    if (mask[2]) bytes[0] = recv_data.ReadUInt8() ^ 1;
+    if (mask[1]) bytes[3] = recv_data.ReadUInt8() ^ 1;
+    if (mask[5]) bytes[5] = recv_data.ReadUInt8() ^ 1;
+    if (mask[3]) bytes[6] = recv_data.ReadUInt8() ^ 1;
+    if (mask[6]) bytes[1] = recv_data.ReadUInt8() ^ 1;
+    if (mask[4]) bytes[4] = recv_data.ReadUInt8() ^ 1;
 
     playerGuid = BitConverter::ToUInt64(bytes);
 
