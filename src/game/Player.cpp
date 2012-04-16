@@ -1537,7 +1537,7 @@ bool Player::BuildEnumData( QueryResult * result, ByteBuffer * p_data )
         return false;
     }
 
-    *p_data << uint8(pRace);                                // Race
+    *p_data << uint8(pClass);                                // Race
 
     Tokens data = StrSplit(fields[19].GetCppString(), " ");
     for (uint8 slot = 0; slot < EQUIPMENT_SLOT_END; slot++)
