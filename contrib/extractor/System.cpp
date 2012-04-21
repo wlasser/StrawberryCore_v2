@@ -60,7 +60,7 @@ enum Extract
 };
 
 // Select data for extract
-int   CONF_extract = /* EXTRACT_MAP |*/ EXTRACT_DBC;
+int   CONF_extract = EXTRACT_MAP | EXTRACT_DBC;
 // This option allow limit minimum height to some value (Allow save some memory)
 // see contrib/mmap/src/Tilebuilder.h, INVALID_MAP_LIQ_HEIGHT
 bool  CONF_allow_height_limit = true;
@@ -106,7 +106,7 @@ void Usage(char* prg)
         "%s -[var] [value]\n"
         "-i set input path\n"
         "-o set output path\n"
-        //"-e extract only MAP(1)/DBC(2) - standard: both(3)\n"
+        "-e extract only MAP(1)/DBC(2) - standard: both(3)\n"
         "-e extract only MAP(1)/DBC(2) - temporary only: DBC(2)\n"
         "-f height stored as int (less map size but lost some accuracy) 1 by default\n"
         "-b extract data for specific build (at least not greater it from available). Min supported build %u.\n"
@@ -243,11 +243,25 @@ uint32 ReadBuild(int locale)
     return build;
 }
 
-uint32 ReadMapDBC()
+uint32 ReadMapDBC(int const locale)
 {
-    printf("Read Map.dbc file... ");
-    DBCFile dbc("DBFilesClient\\Map.dbc");
+    HANDLE localeFile;
+    char localMPQ[512];
+    sprintf(localMPQ, "%s/Data/%s/locale-%s.MPQ", input_path, langs[locale], langs[locale]);
+    if (!SFileOpenArchive(localMPQ, 0, MPQ_OPEN_READ_ONLY, &localeFile))
+        exit(1);
 
+    printf("%s", localMPQ);
+    printf("Read Map.dbc file... ");
+
+    HANDLE dbcFile;
+    if (!SFileOpenFileEx(localeFile, "DBFilesClient\\Map.dbc", SFILE_OPEN_PATCHED_FILE, &dbcFile))
+    {
+        printf("Fatal error: Cannot find Map.dbc in archive!\n");
+        exit(1);
+    }
+
+    DBCFile dbc(dbcFile);
     if(!dbc.open())
     {
         printf("Fatal error: Invalid Map.dbc file format!\n");
@@ -265,10 +279,25 @@ uint32 ReadMapDBC()
     return map_count;
 }
 
-void ReadAreaTableDBC()
+void ReadAreaTableDBC(int const locale)
 {
+    HANDLE localeFile;
+    char localMPQ[512];
+    sprintf(localMPQ, "%s/Data/%s/locale-%s.MPQ", input_path, langs[locale], langs[locale]);
+    if (!SFileOpenArchive(localMPQ, 0, MPQ_OPEN_READ_ONLY, &localeFile))
+        exit(1);
+
+    printf("%s", localMPQ);
     printf("Read AreaTable.dbc file...");
-    DBCFile dbc("DBFilesClient\\AreaTable.dbc");
+
+    HANDLE dbcFile;
+    if (!SFileOpenFileEx(localeFile, "DBFilesClient\\AreaTable.dbc", SFILE_OPEN_PATCHED_FILE, &dbcFile))
+    {
+        printf("Fatal error: Cannot find AreaTable.dbc in archive!\n");
+        exit(1);
+    }
+
+    DBCFile dbc(dbcFile);
 
     if(!dbc.open())
     {
@@ -289,10 +318,25 @@ void ReadAreaTableDBC()
     printf("Done! (%u areas loaded)\n", area_count);
 }
 
-void ReadLiquidTypeTableDBC()
+void ReadLiquidTypeTableDBC(int const locale)
 {
+    HANDLE localeFile;
+    char localMPQ[512];
+    sprintf(localMPQ, "%s/Data/%s/locale-%s.MPQ", input_path, langs[locale], langs[locale]);
+    if (!SFileOpenArchive(localMPQ, 0, MPQ_OPEN_READ_ONLY, &localeFile))
+        exit(1);
+
+    printf("%s", localMPQ);
     printf("Read LiquidType.dbc file...");
-    DBCFile dbc("DBFilesClient\\LiquidType.dbc");
+
+    HANDLE dbcFile;
+    if (!SFileOpenFileEx(localeFile, "DBFilesClient\\LiquidType.dbc", SFILE_OPEN_PATCHED_FILE, &dbcFile))
+    {
+        printf("Fatal error: Cannot find LiquidType.dbc in archive!\n");
+        exit(1);
+    }
+
+    DBCFile dbc(dbcFile);
     if(!dbc.open())
     {
         printf("Fatal error: Invalid LiquidType.dbc file format!\n");
@@ -937,7 +981,7 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     return true;
 }
 
-void ExtractMapsFromMpq(uint32 build)
+void ExtractMapsFromMpq(uint32 build, const int locale)
 {
     char mpq_filename[1024];
     char output_filename[1024];
@@ -945,10 +989,10 @@ void ExtractMapsFromMpq(uint32 build)
 
     printf("Extracting maps...\n");
 
-    uint32 map_count = ReadMapDBC();
+    uint32 map_count = ReadMapDBC(locale);
 
-    ReadAreaTableDBC();
-    ReadLiquidTypeTableDBC();
+    ReadAreaTableDBC(locale);
+    ReadLiquidTypeTableDBC(locale);
 
     std::string path = output_path;
     path += "/maps/";
@@ -1211,10 +1255,10 @@ int main(int argc, char * arg[])
 
         // Open MPQs
         LoadBaseMPQFiles();
-        //LoadLocaleMPQFiles(FirstLocale);
+        LoadLocaleMPQFiles(FirstLocale);
 
         // Extract maps
-        ExtractMapsFromMpq(build);
+        ExtractMapsFromMpq(build, FirstLocale);
 
         // Close MPQs
         CloseArchives();
