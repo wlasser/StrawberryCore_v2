@@ -456,13 +456,6 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     if (!adt.loadFile(filename, false))
         return false;
 
-    adt_MCIN *cells = adt.a_grid->getMCIN();
-    if (!cells)
-    {
-        printf("Can't find cells in '%s'\n", filename);
-        return false;
-    }
-
     memset(liquid_show, 0, sizeof(liquid_show));
     memset(liquid_type, 0, sizeof(liquid_type));
 
@@ -477,7 +470,7 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     {
         for(int j=0;j<ADT_CELLS_PER_GRID;j++)
         {
-            adt_MCNK * cell = cells->getMCNK(i,j);
+            adt_MCNK * cell = adt.cells[i][j];
             uint32 areaid = cell->areaid;
             if(areaid && areaid <= maxAreaId)
             {
@@ -532,7 +525,7 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     {
         for(int j=0;j<ADT_CELLS_PER_GRID;j++)
         {
-            adt_MCNK * cell = cells->getMCNK(i,j);
+            adt_MCNK * cell = adt.cells[i][j];
             if (!cell)
                 continue;
             // Height values for triangles stored in order:
@@ -774,7 +767,7 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
         {
             for(int j=0;j<ADT_CELLS_PER_GRID;j++)
             {
-                adt_MCNK *cell = cells->getMCNK(i, j);
+                adt_MCNK *cell = adt.cells[i][j];
                 if (!cell)
                     continue;
 
@@ -919,7 +912,7 @@ bool ConvertADT(char *filename, char *filename2, int cell_y, int cell_x, uint32 
     {
         for(int j = 0; j < ADT_CELLS_PER_GRID; ++j)
         {
-            adt_MCNK * cell = cells->getMCNK(i,j);
+            adt_MCNK * cell = adt.cells[i][j];
             if(!cell)
                 continue;
             holes[i][j] = cell->holes;
@@ -1006,10 +999,7 @@ void ExtractMapsFromMpq(uint32 build, const int locale)
         sprintf(mpq_map_name, "World\\Maps\\%s\\%s.wdt", map_ids[z].name, map_ids[z].name);
         WDT_file wdt;
         if (!wdt.loadFile(mpq_map_name, false))
-        {
-//            printf("Error loading %s map wdt data\n", map_ids[z].name);
             continue;
-        }
 
         for(uint32 y = 0; y < WDT_MAP_SIZE; ++y)
         {
@@ -1017,6 +1007,7 @@ void ExtractMapsFromMpq(uint32 build, const int locale)
             {
                 if (!wdt.main->adt_list[y][x].exist)
                     continue;
+
                 sprintf(mpq_filename, "World\\Maps\\%s\\%s_%u_%u.adt", map_ids[z].name, map_ids[z].name, x, y);
                 sprintf(output_filename, "%s/maps/%03u%02u%02u.map", output_path, map_ids[z].id, y, x);
                 ConvertADT(mpq_filename, output_filename, y, x, build);
