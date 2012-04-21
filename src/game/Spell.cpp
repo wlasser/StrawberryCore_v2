@@ -3888,8 +3888,6 @@ void Spell::SendSpellStart()
     DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Sending SMSG_SPELL_START id=%u", m_spellInfo->Id);
 
     uint32 castFlags = CAST_FLAG_UNKNOWN2;
-    if (IsRangedSpell())
-        castFlags |= CAST_FLAG_AMMO;
 
     if (m_spellInfo->runeCostID)
         castFlags |= CAST_FLAG_UNKNOWN19;
@@ -3906,7 +3904,7 @@ void Spell::SendSpellStart()
     data << uint32(castFlags);                              // cast flags
     data << uint32(m_timer);                                // delay?
 
-    data << m_targets;
+    m_targets.write(data);
 
     if (castFlags & CAST_FLAG_PREDICTED_POWER)              // predicted power
         data << uint32(0);
@@ -3926,9 +3924,6 @@ void Spell::SendSpellStart()
         }
     }
 
-    if (castFlags & CAST_FLAG_AMMO)                         // projectile info
-        WriteAmmoToPacket(&data);
-
     if (castFlags & CAST_FLAG_IMMUNITY)                     // cast immunity
     {
         data << uint32(0);                                  // used for SetCastSchoolImmunities
@@ -3947,8 +3942,6 @@ void Spell::SendSpellGo()
     DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Sending SMSG_SPELL_GO id=%u", m_spellInfo->Id);
 
     uint32 castFlags = CAST_FLAG_UNKNOWN9;
-    if (IsRangedSpell())
-        castFlags |= CAST_FLAG_AMMO;                        // arrows/bullets visual
 
     if ((m_caster->GetTypeId() == TYPEID_PLAYER) && (m_caster->getClass() == CLASS_DEATH_KNIGHT) && m_spellInfo->runeCostID)
     {
@@ -3972,7 +3965,7 @@ void Spell::SendSpellGo()
 
     WriteSpellGoTargets(&data);
 
-    data << m_targets;
+    m_targets.write(data);
 
     if (castFlags & CAST_FLAG_PREDICTED_POWER)              // predicted power
         data << uint32(0);
@@ -3997,9 +3990,6 @@ void Spell::SendSpellGo()
         data << float(0);
         data << uint32(0);
     }
-
-    if (castFlags & CAST_FLAG_AMMO)                         // projectile info
-        WriteAmmoToPacket(&data);
 
     if (castFlags & CAST_FLAG_VISUAL_CHAIN)                 // spell visual chain effect
     {

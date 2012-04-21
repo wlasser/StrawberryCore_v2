@@ -570,7 +570,7 @@ void Strawberry::LocalizedPacketDo<Builder>::operator()( Player* p )
         if (i_data_cache.size() < cache_idx+1)
             i_data_cache.resize(cache_idx+1);
 
-        data = new WorldPacket(SMSG_MESSAGECHAT, 200);
+        data = new WorldPacket(SMSG_MESSAGE_CHAT, 200);
 
         i_builder(*data, loc_idx);
 

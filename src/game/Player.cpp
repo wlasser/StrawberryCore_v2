@@ -2849,7 +2849,7 @@ void Player::SendInitialSpells()
 
         data << uint32(itr->first);
 
-        data << uint16(itr->second.itemid);                 // cast item id
+        data << uint32(itr->second.itemid);                 // cast item id
         data << uint16(sEntry->GetCategory());              // spell category
 
         // send infinity cooldown in special format
@@ -18328,21 +18328,21 @@ void Player::BuildPlayerChat(WorldPacket *data, uint8 msgtype, const std::string
 
 void Player::Say(const std::string& text, const uint32 language)
 {
-    WorldPacket data(SMSG_MESSAGECHAT, 200);
+    WorldPacket data(SMSG_MESSAGE_CHAT, 200);
     BuildPlayerChat(&data, CHAT_MSG_SAY, text, language);
     SendMessageToSetInRange(&data,sWorld.getConfig(CONFIG_FLOAT_LISTEN_RANGE_SAY),true);
 }
 
 void Player::Yell(const std::string& text, const uint32 language)
 {
-    WorldPacket data(SMSG_MESSAGECHAT, 200);
+    WorldPacket data(SMSG_MESSAGE_CHAT, 200);
     BuildPlayerChat(&data, CHAT_MSG_YELL, text, language);
     SendMessageToSetInRange(&data,sWorld.getConfig(CONFIG_FLOAT_LISTEN_RANGE_YELL),true);
 }
 
 void Player::TextEmote(const std::string& text)
 {
-    WorldPacket data(SMSG_MESSAGECHAT, 200);
+    WorldPacket data(SMSG_MESSAGE_CHAT, 200);
     BuildPlayerChat(&data, CHAT_MSG_EMOTE, text, LANG_UNIVERSAL);
     SendMessageToSetInRange(&data,sWorld.getConfig(CONFIG_FLOAT_LISTEN_RANGE_TEXTEMOTE),true, !sWorld.getConfig(CONFIG_BOOL_ALLOW_TWO_SIDE_INTERACTION_CHAT) );
 }
@@ -18354,14 +18354,14 @@ void Player::Whisper(const std::string& text, uint32 language, ObjectGuid receiv
 
     Player *rPlayer = sObjectMgr.GetPlayer(receiver);
 
-    WorldPacket data(SMSG_MESSAGECHAT, 200);
+    WorldPacket data(SMSG_MESSAGE_CHAT, 200);
     BuildPlayerChat(&data, CHAT_MSG_WHISPER, text, language);
     rPlayer->GetSession()->SendPacket(&data);
 
     // not send confirmation for addon messages
     if (language != LANG_ADDON)
     {
-        data.Initialize(SMSG_MESSAGECHAT, 200);
+        data.Initialize(SMSG_MESSAGE_CHAT, 200);
         rPlayer->BuildPlayerChat(&data, CHAT_MSG_WHISPER_INFORM, text, language);
         GetSession()->SendPacket(&data);
     }

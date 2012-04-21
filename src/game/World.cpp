@@ -1654,7 +1654,7 @@ namespace Strawberry
 
                     uint32 lineLength = (line ? strlen(line) : 0) + 1;
 
-                    data->Initialize(SMSG_MESSAGECHAT, 100);                // guess size
+                    data->Initialize(SMSG_MESSAGE_CHAT, 100);                // guess size
                     *data << uint8(CHAT_MSG_SYSTEM);
                     *data << uint32(LANG_UNIVERSAL);
                     *data << uint64(0);
