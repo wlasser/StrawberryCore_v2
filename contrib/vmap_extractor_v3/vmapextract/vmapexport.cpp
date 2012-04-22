@@ -76,6 +76,8 @@ bool preciseVectorData = false;
 const char * szWorkDirWmo = "./Buildings";
 const char * szRawVMAPMagic = "VMAP003";
 
+const int Builds[] = { 15211, 15354, 15595 };
+
 // Local testing functions
 
 static const char * GetPlainName(const char * szFileName)
@@ -339,40 +341,29 @@ bool fillArchiveNameVector(std::vector<std::string>& pArchiveNames)
     for (std::vector<std::string>::iterator i = locales.begin(); i != locales.end(); ++i)
     {
         pArchiveNames.push_back(in_path + *i + "/locale-" + *i + ".MPQ");
-        pArchiveNames.push_back(in_path + *i + "/expansion-locale-" + *i + ".MPQ");
-        pArchiveNames.push_back(in_path + *i + "/lichking-locale-" + *i + ".MPQ");
+        pArchiveNames.push_back(in_path + *i + "/expansion1-locale-" + *i + ".MPQ");
+        pArchiveNames.push_back(in_path + *i + "/expansion2-locale-" + *i + ".MPQ");
+        pArchiveNames.push_back(in_path + *i + "/expansion3-locale-" + *i + ".MPQ");
     }
 
     // open expansion and common files
-    pArchiveNames.push_back(input_path + string("common.MPQ"));
-    pArchiveNames.push_back(input_path + string("common-2.MPQ"));
-    pArchiveNames.push_back(input_path + string("expansion.MPQ"));
-    pArchiveNames.push_back(input_path + string("lichking.MPQ"));
+    pArchiveNames.push_back(input_path + string("art.MPQ"));
+    pArchiveNames.push_back(input_path + string("expansion1.MPQ"));
+    pArchiveNames.push_back(input_path + string("expansion2.MPQ"));
+    pArchiveNames.push_back(input_path + string("expansion3.MPQ"));
+    pArchiveNames.push_back(input_path + string("world.MPQ"));
+    pArchiveNames.push_back(input_path + string("world2.MPQ"));
 
     // now, scan for the patch levels in the core dir
-    printf("Scanning patch levels from data directory.\n");
-    sprintf(path, "%spatch", input_path);
-    if (!scan_patches(path, pArchiveNames))
-        return(false);
-
-    // now, scan for the patch levels in locale dirs
-    printf("Scanning patch levels from locale directories.\n");
-    bool foundOne = false;
-    for (std::vector<std::string>::iterator i = locales.begin(); i != locales.end(); ++i)
+    /*printf("Scanning patch levels from data directory.\n");
+    for (int i = 0; i <= sizeof(Builds) / sizeof(Builds[0]); i++)
     {
-        printf("Locale: %s\n", i->c_str());
-        sprintf(path, "%s%s/patch-%s", input_path, i->c_str(), i->c_str());
-        if(scan_patches(path, pArchiveNames))
-            foundOne = true;
-    }
+        sprintf(path, "/%swow-update-base-%i", input_path, Builds[i]);
+        if(!scan_patches(path, pArchiveNames))
+            return false;
+    }*/
 
     printf("\n");
-
-    if(!foundOne)
-    {
-        printf("no locale found\n");
-        return false;
-    }
 
     return true;
 }

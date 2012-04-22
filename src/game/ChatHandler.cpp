@@ -64,14 +64,22 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
     uint32 type;
     uint32 lang;
 
-    recv_data >> type;
-    recv_data >> lang;
+    switch (recv_data.GetOpcodeEnum())
+    {
+        case CMSG_CHAT_MESSAGE_SAY:
+            type = CHAT_MSG_SAY;
+            break;
+    }
 
     if(type >= MAX_CHAT_MSG_TYPE)
     {
         sLog.outError("CHAT: Wrong message type received: %u", type);
         return;
     }
+
+    recv_data >> lang;
+    recv_data.read_skip<uint8>();
+    recv_data.read_skip<uint8>();
 
     DEBUG_LOG("CHAT: packet received. type %u, lang %u", type, lang );
 

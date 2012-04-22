@@ -72,6 +72,10 @@ enum Opcodes
     SMSG_FEATURE_SYSTEM_STATUS,
     SMSG_ACTION_BUTTONS,
     SMSG_MONSTER_MOVE,
+    SMSG_CLIENTCACHE_VERSION,
+    SMSG_TUTORIAL_FLAGS,
+    CMSG_SET_SELECTION,
+
 
     // Spells
     SMSG_INITIAL_SPELLS,
@@ -450,7 +454,6 @@ enum Opcodes335a
     MSG_CHANNEL_UPDATE                              = 0x13A,
     CMSG_CANCEL_CHANNELLING                         = 0x13B,
     SMSG_AI_REACTION                                = 0x13C,
-    CMSG_SET_SELECTION                              = 0x13D,
     CMSG_DELETEEQUIPMENT_SET                        = 0x13E,
     CMSG_INSTANCE_LOCK_RESPONSE                     = 0x13F,
     CMSG_DEBUG_PASSIVE_AURA                         = 0x140,
@@ -1433,8 +1436,6 @@ enum Opcodes335a
     SMSG_NEW_WORLD,
     SMSG_AURA_UPDATE_ALL,
     SMSG_WARDEN_DATA,
-    SMSG_CLIENTCACHE_VERSION,
-    SMSG_TUTORIAL_FLAGS,
 };
 
 
