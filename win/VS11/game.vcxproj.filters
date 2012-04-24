@@ -331,6 +331,51 @@
     <Filter Include="Scripts\northrend\ruby_sanctum">
       <UniqueIdentifier>{e35abead-2389-4eb9-88bd-70e6fe5636b5}</UniqueIdentifier>
     </Filter>
+	<Filter Include="Scripts\battlegrounds\baradin_hold">
+      <UniqueIdentifier>{01712db3-d3e7-4c06-90c8-3932f6ecb9ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\eastern_kingdoms\bastion_of_twilight">
+      <UniqueIdentifier>{000d67b8-923f-49ba-bafb-d529a13a7053}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\eastern_kingdoms\blackrock_caverns">
+      <UniqueIdentifier>{6d1c8f66-2db3-4892-aeab-7694b063df3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\eastern_kingdoms\blackwing_descent">
+      <UniqueIdentifier>{a366e6ca-16b3-4fca-b6a6-70ec0cd18249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\eastern_kingdoms\throne_of_the_tides">
+      <UniqueIdentifier>{43e25d50-99bf-4f5e-a26d-8d084be084b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\caverns_of_time\dragon_soul">
+      <UniqueIdentifier>{367726fe-28e0-464d-8989-dba49e88e061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\caverns_of_time\dragon_soul\NewFilter1">
+      <UniqueIdentifier>{2d468805-175e-4648-8988-c46b9054ac3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\caverns_of_time\end_time">
+      <UniqueIdentifier>{318a8349-5e29-4a64-98c3-4750bbdebadd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\caverns_of_time\hour_of_twilight">
+      <UniqueIdentifier>{acc8f05d-86a3-49be-a410-3232efcdb348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\caverns_of_time\well_of_eternity">
+      <UniqueIdentifier>{28164acc-a9df-495b-b01a-5154c3dbbff1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\firelands">
+      <UniqueIdentifier>{21c85f47-4997-4cb9-b006-96abd7239ad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\halls_of_origination">
+      <UniqueIdentifier>{73e5750b-a852-405f-8783-1054338006a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\lost_city_of_the_tolvir">
+      <UniqueIdentifier>{38491668-1a58-4fc0-bb26-43e1ba378511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\throne_of_the_four_winds">
+      <UniqueIdentifier>{a91b4a99-c2a9-4299-9cbf-e97e165458fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\kalimdor\vortex_pinnacle">
+      <UniqueIdentifier>{697a5fdb-976c-4e02-a00a-09c6372d548e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\AccountMgr.cpp">
@@ -2274,6 +2319,51 @@
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\battlegrounds\battleground_script.cpp">
       <Filter>Scripts\battlegrounds</Filter>
+    </ClCompile>
+	<ClCompile Include="..\..\src\game\Scripts\battlegrounds\baradin_hold\instance_baradin_hold.cpp">
+      <Filter>Scripts\battlegrounds\baradin_hold</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\eastern_kingdoms\bastion_of_twilight\instance_bastion_of_twilight.cpp">
+      <Filter>Scripts\eastern_kingdoms\bastion_of_twilight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\eastern_kingdoms\blackrock_caverns\instance_blackrock_caverns.cpp">
+      <Filter>Scripts\eastern_kingdoms\blackrock_caverns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\eastern_kingdoms\blackwing_descent\instance_blackwing_descent.cpp">
+      <Filter>Scripts\eastern_kingdoms\blackwing_descent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\eastern_kingdoms\throne_of_the_tides\instance_entrance_throne_of_tides.cpp">
+      <Filter>Scripts\eastern_kingdoms\throne_of_the_tides</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\eastern_kingdoms\throne_of_the_tides\instance_throne_of_the_tides.cpp">
+      <Filter>Scripts\eastern_kingdoms\throne_of_the_tides</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dragon_soul\instance_dragon_soul.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\dragon_soul</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\hour_of_twilight</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\well_of_eternity\instance_well_of_eternity.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\well_of_eternity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\firelands\instance_firelands.cpp">
+      <Filter>Scripts\kalimdor\firelands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\halls_of_origination\instance_halls_of_origination.cpp">
+      <Filter>Scripts\kalimdor\halls_of_origination</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\lost_city_of_the_tolvir\instance_lost_city_of_the_tolvir.cpp">
+      <Filter>Scripts\kalimdor\lost_city_of_the_tolvir</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\throne_of_the_four_winds\instance_throne_of_the_four_winds.cpp">
+      <Filter>Scripts\kalimdor\throne_of_the_four_winds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\vortex_pinnacle\instance_vortex_pinnacle.cpp">
+      <Filter>Scripts\kalimdor\vortex_pinnacle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
