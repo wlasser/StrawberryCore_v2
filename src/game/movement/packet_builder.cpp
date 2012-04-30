@@ -193,11 +193,11 @@ namespace Movement
         if (splineFlags.orientationFixed)
             data << move_spline.facing.angle;
 
-        data << float(0.f);
+        data << float(1.f);
 
         data << move_spline.FinalDestination().z;
         data << move_spline.FinalDestination().x;
         data << move_spline.FinalDestination().y;
-        data << move_spline.timePassed();
+        data << move_spline.GetId();
     }
 }

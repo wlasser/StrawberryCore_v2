@@ -261,8 +261,8 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     else
         data->WriteBit(false);
 
-    data->WriteBit(false);                                  // flags & UPDATEFLAG_HAS_POSITION Game Object Position
-    data->WriteBit((flags & UPDATEFLAG_LIVING) == 0);
+    data->WriteBit(false);        // flags & UPDATEFLAG_HAS_POSITION Game Object Position
+    data->WriteBit((flags & UPDATEFLAG_LIVING) == 0);       // Stationary Position
     data->WriteBit(false);
 
     if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
@@ -284,7 +284,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         bool interPolatedTurning = ((Unit*)this)->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_INTERP_TURNING;
         bool jumping = ((Unit*)this)->m_movementInfo.GetMovementFlags() & MOVEFLAG_FALLING;
 
-        uint64 Guid2 = uint64(((Player*)this)->GetObjectGuid());
+        uint64 Guid2 = uint64(unit->GetObjectGuid());
         uint8 GuidMask2[] = { 7, 3, 2, 5, 4, 6, 0, 1 };
 
         data->WriteBit(!(unit->m_movementInfo.GetMovementFlags()));
@@ -338,9 +338,9 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
             data->WriteBits(((Unit*)this)->m_movementInfo.GetMovementFlags2(), 12);
     }
 
-    /*if (flags & UPDATEFLAG_HAS_POSITION)
+    if (flags & UPDATEFLAG_HAS_POSITION)
     {
-    }*/
+    }
 
     if(flags & UPDATEFLAG_HAS_ATTACKING_TARGET)
     {
@@ -416,7 +416,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
             else if (tUnit->GetTransport())
                 tGuid = uint64(tUnit->GetTransport()->GetObjectGuid());
 
-            uint8 guidBytes[] = { 69, 71, 67, 64, 65, 70, 66, 68 };
+            uint8 guidBytes[] = { 5, 7, 3, 0, 1, 6, 2, 4 };
 
             data->WriteGuidBytes(tGuid, guidBytes, 2, 0);
             *data << ((Unit*)this)->GetTransTime();
@@ -468,9 +468,9 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         *data << uint32(((Unit*)this)->GetVehicleInfo()->GetEntry()->m_ID); // vehicle id
     }
 
-    /*if (flags & UPDATEFLAG_HAS_POSITION)
+    if (flags & UPDATEFLAG_HAS_POSITION)
     {
-    }*/
+    }
 
     if(flags & UPDATEFLAG_ROTATION)
         *data << int64(((GameObject*)this)->GetPackedWorldRotation());

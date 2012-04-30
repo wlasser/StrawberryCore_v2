@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2012-04-26 23:01:48
+Date: 2012-04-30 16:03:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -766,6 +766,10 @@ INSERT INTO `creature_model_info` VALUES ('15476', '0.383', '1.5', '0', '15475',
 INSERT INTO `creature_model_info` VALUES ('16125', '1', '1.5', '0', '16126', '0');
 INSERT INTO `creature_model_info` VALUES ('16126', '1', '1.5', '1', '16125', '0');
 INSERT INTO `creature_model_info` VALUES ('1859', '0.306', '1.5', '2', '0', '0');
+INSERT INTO `creature_model_info` VALUES ('6895', '0.389', '1.5', '1', '0', '0');
+INSERT INTO `creature_model_info` VALUES ('6894', '0.389', '1.5', '0', '0', '0');
+INSERT INTO `creature_model_info` VALUES ('29423', '0.389', '1.5', '1', '0', '0');
+INSERT INTO `creature_model_info` VALUES ('29422', '0.389', '1.5', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `creature_model_race`
@@ -1079,6 +1083,21 @@ CREATE TABLE `db_script_string` (
 
 -- ----------------------------
 -- Records of db_script_string
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `db_version`
+-- ----------------------------
+DROP TABLE IF EXISTS `db_version`;
+CREATE TABLE `db_version` (
+  `version` varchar(120) NOT NULL,
+  `creature_ai_version` varchar(120) DEFAULT NULL,
+  `cache_id` int(10) DEFAULT '0',
+  `required_11831_02_mangos_command` bit(1) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Used for DB version notes.';
+
+-- ----------------------------
+-- Records of db_version
 -- ----------------------------
 
 -- ----------------------------
@@ -7647,7 +7666,6 @@ INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '68398', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '96220', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '203', 'Unarmed');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '79742', 'Languages');
-INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '69001', '');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '49410', 'Forceful Deflection');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '199', 'Two-Handed Maces');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '1', '15590', 'Fist Weapons');
@@ -7708,7 +7726,6 @@ INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '203', 'Unarmed');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '883', 'Call Pet 1');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '982', 'Revive Pet');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '79742', 'Languages');
-INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '69001', '');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '15590', 'Fist Weapons');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '200', 'Polearms');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '3', '668', 'Language Common');
@@ -7758,7 +7775,6 @@ INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '68398', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '96220', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '203', 'Unarmed');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '79742', 'Languages');
-INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '69001', '');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '15590', 'Fist Weapons');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '76273', 'Armor Skills');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '4', '76297', 'Weapon Skills');
@@ -7807,7 +7823,6 @@ INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '88685', 'Holy Word: San
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '88684', 'Holy Word: Serenity');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '101062', 'Flash Heal');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '79742', 'Languages');
-INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '69001', '');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '76301', 'Weapon Skills');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '76279', 'Armor Skills');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '5', '84734', 'Dark Thoughts');
@@ -7848,7 +7863,6 @@ INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '96220', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '79684', 'Offensive State (DND)');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '203', 'Unarmed');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '79742', 'Languages');
-INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '69001', '');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '133', 'Fireball');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '92315', 'Pyroblast!');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '8', '85801', 'DPS Caster Crit Damage Bonus');
@@ -7888,7 +7902,6 @@ INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '68398', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '96220', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '203', 'Unarmed');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '79742', 'Languages');
-INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '69001', '');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '688', 'Summon Imp');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '86213', 'Soul Swap Exhale');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '9', '89420', 'Drain Life');
@@ -7931,7 +7944,6 @@ INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '68398', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '96220', 'Opening');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '203', 'Unarmed');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '79742', 'Languages');
-INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '69001', '');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '84736', 'Nature\'s Focus');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '81170', 'Ravage!');
 INSERT INTO `playercreateinfo_spell` VALUES ('22', '11', '79577', 'Eclipse Mastery Driver Passive');
@@ -17332,18 +17344,11 @@ INSERT INTO `scripted_event_id` VALUES ('13513', 'event_spell_soul_captured_cred
 INSERT INTO `scripted_event_id` VALUES ('13514', 'event_spell_soul_captured_credit');
 INSERT INTO `scripted_event_id` VALUES ('13515', 'event_spell_soul_captured_credit');
 INSERT INTO `scripted_event_id` VALUES ('13516', 'event_spell_soul_captured_credit');
-INSERT INTO `scripted_event_id` VALUES ('3094', 'event_antalarion_statue_activation');
-INSERT INTO `scripted_event_id` VALUES ('3095', 'event_antalarion_statue_activation');
-INSERT INTO `scripted_event_id` VALUES ('3097', 'event_antalarion_statue_activation');
-INSERT INTO `scripted_event_id` VALUES ('3098', 'event_antalarion_statue_activation');
-INSERT INTO `scripted_event_id` VALUES ('3099', 'event_antalarion_statue_activation');
-INSERT INTO `scripted_event_id` VALUES ('3100', 'event_antalarion_statue_activation');
 INSERT INTO `scripted_event_id` VALUES ('8502', 'event_avatar_of_hakkar');
 INSERT INTO `scripted_event_id` VALUES ('2228', 'event_spell_altar_boss_aggro');
 INSERT INTO `scripted_event_id` VALUES ('2268', 'event_spell_altar_boss_aggro');
 INSERT INTO `scripted_event_id` VALUES ('9735', 'event_spell_saronite_barrier');
 INSERT INTO `scripted_event_id` VALUES ('11225', 'event_taxi_stormcrow');
-INSERT INTO `scripted_event_id` VALUES ('2488', 'event_go_zulfarrak_gong');
 
 -- ----------------------------
 -- Table structure for `script_texts`
@@ -17496,8 +17501,6 @@ CREATE TABLE `spell_bonus_data` (
 -- ----------------------------
 -- Records of spell_bonus_data
 -- ----------------------------
-INSERT INTO `spell_bonus_data` VALUES ('5185', '1.6104', '0', '0', '0', 'Druid - Healing Touch');
-INSERT INTO `spell_bonus_data` VALUES ('339', '0', '0.1', '0', '0', 'Druid - Entangling Roots');
 INSERT INTO `spell_bonus_data` VALUES ('5570', '0', '0.2', '0', '0', 'Druid - Insect Swarm');
 INSERT INTO `spell_bonus_data` VALUES ('8921', '0.1515', '0.13', '0', '0', 'Druid - Moonfire');
 INSERT INTO `spell_bonus_data` VALUES ('9007', '0', '0', '0', '0.03', 'Druid - Pounce Bleed');
@@ -17517,7 +17520,6 @@ INSERT INTO `spell_bonus_data` VALUES ('2120', '0.2357', '0.122', '0', '0', 'Mag
 INSERT INTO `spell_bonus_data` VALUES ('116', '0.8143', '0', '0', '0', 'Mage - Frost Bolt');
 INSERT INTO `spell_bonus_data` VALUES ('1463', '0.8053', '0', '0', '0', 'Mage - Mana Shield');
 INSERT INTO `spell_bonus_data` VALUES ('11366', '1.15', '0.05', '0', '0', 'Mage - Pyroblast');
-INSERT INTO `spell_bonus_data` VALUES ('26573', '0', '0.04', '0', '0.04', 'Paladin - Consecration');
 INSERT INTO `spell_bonus_data` VALUES ('879', '0.15', '0', '0.15', '0', 'Paladin - Exorcism');
 INSERT INTO `spell_bonus_data` VALUES ('25997', '0', '0', '0', '0', 'Paladin - Eye for an Eye');
 INSERT INTO `spell_bonus_data` VALUES ('19750', '1', '0', '0', '0', 'Paladin - Flash of Light');
@@ -17549,8 +17551,6 @@ INSERT INTO `spell_bonus_data` VALUES ('10444', '0', '0', '0', '0', 'Shaman - Fl
 INSERT INTO `spell_bonus_data` VALUES ('8056', '0.3858', '0', '0', '0', 'Shaman - Frost Shock');
 INSERT INTO `spell_bonus_data` VALUES ('8034', '0.1', '0', '0', '0', 'Shaman - Frostbrand Attack Rank 1');
 INSERT INTO `spell_bonus_data` VALUES ('5672', '0.08272', '0', '0', '0', 'Shaman - Healing Stream Totem Aura');
-INSERT INTO `spell_bonus_data` VALUES ('331', '1.6106', '0', '0', '0', 'Shaman - Healing Wave');
-INSERT INTO `spell_bonus_data` VALUES ('403', '0.7143', '0', '0', '0', 'Shaman - Lightning Bolt');
 INSERT INTO `spell_bonus_data` VALUES ('26364', '0.33', '0', '0', '0', 'Shaman - Lightning Shield Proc');
 INSERT INTO `spell_bonus_data` VALUES ('8188', '0.1', '0', '0', '0', 'Shaman - Magma Totam Passive');
 INSERT INTO `spell_bonus_data` VALUES ('3606', '0.1667', '0', '0', '0', 'Shaman - Searing Totem Attack');
@@ -17568,7 +17568,6 @@ INSERT INTO `spell_bonus_data` VALUES ('348', '0.2', '0.2', '0', '0', 'Warlock -
 INSERT INTO `spell_bonus_data` VALUES ('27243', '0.2129', '0.25', '0', '0', 'Warlock - Seed of Corruption');
 INSERT INTO `spell_bonus_data` VALUES ('6229', '0.3', '0', '0', '0', 'Warlock - Shadow Ward');
 INSERT INTO `spell_bonus_data` VALUES ('63106', '0', '0', '0', '0', 'Warlock - Siphon Life Triggered');
-INSERT INTO `spell_bonus_data` VALUES ('6353', '1.15', '0', '0', '0', 'Warlock - Soul Fire');
 INSERT INTO `spell_bonus_data` VALUES ('64569', '0', '0', '0', '0', 'Item - Blood Reserve');
 INSERT INTO `spell_bonus_data` VALUES ('17712', '0', '0', '0', '0', 'Item - Lifestone Healing');
 INSERT INTO `spell_bonus_data` VALUES ('5707', '0', '0', '0', '0', 'Item - Lifestone Regeneration');
@@ -17593,209 +17592,6 @@ CREATE TABLE `spell_chain` (
 -- ----------------------------
 -- Records of spell_chain
 -- ----------------------------
-INSERT INTO `spell_chain` VALUES ('2818', '0', '2818', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8034', '0', '8034', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5672', '0', '5672', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8680', '0', '8680', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8188', '0', '8188', '1', '0');
-INSERT INTO `spell_chain` VALUES ('3606', '0', '3606', '1', '0');
-INSERT INTO `spell_chain` VALUES ('13218', '0', '13218', '1', '0');
-INSERT INTO `spell_chain` VALUES ('10', '0', '10', '1', '0');
-INSERT INTO `spell_chain` VALUES ('120', '0', '120', '1', '0');
-INSERT INTO `spell_chain` VALUES ('122', '0', '122', '1', '0');
-INSERT INTO `spell_chain` VALUES ('116', '0', '116', '1', '0');
-INSERT INTO `spell_chain` VALUES ('7302', '0', '7302', '1', '0');
-INSERT INTO `spell_chain` VALUES ('11426', '0', '11426', '1', '0');
-INSERT INTO `spell_chain` VALUES ('11113', '0', '11113', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2136', '0', '2136', '1', '0');
-INSERT INTO `spell_chain` VALUES ('543', '0', '543', '1', '0');
-INSERT INTO `spell_chain` VALUES ('133', '0', '133', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2120', '0', '2120', '1', '0');
-INSERT INTO `spell_chain` VALUES ('11366', '0', '11366', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2948', '0', '2948', '1', '0');
-INSERT INTO `spell_chain` VALUES ('13165', '0', '13165', '1', '0');
-INSERT INTO `spell_chain` VALUES ('20043', '0', '20043', '1', '0');
-INSERT INTO `spell_chain` VALUES ('136', '0', '136', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1513', '0', '1513', '1', '0');
-INSERT INTO `spell_chain` VALUES ('3674', '0', '3674', '1', '0');
-INSERT INTO `spell_chain` VALUES ('63672', '63671', '3674', '6', '0');
-INSERT INTO `spell_chain` VALUES ('19306', '0', '19306', '1', '0');
-INSERT INTO `spell_chain` VALUES ('13813', '0', '13813', '1', '0');
-INSERT INTO `spell_chain` VALUES ('13812', '0', '13812', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1499', '0', '1499', '1', '0');
-INSERT INTO `spell_chain` VALUES ('13795', '0', '13795', '1', '0');
-INSERT INTO `spell_chain` VALUES ('13797', '0', '13797', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2973', '0', '2973', '1', '0');
-INSERT INTO `spell_chain` VALUES ('19386', '0', '19386', '1', '0');
-INSERT INTO `spell_chain` VALUES ('27813', '0', '27813', '1', '0');
-INSERT INTO `spell_chain` VALUES ('27817', '27813', '27813', '2', '0');
-INSERT INTO `spell_chain` VALUES ('27818', '27817', '27813', '3', '0');
-INSERT INTO `spell_chain` VALUES ('19236', '0', '19236', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2061', '0', '2061', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2060', '0', '2060', '1', '0');
-INSERT INTO `spell_chain` VALUES ('14914', '0', '14914', '1', '0');
-INSERT INTO `spell_chain` VALUES ('15237', '0', '15237', '1', '0');
-INSERT INTO `spell_chain` VALUES ('23455', '0', '23455', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2050', '0', '2050', '1', '0');
-INSERT INTO `spell_chain` VALUES ('724', '0', '724', '1', '0');
-INSERT INTO `spell_chain` VALUES ('596', '0', '596', '1', '0');
-INSERT INTO `spell_chain` VALUES ('139', '0', '139', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2006', '0', '2006', '1', '0');
-INSERT INTO `spell_chain` VALUES ('585', '0', '585', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2944', '0', '2944', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8092', '0', '8092', '1', '0');
-INSERT INTO `spell_chain` VALUES ('15407', '0', '15407', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2096', '0', '2096', '1', '0');
-INSERT INTO `spell_chain` VALUES ('27683', '0', '27683', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8122', '0', '8122', '1', '0');
-INSERT INTO `spell_chain` VALUES ('589', '0', '589', '1', '0');
-INSERT INTO `spell_chain` VALUES ('19434', '0', '19434', '1', '0');
-INSERT INTO `spell_chain` VALUES ('3044', '0', '3044', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1130', '0', '1130', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2643', '0', '2643', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1978', '0', '1978', '1', '0');
-INSERT INTO `spell_chain` VALUES ('9787', '9785', '2018', '5', '0');
-INSERT INTO `spell_chain` VALUES ('9788', '9785', '2018', '5', '0');
-INSERT INTO `spell_chain` VALUES ('17039', '9787', '2018', '6', '0');
-INSERT INTO `spell_chain` VALUES ('17040', '9787', '2018', '6', '0');
-INSERT INTO `spell_chain` VALUES ('17041', '9787', '2018', '6', '0');
-INSERT INTO `spell_chain` VALUES ('10656', '10662', '2108', '5', '0');
-INSERT INTO `spell_chain` VALUES ('10658', '10662', '2108', '5', '0');
-INSERT INTO `spell_chain` VALUES ('10660', '10662', '2108', '5', '0');
-INSERT INTO `spell_chain` VALUES ('28672', '11611', '2259', '5', '0');
-INSERT INTO `spell_chain` VALUES ('28675', '11611', '2259', '5', '0');
-INSERT INTO `spell_chain` VALUES ('28677', '11611', '2259', '5', '0');
-INSERT INTO `spell_chain` VALUES ('19740', '0', '19740', '1', '0');
-INSERT INTO `spell_chain` VALUES ('24275', '0', '24275', '1', '0');
-INSERT INTO `spell_chain` VALUES ('26797', '12180', '3908', '5', '0');
-INSERT INTO `spell_chain` VALUES ('26798', '12180', '3908', '5', '0');
-INSERT INTO `spell_chain` VALUES ('26801', '12180', '3908', '5', '0');
-INSERT INTO `spell_chain` VALUES ('20219', '12656', '4036', '5', '0');
-INSERT INTO `spell_chain` VALUES ('20222', '12656', '4036', '5', '0');
-INSERT INTO `spell_chain` VALUES ('1449', '0', '1449', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1459', '0', '1459', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5143', '0', '5143', '1', '0');
-INSERT INTO `spell_chain` VALUES ('7268', '0', '7268', '1', '0');
-INSERT INTO `spell_chain` VALUES ('587', '0', '587', '1', '0');
-INSERT INTO `spell_chain` VALUES ('597', '587', '587', '2', '0');
-INSERT INTO `spell_chain` VALUES ('990', '597', '587', '3', '0');
-INSERT INTO `spell_chain` VALUES ('6129', '990', '587', '4', '0');
-INSERT INTO `spell_chain` VALUES ('10144', '6129', '587', '5', '0');
-INSERT INTO `spell_chain` VALUES ('10145', '10144', '587', '6', '0');
-INSERT INTO `spell_chain` VALUES ('28612', '10145', '587', '7', '0');
-INSERT INTO `spell_chain` VALUES ('759', '0', '759', '1', '0');
-INSERT INTO `spell_chain` VALUES ('3552', '759', '759', '2', '0');
-INSERT INTO `spell_chain` VALUES ('10053', '3552', '759', '3', '0');
-INSERT INTO `spell_chain` VALUES ('10054', '10053', '759', '4', '0');
-INSERT INTO `spell_chain` VALUES ('27101', '10054', '759', '5', '0');
-INSERT INTO `spell_chain` VALUES ('5504', '0', '5504', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5505', '5504', '5504', '2', '0');
-INSERT INTO `spell_chain` VALUES ('5506', '5505', '5504', '3', '0');
-INSERT INTO `spell_chain` VALUES ('6127', '5506', '5504', '4', '0');
-INSERT INTO `spell_chain` VALUES ('10138', '6127', '5504', '5', '0');
-INSERT INTO `spell_chain` VALUES ('10139', '10138', '5504', '6', '0');
-INSERT INTO `spell_chain` VALUES ('10140', '10139', '5504', '7', '0');
-INSERT INTO `spell_chain` VALUES ('27090', '37420', '5504', '9', '0');
-INSERT INTO `spell_chain` VALUES ('6117', '0', '6117', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1463', '0', '1463', '1', '0');
-INSERT INTO `spell_chain` VALUES ('118', '0', '118', '1', '0');
-INSERT INTO `spell_chain` VALUES ('20217', '0', '20217', '1', '0');
-INSERT INTO `spell_chain` VALUES ('20911', '0', '20911', '1', '0');
-INSERT INTO `spell_chain` VALUES ('853', '0', '853', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1022', '0', '1022', '1', '0');
-INSERT INTO `spell_chain` VALUES ('20925', '0', '20925', '1', '0');
-INSERT INTO `spell_chain` VALUES ('710', '0', '710', '1', '0');
-INSERT INTO `spell_chain` VALUES ('6201', '0', '6201', '1', '0');
-INSERT INTO `spell_chain` VALUES ('693', '0', '693', '1', '0');
-INSERT INTO `spell_chain` VALUES ('687', '0', '687', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1098', '0', '1098', '1', '0');
-INSERT INTO `spell_chain` VALUES ('28176', '0', '28176', '1', '0');
-INSERT INTO `spell_chain` VALUES ('755', '0', '755', '1', '0');
-INSERT INTO `spell_chain` VALUES ('29893', '0', '29893', '1', '0');
-INSERT INTO `spell_chain` VALUES ('6229', '0', '6229', '1', '0');
-INSERT INTO `spell_chain` VALUES ('172', '0', '172', '1', '0');
-INSERT INTO `spell_chain` VALUES ('980', '0', '980', '1', '0');
-INSERT INTO `spell_chain` VALUES ('603', '0', '603', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1490', '0', '1490', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1714', '0', '1714', '1', '0');
-INSERT INTO `spell_chain` VALUES ('702', '0', '702', '1', '0');
-INSERT INTO `spell_chain` VALUES ('6789', '0', '6789', '1', '0');
-INSERT INTO `spell_chain` VALUES ('689', '0', '689', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1120', '0', '1120', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5782', '0', '5782', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5484', '0', '5484', '1', '0');
-INSERT INTO `spell_chain` VALUES ('27243', '0', '27243', '1', '0');
-INSERT INTO `spell_chain` VALUES ('30108', '0', '30108', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8184', '0', '8184', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8227', '0', '8227', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8024', '0', '8024', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8033', '0', '8033', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1454', '0', '1454', '1', '0');
-INSERT INTO `spell_chain` VALUES ('324', '0', '324', '1', '0');
-INSERT INTO `spell_chain` VALUES ('26364', '0', '26364', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8017', '0', '8017', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8071', '0', '8071', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8075', '0', '8075', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8232', '0', '8232', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2008', '0', '2008', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1064', '0', '1064', '1', '0');
-INSERT INTO `spell_chain` VALUES ('974', '0', '974', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5394', '0', '5394', '1', '0');
-INSERT INTO `spell_chain` VALUES ('331', '0', '331', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8004', '0', '8004', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5675', '0', '5675', '1', '0');
-INSERT INTO `spell_chain` VALUES ('421', '0', '421', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8042', '0', '8042', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1535', '0', '1535', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8050', '0', '8050', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8056', '0', '8056', '1', '0');
-INSERT INTO `spell_chain` VALUES ('403', '0', '403', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8190', '0', '8190', '1', '0');
-INSERT INTO `spell_chain` VALUES ('370', '0', '370', '1', '0');
-INSERT INTO `spell_chain` VALUES ('3599', '0', '3599', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5730', '0', '5730', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5185', '0', '5185', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1126', '0', '1126', '1', '0');
-INSERT INTO `spell_chain` VALUES ('20484', '0', '20484', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8936', '0', '8936', '1', '0');
-INSERT INTO `spell_chain` VALUES ('774', '0', '774', '1', '0');
-INSERT INTO `spell_chain` VALUES ('740', '0', '740', '1', '0');
-INSERT INTO `spell_chain` VALUES ('339', '0', '339', '1', '0');
-INSERT INTO `spell_chain` VALUES ('16689', '0', '16689', '1', '339');
-INSERT INTO `spell_chain` VALUES ('2637', '0', '2637', '1', '0');
-INSERT INTO `spell_chain` VALUES ('16914', '0', '16914', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5570', '0', '5570', '1', '0');
-INSERT INTO `spell_chain` VALUES ('8921', '0', '8921', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2908', '0', '2908', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2912', '0', '2912', '1', '0');
-INSERT INTO `spell_chain` VALUES ('467', '0', '467', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5176', '0', '5176', '1', '0');
-INSERT INTO `spell_chain` VALUES ('1949', '0', '1949', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5857', '0', '5857', '1', '0');
-INSERT INTO `spell_chain` VALUES ('348', '0', '348', '1', '0');
-INSERT INTO `spell_chain` VALUES ('29722', '0', '29722', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5740', '0', '5740', '1', '0');
-INSERT INTO `spell_chain` VALUES ('5676', '0', '5676', '1', '0');
-INSERT INTO `spell_chain` VALUES ('686', '0', '686', '1', '0');
-INSERT INTO `spell_chain` VALUES ('17877', '0', '17877', '1', '0');
-INSERT INTO `spell_chain` VALUES ('6353', '0', '6353', '1', '0');
-INSERT INTO `spell_chain` VALUES ('26573', '0', '26573', '1', '0');
-INSERT INTO `spell_chain` VALUES ('20116', '26573', '26573', '2', '0');
-INSERT INTO `spell_chain` VALUES ('879', '0', '879', '1', '0');
-INSERT INTO `spell_chain` VALUES ('19750', '0', '19750', '1', '0');
-INSERT INTO `spell_chain` VALUES ('635', '0', '635', '1', '0');
-INSERT INTO `spell_chain` VALUES ('20473', '0', '20473', '1', '0');
-INSERT INTO `spell_chain` VALUES ('25912', '0', '25912', '1', '0');
-INSERT INTO `spell_chain` VALUES ('25914', '0', '25914', '1', '0');
-INSERT INTO `spell_chain` VALUES ('2812', '0', '2812', '1', '0');
-INSERT INTO `spell_chain` VALUES ('7328', '0', '7328', '1', '0');
-INSERT INTO `spell_chain` VALUES ('527', '0', '527', '1', '0');
-INSERT INTO `spell_chain` VALUES ('588', '0', '588', '1', '0');
-INSERT INTO `spell_chain` VALUES ('17', '0', '17', '1', '0');
-INSERT INTO `spell_chain` VALUES ('21562', '0', '21562', '1', '0');
-INSERT INTO `spell_chain` VALUES ('9484', '0', '9484', '1', '0');
-INSERT INTO `spell_chain` VALUES ('13819', '0', '13819', '1', '0');
-INSERT INTO `spell_chain` VALUES ('23214', '13819', '13819', '2', '33391');
 
 -- ----------------------------
 -- Table structure for `spell_check`
@@ -18673,7 +18469,6 @@ CREATE TABLE `spell_learn_spell` (
 -- ----------------------------
 -- Records of spell_learn_spell
 -- ----------------------------
-INSERT INTO `spell_learn_spell` VALUES ('20271', '21084', '1');
 INSERT INTO `spell_learn_spell` VALUES ('5784', '33388', '1');
 INSERT INTO `spell_learn_spell` VALUES ('13819', '33388', '1');
 INSERT INTO `spell_learn_spell` VALUES ('17002', '24867', '0');
@@ -18789,7 +18584,6 @@ INSERT INTO `spell_proc_event` VALUES ('9784', '127', '0', '0', '0', '0', '0', '
 INSERT INTO `spell_proc_event` VALUES ('9799', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('11095', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('11119', '4', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
-INSERT INTO `spell_proc_event` VALUES ('11129', '4', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('11180', '16', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('11185', '0', '3', '128', '128', '128', '0', '0', '0', '0', '0', '0', '327680', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('11255', '0', '3', '16384', '16384', '16384', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
@@ -18801,7 +18595,6 @@ INSERT INTO `spell_proc_event` VALUES ('12317', '127', '0', '0', '0', '0', '0', 
 INSERT INTO `spell_proc_event` VALUES ('12319', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('12322', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('12834', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
-INSERT INTO `spell_proc_event` VALUES ('13165', '0', '9', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('13754', '0', '8', '16', '16', '16', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('13983', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '24', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('14156', '0', '8', '4063232', '4063232', '4063232', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
@@ -18827,13 +18620,11 @@ INSERT INTO `spell_proc_event` VALUES ('16880', '127', '0', '0', '0', '0', '0', 
 INSERT INTO `spell_proc_event` VALUES ('16952', '0', '7', '233472', '233472', '233472', '1024', '1024', '1024', '262144', '262144', '262144', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('16958', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('17106', '0', '7', '524288', '524288', '524288', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `spell_proc_event` VALUES ('17364', '8', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('17495', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '64', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('17767', '0', '5', '33554432', '0', '0', '0', '0', '0', '0', '0', '0', '524288', '262144', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('17793', '0', '5', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('17941', '0', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '65536', '524288', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('18094', '0', '5', '10', '10', '10', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-INSERT INTO `spell_proc_event` VALUES ('18119', '0', '5', '0', '0', '0', '8388608', '8388608', '8388608', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('18820', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '65536', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('19184', '0', '9', '16', '16', '16', '8192', '8192', '8192', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('19572', '0', '9', '8388608', '8388608', '8388608', '0', '0', '0', '0', '0', '0', '16384', '0', '0', '0', '0');
@@ -18844,11 +18635,9 @@ INSERT INTO `spell_proc_event` VALUES ('20132', '127', '0', '0', '0', '0', '0', 
 INSERT INTO `spell_proc_event` VALUES ('20154', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('20164', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '5', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('20165', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '20', '0', '0');
-INSERT INTO `spell_proc_event` VALUES ('20234', '0', '10', '32768', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('20705', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('20784', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('20911', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '112', '0', '0', '0');
-INSERT INTO `spell_proc_event` VALUES ('20925', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '64', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('21185', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '10');
 INSERT INTO `spell_proc_event` VALUES ('21882', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('21890', '0', '4', '712396527', '712396527', '712396527', '876', '876', '876', '0', '0', '0', '0', '0', '0', '0', '0');
@@ -18874,7 +18663,6 @@ INSERT INTO `spell_proc_event` VALUES ('24353', '127', '0', '0', '0', '0', '0', 
 INSERT INTO `spell_proc_event` VALUES ('24389', '0', '3', '12582935', '12582935', '12582935', '64', '64', '64', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('24658', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '82192', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('24905', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '15', '0', '0');
-INSERT INTO `spell_proc_event` VALUES ('24932', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '6');
 INSERT INTO `spell_proc_event` VALUES ('25050', '4', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('25669', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('26107', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '100', '0', '0', '0');
@@ -18928,7 +18716,6 @@ INSERT INTO `spell_proc_event` VALUES ('63086', '0', '9', '0', '0', '0', '0', '0
 INSERT INTO `spell_proc_event` VALUES ('63108', '0', '5', '2', '2', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('63156', '0', '5', '1', '1', '1', '192', '192', '192', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('63251', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '45');
-INSERT INTO `spell_proc_event` VALUES ('63280', '0', '11', '536870912', '536870912', '536870912', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('63320', '0', '5', '262144', '262144', '262144', '0', '0', '0', '32768', '32768', '32768', '16384', '1', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('63335', '0', '15', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('63373', '0', '11', '2147483648', '2147483648', '2147483648', '0', '0', '0', '0', '0', '0', '65536', '0', '0', '0', '0');
@@ -18950,7 +18737,6 @@ INSERT INTO `spell_proc_event` VALUES ('64964', '0', '15', '0', '0', '0', '53687
 INSERT INTO `spell_proc_event` VALUES ('64928', '0', '11', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('64976', '0', '4', '1', '1', '1', '0', '0', '0', '0', '0', '0', '65536', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('65661', '0', '15', '4194321', '4194321', '4194321', '537001988', '537001988', '537001988', '0', '0', '0', '16', '0', '0', '100', '0');
-INSERT INTO `spell_proc_event` VALUES ('64127', '0', '6', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('64914', '0', '8', '0', '0', '0', '524288', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('66808', '127', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4', '0', '0', '0', '0');
 INSERT INTO `spell_proc_event` VALUES ('67115', '0', '15', '20971520', '20971520', '20971520', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
