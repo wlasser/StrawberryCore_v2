@@ -1,0 +1,56 @@
+/* 
+Starwberry Scripts
+*/
+
+#define MAX_ENCOUNTER 5
+
+enum Data64
+{
+    DATA_ECHO_BAINE,
+    DATA_ECHO_JAINA,
+    DATA_ECHO_SYLVANAS,
+    DATA_ECHO_TYRANDE,
+    DATA_MUROZOND,
+};
+
+enum DATA
+{
+    DATA_ECHO_BAINE_EVENT,
+    DATA_ECHO_JAINA_EVENT,
+    DATA_ECHO_SYLVANAS_EVENT,
+    DATA_ECHO_TYRANDE_EVENT,
+    DATA_MUROZOND_EVENT,
+};
+
+enum CreatureIds
+{
+	// Creatures
+	BOSS_BAINE			= 54431,
+	BOSS_JAINA			= 54445,
+	BOSS_SYLVANAS		= 54123,
+	BOSS_TYRANDE		= 54544,
+	BOSS_MUROZOND		= 54432,
+};
+
+class MANGOS_DLL_DECL instance_end_time : public ScriptedInstance
+{
+    public:
+        instance_end_time(Map* pMap);
+        ~instance_end_time() {}
+
+        void Initialize();
+        void Load(const char* chrIn);
+        const char* Save() { return m_chrInStr.c_str(); }
+        void OnCreatureCreate(Creature * creature);
+        void OnCreatureEnterCombat(Creature * creature);
+        void OnCreatureEvade(Creature * creature);
+        void OnCreatureDeath(Creature * creature);
+        uint64 GetData64(uint32 uiType);
+        void SetData64(uint32 uiType, uint64 uiValue);
+        uint32 GetData(uint32 uiType);
+        void SetData(uint32 uiType, uint32 uiValue);
+
+    private:
+        std::string m_chrInStr;
+        uint32 m_uiEncounter[MAX_ENCOUNTER];
+};
