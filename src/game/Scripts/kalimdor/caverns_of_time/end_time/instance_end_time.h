@@ -2,6 +2,9 @@
 Starwberry Scripts
 */
 
+#ifndef DEF_ENDTIME_H
+#define DEF_ENDTIME_H
+
 #define MAX_ENCOUNTER 5
 
 enum Data64
@@ -45,8 +48,6 @@ class instance_end_time : public ScriptedInstance
         void OnCreatureEnterCombat(Creature * creature);
         void OnCreatureEvade(Creature * creature);
         void OnCreatureDeath(Creature * creature);
-        uint64 GetData64(uint32 uiType);
-        void SetData64(uint32 uiType, uint64 uiValue);
         uint32 GetData(uint32 uiType);
         void SetData(uint32 uiType, uint32 uiValue);
 
@@ -54,3 +55,5 @@ class instance_end_time : public ScriptedInstance
         std::string m_chrInStr;
         uint32 m_uiEncounter[MAX_ENCOUNTER];
 };
+
+#endif

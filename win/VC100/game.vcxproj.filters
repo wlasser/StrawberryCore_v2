@@ -2362,6 +2362,9 @@
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\vortex_pinnacle\instance_vortex_pinnacle.cpp">
       <Filter>Scripts\kalimdor\vortex_pinnacle</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -3064,6 +3067,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\Scripts\outland\tempest_keep\the_mechanar\mechanar.h">
       <Filter>scripts\outland\tempest_keep\the_mechanar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.h">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
