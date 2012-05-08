@@ -3,12 +3,12 @@ Starwberry Scripts
 */
 
 // Includes
-#include instance_end_time.h
-#include "precompiled.h"
+#include "instance_end_time.h"
+#include "pchdef.h"
 
 // UPDATE `creature_template` SET ScriptName='npc_boss_echo_jaina' WHERE `entry`=54445;
 
-struct MANGOS_DLL_DECL boss_echo_jainaAI : public ScriptedAI
+struct boss_echo_jainaAI : public ScriptedAI
 {
 	boss_echo_jainaAI(Creature* pCreature) : ScriptedAI(pCreature)
 	{
@@ -35,7 +35,6 @@ struct MANGOS_DLL_DECL boss_echo_jainaAI : public ScriptedAI
 	void KilledUnit(Unit* pVictim)
 	{
 		m_creature->MonsterYell("I didn't want to do that.", LANG_UNIVERSAL, NULL);
-		DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10789);
 	}
 
 	void JustDied(Unit* pKiller)

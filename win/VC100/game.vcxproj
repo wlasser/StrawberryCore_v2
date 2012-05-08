@@ -587,7 +587,6 @@
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\bloodmyst_isle.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\boss_azuregos.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dragon_soul\instance_dragon_soul.cpp" />
-    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\well_of_eternity\instance_well_of_eternity.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\darkshore.cpp" />

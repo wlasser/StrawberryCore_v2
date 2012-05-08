@@ -2341,9 +2341,6 @@
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dragon_soul\instance_dragon_soul.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\dragon_soul</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp">
-      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\hour_of_twilight</Filter>
     </ClCompile>

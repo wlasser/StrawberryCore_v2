@@ -1,10 +1,13 @@
-// Script Generated: 5/1/2012 9:15:08 PM
-// Run this query on your world database
+/* 
+Starwberry Scripts
+*/
+
+#include "instance_end_time.h"
+#include "pchdef.h"
+
 // UPDATE `creature_template` SET ScriptName='npc_boss_echo_tyrande' WHERE `entry`=54544;
-#include "precompiled.h"
 
-
-struct MANGOS_DLL_DECL boss_echo_tyrandeAI : public ScriptedAI
+struct boss_echo_tyrandeAI : public ScriptedAI
 {
 	boss_echo_tyrandeAI(Creature* pCreature) : ScriptedAI(pCreature)
 	{

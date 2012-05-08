@@ -3,12 +3,12 @@ Starwberry Scripts
 */
 
 // Includes
-#include instance_end_time.h
-#include "precompiled.h"
+#include "instance_end_time.h"
+#include "pchdef.h"
 
 // UPDATE `creature_template` SET ScriptName='npc_boss_echo_sylvanas' WHERE `entry`=54123;
 
-struct MANGOS_DLL_DECL boss_echo_sylvanasAI : public ScriptedAI
+struct boss_echo_sylvanasAI : public ScriptedAI
 {
 	boss_echo_sylvanasAI(Creature* pCreature) : ScriptedAI(pCreature)
 	{

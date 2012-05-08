@@ -3,25 +3,12 @@ Starwberry Scripts
 */
 
 // Includes
-#include instance_end_time.h
-#include "precompiled.h"
-
-enum
-{
-	// Spells of Baine and Player
-	SPELL_MOLTEN_BLAST	= 101840 // Molten Blast
-	SPELL_PULVERIZE		= 101627 // Pulverize
-	SPELL_MAGMA			= 101619 // Magma IF Player stood in Lava
-	SPELL_MOLTEN_FISTS	= 101866 // Molten Fists IF Player stood in Lava
-	SPELL_THROW_TOTEM	= 101614 // Throw Totem
-	SPELL_BAINES_TOTEM	= 101594 // Baine's Totem
-	SPELL_PLAYER_TOTEM	= 101602 // Player's Throw Totem
-	SPELL_MOLTEN_AXE	= 101836 // Boss Buff IF stood in Lava
-};
+#include "instance_end_time.h"
+#include "pchdef.h"
 
 // UPDATE `creature_template` SET ScriptName='npc_boss_echo_baine' WHERE `entry`=54431;
 
-struct MANGOS_DLL_DECL boss_echo_baineAI : public ScriptedAI
+struct boss_echo_baineAI : public ScriptedAI
 {
 	boss_echo_baineAI(Creature* pCreature) : ScriptedAI(pCreature)
 	{
@@ -43,14 +30,13 @@ struct MANGOS_DLL_DECL boss_echo_baineAI : public ScriptedAI
 
 	void KilledUnit(Unit* pVictim)
 	{
+		DoScriptText(SAY_DEATH, m_creature);
 		m_creature->MonsterYell("This is the price you pay!", LANG_UNIVERSAL, NULL);
-		DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10162);
 	}
 
 	void JustDied(Unit* pKiller)
 	{
 		m_creature->MonsterYell("Where... is this place? What... have I done? Forgive me, my father...", LANG_UNIVERSAL, NULL);
-		DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10184);
 	}
 
 	void Reset()

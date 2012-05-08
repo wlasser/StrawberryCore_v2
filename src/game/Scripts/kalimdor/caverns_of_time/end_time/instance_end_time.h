@@ -32,7 +32,7 @@ enum CreatureIds
 	BOSS_MUROZOND		= 54432,
 };
 
-class MANGOS_DLL_DECL instance_end_time : public ScriptedInstance
+class instance_end_time : public ScriptedInstance
 {
     public:
         instance_end_time(Map* pMap);

@@ -1,9 +1,9 @@
-/****
+/* 
+Starwberry Scripts
+*/
 
-
-**/
 #include "instance_end_time.h"
-#include "precompiled.h"
+#include "pchdef.h"
 
 instance_end_time::instance_end_time(Map *pMap) : ScriptedInstance(pMap)
 {
@@ -56,11 +56,11 @@ void instance_end_time::SetData64(uint32 uiType, uint64 uiValue)
 {
     switch(uiType)
     {
-        case DATA_ECHO_BAINE:       m_mNpcEntryGuidStore[BOSS_BAINE] = uiValue; break;
-        case DATA_ECHO_JAINA:       m_mNpcEntryGuidStore[BOSS_JAINA] = uiValue; break;
-        case DATA_ECHO_SYLVANAS:    m_mNpcEntryGuidStore[BOSS_SYLVANAS] = uiValue; break;
-        case DATA_ECHO_TYRANDE:     m_mNpcEntryGuidStore[BOSS_TYRANDE] = uiValue; break;
-        case DATA_MUROZOND:         m_mNpcEntryGuidStore[BOSS_MUROZOND] = uiValue; break;
+        case DATA_ECHO_BAINE:       m_mNpcEntryGuidStore[BOSS_BAINE] == uiValue; break;
+        case DATA_ECHO_JAINA:       m_mNpcEntryGuidStore[BOSS_JAINA] == uiValue; break;
+        case DATA_ECHO_SYLVANAS:    m_mNpcEntryGuidStore[BOSS_SYLVANAS] == uiValue; break;
+        case DATA_ECHO_TYRANDE:     m_mNpcEntryGuidStore[BOSS_TYRANDE] == uiValue; break;
+        case DATA_MUROZOND:         m_mNpcEntryGuidStore[BOSS_MUROZOND] == uiValue; break;
     }
 }
 
