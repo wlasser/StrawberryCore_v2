@@ -1,6 +1,6 @@
-/* 
-Starwberry Scripts
-*/
+/* Copyright (C) 2010 - 2012 Strawberry Scripts <http://www.strawberry-pr0jcts.com/>
+ * This program is free software licensed under GPL version 2
+ * Please see the included DOCS/LICENSE.TXT for more information */
 
 #ifndef DEF_ENDTIME_H
 #define DEF_ENDTIME_H

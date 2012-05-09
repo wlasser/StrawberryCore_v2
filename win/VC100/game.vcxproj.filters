@@ -2365,6 +2365,18 @@
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_jaina.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_sylvanas.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_tyrande.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_baine.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">

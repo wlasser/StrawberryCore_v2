@@ -1,6 +1,18 @@
-/* 
-Starwberry Scripts
-*/
+/* Copyright (C) 2010 - 2012 Strawberry Scripts <http://www.strawberry-pr0jcts.com/>
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #include "instance_end_time.h"
 #include "pchdef.h"
@@ -25,6 +37,8 @@ struct boss_echo_tyrandeAI : public ScriptedAI
 
 	void Aggro(Unit* pWho)
 	{
+		m_creature->MonsterYell("Let the peaceful light of Elune soothe your souls in this dark time.", LANG_UNIVERSAL, NULL);
+		DoCastSpellIfCan(m_creature->getVictim(), 10789);
 	}
 
 	void KilledUnit(Unit* pVictim)
@@ -35,6 +49,8 @@ struct boss_echo_tyrandeAI : public ScriptedAI
 
 	void JustDied(Unit* pKiller)
 	{
+		m_creature->MonsterYell("I can...see the light of the moon...so clearly now. It is...beautiful...", LANG_UNIVERSAL, NULL);
+		DoCastSpellIfCan(m_creature->getVictim(), 10789);
 	}
 
 	void Reset()
@@ -71,25 +87,25 @@ struct boss_echo_tyrandeAI : public ScriptedAI
 
 			if (spell1_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10219);
+				DoCastSpellIfCan((m_creature->getVictim(), 0), 10219);
 				spell1_phase1_Timer = 1000+rand()%9000;
 			} else spell1_phase1_Timer -= diff;
 
 			if (spell2_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10241);
+				DoCastSpellIfCan((m_creature->getVictim(), 0), 10241);
 				spell2_phase1_Timer = 1000+rand()%29000;
 			} else spell2_phase1_Timer -= diff;
 
 			if (spell3_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10217);
+				DoCastSpellIfCan((m_creature->getVictim(), 0), 10217);
 				spell3_phase1_Timer = 1000+rand()%19000;
 			} else spell3_phase1_Timer -= diff;
 
 			if (spell4_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10214);
+				DoCastSpellIfCan((m_creature->getVictim(), 0), 10214);
 				spell4_phase1_Timer = 1000+rand()%49000;
 			} else spell4_phase1_Timer -= diff;
 

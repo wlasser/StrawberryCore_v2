@@ -548,6 +548,10 @@
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\bloodmyst_isle.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\boss_azuregos.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dragon_soul\instance_dragon_soul.cpp" />
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_baine.cpp" />
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_jaina.cpp" />
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_sylvanas.cpp" />
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_tyrande.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.cpp" />
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\well_of_eternity\instance_well_of_eternity.cpp" />
@@ -1050,6 +1054,7 @@
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\blackfathom_deeps\blackfathom_deeps.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\culling_of_stratholme\culling_of_stratholme.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dark_portal\dark_portal.h" />
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjal.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjalAI.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\old_hillsbrad\old_hillsbrad.h" />

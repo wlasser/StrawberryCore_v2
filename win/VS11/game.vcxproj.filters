@@ -331,7 +331,7 @@
     <Filter Include="Scripts\northrend\ruby_sanctum">
       <UniqueIdentifier>{e35abead-2389-4eb9-88bd-70e6fe5636b5}</UniqueIdentifier>
     </Filter>
-	<Filter Include="Scripts\battlegrounds\baradin_hold">
+    <Filter Include="Scripts\battlegrounds\baradin_hold">
       <UniqueIdentifier>{01712db3-d3e7-4c06-90c8-3932f6ecb9ee}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scripts\eastern_kingdoms\bastion_of_twilight">
@@ -2320,7 +2320,7 @@
     <ClCompile Include="..\..\src\game\Scripts\battlegrounds\battleground_script.cpp">
       <Filter>Scripts\battlegrounds</Filter>
     </ClCompile>
-	<ClCompile Include="..\..\src\game\Scripts\battlegrounds\baradin_hold\instance_baradin_hold.cpp">
+    <ClCompile Include="..\..\src\game\Scripts\battlegrounds\baradin_hold\instance_baradin_hold.cpp">
       <Filter>Scripts\battlegrounds\baradin_hold</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\eastern_kingdoms\bastion_of_twilight\instance_bastion_of_twilight.cpp">
@@ -2364,6 +2364,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\vortex_pinnacle\instance_vortex_pinnacle.cpp">
       <Filter>Scripts\kalimdor\vortex_pinnacle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_baine.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_jaina.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_sylvanas.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_tyrande.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3067,6 +3079,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\Scripts\outland\tempest_keep\the_mechanar\mechanar.h">
       <Filter>scripts\outland\tempest_keep\the_mechanar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.h">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

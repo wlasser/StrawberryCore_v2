@@ -1,6 +1,25 @@
-/* 
-Starwberry Scripts
-*/
+/* Copyright (C) 2010 - 2012 Strawberry Scripts <http://www.strawberry-pr0jcts.com/>
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/* ScriptData
+SDName: Boss_Echo_Baine
+SD%Complete: 20
+SDComment: Some timers are not correct. Alpha Script.
+SDCategory: Caverns of Time, End Time
+EndScriptData */
 
 // Includes
 #include "instance_end_time.h"
@@ -10,10 +29,11 @@ Starwberry Scripts
 
 struct boss_echo_baineAI : public ScriptedAI
 {
-	boss_echo_baineAI(Creature* pCreature) : ScriptedAI(pCreature)
+    boss_echo_baineAI(Creature* pCreature) : ScriptedAI(pCreature)
 	{
-		Reset();
-	}
+        enraged = pCreature->GetMap()->IsRegularDifficulty();
+        Reset();
+    }
 
 	uint32 spell1_phase1_Timer;
 	uint32 phase1_Percent;
@@ -30,13 +50,14 @@ struct boss_echo_baineAI : public ScriptedAI
 
 	void KilledUnit(Unit* pVictim)
 	{
-		DoScriptText(SAY_DEATH, m_creature);
 		m_creature->MonsterYell("This is the price you pay!", LANG_UNIVERSAL, NULL);
+		DoCastSpellIfCan((m_creature->getVictim(), 0), 10162);
 	}
 
 	void JustDied(Unit* pKiller)
 	{
 		m_creature->MonsterYell("Where... is this place? What... have I done? Forgive me, my father...", LANG_UNIVERSAL, NULL);
+		DoCastSpellIfCan((m_creature->getVictim(), 0), 10184);
 	}
 
 	void Reset()
@@ -103,7 +124,7 @@ struct boss_echo_baineAI : public ScriptedAI
 
 			if (spell1_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan(SelectUnit(SELECT_TARGET_RANDOM, 0), 10162);
+				DoCastSpellIfCan((m_creature->getVictim(), 0), 10162);
 				spell1_phase1_Timer = 0+rand()%30000;
 			} else spell1_phase1_Timer -= diff;
 		}
