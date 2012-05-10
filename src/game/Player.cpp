@@ -19506,8 +19506,6 @@ void Player::AddSpellAndCategoryCooldowns(SpellEntry const* spellInfo, uint32 it
 
     // some special item spells without correct cooldown in SpellInfo
     // cooldown information stored in item prototype
-    // This used in same way in WorldSession::HandleItemQuerySingleOpcode data sending to client.
-
     if (itemId)
     {
         if (ItemPrototype const* proto = ObjectMgr::GetItemPrototype(itemId))
