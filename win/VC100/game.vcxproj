@@ -1097,6 +1097,7 @@
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjal.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjalAI.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\old_hillsbrad\old_hillsbrad.h" />
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\well_of_eternity\instance_well_of_eternity.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\dire_maul\dire_maul.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\onyxias_lair\onyxias_lair.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\razorfen_kraul\razorfen_kraul.h" />
@@ -1254,6 +1255,7 @@
     <ClInclude Include="..\..\src\game\WardenModuleMac.h" />
     <ClInclude Include="..\..\src\game\WardenModuleWin.h" />
     <ClInclude Include="..\..\src\game\WardenWin.h" />
+    <ClInclude Include="instance_hour_of_twilight.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dep\recastnavigation\Detour\win\VC100\Detour.vcxproj">

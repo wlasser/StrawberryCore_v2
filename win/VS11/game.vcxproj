@@ -1055,9 +1055,11 @@
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\culling_of_stratholme\culling_of_stratholme.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dark_portal\dark_portal.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.h" />
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjal.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjalAI.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\old_hillsbrad\old_hillsbrad.h" />
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\well_of_eternity\instance_well_of_eternity.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\dire_maul\dire_maul.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\onyxias_lair\onyxias_lair.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\razorfen_kraul\razorfen_kraul.h" />
