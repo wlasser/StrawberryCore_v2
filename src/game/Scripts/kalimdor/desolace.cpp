@@ -28,7 +28,7 @@ npc_melizza_brimbuzzle
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_aged_dying_ancient_kodo

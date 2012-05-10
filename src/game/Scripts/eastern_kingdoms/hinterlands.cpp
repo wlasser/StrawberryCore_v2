@@ -27,7 +27,7 @@ npc_rinji
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
  /*######
 ## npc_00x09hl

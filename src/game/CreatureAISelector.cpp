@@ -23,7 +23,6 @@
 #include "NullCreatureAI.h"
 #include "Policies/SingletonImp.h"
 #include "MovementGenerator.h"
-#include "EventScripts.h"
 #include "Pet.h"
 
 INSTANTIATE_SINGLETON_1(CreatureAIRegistry);

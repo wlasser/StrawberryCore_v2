@@ -33,7 +33,7 @@ EndContentData */
 
 #include "pchdef.h"
 #include "blackrock_depths.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## go_shadowforge_brazier

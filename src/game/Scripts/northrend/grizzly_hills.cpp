@@ -26,7 +26,7 @@ npc_depleted_war_golem
 EndContentData */
 
 #include "pchdef.h"
-#include "pet_ai.h"
+#include "../../ScriptBase/AI/pet_ai.h"
 
 /*######
 ## npc_depleted_war_golem

@@ -27,7 +27,7 @@ EndContentData */
 
 #include "pchdef.h"
 #include "zulaman.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_forest_frog

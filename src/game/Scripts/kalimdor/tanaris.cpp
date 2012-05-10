@@ -31,8 +31,8 @@ npc_tooga
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
-#include "follower_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
+#include "../../ScriptBase/AI/follower_ai.h"
 
 /*######
 ## mob_aquementas

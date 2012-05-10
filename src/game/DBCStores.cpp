@@ -393,7 +393,7 @@ void LoadDBCStores(const std::string& dataPath)
         if (build)
             sLog.outError("Found DBC files for build %u but StrawberryWorld expected DBC for one from builds: %s Please extract correct DBC files.", build, AcceptableClientBuildsListStr().c_str());
         else
-            sLog.outError("Incorrect DataDir value in StrawberryWorld.conf or not found build info (outdated DBC files). Required one from builds: %s Please extract correct DBC files.",AcceptableClientBuildsListStr().c_str());
+            sLog.outError("Incorrect DataDir value in strawberryworld.conf or not found build info (outdated DBC files). Required one from builds: %s Please extract correct DBC files.",AcceptableClientBuildsListStr().c_str());
         Log::WaitBeforeContinueIfNeed();
         exit(1);
     }
@@ -725,7 +725,7 @@ void LoadDBCStores(const std::string& dataPath)
     // error checks
     if (bad_dbc_files.size() >= DBCFilesCount )
     {
-        sLog.outError("\nIncorrect DataDir value in StrawberryWorld.conf or ALL required *.dbc files (%d) not found by path: %sdbc",DBCFilesCount,dataPath.c_str());
+        sLog.outError("\nIncorrect DataDir value in strawberryworld.conf or ALL required *.dbc files (%d) not found by path: %sdbc",DBCFilesCount,dataPath.c_str());
         Log::WaitBeforeContinueIfNeed();
         exit(1);
     }

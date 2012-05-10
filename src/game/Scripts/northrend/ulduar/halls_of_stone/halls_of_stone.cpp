@@ -23,7 +23,7 @@ EndScriptData */
 
 #include "pchdef.h"
 #include "halls_of_stone.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /* Notes
  * The timers and handling of texts is not confirmed, but should also not be too far off

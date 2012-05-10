@@ -728,7 +728,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
                 data << mi->fallTime;
             break;
         default:
-            WPError(false, "Incorrect sequence element detected at ReadMovementInfo");
+            WPError(false);
         }
     }
 }

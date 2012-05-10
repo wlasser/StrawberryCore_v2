@@ -51,13 +51,13 @@ struct boss_echo_baineAI : public ScriptedAI
 	void KilledUnit(Unit* pVictim)
 	{
 		m_creature->MonsterYell("This is the price you pay!", LANG_UNIVERSAL, NULL);
-		DoCastSpellIfCan((m_creature->getVictim(), 0), 10162);
+		DoCastSpellIfCan((m_creature->getVictim()), 10162);
 	}
 
 	void JustDied(Unit* pKiller)
 	{
 		m_creature->MonsterYell("Where... is this place? What... have I done? Forgive me, my father...", LANG_UNIVERSAL, NULL);
-		DoCastSpellIfCan((m_creature->getVictim(), 0), 10184);
+		DoCastSpellIfCan((m_creature->getVictim()), 10184);
 	}
 
 	void Reset()
@@ -124,7 +124,7 @@ struct boss_echo_baineAI : public ScriptedAI
 
 			if (spell1_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10162);
+				DoCastSpellIfCan((m_creature->getVictim()), 10162);
 				spell1_phase1_Timer = 0+rand()%30000;
 			} else spell1_phase1_Timer -= diff;
 		}

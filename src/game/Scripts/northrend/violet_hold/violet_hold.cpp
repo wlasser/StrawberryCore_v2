@@ -30,7 +30,7 @@ EndContentData */
 
 #include "pchdef.h"
 #include "violet_hold.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## go_activation_crystal

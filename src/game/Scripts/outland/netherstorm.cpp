@@ -31,8 +31,8 @@ npc_maxx_a_million
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
-#include "pet_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
+#include "../../ScriptBase/AI/pet_ai.h"
 
 /*######
 ## npc_manaforge_control_console

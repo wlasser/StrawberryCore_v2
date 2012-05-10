@@ -25,7 +25,7 @@ EndScriptData */
 npc_corporal_keeshan */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_corporal_leehsan

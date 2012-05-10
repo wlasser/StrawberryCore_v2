@@ -39,7 +39,6 @@ alter table creature_movement add `wpguid` int(11) default '0';
 #include "CreatureAI.h"
 #include "WaypointManager.h"
 #include "WorldPacket.h"
-#include "EventScripts.h"
 #include "movement/MoveSplineInit.h"
 #include "movement/MoveSpline.h"
 

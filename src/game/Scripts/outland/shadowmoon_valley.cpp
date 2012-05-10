@@ -36,8 +36,8 @@ go_crystal_prison
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
-#include "pet_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
+#include "../../ScriptBase/AI/pet_ai.h"
 
 /*#####
 # mob_mature_netherwing_drake

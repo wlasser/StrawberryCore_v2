@@ -36,7 +36,6 @@
 #include "ObjectAccessor.h"
 #include "MapManager.h"
 #include "MassMailMgr.h"
-#include "EventScripts.h"
 #include "Language.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"

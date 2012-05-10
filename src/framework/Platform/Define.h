@@ -52,9 +52,19 @@ typedef ACE_SHLIB_HANDLE STRAWBERRY_LIBRARY_HANDLE;
 #define STRAWBERRY_PATH_MAX PATH_MAX                            // ace/os_include/os_limits.h -> ace/Basic_Types.h
 
 #if PLATFORM == PLATFORM_WINDOWS
+#  define STRAWBERRY_PATH_MAX MAX_PATH
+#  ifndef DECLSPEC_NORETURN
+#    define DECLSPEC_NORETURN __declspec(noreturn)
+#  endif //DECLSPEC_NORETURN
+#  ifndef DECLSPEC_DEPRECATED
+#    define DECLSPEC_DEPRECATED __declspec(deprecated)
+#  endif //DECLSPEC_DEPRECATED
 #  define STRAWBERRY_EXPORT __declspec(dllexport)
 #  define STRAWBERRY_IMPORT __cdecl
 #else //PLATFORM != PLATFORM_WINDOWS
+#  define STRAWBERRY_PATH_MAX PATH_MAX
+#  define DECLSPEC_NORETURN
+#  define DECLSPEC_DEPRECATED
 #  define STRAWBERRY_EXPORT export
 #  if defined(__APPLE_CC__) && defined(BIG_ENDIAN)
 #    define STRAWBERRY_IMPORT __attribute__ ((longcall))

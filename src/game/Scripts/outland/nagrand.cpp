@@ -30,7 +30,7 @@ npc_creditmarker_visit_with_ancestors
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## mob_lump

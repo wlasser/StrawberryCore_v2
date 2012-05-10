@@ -23,7 +23,7 @@ EndScriptData */
 
 #include "pchdef.h"
 #include "wailing_caverns.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 enum
 {

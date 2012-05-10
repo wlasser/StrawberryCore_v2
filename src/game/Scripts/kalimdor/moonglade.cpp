@@ -31,7 +31,7 @@ boss_eranikus
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 #include "ObjectMgr.h"
 
 /*######

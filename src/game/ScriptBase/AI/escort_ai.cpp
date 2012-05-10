@@ -11,7 +11,7 @@ EndScriptData */
 
 #include "pchdef.h"
 #include "escort_ai.h"
-#include "ScriptTexts.h"
+#include "../Texts/ScriptTexts.h"
 
 const float MAX_PLAYER_DISTANCE = 66.0f;
 
