@@ -322,7 +322,7 @@ void WorldSession::HandleLogoutCancelOpcode( WorldPacket & /*recv_data*/ )
 
     LogoutRequest(0);
 
-    WorldPacket data( SMSG_LOGOUT_CANCEL_ACK, 0 );
+    WorldPacket data( SMSG_LOGOUT_CANCEL, 0 );
     SendPacket( &data );
 
     // not remove flags if can't free move - its not set in Logout request code.
@@ -341,7 +341,7 @@ void WorldSession::HandleLogoutCancelOpcode( WorldPacket & /*recv_data*/ )
         GetPlayer()->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED);
     }
 
-    DEBUG_LOG( "WORLD: sent SMSG_LOGOUT_CANCEL_ACK Message" );
+    DEBUG_LOG( "WORLD: sent SMSG_LOGOUT_CANCEL Message" );
 }
 
 void WorldSession::HandleTogglePvP( WorldPacket & recv_data )
