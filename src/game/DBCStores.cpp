@@ -205,6 +205,9 @@ static uint32 sTalentTabPages[MAX_CLASSES][3];
 DBCStorage <TaxiNodesEntry> sTaxiNodesStore(TaxiNodesEntryfmt);
 TaxiMask sTaxiNodesMask;
 TaxiMask sOldContinentsNodesMask;
+TaxiMask sHordeTaxiNodesMask;
+TaxiMask sAllianceTaxiNodesMask;
+TaxiMask sDeathKnightTaxiNodesMask;
 
 // DBC used only for initialization sTaxiPathSetBySource at startup.
 TaxiPathSetBySource sTaxiPathSetBySource;
@@ -672,6 +675,9 @@ void LoadDBCStores(const std::string& dataPath)
 
         memset(sTaxiNodesMask,0,sizeof(sTaxiNodesMask));
         memset(sOldContinentsNodesMask,0,sizeof(sTaxiNodesMask));
+        memset(sHordeTaxiNodesMask, 0, sizeof(sHordeTaxiNodesMask));
+        memset(sAllianceTaxiNodesMask, 0, sizeof(sAllianceTaxiNodesMask));
+        memset(sDeathKnightTaxiNodesMask, 0, sizeof(sDeathKnightTaxiNodesMask));
         for(uint32 i = 1; i < sTaxiNodesStore.GetNumRows(); ++i)
         {
             TaxiNodesEntry const* node = sTaxiNodesStore.LookupEntry(i);
@@ -701,9 +707,21 @@ void LoadDBCStores(const std::string& dataPath)
             uint32 submask = 1<<((i-1)%32);
             sTaxiNodesMask[field] |= submask;
 
+            if (node->MountCreatureID[0] && node->MountCreatureID[0] != 32981)
+                sHordeTaxiNodesMask[field] |= submask;
+            if (node->MountCreatureID[1] && node->MountCreatureID[1] != 32981)
+                sAllianceTaxiNodesMask[field] |= submask;
+            if (node->MountCreatureID[0] == 32981 || node->MountCreatureID[1] == 32981)
+                sDeathKnightTaxiNodesMask[field] |= submask;
+
             // old continent node (+ nodes virtually at old continents, check explicitly to avoid loading map files for zone info)
             if (node->map_id < 2 || i == 82 || i == 83 || i == 93 || i == 94)
                 sOldContinentsNodesMask[field] |= submask;
+
+            // fix DK node at Ebon Hold
+            if (i == 315) {
+                ((TaxiNodesEntry*)node)->MountCreatureID[1] = 32981;
+			}
         }
     }
 
