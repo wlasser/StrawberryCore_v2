@@ -87,25 +87,25 @@ struct boss_echo_tyrandeAI : public ScriptedAI
 
 			if (spell1_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10219);
+				DoCastSpellIfCan((m_creature->getVictim()), 10219);
 				spell1_phase1_Timer = 1000+rand()%9000;
 			} else spell1_phase1_Timer -= diff;
 
 			if (spell2_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10241);
+				DoCastSpellIfCan((m_creature->getVictim()), 10241);
 				spell2_phase1_Timer = 1000+rand()%29000;
 			} else spell2_phase1_Timer -= diff;
 
 			if (spell3_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10217);
+				DoCastSpellIfCan((m_creature->getVictim()), 10217);
 				spell3_phase1_Timer = 1000+rand()%19000;
 			} else spell3_phase1_Timer -= diff;
 
 			if (spell4_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10214);
+				DoCastSpellIfCan((m_creature->getVictim()), 10214);
 				spell4_phase1_Timer = 1000+rand()%49000;
 			} else spell4_phase1_Timer -= diff;
 

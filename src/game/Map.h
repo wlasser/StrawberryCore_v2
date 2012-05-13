@@ -36,7 +36,7 @@
 #include "GameSystem/GridRefManager.h"
 #include "MapRefManager.h"
 #include "Utilities/TypeList.h"
-#include "EventScripts.h"
+#include "ScriptBase/Event/EventScripts.h"
 #include "CreatureLinkingMgr.h"
 
 #include <bitset>

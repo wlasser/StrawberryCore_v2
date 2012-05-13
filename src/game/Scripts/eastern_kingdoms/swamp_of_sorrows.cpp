@@ -26,7 +26,7 @@ npc_galen_goodward
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_galen_goodward

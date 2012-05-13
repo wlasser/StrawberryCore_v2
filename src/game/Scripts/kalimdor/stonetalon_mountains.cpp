@@ -22,7 +22,7 @@ SDCategory: Stonetalon Mountains
 EndScriptData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_braug_dimspirit

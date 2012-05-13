@@ -29,7 +29,7 @@ event_stormcrow
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npcs_ashyen_and_keleth

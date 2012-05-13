@@ -96,7 +96,7 @@ struct boss_echo_sylvanasAI : public ScriptedAI
 
 			if (spell3_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10140);
+				DoCastSpellIfCan((m_creature->getVictim()), 10140);
 				spell3_phase1_Timer = 1000+rand()%29000;
 			} else spell3_phase1_Timer -= diff;
 		}

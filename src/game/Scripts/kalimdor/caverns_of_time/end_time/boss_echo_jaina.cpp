@@ -109,19 +109,19 @@ struct boss_echo_jainaAI : public ScriptedAI
 
 			if (spell3_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10133);
+				DoCastSpellIfCan((m_creature->getVictim()), 10133);
 				spell3_phase1_Timer = 1000+rand()%30000;
 			} else spell3_phase1_Timer -= diff;
 
 			if (spell4_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10181);
+				DoCastSpellIfCan((m_creature->getVictim()), 10181);
 				spell4_phase1_Timer = 1000+rand()%31000;
 			} else spell4_phase1_Timer -= diff;
 
 			if (spell5_phase1_Timer <= diff)
 			{
-				DoCastSpellIfCan((m_creature->getVictim(), 0), 10192);
+				DoCastSpellIfCan((m_creature->getVictim()), 10192);
 				spell5_phase1_Timer = 1000+rand()%24000;
 			} else spell5_phase1_Timer -= diff;
 		}

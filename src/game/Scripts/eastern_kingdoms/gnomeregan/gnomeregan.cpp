@@ -27,7 +27,7 @@ EndContentData */
 
 #include "pchdef.h"
 #include "gnomeregan.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_blastmaster_emi_shortfuse

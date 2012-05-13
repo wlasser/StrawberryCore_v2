@@ -70,8 +70,8 @@
 # else
 #  define _ENDIAN_PLATFORM "Win32 (" _ENDIAN_STRING ")"
 # endif
-# define _STRAWBERRYWORLD_CONFIG  SYSCONFDIR "StrawberryWorld.conf"
-# define _STRAWBERRYREALM_CONFIG   SYSCONFDIR "StrawberryRealm.conf"
+# define _STRAWBERRYWORLD_CONFIG  SYSCONFDIR "strawberryworld.conf"
+# define _STRAWBERRYREALM_CONFIG   SYSCONFDIR "strawberryrealm.conf"
 # define _AUCTIONHOUSEBOT_CONFIG   SYSCONFDIR "AHBot.conf"
 #else
 # if defined  (__FreeBSD__)
@@ -89,8 +89,8 @@
 # else
 #  define _ENDIAN_PLATFORM "Unix_"ARCHITECTURE" (" _ENDIAN_STRING ")"
 # endif
-# define _STRAWBERRYWORLD_CONFIG  SYSCONFDIR "StrawberryWorld.conf"
-# define _STRAWBERRYREALM_CONFIG  SYSCONFDIR "StrawberryRealm.conf"
+# define _STRAWBERRYWORLD_CONFIG  SYSCONFDIR "strawberryworld.conf"
+# define _STRAWBERRYREALM_CONFIG  SYSCONFDIR "strawberryrealm.conf"
 # define _AUCTIONHOUSEBOT_CONFIG   SYSCONFDIR "AHBot.conf"
 #endif
 

@@ -30,7 +30,7 @@ go_acherus_soul_prison
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_a_special_surprise

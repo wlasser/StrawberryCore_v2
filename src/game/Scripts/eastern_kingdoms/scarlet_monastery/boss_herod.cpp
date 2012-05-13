@@ -22,7 +22,7 @@ SDCategory: Scarlet Monastery
 EndScriptData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 enum
 {

@@ -28,7 +28,7 @@ EndContentData */
 
 #include "pchdef.h"
 #include "karazhan.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /*######
 # npc_barnesAI

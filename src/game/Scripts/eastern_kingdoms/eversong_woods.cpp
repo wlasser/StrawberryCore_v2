@@ -30,7 +30,7 @@ npc_infused_crystal
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 #include "TemporarySummon.h"
 
 /*######

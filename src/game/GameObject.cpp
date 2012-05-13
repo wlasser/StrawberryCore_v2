@@ -38,7 +38,6 @@
 #include "BattleGround.h"
 #include "BattleGroundAV.h"
 #include "Util.h"
-#include "EventScripts.h"
 #include <G3D/Quat.h>
 
 GameObject::GameObject() : WorldObject(),

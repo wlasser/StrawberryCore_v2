@@ -23,7 +23,7 @@ EndScriptData */
 
 #include "pchdef.h"
 #include "old_hillsbrad.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## go_barrel_old_hillsbrad

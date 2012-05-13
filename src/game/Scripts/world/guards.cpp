@@ -45,7 +45,7 @@ guard_undercity
 EndContentData */
 
 #include "pchdef.h"
-#include "guard_ai.h"
+#include "../../ScriptBase/AI/guard_ai.h"
 
 CreatureAI* GetAI_guard_azuremyst(Creature* pCreature)
 {

@@ -39,8 +39,8 @@ npc_isla_starmane
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
-#include "pet_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
+#include "../../ScriptBase/AI/pet_ai.h"
 
 /*######
 ## mob_unkor_the_ruthless

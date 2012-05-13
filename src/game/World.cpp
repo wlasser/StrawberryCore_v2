@@ -47,7 +47,6 @@
 #include "LootMgr.h"
 #include "ItemEnchantmentMgr.h"
 #include "MapManager.h"
-#include "EventScripts.h"
 #include "CreatureAIRegistry.h"
 #include "Policies/SingletonImp.h"
 #include "BattleGroundMgr.h"
@@ -442,7 +441,7 @@ void World::LoadConfigSettings(bool reload)
     if (!confVersion)
     {
         sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: StrawberryWorld.conf does not include a ConfVersion variable.");
+        sLog.outError(" WARNING: strawberryworld.conf does not include a ConfVersion variable.");
         sLog.outError("          Your configuration file may be out of date!");
         sLog.outError("*****************************************************************************");
         Log::WaitBeforeContinueIfNeed();
@@ -452,7 +451,7 @@ void World::LoadConfigSettings(bool reload)
         if (confVersion < _STRAWBERRYWORLDCONFVERSION)
         {
             sLog.outError("*****************************************************************************");
-            sLog.outError(" WARNING: Your StrawberryWorld.conf version indicates your conf file is out of date!");
+            sLog.outError(" WARNING: Your strawberryworld.conf version indicates your conf file is out of date!");
             sLog.outError("          Please check for updates, as your current default values may cause");
             sLog.outError("          unexpected behavior.");
             sLog.outError("*****************************************************************************");
@@ -887,7 +886,7 @@ void World::LoadConfigSettings(bool reload)
     if (reload)
     {
         if (dataPath != m_dataPath)
-            sLog.outError("DataDir option can't be changed at StrawberryWorld.conf reload, using current value (%s).", m_dataPath.c_str());
+            sLog.outError("DataDir option can't be changed at strawberryworld.conf reload, using current value (%s).", m_dataPath.c_str());
     }
     else
     {
@@ -942,7 +941,7 @@ void World::SetInitialWorldSettings()
         (m_configUint32Values[CONFIG_UINT32_EXPANSION] &&
         (!MapManager::ExistMapAndVMap(530,10349.6f,-6357.29f) || !MapManager::ExistMapAndVMap(530,-3961.64f,-13931.2f))))
     {
-        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map and vmap files in appropriate directories or correct the DataDir value in the StrawberryWorld.conf file.",m_dataPath.c_str(),m_dataPath.c_str());
+        sLog.outError("Correct *.map files not found in path '%smaps' or *.vmtree/*.vmtile files in '%svmaps'. Please place *.map and vmap files in appropriate directories or correct the DataDir value in the strawberryworld.conf file.",m_dataPath.c_str(),m_dataPath.c_str());
         Log::WaitBeforeContinueIfNeed();
         //exit(1);
     }
@@ -2336,7 +2335,7 @@ bool World::configNoReload(bool reload, eConfigUInt32Values index, char const* f
 
     uint32 val = sConfig.GetIntDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at StrawberryWorld.conf reload, using current value (%u).", fieldname, getConfig(index));
+        sLog.outError("%s option can't be changed at strawberryworld.conf reload, using current value (%u).", fieldname, getConfig(index));
 
     return false;
 }
@@ -2348,7 +2347,7 @@ bool World::configNoReload(bool reload, eConfigInt32Values index, char const* fi
 
     int32 val = sConfig.GetIntDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at StrawberryWorld.conf reload, using current value (%i).", fieldname, getConfig(index));
+        sLog.outError("%s option can't be changed at strawberryworld.conf reload, using current value (%i).", fieldname, getConfig(index));
 
     return false;
 }
@@ -2360,7 +2359,7 @@ bool World::configNoReload(bool reload, eConfigFloatValues index, char const* fi
 
     float val = sConfig.GetFloatDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at StrawberryWorld.conf reload, using current value (%f).", fieldname, getConfig(index));
+        sLog.outError("%s option can't be changed at strawberryworld.conf reload, using current value (%f).", fieldname, getConfig(index));
 
     return false;
 }
@@ -2372,7 +2371,7 @@ bool World::configNoReload(bool reload, eConfigBoolValues index, char const* fie
 
     bool val = sConfig.GetBoolDefault(fieldname, defvalue);
     if (val != getConfig(index))
-        sLog.outError("%s option can't be changed at StrawberryWorld.conf reload, using current value (%s).", fieldname, getConfig(index) ? "'true'" : "'false'");
+        sLog.outError("%s option can't be changed at strawberryworld.conf reload, using current value (%s).", fieldname, getConfig(index) ? "'true'" : "'false'");
 
     return false;
 }

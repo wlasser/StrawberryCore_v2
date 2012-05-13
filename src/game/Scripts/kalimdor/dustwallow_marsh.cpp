@@ -33,7 +33,7 @@ npc_private_hendel
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## mobs_risen_husk_spirit

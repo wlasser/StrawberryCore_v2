@@ -29,7 +29,7 @@ npc_kroshius
 EndContentData */
 
 #include "pchdef.h"
-#include "follower_ai.h"
+#include "../../ScriptBase/AI/follower_ai.h"
 #include "ObjectMgr.h"
 
 /*####

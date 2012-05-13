@@ -26,7 +26,7 @@ quest_willix_the_importer
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../../ScriptBase/AI/escort_ai.h"
 
 enum
 {

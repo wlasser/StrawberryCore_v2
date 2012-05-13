@@ -30,7 +30,7 @@ npc_plucky_johnson
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 # npc_kanati

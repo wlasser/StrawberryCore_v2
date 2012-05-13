@@ -26,7 +26,7 @@ npc_professor_phizzlethorpe
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_professor_phizzlethorpe

@@ -30,7 +30,7 @@ npc_loramus_thalipedes
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*#####
 ## npc_rizzle_sprysprocket

@@ -27,7 +27,7 @@ npc_deathstalker_faerleia
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*#####
 ## npc_deathstalker_erland

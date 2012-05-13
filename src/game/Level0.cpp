@@ -26,7 +26,6 @@
 #include "ObjectAccessor.h"
 #include "Language.h"
 #include "AccountMgr.h"
-#include "EventScripts.h"
 #include "SystemConfig.h"
 #include "revision.h"
 #include "revision_nr.h"

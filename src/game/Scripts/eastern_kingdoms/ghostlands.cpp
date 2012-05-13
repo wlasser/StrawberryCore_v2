@@ -28,7 +28,7 @@ npc_ranger_lilatha
 EndContentData */
 
 #include "pchdef.h"
-#include "escort_ai.h"
+#include "../../ScriptBase/AI/escort_ai.h"
 
 /*######
 ## npc_blood_knight_dawnstar

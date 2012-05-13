@@ -30,7 +30,7 @@ EndContentData */
 
 #include "pchdef.h"
 #include "old_hillsbrad.h"
-#include "escort_ai.h"
+#include "../ScriptBase/AI/escort_ai.h"
 
 struct npc_tarethaAI : public npc_escortAI
 {
