@@ -376,6 +376,9 @@
     <Filter Include="Scripts\kalimdor\vortex_pinnacle">
       <UniqueIdentifier>{697a5fdb-976c-4e02-a00a-09c6372d548e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\spells">
+      <UniqueIdentifier>{5a6e72f1-ced4-4961-aa73-5149530f763a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\AccountMgr.cpp">
@@ -2376,6 +2379,48 @@
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_baine.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_boss.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_dk.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_druid.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_general.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_hunter.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_item.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_mage.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_paladin.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_priest.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_quest.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_rogue.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_shaman.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_warlock.cpp">
+      <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\spells\spell_warrior.cpp">
+      <Filter>Scripts\spells</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
