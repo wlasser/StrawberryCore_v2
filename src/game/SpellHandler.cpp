@@ -341,6 +341,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
     uint8  cast_count, unk_flags;
     recvPacket >> cast_count;
     recvPacket >> spellId;
+    recvPacket.read_skip<uint32>();
     recvPacket >> unk_flags;                                // flags (if 0x02 - some additional data are received)
 
     // ignore for remote control state (for player case)

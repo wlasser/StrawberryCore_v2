@@ -1032,6 +1032,6 @@ int WorldSocket::HandlePing(WorldPacket& recvPacket)
     }
 
     WorldPacket packet(SMSG_PONG, 4);
-    packet << sequence;
+    packet << latency;
     return SendPacket(packet);
 }
