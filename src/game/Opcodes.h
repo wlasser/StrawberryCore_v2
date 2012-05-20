@@ -326,6 +326,7 @@ enum Opcodes
     CMSG_SWAP_ITEM,
     CMSG_SWAP_INV_ITEM,
     CMSG_AUTOEQUIP_ITEM,
+    SMSG_LIST_INVENTORY,
     MAX_OPCODE_VALUE
 };
 
@@ -675,7 +676,6 @@ enum Opcodes335a
     CMSG_QUEST_CONFIRM_ACCEPT                       = 0x19B,
     SMSG_QUEST_CONFIRM_ACCEPT                       = 0x19C,
     CMSG_PUSHQUESTTOPARTY                           = 0x19D,
-    SMSG_LIST_INVENTORY                             = 0x19F,
     CMSG_SELL_ITEM                                  = 0x1A0,
     SMSG_SELL_ITEM                                  = 0x1A1,
     CMSG_BUY_ITEM                                   = 0x1A2,

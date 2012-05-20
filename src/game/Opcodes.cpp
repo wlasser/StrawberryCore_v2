@@ -230,5 +230,6 @@ void InitOpcodeTable()
     OPCODE(CMSG_SWAP_ITEM,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSwapItem                );
     OPCODE(CMSG_SWAP_INV_ITEM,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSwapInvItemOpcode       );
     OPCODE(CMSG_AUTOEQUIP_ITEM,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAutoEquipItemOpcode     );
+    OPCODE(SMSG_LIST_INVENTORY,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 
 };

@@ -583,27 +583,36 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
     VendorItemData const* vItems = pCreature->GetVendorItems();
     VendorItemData const* tItems = pCreature->GetVendorTemplateItems();
 
-    if (!vItems && !tItems)
-    {
-        WorldPacket data( SMSG_LIST_INVENTORY, (8+1+1) );
-        data << ObjectGuid(vendorguid);
-        data << uint8(0);                                   // count==0, next will be error code
-        data << uint8(0);                                   // "Vendor has no inventory"
-        SendPacket(&data);
-        return;
-    }
-
     uint8 customitems = vItems ? vItems->GetItemCount() : 0;
     uint8 numitems = customitems + (tItems ? tItems->GetItemCount() : 0);
 
     uint8 count = 0;
 
     WorldPacket data( SMSG_LIST_INVENTORY, (8+1+numitems*8*4) );
-    data << ObjectGuid(vendorguid);
+    uint64 Guid = uint64(vendorguid);
+    uint8 GuidMask[] = { 1, 0, 3, 6, 5, 2, 7, 4 };
+    uint8 GuidBytes[] = { 5, 4, 1, 0, 6, 2, 3, 7 };
 
-    size_t count_pos = data.wpos();
-    data << uint8(count);                                   // placeholder, client limit 150 items (as of 3.3.3)
+    data.WriteGuidMask(Guid, GuidMask, 2);
+    data.WriteBits(count, 9); // Unsure, because it was too late :/
+    data.WriteGuidMask(Guid, GuidMask, 4, 2);
+    data.WriteBit((numitems == 0));
+    data.WriteGuidMask(Guid, GuidMask, 1, 6);
 
+    if (!(numitems == 0))
+    {
+        for (uint32 i = 0; i < count; i++)
+        {
+            // Hmm???
+            data.WriteBit(true);
+            // +40-4...packet size???
+            data.WriteBit(true);
+        }
+    }
+
+    data.WriteGuidMask(Guid, GuidMask, 1, 7);
+
+    // Data part...
     float discountMod = _player->GetReputationPriceDiscount(pCreature);
 
     for(uint8 vendorslot = 0; vendorslot < numitems; ++vendorslot )
@@ -650,26 +659,24 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
                 // reputation discount
                 uint32 price = (crItem->ExtendedCost == 0 || pProto->Flags2 & ITEM_FLAG2_EXT_COST_REQUIRES_GOLD) ? uint32(floor(pProto->BuyPrice * discountMod)) : 0;
 
-                data << uint32(vendorslot +1);              // client size expected counting from 1
                 data << uint32(itemId);
+                data << uint32(pProto->BuyCount);
+                // Unknown, uint32
+                data << uint32(price);
                 data << uint32(pProto->DisplayInfoID);
                 data << uint32(crItem->maxcount <= 0 ? 0xFFFFFFFF : pCreature->GetVendorItemCurrentCount(crItem));
-                data << uint32(price);
-                data << uint32(pProto->MaxDurability);
-                data << uint32(pProto->BuyCount);
                 data << uint32(crItem->ExtendedCost);
+                // Unknown, uint32
+                data << uint32(vendorslot +1);              // client size expected counting from 1
+                data << uint32(pProto->MaxDurability);
             }
         }
     }
 
-    if (count == 0)
-    {
-        data << uint8(0);                                   // "Vendor has no inventory"
-        SendPacket(&data);
-        return;
-    }
+    data.WriteGuidBytes(Guid, GuidBytes, 5, 0);
+    data << uint8((count % 10) == 0 ? count / 10 : (count / 10) + 1);
+    data.WriteGuidBytes(Guid, GuidBytes, 3, 5);
 
-    data.put<uint8>(count_pos, count);
     SendPacket(&data);
 }
 
