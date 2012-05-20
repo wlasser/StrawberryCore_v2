@@ -1061,8 +1061,9 @@ void World::SetInitialWorldSettings()
     sLog.outString( "Loading SpellsScriptTarget...");
     sSpellMgr.LoadSpellScriptTarget();                      // must be after LoadCreatureTemplates and LoadGameobjectInfo
 
-    sLog.outString( "Loading ItemRequiredTarget...");
-    sObjectMgr.LoadItemRequiredTarget();
+    // ToDo: FIX!!!
+    //sLog.outString( "Loading ItemRequiredTarget...");
+    //sObjectMgr.LoadItemRequiredTarget();
 
     sLog.outString( "Loading Reputation Reward Rates...");
     sObjectMgr.LoadReputationRewardRate();
