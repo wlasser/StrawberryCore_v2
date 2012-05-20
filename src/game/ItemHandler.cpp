@@ -594,7 +594,8 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
     uint8 GuidBytes[] = { 5, 4, 1, 0, 6, 2, 3, 7 };
 
     data.WriteGuidMask(Guid, GuidMask, 2);
-    data.WriteBits(count, 9); // Unsure, because it was too late :/
+    // Blaaa this should be is numitems * 2, 
+    data << uint8(numitems * 2);
     data.WriteGuidMask(Guid, GuidMask, 4, 2);
     data.WriteBit((numitems == 0));
     data.WriteGuidMask(Guid, GuidMask, 1, 6);
