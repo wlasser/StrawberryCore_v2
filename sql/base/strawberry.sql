@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50519
 File Encoding         : 65001
 
-Date: 2012-05-13 15:16:40
+Date: 2012-05-20 02:09:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1861,6 +1861,9 @@ CREATE TABLE `item_template` (
   `Quality` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `Flags` int(10) unsigned NOT NULL DEFAULT '0',
   `Flags2` int(10) unsigned NOT NULL DEFAULT '0',
+  `Unknown` float NOT NULL,
+  `Unknown1` float NOT NULL,
+  `Unknown2` int(10) NOT NULL,
   `BuyCount` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `BuyPrice` int(10) unsigned NOT NULL DEFAULT '0',
   `SellPrice` int(10) unsigned NOT NULL DEFAULT '0',
@@ -1879,44 +1882,49 @@ CREATE TABLE `item_template` (
   `maxcount` smallint(5) NOT NULL DEFAULT '-1',
   `stackable` smallint(5) NOT NULL DEFAULT '1',
   `ContainerSlots` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `StatsCount` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_type1` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value1` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_1` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_1` int(10) NOT NULL DEFAULT '0',
   `stat_type2` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value2` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_2` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_2` int(10) NOT NULL DEFAULT '0',
   `stat_type3` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value3` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_3` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_3` int(10) NOT NULL DEFAULT '0',
   `stat_type4` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value4` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_4` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_4` int(10) NOT NULL DEFAULT '0',
   `stat_type5` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value5` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_5` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_5` int(10) NOT NULL DEFAULT '0',
   `stat_type6` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value6` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_6` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_6` int(10) NOT NULL DEFAULT '0',
   `stat_type7` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value7` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_7` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_7` int(10) NOT NULL DEFAULT '0',
   `stat_type8` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value8` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_8` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_8` int(10) NOT NULL DEFAULT '0',
   `stat_type9` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value9` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_9` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_9` int(10) NOT NULL DEFAULT '0',
   `stat_type10` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stat_value10` smallint(6) NOT NULL DEFAULT '0',
+  `stat_unk1_10` int(10) NOT NULL DEFAULT '0',
+  `stat_unk2_10` int(10) NOT NULL DEFAULT '0',
   `ScalingStatDistribution` smallint(6) NOT NULL DEFAULT '0',
-  `ScalingStatValue` int(6) unsigned NOT NULL DEFAULT '0',
-  `dmg_min1` float NOT NULL DEFAULT '0',
-  `dmg_max1` float NOT NULL DEFAULT '0',
-  `dmg_type1` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `dmg_min2` float NOT NULL DEFAULT '0',
-  `dmg_max2` float NOT NULL DEFAULT '0',
-  `dmg_type2` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `armor` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `holy_res` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `fire_res` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `nature_res` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `frost_res` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `shadow_res` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `arcane_res` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `delay` smallint(5) unsigned NOT NULL DEFAULT '1000',
-  `ammo_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `DamageType` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `delay` int(10) NOT NULL,
   `RangedModRange` float NOT NULL DEFAULT '0',
   `spellid_1` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `spelltrigger_1` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -1964,7 +1972,6 @@ CREATE TABLE `item_template` (
   `sheath` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `RandomProperty` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `RandomSuffix` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `block` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `itemset` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `MaxDurability` smallint(5) unsigned NOT NULL DEFAULT '0',
   `area` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -1987,6 +1994,9 @@ CREATE TABLE `item_template` (
   `ScriptName` varchar(64) NOT NULL DEFAULT '',
   `DisenchantID` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `FoodType` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `StatScalingFactor` float NOT NULL,
+  `Unknown400_1` int(10) unsigned NOT NULL DEFAULT '0',
+  `Unknown400_2` int(10) unsigned NOT NULL DEFAULT '0',
   `minMoneyLoot` int(10) unsigned NOT NULL DEFAULT '0',
   `maxMoneyLoot` int(10) unsigned NOT NULL DEFAULT '0',
   `ExtraFlags` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -1997,6 +2007,7 @@ CREATE TABLE `item_template` (
 -- ----------------------------
 -- Records of item_template
 -- ----------------------------
+INSERT INTO `item_template` VALUES ('17', '4', '4', '-1', 'Martin Fury', '5663', '0', '0', '8192', '1.0428', '1', '1', '1', '3', '7', '4', '-1', '-1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '500', '0', '7', '0', '100', '0', '-1', '0', '-1', '0', '0', '1000', '0', '-1', '0', '-1', '0', '0', '0', '0', '-1', '0', '-1', '0', '0', '0', '0', '-1', '0', '-1', '0', '0', '0', '0', '-1', '0', '-1', '1', '', '0', '0', '0', '0', '0', '6', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '', '0', '0', '0', '0', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `locales_achievement_reward`
@@ -2715,13 +2726,13 @@ INSERT INTO `opcodes` VALUES ('CMSG_PLAYER_LOGIN', '1457', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_PLAYER_LOGOUT', '27143', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_QUERY_TIME', '13861', '15354', '0');
 INSERT INTO `opcodes` VALUES ('CMSG_QUEST_NPC_QUERY', '26669', '15354', '0');
-INSERT INTO `opcodes` VALUES ('CMSG_READY_FOR_ACCOUNT_DATA_TIMES', '11030', '15595', '15595');
+INSERT INTO `opcodes` VALUES ('CMSG_READY_FOR_ACCOUNT_DATA_TIMES', '1282', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_REALM_SPLIT_STATE', '10502', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_REPORT_LAG_SUBMIT', '15597', '15354', '0');
 INSERT INTO `opcodes` VALUES ('CMSG_REQUEST_ACCOUNT_DATA', '25861', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_REQUEST_CHARACTER_CREATE', '18998', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_REQUEST_CHARACTER_DELETE', '25637', '15595', '15595');
-INSERT INTO `opcodes` VALUES ('CMSG_REQUEST_CHARACTER_ENUM', '1282', '15595', '15595');
+INSERT INTO `opcodes` VALUES ('CMSG_REQUEST_CHARACTER_ENUM', '11030', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_SET_ACTIONBAR_TOGGLES', '29861', '15354', '0');
 INSERT INTO `opcodes` VALUES ('CMSG_SET_SELECTION', '1286', '15595', '15595');
 INSERT INTO `opcodes` VALUES ('CMSG_START_ASCENSION', '4949', '15354', '0');
