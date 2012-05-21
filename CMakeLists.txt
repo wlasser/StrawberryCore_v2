@@ -16,8 +16,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-project(MaNGOS)
-set(MANGOS_VERSION 0.17.0)
+project(StrawberryCore)
+set(StrawberryCore_VERSION 0.0.1)
 
 # CMake policies
 cmake_minimum_required(VERSION 2.8)
@@ -57,13 +57,13 @@ endif()
 
 # Output description of this script
 message(
-  "\nThis script builds the MaNGOS server.
+  "\nThis script builds the StrawberryCore server.
   Options that can be used in order to configure the process:
     PREFIX: Path where the server should be installed to
     PCH: Use precompiled headers
     DEBUG: Debug mode
   To set an option simply type -D<OPTION>=<VALUE> after 'cmake <srcs>'.
-  For example: cmake .. -DDEBUG=1 -DPREFIX=/opt/mangos\n"
+  For example: cmake .. -DDEBUG=1 -DPREFIX=/opt/StrawberryCore\n"
 ) # TODO: PLATFORM: Sets the architecture for compile (X86,X64)
 
 # Override configuration-types - we don't use anything else than debug and release
@@ -83,22 +83,8 @@ if(WIN32)
   endif()
 endif()
 
-# if(WIN32)
-#   if(PLATFORM MATCHES X86)
-#     set(ARCH_FLAGS "/MACHINE:X86")
-#   else()
-#     set(ARCH_FLAGS "/MACHINE:X64")
-#   endif()
-# elseif(UNIX)
-#   if(PLATFORM MATCHES X86)
-#     set(ARCH_FLAGS "-m32")
-#   else()
-#     set(ARCH_FLAGS "-m64")
-#   endif()
-# endif()
-
 option(DEBUG "Debug mode" 0)
-# option(CLI "With CLI" 1) # Not used by MaNGOS so far
+# option(CLI "With CLI" 1) # Not used by StrawberryCore so far
 # option(RA "With Remote Access" 0) # TODO: support remote access
 option(TBB_USE_EXTERNAL "Use external TBB" 0)
 option(USE_STD_MALLOC "Use standard malloc instead of TBB" 0)
@@ -106,7 +92,7 @@ option(ACE_USE_EXTERNAL "Use external ACE" 0)
 
 find_package(PCHSupport)
 
-# Add options for compile of mangos
+# Add options for compile of StrawberryCore
 if(PCHSupport_FOUND)
   if(WIN32)
     option(PCH "Use precompiled headers" 1)
@@ -141,6 +127,14 @@ if(WIN32)
   set(LIBS_DIR ${CMAKE_INSTALL_PREFIX}/bin)
 else()
   set(LIBS_DIR ${CMAKE_INSTALL_PREFIX}/lib)
+endif()
+
+if( WITH_WARNINGS )
+  add_definitions(-Wall -Wfatal-errors -Wextra)
+  message(STATUS "GCC: All warnings enabled")
+else()
+  add_definitions(--no-warnings)
+  message(STATUS "GCC: All warnings disabled")
 endif()
 
 # For Unix systems set the rpath so that libraries are found
@@ -235,7 +229,7 @@ else()
 endif()
 
 message("")
-message("MaNGOS-Core revision  : ${GIT_REVISION}")
+message("StrawberryCore revision  : ${GIT_REVISION}")
 message("Install server to     : ${CMAKE_INSTALL_PREFIX}")
 message("")
 
@@ -407,11 +401,11 @@ add_subdirectory(dep) # TODO: add vmap extractor build support
 set(DEFINITIONS
   DO_MYSQL
   HAVE_CONFIG_H
-  VERSION="${MANGOS_VERSION}"
+  VERSION="${STRAWBERRY_VERSION}"
   SYSCONFDIR="${CONF_DIR}/"
 )
 set(DEFINITIONS_RELEASE NDEBUG)
-set(DEFINITIONS_DEBUG _DEBUG MANGOS_DEBUG)
+set(DEFINITIONS_DEBUG _DEBUG STRAWBERRY_DEBUG)
 if(WIN32)
   set(DEFINITIONS ${DEFINITIONS} WIN32 _WIN32)
   set(DEFINITIONS_RELEASE ${DEFINITIONS_RELEASE} _CRT_SECURE_NO_WARNINGS)
