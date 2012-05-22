@@ -594,7 +594,8 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
     uint8 GuidBytes[] = { 5, 4, 1, 0, 6, 2, 3, 7 };
 
     data.WriteGuidMask(Guid, GuidMask, 2);
-    data.WriteBits(count, 9); // Unsure, because it was too late :/
+    // Blaaa this should be is numitems * 2, 
+    data << uint8(numitems * 2);
     data.WriteGuidMask(Guid, GuidMask, 4, 2);
     data.WriteBit((numitems == 0));
     data.WriteGuidMask(Guid, GuidMask, 1, 6);
@@ -603,7 +604,7 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
     {
         for (uint32 i = 0; i < count; i++)
         {
-            // Hmm???
+            // crItem->ExtendedCost???
             data.WriteBit(true);
             // +40-4...packet size???
             data.WriteBit(true);
@@ -661,12 +662,12 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
 
                 data << uint32(itemId);
                 data << uint32(pProto->BuyCount);
-                // Unknown, uint32
+                // crItem->ExtendedCost???
                 data << uint32(price);
                 data << uint32(pProto->DisplayInfoID);
                 data << uint32(crItem->maxcount <= 0 ? 0xFFFFFFFF : pCreature->GetVendorItemCurrentCount(crItem));
-                data << uint32(crItem->ExtendedCost);
-                // Unknown, uint32
+                data << uint32(1);    // Unknown 4.x.x, mostly 1
+                // Hmm?? uint32
                 data << uint32(vendorslot +1);              // client size expected counting from 1
                 data << uint32(pProto->MaxDurability);
             }
