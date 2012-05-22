@@ -3370,6 +3370,12 @@ SpellAuraProcResult Unit::HandleProcTriggerSpellAuraProc(Unit *pVictim, uint32 d
                 trigger_spell_id = 54843;
                 target = pVictim;
             }
+            // Seal of Insight effect
+            else if(auraSpellInfo->Id == 20271 && procSpell->Id == 20165)
+            {
+                int32 damageSeal = 1 + ((100/400) *(((Player*)this)->GetBaseSpellPowerBonus() / 16) * this->GetModifierValue(UNIT_MOD_ATTACK_POWER,TOTAL_VALUE));
+                CastCustomSpell(pVictim,54158,&damageSeal,NULL,NULL,true);
+            }
             break;
         }
         case SPELLFAMILY_SHAMAN:
