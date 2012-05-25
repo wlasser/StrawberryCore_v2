@@ -268,10 +268,11 @@ enum ItemSubclassContainer
     ITEM_SUBCLASS_GEM_CONTAINER                 = 5,
     ITEM_SUBCLASS_MINING_CONTAINER              = 6,
     ITEM_SUBCLASS_LEATHERWORKING_CONTAINER      = 7,
-    ITEM_SUBCLASS_INSCRIPTION_CONTAINER         = 8
+    ITEM_SUBCLASS_INSCRIPTION_CONTAINER         = 8,
+    ITEM_SUBCLASS_TACKLE_BOX                    = 9
 };
 
-#define MAX_ITEM_SUBCLASS_CONTAINER               9
+#define MAX_ITEM_SUBCLASS_CONTAINER              10
 
 enum ItemSubclassWeapon
 {
@@ -310,10 +311,12 @@ enum ItemSubclassGem
     ITEM_SUBCLASS_GEM_ORANGE                    = 5,
     ITEM_SUBCLASS_GEM_META                      = 6,
     ITEM_SUBCLASS_GEM_SIMPLE                    = 7,
-    ITEM_SUBCLASS_GEM_PRISMATIC                 = 8
+    ITEM_SUBCLASS_GEM_PRISMATIC                 = 8,
+    ITEM_SUBCLASS_GEM_HYDRAULIC                 = 9,
+    ITEM_SUBCLASS_GEM_COGWHEEL                  = 10,
 };
 
-#define MAX_ITEM_SUBCLASS_GEM                     9
+#define MAX_ITEM_SUBCLASS_GEM                     11
 
 enum ItemSubclassArmor
 {
@@ -327,10 +330,11 @@ enum ItemSubclassArmor
     ITEM_SUBCLASS_ARMOR_LIBRAM                  = 7,
     ITEM_SUBCLASS_ARMOR_IDOL                    = 8,
     ITEM_SUBCLASS_ARMOR_TOTEM                   = 9,
-    ITEM_SUBCLASS_ARMOR_SIGIL                   = 10
+    ITEM_SUBCLASS_ARMOR_SIGIL                   = 10,
+    ITEM_SUBCLASS_ARMOR_RELIC                   = 11
 };
 
-#define MAX_ITEM_SUBCLASS_ARMOR                   11
+#define MAX_ITEM_SUBCLASS_ARMOR                   12
 
 enum ItemSubclassReagent
 {
@@ -391,10 +395,11 @@ enum ItemSubclassRecipe
     ITEM_SUBCLASS_FIRST_AID_MANUAL              = 7,
     ITEM_SUBCLASS_ENCHANTING_FORMULA            = 8,
     ITEM_SUBCLASS_FISHING_MANUAL                = 9,
-    ITEM_SUBCLASS_JEWELCRAFTING_RECIPE          = 10
+    ITEM_SUBCLASS_JEWELCRAFTING_RECIPE          = 10,
+    ITEM_SUBCLASS_RECIPE_INSCRIPTION            = 11,
 };
 
-#define MAX_ITEM_SUBCLASS_RECIPE                  11
+#define MAX_ITEM_SUBCLASS_RECIPE                  12
 
 enum ItemSubclassMoney
 {

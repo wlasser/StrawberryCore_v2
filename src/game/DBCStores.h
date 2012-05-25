@@ -143,7 +143,6 @@ extern DBCStorage <GtOCTClassCombatRatingScalarEntry> sGtOCTClassCombatRatingSca
 //extern DBCStorage <GtRegenHPPerSptEntry>         sGtRegenHPPerSptStore;
 extern DBCStorage <GtRegenMPPerSptEntry>         sGtRegenMPPerSptStore;
 extern DBCStorage <HolidaysEntry>                sHolidaysStore;
-//extern DBCStorage <ItemEntry>                    sItemStore;
 extern DBCStorage <ItemArmorQualityEntry>        sItemArmorQualityStore;
 extern DBCStorage <ItemArmorShieldEntry>         sItemArmorShieldStore;
 extern DBCStorage <ItemArmorTotalEntry>          sItemArmorTotalStore;
@@ -158,7 +157,6 @@ extern DBCStorage <ItemDamageEntry>              sItemDamageTwoHandStore;
 extern DBCStorage <ItemDamageEntry>              sItemDamageTwoHandCasterStore;
 extern DBCStorage <ItemDamageEntry>              sItemDamageWandStore;
 //extern DBCStorage <ItemDisplayInfoEntry>      sItemDisplayInfoStore; -- not used currently
-extern DBCStorage <ItemExtendedCostEntry>        sItemExtendedCostStore;
 extern DBCStorage <ItemLimitCategoryEntry>       sItemLimitCategoryStore;
 extern DBCStorage <ItemRandomPropertiesEntry>    sItemRandomPropertiesStore;
 extern DBCStorage <ItemRandomSuffixEntry>        sItemRandomSuffixStore;
@@ -238,7 +236,6 @@ DBCStorage <SoundEntriesEntry>          const* GetSoundEntriesStore();
 DBCStorage <SpellEntry>                 const* GetSpellStore();
 DBCStorage <SpellRangeEntry>            const* GetSpellRangeStore();
 DBCStorage <FactionEntry>               const* GetFactionStore();
-DBCStorage <ItemEntry>                  const* GetItemDisplayStore();
 DBCStorage <CreatureDisplayInfoEntry>   const* GetCreatureDisplayStore();
 DBCStorage <EmotesEntry>                const* GetEmotesStore();
 DBCStorage <EmotesTextEntry>            const* GetEmotesTextStore();

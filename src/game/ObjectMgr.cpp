@@ -29,6 +29,7 @@
 #include "SpellMgr.h"
 #include "UpdateMask.h"
 #include "World.h"
+#include "DB2Stores.h"
 #include "Group.h"
 #include "ArenaTeam.h"
 #include "Transports.h"
@@ -2045,8 +2046,6 @@ void ObjectMgr::LoadItemPrototypes()
             if(proto->RequiredReputationRank == MIN_REPUTATION_RANK)
                 sLog.outErrorDb("Item (Entry: %u) has min. reputation rank in RequiredReputationRank (0) but RequiredReputationFaction > 0, faction setting is useless.",i);
         }
-        else if(proto->RequiredReputationRank > MIN_REPUTATION_RANK)
-            sLog.outErrorDb("Item (Entry: %u) has RequiredReputationFaction ==0 but RequiredReputationRank > 0, rank setting is useless.",i);
 
         if(proto->MaxCount < -1)
         {
@@ -2064,10 +2063,10 @@ void ObjectMgr::LoadItemPrototypes()
             sLog.outErrorDb("Item (Entry: %u) has too large negative in stackable (%i), replace by value (-1) no stacking limits.",i,proto->Stackable);
             const_cast<ItemPrototype*>(proto)->Stackable = -1;
         }
-        else if(proto->Stackable > 1000)
+        else if(proto->Stackable > 0x7FFF)
         {
             sLog.outErrorDb("Item (Entry: %u) has too large value in stackable (%u), replace by hardcoded upper limit (1000).",i,proto->Stackable);
-            const_cast<ItemPrototype*>(proto)->Stackable = 1000;
+            const_cast<ItemPrototype*>(proto)->Stackable = 0x7FFF;
         }
 
         if (proto->ContainerSlots)
@@ -2138,6 +2137,7 @@ void ObjectMgr::LoadItemPrototypes()
                 if(!spellInfo)
                 {
                     sLog.outErrorDb("Item (Entry: %u) has wrong (not existing) spell in spellid_%d (%u)",i,1+1,proto->Spells[1].SpellId);
+                    
                     const_cast<ItemPrototype*>(proto)->Spells[0].SpellId = 0;
                     const_cast<ItemPrototype*>(proto)->Spells[1].SpellId = 0;
                     const_cast<ItemPrototype*>(proto)->Spells[1].SpellTrigger = ITEM_SPELLTRIGGER_ON_USE;

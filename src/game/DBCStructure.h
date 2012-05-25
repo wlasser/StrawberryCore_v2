@@ -1086,18 +1086,6 @@ struct HolidaysEntry
     //uint32 flags;                                         // 54       m_flags
 };
 
-struct ItemEntry
-{
-   uint32   ID;                                             // 0        m_ID
-   uint32   Class;                                          // 1        m_classID
-   uint32   SubClass;                                       // 2        m_subclassID (some items have strange subclasses)
-   int32    Unk0;                                           // 3        m_sound_override_subclassid
-   int32    Material;                                       // 4        m_material
-   uint32   DisplayId;                                      // 5        m_displayInfoID
-   uint32   InventoryType;                                  // 6        m_inventoryType
-   uint32   Sheath;                                         // 7        m_sheatheType
-};
-
 struct ItemArmorQualityEntry
 {
   uint32    Id;                                             // 0 item level
@@ -1151,14 +1139,6 @@ struct ItemDisplayInfoEntry
                                                             // 11       m_particleColorID
 };
 
-//struct ItemCondExtCostsEntry
-//{
-//    uint32      ID;
-//    uint32      condExtendedCost;                         // ItemPrototype::CondExtendedCost
-//    uint32      itemextendedcostentry;                    // ItemPrototype::ExtendedCost
-//    uint32      arenaseason;                              // arena season number(1-4)
-//};
-
 // common struct for:
 // ItemDamageAmmo.dbc
 // ItemDamageOneHand.dbc
@@ -1173,23 +1153,6 @@ struct ItemDamageEntry
   uint32    Id;                                             // 0 item level
   float     Value[7];                                       // 1-7 multiplier for item quality
   uint32    Id2;                                            // 8 item level
-};
-
-#define MAX_EXTENDED_COST_ITEMS 5
-
-struct ItemExtendedCostEntry
-{
-    uint32      ID;                                         // 0        m_ID
-    uint32      reqhonorpoints;                             // 1        m_honorPoints
-    uint32      reqarenapoints;                             // 2        m_arenaPoints
-    uint32      reqarenaslot;                               // 3        m_arenaBracket
-    uint32      reqitem[MAX_EXTENDED_COST_ITEMS];           // 5-8      m_itemID
-    uint32      reqitemcount[MAX_EXTENDED_COST_ITEMS];      // 9-13     m_itemCount
-    uint32      reqpersonalarenarating;                     // 14       m_requiredArenaRating
-    //uint32                                                // 15       m_itemPurchaseGroup
-    //uint32    someId[5];                                  // 16-20, may be currency id's
-    //uint32    someCount[5];                               // 21-25
-    //uint32    something[5];                               // 26-30
 };
 
 struct ItemLimitCategoryEntry

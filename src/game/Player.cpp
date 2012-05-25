@@ -40,6 +40,7 @@
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"
 #include "ObjectMgr.h"
+#include "DB2Stores.h"
 #include "ObjectAccessor.h"
 #include "CreatureAI.h"
 #include "Formulas.h"

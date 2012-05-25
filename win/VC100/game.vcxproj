@@ -365,6 +365,7 @@
     <ClCompile Include="..\..\src\game\ChatHandler.cpp" />
     <ClCompile Include="..\..\src\game\CombatHandler.cpp" />
     <ClCompile Include="..\..\src\game\CreatureLinkingMgr.cpp" />
+    <ClCompile Include="..\..\src\game\DB2Stores.cpp" />
     <ClCompile Include="..\..\src\game\DuelHandler.cpp" />
     <ClCompile Include="..\..\src\game\GameEventMgr.cpp" />
     <ClCompile Include="..\..\src\game\GMTicketHandler.cpp" />
@@ -1053,6 +1054,9 @@
     <ClInclude Include="..\..\src\game\ChannelMgr.h" />
     <ClInclude Include="..\..\src\game\Chat.h" />
     <ClInclude Include="..\..\src\game\CreatureLinkingMgr.h" />
+    <ClInclude Include="..\..\src\game\DB2fmt.h" />
+    <ClInclude Include="..\..\src\game\DB2Stores.h" />
+    <ClInclude Include="..\..\src\game\DB2Structure.h" />
     <ClInclude Include="..\..\src\game\GameEventMgr.h" />
     <ClInclude Include="..\..\src\game\GossipDef.h" />
     <ClInclude Include="..\..\src\game\GridDefines.h" />

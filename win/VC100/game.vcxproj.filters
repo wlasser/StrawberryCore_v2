@@ -2422,6 +2422,9 @@
     <ClCompile Include="..\..\src\game\Scripts\spells\spell_warrior.cpp">
       <Filter>Scripts\spells</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\DB2Stores.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -3133,6 +3136,15 @@
     </ClInclude>
     <ClInclude Include="instance_hour_of_twilight.h">
       <Filter>Scripts\kalimdor\caverns_of_time\hour_of_twilight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DB2fmt.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DB2Stores.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DB2Structure.h">
+      <Filter>Server</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
