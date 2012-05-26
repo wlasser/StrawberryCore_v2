@@ -1272,7 +1272,7 @@ struct MapEntry
     uint32  addon;                                          // 16       m_expansionID
     //uint32 unkTime;                                       // 17       m_raidOffset
     //uint32 maxPlayers;                                    // 18       m_maxPlayers
-    //uint32 unk400;                                        // 19 new 4.0.0, mapid, related to phasing
+    uint32 NextPhaseMap;                                    // 19 - MapId for next phase.
 
     // Helpers
     uint32 Expansion() const { return addon; }
@@ -1327,6 +1327,13 @@ struct OverrideSpellDataEntry
     uint32      Spells[MAX_OVERRIDE_SPELLS];                // 1-10     m_spells
     //uint32      unk2;                                     // 11       m_flags
     //uint32      unk3;                                     // 12 possibly flag
+};
+
+struct PhaseEntry
+{
+    uint32 Id;                                              // 0
+    uint32 PhaseShift;                                      // 1
+    uint32 Flags;                                           // 2 - 0x0, 0x4, 0x8
 };
 
 struct PvPDifficultyEntry
