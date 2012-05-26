@@ -578,6 +578,7 @@ void WorldSession::SendSetPhaseShift(uint32 PhaseShift, uint32 mapId = 0)
 
     WorldPacket data(SMSG_PHASE_SHIFT_CHANGE, 4);
     data.WriteGuidMask(guid, guidMask, 8);
+    data.WriteGuidBytes(guid, guidBytes, 2, 0);
 
     data << uint32(PhaseShift);
     SendPacket(&data);
