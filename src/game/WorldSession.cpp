@@ -570,9 +570,15 @@ void WorldSession::SendNotification(int32 string_id,...)
     }
 }
 
-void WorldSession::SendSetPhaseShift(uint32 PhaseShift)
+void WorldSession::SendSetPhaseShift(uint32 PhaseShift, uint32 mapId = 0)
 {
-    WorldPacket data(SMSG_SET_PHASE_SHIFT, 4);
+    uint64 guid = uint64(_player->GetObjectGuid());
+    uint8 guidMask[] = { 2, 3, 1, 6, 4, 5, 0, 7 };
+    uint8 guidBytes[] = { 7, 4, 1, 2, 6, 3, 0, 5 };
+
+    WorldPacket data(SMSG_PHASE_SHIFT_CHANGE, 4);
+    data.WriteGuidMask(guid, guidMask, 8);
+
     data << uint32(PhaseShift);
     SendPacket(&data);
 }
