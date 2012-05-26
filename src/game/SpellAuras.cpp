@@ -5289,6 +5289,20 @@ void Aura::HandleAuraPeriodicDummy(bool apply, bool Real)
                 m_modifier.m_amount += int32(caster->GetTotalAttackPowerValue(RANGED_ATTACK) * 14 / 100);
             break;
         }
+        case SPELLFAMILY_PRIEST:
+        {
+            // Holy Word: Sanctuary
+            if(GetSpellProto()->Id == 88685)
+            {
+                DynamicObject* dynObj = GetCaster()->GetDynObject(88685);
+                for(DynamicObject::AffectedSet::iterator itr = dynObj->GetAffected().begin(); itr != dynObj->GetAffected().end(); ++itr)
+                {
+                    Player *plr = ObjectAccessor::FindPlayer((*itr));
+                    GetHolder()->GetCaster()->CastSpell(plr,88686,true);
+                }
+            }
+            break;
+        }
     }
 
     m_isPeriodic = apply;
