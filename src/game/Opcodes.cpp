@@ -129,7 +129,7 @@ void InitOpcodeTable()
     OPCODE(CMSG_LOGOUT_REQUEST,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLogoutRequestOpcode     );
     OPCODE(CMSG_PLAYER_LOGOUT,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePlayerLogoutOpcode      );
     OPCODE(CMSG_LOGOUT_CANCEL,                STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleLogoutCancelOpcode      );
-    OPCODE(SMSG_LOGOUT_CANCEL,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_LOGOUT_CANCEL,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_LOGOUT_RESPONSE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_LOGOUT_COMPLETE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_PLAYER_LOGIN,                 STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandlePlayerLoginOpcode       );
@@ -168,6 +168,7 @@ void InitOpcodeTable()
     OPCODE(SMSG_CHAT_RECONNECT,               STATUS_NEVER,    PROCESS_INPLACE, &WorldSession::HandleServerSide                   );
     OPCODE(SMSG_CHANNEL_LIST,                 STATUS_NEVER,    PROCESS_INPLACE, &WorldSession::HandleServerSide                   );
     OPCODE(SMSG_MESSAGE_CHAT,                 STATUS_NEVER,    PROCESS_INPLACE, &WorldSession::HandleServerSide                   );
+    OPCODE(SMSG_PHASE_SHIFT_CHANGE,           STATUS_NEVER,    PROCESS_INPLACE, &WorldSession::HandleServerSide                   );
     OPCODE(SMSG_TEXT_EMOTE,                   STATUS_NEVER,    PROCESS_INPLACE, &WorldSession::HandleServerSide                   );
     OPCODE(SMSG_ZONE_UNDER_ATTACK,            STATUS_NEVER,    PROCESS_INPLACE, &WorldSession::HandleServerSide                   );
     OPCODE(SMSG_DEFENSE_MESSAGE,              STATUS_NEVER,    PROCESS_INPLACE, &WorldSession::HandleServerSide                   );
@@ -203,7 +204,6 @@ void InitOpcodeTable()
     OPCODE(SMSG_NAME_CACHE,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     //OPCODE(SMSG_COMPRESSED_UPDATE_OBJECT,     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_PLAYER_MOVE,                  STATUS_AUTHED,   PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
-    
     OPCODE(CMSG_GOSSIP_HELLO,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGossipHelloOpcode       );
     OPCODE(SMSG_GOSSIP_MESSAGE,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_GOSSIP_COMPLETE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );

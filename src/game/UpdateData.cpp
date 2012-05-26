@@ -54,12 +54,12 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
     ByteBuffer buf(2 + 4 + (m_outOfRangeGUIDs.empty() ? 0 : 1 + 4 + 9 * m_outOfRangeGUIDs.size()) + m_data.wpos());
 
     buf << uint16(m_map);
-    buf << (uint32) (!m_outOfRangeGUIDs.empty() ? m_blockCount + 1 : m_blockCount);
+    buf << uint32(!m_outOfRangeGUIDs.empty() ? m_blockCount + 1 : m_blockCount);
 
     if(!m_outOfRangeGUIDs.empty())
     {
-        buf << (uint8) UPDATETYPE_OUT_OF_RANGE_OBJECTS;
-        buf << (uint32) m_outOfRangeGUIDs.size();
+        buf << uint8(UPDATETYPE_OUT_OF_RANGE_OBJECTS);
+        buf << uint32(m_outOfRangeGUIDs.size());
 
         for(ObjectGuidSet::const_iterator i = m_outOfRangeGUIDs.begin(); i != m_outOfRangeGUIDs.end(); ++i)
             buf << i->WriteAsPacked();
@@ -69,7 +69,7 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
 
     size_t pSize = buf.wpos();                              // use real used data size
     packet->append( buf );
-    packet->SetOpcode( SMSG_UPDATE_OBJECT );
+    packet->SetOpcode(SMSG_UPDATE_OBJECT);
 
     //if (packet->wpos() > 100)
     //    packet->compress(SMSG_COMPRESSED_UPDATE_OBJECT);

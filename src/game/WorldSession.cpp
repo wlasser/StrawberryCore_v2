@@ -570,10 +570,55 @@ void WorldSession::SendNotification(int32 string_id,...)
     }
 }
 
-void WorldSession::SendSetPhaseShift(uint32 PhaseShift)
+void WorldSession::SendSetPhaseShift(uint32 phaseMask)
 {
-    WorldPacket data(SMSG_SET_PHASE_SHIFT, 4);
-    data << uint32(PhaseShift);
+    uint64 guid = uint64(_player->GetObjectGuid());
+    uint8 guidMask[] = { 2, 3, 1, 6, 4, 5, 0, 7 };
+    uint8 guidBytes[] = { 7, 4, 1, 2, 6, 3, 0, 5 };
+
+    uint32 phaseFlags = 0;
+    uint32 currentMap = _player->GetMapId();
+
+    for (uint32 i = 0; i < sPhaseStore.GetNumRows(); i++)
+    {
+        if (PhaseEntry const* phase = sPhaseStore.LookupEntry(i))
+        {
+            if (phase->PhaseShift == phaseMask)
+            {
+                phaseFlags = phase->Flags;
+                break;
+            }
+
+        }
+    }
+
+    WorldPacket data(SMSG_PHASE_SHIFT_CHANGE, 30);
+    data.WriteGuidMask(guid, guidMask, 8);
+    data.WriteGuidBytes(guid, guidBytes, 2, 0);
+
+    // Seen only 0 bytes
+    data << uint32(0);
+
+    data.WriteGuidBytes(guid, guidBytes, 1, 2);
+    data << uint32(phaseMask ? phaseFlags : 8);
+    data.WriteGuidBytes(guid, guidBytes, 2, 3);
+
+    // Seen only 0 bytes
+    data << uint32(0);
+
+    // PhaseShift, uint16 (2 bytes)
+    data << uint32(phaseMask ? 2 : 0);
+    if (phaseMask)
+        data << uint16(phaseMask);
+
+    data.WriteGuidBytes(guid, guidBytes, 2, 5);
+
+    // MapId , uint16 (2 bytes)
+    data << uint32(currentMap ? 2 : 0);
+    if (currentMap)
+        data << uint16(currentMap);
+
+    data.WriteGuidBytes(guid, guidBytes, 1, 7);
     SendPacket(&data);
 }
 
