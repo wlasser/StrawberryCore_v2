@@ -705,11 +705,25 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
     LoadAccountData(holder->GetResult(PLAYER_LOGIN_QUERY_LOADACCOUNTDATA),PER_CHARACTER_CACHE_MASK);
     SendAccountDataTimes(PER_CHARACTER_CACHE_MASK);
 
-    data.Initialize(SMSG_FEATURE_SYSTEM_STATUS, 10);         // added in 2.2.0
-    data << uint32(0);   // Unknown
-    data << uint8(2);    // Unknown
-    data << uint32(0);   // Mail related?
-    data << uint8(160);  // Unknown, always 0xA0?
+    data.Initialize(SMSG_FEATURE_SYSTEM_STATUS, 34);         // added in 2.2.0
+    data << uint8(2);     // SystemStatus
+    data << uint32(1);    // Unknown, Mostly 1
+    data << uint32(1);    // Unknown, Mostly 1
+    data << uint32(2);    // Unknown, Mostly same as SystemStatus, but seen other values
+    data << uint32(0);    // Unknown, Hmm???
+
+    data.WriteBit(true);  // Unknown
+    data.WriteBit(true);  // Unknown
+    data.WriteBit(false); // Unknown
+    data.WriteBit(true);  // Unknown
+    data.WriteBit(false); // EnableVoiceChat, not sure
+    data.WriteBit(false); // Unknown
+    
+    data << uint32(1);    // Only seen 1
+    data << uint32(0);    // Unknown, like random values
+    data << uint32(0xA);  // Only seen 10
+    data << uint32(0x3C); // Only seen 60
+
     SendPacket(&data);
 
     // Send MOTD
