@@ -580,9 +580,17 @@ void WorldSession::SendSetPhaseShift(uint32 phaseMask)
     uint32 currentMap = _player->GetMapId();
 
     for (uint32 i = 0; i < sPhaseStore.GetNumRows(); i++)
+    {
         if (PhaseEntry const* phase = sPhaseStore.LookupEntry(i))
+        {
             if (phase->PhaseShift == phaseMask)
+            {
                 phaseFlags = phase->Flags;
+                break;
+            }
+
+        }
+    }
 
     WorldPacket data(SMSG_PHASE_SHIFT_CHANGE, 30);
     data.WriteGuidMask(guid, guidMask, 8);
