@@ -5904,7 +5904,7 @@ void Player::SendInitialActionButtons() const
     DETAIL_LOG( "Initializing Action Buttons for '%u' spec '%u'", GetGUIDLow(), m_activeSpec);
 
     WorldPacket data(SMSG_ACTION_BUTTONS, 1+(MAX_ACTION_BUTTONS*4));
-    data << uint8(1);                                       // talent spec amount (in packet)
+
     ActionButtonList const& currentActionButtonList = m_actionButtons[m_activeSpec];
     for(uint8 button = 0; button < MAX_ACTION_BUTTONS; ++button)
     {
@@ -5914,8 +5914,10 @@ void Player::SendInitialActionButtons() const
         else
             data << uint32(0);
     }
+    
+    data << uint8(1);                                       // talent spec amount (in packet)
+    GetSession()->SendPacket(&data);
 
-    GetSession()->SendPacket( &data );
     DETAIL_LOG( "Action Buttons for '%u' spec '%u' Initialized", GetGUIDLow(), m_activeSpec );
 }
 
@@ -6125,7 +6127,7 @@ void Player::SendDirectMessage(WorldPacket *data)
 
 void Player::SendCinematicStart(uint32 CinematicSequenceId)
 {
-    WorldPacket data(SMSG_TRIGGER_CINEMATIC, 4);
+    WorldPacket data(SMSG_START_CINEMATIC, 4);
     data << uint32(CinematicSequenceId);
     SendDirectMessage(&data);
 }
@@ -20154,7 +20156,7 @@ void Player::SendInitialPacketsBeforeAddToMap()
     GetSocial()->SendSocialList();
 
     // Homebind
-    WorldPacket data(SMSG_BINDPOINTUPDATE, 5*4);
+    WorldPacket data(SMSG_SAVE_BIND_POINT, 5*4);
     data << m_homebindX << m_homebindY << m_homebindZ;
     data << (uint32) m_homebindMapId;
     data << (uint32) m_homebindAreaId;

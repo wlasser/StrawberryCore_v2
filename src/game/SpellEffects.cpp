@@ -9408,7 +9408,7 @@ void Spell::EffectBind(SpellEffectEntry const* effect)
     player->SetHomebindToLocation(loc,area_id);
 
     // binding
-    WorldPacket data( SMSG_BINDPOINTUPDATE, (4+4+4+4+4) );
+    WorldPacket data(SMSG_SAVE_BIND_POINT, (4+4+4+4+4) );
     data << float(loc.coord_x);
     data << float(loc.coord_y);
     data << float(loc.coord_z);
