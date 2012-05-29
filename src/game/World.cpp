@@ -69,6 +69,7 @@
 #include "Vehicle.h"
 #include "WardenDataStorage.h"
 #include "ScriptMgr.h"
+#include "BattlefieldMgr.h"
 
 INSTANTIATE_SINGLETON_1( World );
 
@@ -1385,6 +1386,10 @@ void World::SetInitialWorldSettings()
     sLog.outString( "Starting BattleGround System" );
     sBattleGroundMgr.CreateInitialBattleGrounds();
     sBattleGroundMgr.InitAutomaticArenaPointDistribution();
+
+    ///- Initialize Battlefields
+    sLog.outString( "Starting Battlefield System" );
+    sBattlefieldMrg.Initialize();
 
     //Not sure if this can be moved up in the sequence (with static data loading) as it uses MapManager
     sLog.outString( "Loading Transports..." );
