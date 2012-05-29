@@ -308,6 +308,7 @@ enum Opcodes
     CMSG_GOSSIP_SELECT_OPTION,
     CMSG_LIST_INVENTORY,
     CMSG_SPIRIT_HEALER_ACTIVATE,
+    CMSG_ATTACKSWING,
     SMSG_ATTACKSTART,
     SMSG_ATTACKSTOP,
     SMSG_ATTACKERSTATEUPDATE,
@@ -333,6 +334,7 @@ enum Opcodes
     CMSG_OPENING_CINEMATIC,
     SMSG_START_CINEMATIC,
     CMSG_UI_TIME_REQUEST,
+    SMSG_UI_TIME,
     SMSG_NEW_WORLD,
     MAX_OPCODE_VALUE
 };
@@ -606,7 +608,6 @@ enum Opcodes335a
     CMSG_DELETEEQUIPMENT_SET                        = 0x13E,
     CMSG_INSTANCE_LOCK_RESPONSE                     = 0x13F,
     CMSG_DEBUG_PASSIVE_AURA                         = 0x140,
-    CMSG_ATTACKSWING                                = 0x141,
     CMSG_ATTACKSTOP                                 = 0x142,
     SMSG_PENDING_RAID_LOCK                          = 0x147,
     CMSG_PERFORM_ACTION_SET                         = 0x14C,
@@ -1439,7 +1440,6 @@ enum Opcodes335a
     CMSG_GM_CREATE_TICKET_RESPONSE                  = 0x4F3,
     CMSG_SERVERINFO                                 = 0x4F4,
     SMSG_SERVERINFO                                 = 0x4F5,
-    SMSG_UI_TIME                                    = 0x4F7,
     CMSG_CHAR_RACE_CHANGE                           = 0x4F8,
     MSG_VIEW_PHASE_SHIFT                            = 0x4F9,
     SMSG_TALENTS_INVOLUNTARILY_RESET                = 0x4FA,

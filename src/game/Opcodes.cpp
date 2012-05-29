@@ -212,6 +212,7 @@ void InitOpcodeTable()
     OPCODE(CMSG_GOSSIP_SELECT_OPTION,         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGossipSelectOptionOpcode);
     OPCODE(CMSG_LIST_INVENTORY,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleListInventoryOpcode     );
     OPCODE(CMSG_SPIRIT_HEALER_ACTIVATE,       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSpiritHealerActivateOpcode);
+    OPCODE(CMSG_ATTACKSWING,                  STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::HandleAttackSwingOpcode       );
     OPCODE(SMSG_ATTACKSTART,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_ATTACKSTOP,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_ATTACKERSTATEUPDATE,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
@@ -238,5 +239,6 @@ void InitOpcodeTable()
     OPCODE(SMSG_START_CINEMATIC,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_INITIALIZE_FACTIONS,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_UI_TIME_REQUEST,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUITimeRequestOpcode     );
+    OPCODE(SMSG_UI_TIME,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_NEW_WORLD,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 };
