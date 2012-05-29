@@ -288,7 +288,11 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         uint8 GuidMask2[] = { 7, 3, 2, 5, 4, 6, 0, 1 };
 
         data->WriteBit(!(unit->m_movementInfo.GetMovementFlags()));
-        data->WriteBit(!(flags & UPDATEFLAG_ROTATION));
+        if (unit->GetTypeId() == TYPEID_UNIT)
+            data->WriteBit(false);
+        else
+            data->WriteBit(true);
+
         data->WriteGuidMask(Guid2, GuidMask2, 3, 0);
 
         if(unit->m_movementInfo.GetMovementFlags())
@@ -446,7 +450,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         data->WriteGuidBytes(Guid3, GuidBytes3, 1, 7);
         *data << ((Unit*)this)->GetSpeed(MOVE_TURN_RATE);
 
-        if (flags & UPDATEFLAG_ROTATION)
+        if (unit->GetTypeId() == TYPEID_UNIT)
             *data << ((Unit*)this)->GetOrientation();
 
         *data << ((Unit*)this)->GetSpeed(MOVE_RUN);
