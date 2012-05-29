@@ -588,7 +588,6 @@ void WorldSession::SendSetPhaseShift(uint32 phaseMask)
                 phaseFlags = phase->Flags;
                 break;
             }
-
         }
     }
 
