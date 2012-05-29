@@ -236,7 +236,7 @@ void WorldSession::HandleGameObjectStatsOpcode( WorldPacket & recv_data )
             }
         }
         DETAIL_LOG("WORLD: CMSG_GAME_OBJECT_STATS '%s' - Entry: %u. ", info->name, entryID);
-        WorldPacket data ( CMSG_GAME_OBJECT_STATS, 150 );
+        WorldPacket data (SMSG_GAME_OBJECT_STATS, 150);
         data << uint32(entryID);
         data << uint32(info->type);
         data << uint32(info->displayId);

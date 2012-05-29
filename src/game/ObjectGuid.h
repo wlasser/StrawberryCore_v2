@@ -66,7 +66,7 @@ enum HighGuid
     HIGHGUID_PLAYER         = 0x0000,                       // blizz 0000
     HIGHGUID_GAMEOBJECT     = 0xF110,                       // blizz F110
     HIGHGUID_TRANSPORT      = 0xF120,                       // blizz F120 (for GAMEOBJECT_TYPE_TRANSPORT)
-    HIGHGUID_UNIT           = 0xF003,                       // blizz F130
+    HIGHGUID_UNIT           = 0x0F03,                       // blizz F130
     HIGHGUID_PET            = 0xF140,                       // blizz F140
     HIGHGUID_VEHICLE        = 0xF150,                       // blizz F550
     HIGHGUID_DYNAMICOBJECT  = 0xF100,                       // blizz F100
