@@ -83,12 +83,40 @@ if(WIN32)
   endif()
 endif()
 
+# if(WIN32)
+#   if(PLATFORM MATCHES X86)
+#     set(ARCH_FLAGS "/MACHINE:X86")
+#   else()
+#     set(ARCH_FLAGS "/MACHINE:X64")
+#   endif()
+# elseif(UNIX)
+#   if(PLATFORM MATCHES X86)
+#     set(ARCH_FLAGS "-m32")
+#   else()
+#     set(ARCH_FLAGS "-m64")
+#   endif()
+# endif()
+
 option(DEBUG "Debug mode" 0)
 # option(CLI "With CLI" 1) # Not used by StrawberryCore so far
 # option(RA "With Remote Access" 0) # TODO: support remote access
 option(TBB_USE_EXTERNAL "Use external TBB" 0)
 option(USE_STD_MALLOC "Use standard malloc instead of TBB" 0)
+option(USE_TBB_MALLOC "Use included TBB malloc" 0)
 option(ACE_USE_EXTERNAL "Use external ACE" 0)
+
+if(WIN32)
+  if(PLATFORM MATCHES X86) # 32-bit
+    option(USE_FASTMM_MALLOC "Use included FastMM malloc (default for win*)" 1)
+    option(USE_STD_MALLOC "Use standard malloc instead of TBB" 0)
+  else() # 64-bit
+    option(USE_STD_MALLOC "Use standard malloc instead of TBB" 0)
+    option(USE_FASTMM_MALLOC "Use included FastMM malloc (default for win*)" 1)
+  endif()
+else()
+#Unix and other platforms
+  option(USE_STD_MALLOC "Use standard malloc instead of TBB" 1)
+endif()
 
 find_package(PCHSupport)
 

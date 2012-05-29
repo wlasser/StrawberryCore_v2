@@ -3826,62 +3826,38 @@ SpellAuraProcResult Unit::HandleOverrideClassScriptAuraProc(Unit *pVictim, uint3
     return SPELL_AURA_PROC_OK;
 }
 
-SpellAuraProcResult Unit::HandleMendingAuraProc( Unit* /*pVictim*/, uint32 /*damage*/, Aura* triggeredByAura, SpellEntry const* /*procSpell*/, uint32 /*procFlag*/, uint32 /*procEx*/, uint32 /*cooldown*/ )
+SpellAuraProcResult Unit::HandleMendingAuraProc( Unit* /*pVictim*/, uint32 /*damage*/, Aura* triggeredByAura, SpellEntry const* procSpell, uint32 /*procFlag*/, uint32 /*procEx*/, uint32 /*cooldown*/ )
 {
-    // aura can be deleted at casts
-    SpellEntry const* spellProto = triggeredByAura->GetSpellProto();
-    SpellEffectIndex effIdx = triggeredByAura->GetEffIndex();
-    int32 heal = triggeredByAura->GetModifier()->m_amount;
-    ObjectGuid caster_guid = triggeredByAura->GetCasterGuid();
+    Player *priestCaster = (Player *)triggeredByAura->GetCaster();
+    int32 heal = triggeredByAura->GetSpellProto()->CalculateSimpleValue(EFFECT_INDEX_0) + (priestCaster->GetBaseSpellPowerBonus() * 318/1000);
+    float radius = sSpellRadiusStore.LookupEntry(procSpell->rangeIndex)->Radius;
 
-    // jumps
-    int32 jumps = triggeredByAura->GetHolder()->GetAuraCharges()-1;
-
-    // next target selection
-    if (jumps > 0 && GetTypeId()==TYPEID_PLAYER && caster_guid.IsPlayer())
+    if(triggeredByAura->GetSpellProto()->Id == procSpell->Id)
     {
-        float radius;
-        SpellEffectEntry const* spellEffect = spellProto->GetSpellEffect(effIdx);
-        if (spellEffect && spellEffect->EffectRadiusIndex)
-            radius = GetSpellRadius(sSpellRadiusStore.LookupEntry(spellEffect->EffectRadiusIndex));
-        else
-            radius = GetSpellMaxRange(sSpellRangeStore.LookupEntry(spellProto->rangeIndex));
+        CastCustomSpell(this,33110,&heal,NULL,NULL,true,NULL,NULL,priestCaster->GetObjectGuid(),triggeredByAura->GetSpellProto());
 
-        if(Player* caster = ((Player*)triggeredByAura->GetCaster()))
+        Player* newVictim = ((Player *)this)->GetNextRandomRaidMember(radius);
+        uint32 jumps = triggeredByAura->GetHolder()->GetAuraCharges()-1;
+        if(jumps > 0)
         {
-            caster->ApplySpellMod(spellProto->Id, SPELLMOD_RADIUS, radius, NULL);
-
-            if(Player* target = ((Player*)this)->GetNextRandomRaidMember(radius))
+            do
             {
-                SpellAuraHolder *holder = GetSpellAuraHolder(spellProto->Id, caster->GetObjectGuid());
-                SpellAuraHolder *new_holder = CreateSpellAuraHolder(spellProto, target, caster);
-                SpellClassOptionsEntry const* classOptions = spellProto->GetSpellClassOptions();
-                // aura will applied from caster, but spell casted from current aura holder
-                SpellModifier *mod = new SpellModifier(SPELLMOD_CHARGES,SPELLMOD_FLAT,jumps-5,spellProto->Id,classOptions ? classOptions->SpellFamilyFlags : ClassFamilyMask());
-
-                for (int32 i = 0; i < MAX_EFFECT_INDEX; ++i)
+                if(newVictim != ((Player*)this))
                 {
-                    Aura *aur = holder->GetAuraByEffectIndex(SpellEffectIndex(i));
-                    if (!aur)
-                        continue;
-
-                    int32 basePoints = aur->GetBasePoints();
-                    Aura * new_aur = CreateAura(spellProto, aur->GetEffIndex(), &basePoints, new_holder, target, caster);
-                    new_holder->AddAura(new_aur, new_aur->GetEffIndex());
+                    priestCaster->CastCustomSpell(newVictim,triggeredByAura->GetSpellProto()->Id,NULL,NULL,NULL,false,NULL,NULL,priestCaster->GetObjectGuid());
+                    return SPELL_AURA_PROC_OK;
                 }
-                new_holder->SetAuraCharges(jumps, false);
-
-                // lock aura holder (currently SPELL_AURA_PRAYER_OF_MENDING is single target spell, so will attempt removing from old target
-                // when applied to new one)
-                triggeredByAura->SetInUse(true);
-                target->AddSpellAuraHolder(new_holder);
-                triggeredByAura->SetInUse(false);
-            }
+                else
+                {
+                    Player* newVictim = ((Player *)this)->GetNextRandomRaidMember(radius);
+                }
+            }while(newVictim == ((Player*)this));
         }
     }
-
-    // heal
-    CastCustomSpell(this,33110,&heal,NULL,NULL,true,NULL,NULL,caster_guid, spellProto);
+    else
+    {
+        priestCaster->CastSpell(this,procSpell->Id,false);
+    }
     return SPELL_AURA_PROC_OK;
 }
 
