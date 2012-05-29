@@ -43,10 +43,10 @@ VehicleKit::VehicleKit(Unit* base) : m_pBase(base), m_uiNumFreeSeats(0)
         if(base)
         {
             if(GetBase()->GetVehicleInfo()->GetEntry()->m_flags & VEHICLE_FLAG_NO_STRAFE)
-                GetBase()->m_movementInfo.AddMovementFlag2(MOVEFLAG2_NO_STRAFE);
+                GetBase()->m_movementInfo.AddMovementFlag2(MOVEFLAG2_PREVENT_STRAFE);
 
             if(GetBase()->GetVehicleInfo()->GetEntry()->m_flags & VEHICLE_FLAG_NO_JUMPING)
-                GetBase()->m_movementInfo.AddMovementFlag2(MOVEFLAG2_NO_JUMPING);
+                GetBase()->m_movementInfo.AddMovementFlag2(MOVEFLAG2_PREVENT_JUMPING);
         }
 
         if (VehicleSeatEntry const *seatInfo = sVehicleSeatStore.LookupEntry(seatId))

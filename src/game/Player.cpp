@@ -1867,22 +1867,22 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
                 if (m_transport)
                 {
                     data << float(m_movementInfo.GetTransportPos()->x);
+                    data << float(m_movementInfo.GetTransportPos()->o);
                     data << float(m_movementInfo.GetTransportPos()->y);
-                    data << float(m_movementInfo.GetTransportPos()->z);
                 }
                 else
                 {
                     data << float(final_x);
+                    data << float(final_o);
                     data << float(final_y);
-                    data << float(final_z);
                 }
 
                 data << uint32(mapid);
 
                 if (m_transport)
-                    data << float(m_movementInfo.GetTransportPos()->o);
+                    data << float(m_movementInfo.GetTransportPos()->z);
                 else
-                    data << float(final_o);
+                    data << float(final_z);
 
                 GetSession()->SendPacket(&data);
                 SendSavedInstances();
@@ -20750,6 +20750,7 @@ void Player::UpdateForQuestWorldObjects()
             }
         }
     }
+
     udata.BuildPacket(&packet);
     GetSession()->SendPacket(&packet);
 }

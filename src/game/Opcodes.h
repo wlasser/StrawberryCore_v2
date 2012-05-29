@@ -68,6 +68,7 @@ enum Opcodes
     SMSG_ACTION_BUTTONS,
     SMSG_MONSTER_MOVE,
     SMSG_CLIENTCACHE_VERSION,
+    CMSG_TUTORIAL_FLAG,
     SMSG_TUTORIAL_FLAGS,
     CMSG_SET_SELECTION,
     SMSG_INITIAL_SPELLS,
@@ -331,6 +332,8 @@ enum Opcodes
     SMSG_SAVE_BIND_POINT,
     CMSG_OPENING_CINEMATIC,
     SMSG_START_CINEMATIC,
+    CMSG_UI_TIME_REQUEST,
+    SMSG_NEW_WORLD,
     MAX_OPCODE_VALUE
 };
 
@@ -551,7 +554,6 @@ enum Opcodes335a
     CMSG_TRIGGER_CINEMATIC_CHEAT                    = 0x0F8,
     CMSG_NEXT_CINEMATIC_CAMERA                      = 0x0FB,
     CMSG_COMPLETE_CINEMATIC                         = 0x0FC,
-    CMSG_TUTORIAL_FLAG                              = 0x0FE,
     CMSG_TUTORIAL_CLEAR                             = 0x0FF,
     CMSG_TUTORIAL_RESET                             = 0x100,
     CMSG_STANDSTATECHANGE                           = 0x101,
@@ -1437,7 +1439,6 @@ enum Opcodes335a
     CMSG_GM_CREATE_TICKET_RESPONSE                  = 0x4F3,
     CMSG_SERVERINFO                                 = 0x4F4,
     SMSG_SERVERINFO                                 = 0x4F5,
-    CMSG_UI_TIME_REQUEST                            = 0x4F6,
     SMSG_UI_TIME                                    = 0x4F7,
     CMSG_CHAR_RACE_CHANGE                           = 0x4F8,
     MSG_VIEW_PHASE_SHIFT                            = 0x4F9,
@@ -1504,7 +1505,6 @@ enum Opcodes335a
     SMSG_NPC_TEXT_UPDATE,
     SMSG_QUEST_QUERY_RESPONSE,
     SMSG_PAGE_TEXT_QUERY_RESPONSE,
-    SMSG_NEW_WORLD,
     SMSG_AURA_UPDATE_ALL,
     SMSG_WARDEN_DATA,
 };

@@ -233,7 +233,7 @@ void Object::DestroyForPlayer( Player *target, bool anim ) const
     target->GetSession()->SendPacket(&data);
 }
 
-void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
+void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 {
     uint64 Guid = uint64(((Unit*)this)->GetObjectGuid());
     uint8 GuidMask[] = { 3, 4, 0, 1, 2 };
@@ -244,7 +244,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
         data->WriteBits(false, 2);
 
     data->WriteBit(flags & UPDATEFLAG_ROTATION);
-    data->WriteBit(flags & UPDATEFLAG_UNK4);                // AnimKits
+    data->WriteBit(flags & UPDATEFLAG_ANIM_KITS);                // AnimKits
     data->WriteBit(flags & UPDATEFLAG_HAS_ATTACKING_TARGET);
 
     if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
@@ -347,7 +347,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
             data->WriteBits(0, 8);
     }
 
-    if (flags & UPDATEFLAG_UNK4)
+    if (flags & UPDATEFLAG_ANIM_KITS)
     {
         data->WriteBit(!true);
         data->WriteBit(!true);
@@ -485,7 +485,7 @@ void Object::BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
                 *data << uint8(0);
     }
 
-    if (flags & UPDATEFLAG_UNK4)
+    if (flags & UPDATEFLAG_ANIM_KITS)
         *data << uint16(0) << uint16(0) << uint16(0);
 
     if(flags & UPDATEFLAG_TRANSPORT)
@@ -1020,8 +1020,7 @@ void Object::MarkForClientUpdate()
     }
 }
 
-WorldObject::WorldObject()
-    : m_isActiveObject(false), m_currMap(NULL), m_mapId(0), m_InstanceId(0), m_phaseMask(PHASEMASK_NORMAL)
+WorldObject::WorldObject() : m_isActiveObject(false), m_currMap(NULL), m_mapId(0), m_InstanceId(0), m_phaseMask(PHASEMASK_NORMAL)
 {
 }
 

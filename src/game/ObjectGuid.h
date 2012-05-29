@@ -66,7 +66,7 @@ enum HighGuid
     HIGHGUID_PLAYER         = 0x0000,                       // blizz 0000
     HIGHGUID_GAMEOBJECT     = 0xF110,                       // blizz F110
     HIGHGUID_TRANSPORT      = 0xF120,                       // blizz F120 (for GAMEOBJECT_TYPE_TRANSPORT)
-    HIGHGUID_UNIT           = 0xF130,                       // blizz F130
+    HIGHGUID_UNIT           = 0xF003,                       // blizz F130
     HIGHGUID_PET            = 0xF140,                       // blizz F140
     HIGHGUID_VEHICLE        = 0xF150,                       // blizz F550
     HIGHGUID_DYNAMICOBJECT  = 0xF100,                       // blizz F100
@@ -91,7 +91,7 @@ class ObjectGuid
     public:                                                 // constructors
         ObjectGuid() : m_guid(0) {}
         explicit ObjectGuid(uint64 guid) : m_guid(guid) {}
-        ObjectGuid(HighGuid hi, uint32 entry, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 48) : 0) {}
+        ObjectGuid(HighGuid hi, uint32 entry, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(entry) << 32) | (uint64(hi) << 48) : 0) {}
         ObjectGuid(HighGuid hi, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(hi) << 48) : 0) {}
 
         operator uint64() const { return m_guid; }
@@ -110,7 +110,7 @@ class ObjectGuid
     public:                                                 // accessors
         uint64   GetRawValue() const { return m_guid; }
         HighGuid GetHigh() const { return HighGuid((m_guid >> 48) & 0x00000FFF); }
-        uint32   GetEntry() const { return HasEntry() ? uint32((m_guid >> 24) & UI64LIT(0x0000000000FFFFFF)) : 0; }
+        uint32   GetEntry() const { return HasEntry() ? uint32((m_guid >> 32) & UI64LIT(0x0000000000FFFFFF)) : 0; }
         uint32   GetCounter()  const
         {
             return HasEntry()
