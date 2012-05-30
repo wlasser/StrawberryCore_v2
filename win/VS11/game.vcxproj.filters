@@ -377,7 +377,7 @@
       <UniqueIdentifier>{697a5fdb-976c-4e02-a00a-09c6372d548e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scripts\spells">
-      <UniqueIdentifier>{b9e38de8-5c2b-4bda-a1ad-b6d89decdd1e}</UniqueIdentifier>
+      <UniqueIdentifier>{5a6e72f1-ced4-4961-aa73-5149530f763a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2344,9 +2344,6 @@
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dragon_soul\instance_dragon_soul.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\dragon_soul</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp">
-      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\hour_of_twilight</Filter>
     </ClCompile>
@@ -2368,7 +2365,7 @@
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\vortex_pinnacle\instance_vortex_pinnacle.cpp">
       <Filter>Scripts\kalimdor\vortex_pinnacle</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_baine.cpp">
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_jaina.cpp">
@@ -2378,6 +2375,9 @@
       <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_tyrande.cpp">
+      <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\boss_echo_baine.cpp">
       <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\spells\spell_boss.cpp">
@@ -2421,6 +2421,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\game\Scripts\spells\spell_warrior.cpp">
       <Filter>Scripts\spells</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\DB2Stores.cpp">
+      <Filter>Server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3128,11 +3131,20 @@
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.h">
       <Filter>Scripts\kalimdor\caverns_of_time\end_time</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.h">
-      <Filter>Scripts\kalimdor\caverns_of_time\hour_of_twilight</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\well_of_eternity\instance_well_of_eternity.h">
       <Filter>Scripts\kalimdor\caverns_of_time\well_of_eternity</Filter>
+    </ClInclude>
+    <ClInclude Include="instance_hour_of_twilight.h">
+      <Filter>Scripts\kalimdor\caverns_of_time\hour_of_twilight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DB2fmt.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DB2Stores.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DB2Structure.h">
+      <Filter>Server</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
