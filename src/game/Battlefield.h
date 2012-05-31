@@ -19,4 +19,58 @@
 #ifndef __BATTLEFIELD_H
 #define __BATTLEFIELD_H
 
+#include "BattlefieldMgr.h"
+#include "MapManager.h"
+#include "Group.h"
+
+enum Battlefields
+{
+    BATTLEFIELD_WG = 1,
+    BATTLEFIELD_TB = 21
+};
+
+enum Teams
+{
+    TEAM_ALLIANCE,
+    TEAM_HORDE
+};
+
+typedef std::list<Player *> PlayerList;
+
+class Map;
+
+class Battlefield
+{
+    friend class BattlefieldMgr;
+
+    public:
+
+        Battlefield(uint8 BattleId,uint32 zoneId, uint32 WarTime,uint32 NoWarTime);
+        ~Battlefield();
+        
+        virtual void Update(uint32 uiDiff);
+        virtual void BattleStart();
+        virtual void BattleEnd();
+
+        void PlayerJoin(Player* player);
+        void PlayerLeave(Player* player);
+        bool IsBattleInProgress() const { return m_battleInProgress; } ;
+
+    protected:
+        uint8           m_defenderTeam;
+        uint8           m_attackerTeam;
+        uint8           m_controlledByTeam;
+        uint8           m_battleId;
+        uint32          m_nextBattleTimer;
+        uint32          m_battleDurationTimer;
+        uint32          m_zoneId;
+        bool            m_battleInProgress;
+        PlayerList      m_queuedPlayers[2];
+        Group*          m_raidGroup;
+        Map*            m_map;
+
+    private:
+        void InvitePlayersInZone();
+};
+
 #endif

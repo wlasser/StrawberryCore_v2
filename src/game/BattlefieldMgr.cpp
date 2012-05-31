@@ -18,7 +18,50 @@
 
 #include "BattlefieldMgr.h"
 
+INSTANTIATE_SINGLETON_1(BattlefieldMgr);
+
+BattlefieldMgr::BattlefieldMgr()
+{
+
+}
+
+BattlefieldMgr::~BattlefieldMgr()
+{
+
+}
+
 void BattlefieldMgr::Initialize()
+{
+    sLog.outDebug("Creating battlefields");
+}
+
+void BattlefieldMgr::Update(uint32 uiDiff)
+{
+    sLog.outDebug("Updating the Battlefields");
+    for(BattlefieldList::iterator itr = m_battlefieldList.begin(); itr != m_battlefieldList.end(); ++itr)
+    {
+        (*itr).second->Update(uiDiff);
+    }
+}
+
+void BattlefieldMgr::AddPlayerToQueue(Player* plr)
+{
+    m_queue.push_back(plr);
+}
+
+void BattlefieldMgr::SendQueueRequestResponse(Player* plr,bool canJoin)
+{
+    WorldPacket data(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,11);
+
+    data << uint8(0);
+    data << uint32(4197);
+    data << uint64(1);
+    data << uint64(plr->GetObjectGuid().GetRawValue());
+    data << uint8(1);
+    data << uint8(1);
+}
+
+void BattlefieldMgr::SendInvitePlayerToQueue(Player * player)
 {
 
 }

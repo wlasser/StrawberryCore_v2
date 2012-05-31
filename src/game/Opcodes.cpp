@@ -241,4 +241,6 @@ void InitOpcodeTable()
     OPCODE(CMSG_UI_TIME_REQUEST,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUITimeRequestOpcode     );
     OPCODE(SMSG_UI_TIME,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_NEW_WORLD,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_BATTLEFIELD_MGR_QUEUE_REQ,    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBattlefieldJoinQueueOpcode);
+    OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
 };

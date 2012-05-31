@@ -19,23 +19,44 @@
 #ifndef __BATTLEFIELD_MGR_H
 #define __BATTLEFIELD_MGR_H
 
+#include "Battlefield.h"
 #include "Player.h"
+#include "Log.h"
+#include "Opcodes.h"
+#include "ObjectAccessor.h"
+#include "WorldPacket.h"
+#include "Common.h"
+#include "SharedDefines.h"
+#include "Policies/Singleton.h"
+#include "ace/Recursive_Thread_Mutex.h"
 #include <map>
 
-typedef std::list<Player*> PlayerQueue;
-
 class Player;
+class Battlefield;
+
+typedef std::list<Player*> PlayerQueue;
+typedef std::map<uint8,Battlefield* > BattlefieldList;
 
 class BattlefieldMgr
 {
+    friend class Battlefield;
+
     public:
+        BattlefieldMgr();
+        ~BattlefieldMgr();
 
         void Initialize();
         void Update(uint32 uiDiff);
+        void AddPlayerToQueue(Player* plr);
+
+        void SendQueueRequestResponse(Player* plr,bool canJoin);
+        void SendInvitePlayerToQueue(Player * player);
 
     private:
-        PlayerQueue m_queue;
+        PlayerQueue             m_queue;
+        BattlefieldList         m_battlefieldList;
+
 };
 
-#define sBattlefieldMrg Strawberry::Singleton<BattlefieldMgr>::Instance()
+#define sBattlefieldMgr Strawberry::Singleton<BattlefieldMgr>::Instance()
 #endif
