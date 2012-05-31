@@ -326,6 +326,7 @@
     <ClCompile Include="..\..\src\game\ChatHandler.cpp" />
     <ClCompile Include="..\..\src\game\CombatHandler.cpp" />
     <ClCompile Include="..\..\src\game\CreatureLinkingMgr.cpp" />
+    <ClCompile Include="..\..\src\game\DB2Stores.cpp" />
     <ClCompile Include="..\..\src\game\DuelHandler.cpp" />
     <ClCompile Include="..\..\src\game\GameEventMgr.cpp" />
     <ClCompile Include="..\..\src\game\GMTicketHandler.cpp" />
@@ -1014,6 +1015,9 @@
     <ClInclude Include="..\..\src\game\ChannelMgr.h" />
     <ClInclude Include="..\..\src\game\Chat.h" />
     <ClInclude Include="..\..\src\game\CreatureLinkingMgr.h" />
+    <ClInclude Include="..\..\src\game\DB2fmt.h" />
+    <ClInclude Include="..\..\src\game\DB2Stores.h" />
+    <ClInclude Include="..\..\src\game\DB2Structure.h" />
     <ClInclude Include="..\..\src\game\GameEventMgr.h" />
     <ClInclude Include="..\..\src\game\GossipDef.h" />
     <ClInclude Include="..\..\src\game\GridDefines.h" />
@@ -1069,7 +1073,6 @@
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\culling_of_stratholme\culling_of_stratholme.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dark_portal\dark_portal.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.h" />
-    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hour_of_twilight\instance_hour_of_twilight.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjal.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjalAI.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\old_hillsbrad\old_hillsbrad.h" />
@@ -1231,6 +1234,7 @@
     <ClInclude Include="..\..\src\game\WardenModuleMac.h" />
     <ClInclude Include="..\..\src\game\WardenModuleWin.h" />
     <ClInclude Include="..\..\src\game\WardenWin.h" />
+    <ClInclude Include="instance_hour_of_twilight.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\dep\recastnavigation\Detour\win\VS11\Detour.vcxproj">

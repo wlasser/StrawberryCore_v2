@@ -41,7 +41,13 @@ void WorldSession::SendNameCacheOpcode(Player *p)
                                                             // guess size
     WorldPacket data( SMSG_NAME_CACHE, (8+1+1+1+1+1+10) );
     data << p->GetPackGUID();                               // player guid
-    data << p->GetName();                                   // played name, maxlength: 48
+    data << uint8(0);                                       // added in 3.1; if > 1, then end of packet
+    data << p->GetName();
+    data << uint8(0);                                       // realm name for cross realm BG usage
+    data << uint8(p->getRace());                                   // race
+    data << uint8(p->getGender());                                 // gender
+    data << uint8(p->getClass());                                  // class
+
     if(DeclinedName const* names = p->GetDeclinedNames())
     {
         data << uint8(1);                                   // is declined
@@ -50,11 +56,6 @@ void WorldSession::SendNameCacheOpcode(Player *p)
     }
     else
         data << uint8(0);                                   // is not declined
-
-    data << uint8(0);                                       // realm name for cross realm BG usage
-    data << uint32(p->getRace());
-    data << uint32(p->getGender());
-    data << uint32(p->getClass());
 
     SendPacket(&data);
 }
