@@ -22,7 +22,7 @@
 
 void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
 {
-    //uint64 playerGuid = 0;
+    uint64 playerGuid = 0;
     bool canJoin = true;
 
     BitStream mask = recv_data.ReadBitStream(8);
