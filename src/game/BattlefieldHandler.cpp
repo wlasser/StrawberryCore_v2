@@ -22,35 +22,29 @@
 
 void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
 {
-    uint8 mask[8];
-    uint8 bytes[8];
-    *(uint64*)bytes = 0;
-    bool canJoin = false;
+    //uint64 playerGuid = 0;
+    bool canJoin = true;
 
-    for(uint8 i = 0 ; i < 8; ++i){
-        recv_data.ReadByteMask(mask[i]);
-    }
+    BitStream mask = recv_data.ReadBitStream(8);
 
-    if (mask[4])
-        bytes[6] = recv_data.ReadUInt8() ^ 1;
-    if (mask[1])
-        bytes[3] = recv_data.ReadUInt8() ^ 1;
-    if (mask[5])
-        bytes[2] = recv_data.ReadUInt8() ^ 1;
-    if (mask[3])
-        bytes[4] = recv_data.ReadUInt8() ^ 1;
-    if (mask[2])
-        bytes[7] = recv_data.ReadUInt8() ^ 1;
-    if (mask[6])
-        bytes[1] = recv_data.ReadUInt8() ^ 1;
-    if (mask[7])
-        bytes[5] = recv_data.ReadUInt8() ^ 1;
-    if (mask[0])
-        bytes[0] = recv_data.ReadUInt8() ^ 1;
+    ByteBuffer bytes(8, true);
 
-    Player * plr = ObjectAccessor::FindPlayer((*(ObjectGuid*)bytes));
-    if(plr->HasFreeBattleGroundQueueId())
-        canJoin = true;
+    if (mask[4]) bytes[6] = recv_data.ReadUInt8() ^ 1;
+    if (mask[1]) bytes[3] = recv_data.ReadUInt8() ^ 1;
+    if (mask[5]) bytes[2] = recv_data.ReadUInt8() ^ 1;
+    if (mask[3]) bytes[4] = recv_data.ReadUInt8() ^ 1;
+    if (mask[2]) bytes[7] = recv_data.ReadUInt8() ^ 1;
+    if (mask[6]) bytes[1] = recv_data.ReadUInt8() ^ 1;
+    if (mask[7]) bytes[5] = recv_data.ReadUInt8() ^ 1;
+    if (mask[0]) bytes[0] = recv_data.ReadUInt8() ^ 1;
+
+    playerGuid = BitConverter::ToUInt64(bytes);
+    //ObjectGuid playerGuid;
+    //recv_data >> playerGuid.ReadAsPacked();
+    sLog.outDebug( "Player with guid: %u ", playerGuid);
+    Player * plr = ObjectAccessor::FindPlayer(playerGuid);
+    /*if(plr->HasFreeBattleGroundQueueId())
+        canJoin = true;*/
 
     sBattlefieldMgr.SendQueueRequestResponse(plr,canJoin);
 }

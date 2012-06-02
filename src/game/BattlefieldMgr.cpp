@@ -37,7 +37,7 @@ void BattlefieldMgr::Initialize()
 
 void BattlefieldMgr::Update(uint32 uiDiff)
 {
-    sLog.outDebug("Updating the Battlefields");
+    //sLog.outDebug("Updating the Battlefields");
     for(BattlefieldList::iterator itr = m_battlefieldList.begin(); itr != m_battlefieldList.end(); ++itr)
     {
         (*itr).second->Update(uiDiff);
