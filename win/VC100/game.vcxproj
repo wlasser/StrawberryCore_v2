@@ -340,6 +340,7 @@
     <ClCompile Include="..\..\src\game\AchievementMgr.cpp" />
     <ClCompile Include="..\..\src\game\ArenaTeamHandler.cpp" />
     <ClCompile Include="..\..\src\game\AuctionHouseHandler.cpp" />
+    <ClCompile Include="..\..\src\game\BattlefieldHandler.cpp" />
     <ClCompile Include="..\..\src\game\BattlefieldMgr.cpp" />
     <ClCompile Include="..\..\src\game\BattleGround.cpp" />
     <ClCompile Include="..\..\src\game\BattleGroundAA.cpp" />
@@ -1030,13 +1031,10 @@
     </ClCompile>
     <ClCompile Include="..\..\src\game\WardenMac.cpp" />
     <ClCompile Include="..\..\src\game\WardenWin.cpp" />
-    <ClCompile Include="Battlefield.cpp" />
-    <ClCompile Include="BattlefieldHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h" />
     <ClInclude Include="..\..\src\game\AchievementMgr.h" />
-    <ClInclude Include="..\..\src\game\Battlefield.h" />
     <ClInclude Include="..\..\src\game\BattlefieldMgr.h" />
     <ClInclude Include="..\..\src\game\BattleGround.h" />
     <ClInclude Include="..\..\src\game\BattleGroundAA.h" />
