@@ -42,7 +42,7 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
     //ObjectGuid playerGuid;
     //recv_data >> playerGuid.ReadAsPacked();
     sLog.outDebug( "Player with guid: %u ", playerGuid);
-    Player * plr = ObjectAccessor::FindPlayer(playerGuid);
+    Player * plr = ObjectAccessor::FindPlayer((ObjectGuid)playerGuid);
     /*if(plr->HasFreeBattleGroundQueueId())
         canJoin = true;*/
 

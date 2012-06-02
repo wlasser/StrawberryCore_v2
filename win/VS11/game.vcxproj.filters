@@ -2425,6 +2425,12 @@
     <ClCompile Include="..\..\src\game\DB2Stores.cpp">
       <Filter>Server</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\BattlefieldHandler.cpp">
+      <Filter>World/Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\BattlefieldMgr.cpp">
+      <Filter>World/Handlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -3145,6 +3151,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\DB2Structure.h">
       <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\BattlefieldMgr.h">
+      <Filter>World/Handlers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
