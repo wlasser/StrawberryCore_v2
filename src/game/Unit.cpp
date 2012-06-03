@@ -10838,7 +10838,7 @@ void MovementInfo::BuildMovementPacket(ByteBuffer *data) const
 
     data->FlushBits(); // reset bit stream
 
-    *data << t_guid.m_guid;
+    *data << t_guid.GetRawValue();
     *data << time;
     *data << pos.x;
     *data << pos.y;
@@ -10847,7 +10847,7 @@ void MovementInfo::BuildMovementPacket(ByteBuffer *data) const
 
     if (onTransport)
     {
-        *data << t_guid.m_guid;
+        *data << t_guid.GetRawValue();
         *data << t_pos.x;
         *data << t_pos.y;
         *data << t_pos.z;
