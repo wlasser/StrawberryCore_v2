@@ -256,10 +256,8 @@ void WorldSession::HandleMoveTeleportAckOpcode(WorldPacket& recv_data)
 
 void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
 {
-    Opcodes opcode = recv_data.GetOpcodeEnum();
+    Opcodes opcode = (Opcodes)recv_data.GetOpcode();
     DEBUG_LOG("WORLD: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
-
-    recv_data.hexlike();
 
     Unit *mover = _player->GetMover();
 
@@ -278,11 +276,12 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
     MovementInfo movementInfo;
     ReadMovementInfo(recv_data, &movementInfo);
 
-    recv_data.rpos(recv_data.wpos());
-
     // prevent tampered movement data
     if (movementInfo.guid != mover->GetObjectGuid())
+    {
+        sLog.outError("Error: Different Guids. MoveInfo: %u, Mover: %u", movementInfo.guid.GetRawValue(), mover->GetObjectGuid().GetRawValue());
         return;
+    }
 
     /* handle special cases */
     if (movementInfo.moveFlags & MOVEFLAG_ONTRANSPORT)
@@ -360,6 +359,7 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
         return;
     }
 
+    sLog.outDebug("Updated Position GUID(%u): %f, %f, %f, %f", movementInfo.guid.GetCounter(), movementInfo.pos.x, movementInfo.pos.y, movementInfo.pos.z, movementInfo.pos.o);
     mover->SetPosition(movementInfo.pos.x, movementInfo.pos.y, movementInfo.pos.z, movementInfo.pos.o, false);
 
     if (plMover)                                            // nothing is charmed, or player charmed
@@ -400,6 +400,10 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
     bool HaveTransportData = false,
         HaveTransportTime2 = false,
         HaveTransportTime3 = false,
+        HaveMovementFlags = true,
+        HaveMovementFlags2 = true,
+        HaveOrientation = true,
+        HaveTimeStamp = true,
         HavePitch = false,
         HaveFallData = false,
         HaveFallDirection = false,
@@ -409,6 +413,7 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
     MovementStatusElements *sequence = GetMovementStatusElementsSequence(data.GetOpcodeEnum());
     if(sequence == NULL)
         return;
+
     uint8 guid[8];
     uint8 tguid[8];
     *(uint64*)guid = 0;
@@ -423,11 +428,11 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
             continue;
         }
 
-        if (element >= MSETransportGuidByte0 &&
-            element <= MSETransportGuidByte7)
+        if (element >= MSETransportGuidByte0 && element <= MSETransportGuidByte7)
         {
             if (HaveTransportData)
                 data.ReadByteMask(tguid[element - MSETransportGuidByte0]);
+
             continue;
         }
 
@@ -437,126 +442,144 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
             continue;
         }
 
-        if (element >= MSETransportGuidByte0_2 &&
-            element <= MSETransportGuidByte7_2)
+        if (element >= MSETransportGuidByte0_2 && element <= MSETransportGuidByte7_2)
         {
             if (HaveTransportData)
                 data.ReadByteSeq(tguid[element - MSETransportGuidByte0_2]);
+
             continue;
         }
 
         switch (element)
         {
-        case MSEFlags:
-            mi->moveFlags = data.ReadBits(30);
-            break;
-        case MSEFlags2:
-            mi->moveFlags2 = data.ReadBits(12);
-            break;
-        case MSETimestamp:
-            data >> mi->time;
-            break;
-        case MSEHavePitch:
-            HavePitch = data.ReadBit();
-            break;
-        case MSEHaveFallData:
-            HaveFallData = data.ReadBit();
-            break;
-        case MSEHaveFallDirection:
-            if (HaveFallData)
-                HaveFallDirection = data.ReadBit();
-            break;
-        case MSEHaveTransportData:
-            HaveTransportData = data.ReadBit();
-            break;
-        case MSETransportHaveTime2:
-            if (HaveTransportData)
-                HaveTransportTime2 = data.ReadBit();
-            break;
-        case MSETransportHaveTime3:
-            if (HaveTransportData)
-                HaveTransportTime3 = data.ReadBit();
-            break;
-        case MSEHaveSpline:
-            HaveSpline = data.ReadBit();
-            break;
-        case MSEHaveSplineElev:
-            HaveSplineElevation = data.ReadBit();
-            break;
-        case MSEPositionX:
-            {
+            case MSEFlags:
+                if (MSEHaveMovementFlags)
+                    mi->moveFlags = data.ReadBits(30);
+                break;
+            case MSEFlags2:
+                if (MSEHaveMovementFlags2)
+                    mi->moveFlags2 = data.ReadBits(12);
+                break;
+            case MSEHaveUnknownBit:
+                data.ReadBit();
+            case MSETimestamp:
+                if (MSEHaveTimeStamp)
+                    data >> mi->time;
+                break;
+            case MSEHaveTimeStamp:
+                HaveTimeStamp = !data.ReadBit();
+                break;
+            case MSEHaveOrientation:
+                HaveOrientation = data.ReadBit();
+                break;
+            case MSEHaveMovementFlags:
+                HaveMovementFlags = !data.ReadBit();
+                break;
+            case MSEHaveMovementFlags2:
+                HaveMovementFlags2 = !data.ReadBit();
+                break;
+            case MSEHavePitch:
+                HavePitch = data.ReadBit();
+                break;
+            case MSEHaveFallData:
+                HaveFallData = data.ReadBit();
+                break;
+            case MSEHaveFallDirection:
+                if (HaveFallData)
+                    HaveFallDirection = data.ReadBit();
+                break;
+            case MSEHaveTransportData:
+                HaveTransportData = data.ReadBit();
+                break;
+            case MSETransportHaveTime2:
+                if (HaveTransportData)
+                    HaveTransportTime2 = data.ReadBit();
+                break;
+            case MSETransportHaveTime3:
+                if (HaveTransportData)
+                    HaveTransportTime3 = data.ReadBit();
+                break;
+            case MSEHaveSpline:
+                HaveSpline = data.ReadBit();
+                break;
+            case MSEHaveSplineElev:
+                HaveSplineElevation = data.ReadBit();
+                break;
+            case MSEPositionX:
                 data >> mi->pos.x;
+                break;
+            case MSEPositionY:
                 data >> mi->pos.y;
+                break;
+            case MSEPositionZ:
                 data >> mi->pos.z;
-            }
-            break;
-        case MSEPositionY:
-        case MSEPositionZ:
-            break;  // assume they always go as vector of 3
-        case MSEPositionO:
-            data >> mi->pos.o;
-            break;
-        case MSEPitch:
-            if (HavePitch)
-                data >> mi->s_pitch;
-            break;
-        case MSEFallTime:
-            if (HaveFallData)
-                data >> mi->fallTime;
-            break;
-        case MSESplineElev:
-            if (HaveSplineElevation)
-                data >> mi->splineElevation;
-            break;
-        case MSEFallHorizontalSpeed:
-            if (HaveFallDirection)
-                data >> mi->jump.xyspeed;
-            break;
-        case MSEFallVerticalSpeed:
-            if (HaveFallData)
-                data >> mi->jump.velocity;
-            break;
-        case MSEFallCosAngle:
-            if (HaveFallDirection)
-                data >> mi->jump.cosAngle;
-            break;
-        case MSEFallSinAngle:
-            if (HaveFallDirection)
-                data >> mi->jump.sinAngle;
-            break;
-        case MSETransportSeat:
-            if (HaveTransportData)
-                data >> mi->t_seat;
-            break;
-        case MSETransportPositionO:
-            if (HaveTransportData)
-                data >> mi->t_pos.o;
-            break;
-        case MSETransportPositionX:
-            if (HaveTransportData)
-            {
-                data >> mi->pos.x;
-                data >> mi->pos.y;
-                data >> mi->pos.z;
-            }
-            break;
-        case MSETransportPositionY:
-        case MSETransportPositionZ:
-            break;  // assume they always go as vector of 3
-        case MSETransportTime:
-            if (HaveTransportData)
-                data >> mi->t_time;
-            break;
-        case MSETransportTime2:
-            if (HaveTransportTime2)
-                data >> mi->t_time2;
-            break;
-        case MSETransportTime3:
-            if (HaveTransportTime3)
-                data >> mi->fallTime;
-            break;
-        default:
-            WPError(false);
+                break;
+            case MSEPositionO:
+                if (HaveOrientation)
+                    data >> mi->pos.o;
+                break;
+            case MSEPitch:
+                if (HavePitch)
+                    data >> mi->s_pitch;
+                break;;
+            case MSEFallTime:
+                if (HaveFallData)
+                    sLog.outDebug("mi->fallTime: %u", mi->fallTime);
+                break;
+            case MSESplineElev:
+                if (HaveSplineElevation)
+                    data >> mi->splineElevation;
+                break;
+            case MSEFallHorizontalSpeed:
+                if (HaveFallDirection)
+                    data >> mi->jump.xyspeed;
+                break;
+            case MSEFallVerticalSpeed:
+                if (HaveFallData)
+                    data >> mi->jump.velocity;
+                break;
+            case MSEFallCosAngle:
+                if (HaveFallDirection)
+                    data >> mi->jump.cosAngle;
+                break;
+            case MSEFallSinAngle:
+                if (HaveFallDirection)
+                    data >> mi->jump.sinAngle;
+                break;
+            case MSETransportSeat:
+                if (HaveTransportData)
+                    data >> mi->t_seat;
+                break;
+            case MSETransportPositionO:
+                if (HaveTransportData)
+                    data >> mi->t_pos.o;
+                break;
+            case MSETransportPositionX:
+                if (HaveTransportData)
+                    data >> mi->pos.x;
+                break;
+            case MSETransportPositionY:
+                if (HaveTransportData)
+                    data >> mi->pos.y;
+                break;
+            case MSETransportPositionZ:
+                if (HaveTransportData)
+                    data >> mi->pos.z;
+                break;
+            case MSETransportTime:
+                if (HaveTransportData)
+                    data >> mi->t_time;
+                break;
+            case MSETransportTime2:
+                if (HaveTransportTime2)
+                    data >> mi->t_time2;
+                break;
+            case MSETransportTime3:
+                if (HaveTransportTime3)
+                    data >> mi->fallTime;
+                break;
+            default:
+                WPError(false);
         }
     }
 
@@ -573,6 +596,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
     bool HaveTransportData = mi->HasMovementFlag(MOVEFLAG_ONTRANSPORT),
         HaveTransportTime2 = (mi->moveFlags2 & MOVEFLAG2_INTERP_MOVEMENT) != 0,
         HaveTransportTime3 = false,
+        HaveTime = true,
         HavePitch = (mi->HasMovementFlag(MovementFlags(MOVEFLAG_SWIMMING | MOVEFLAG_FLYING))) 
         || (mi->moveFlags2 & MOVEFLAG2_ALLOW_PITCHING),
         HaveFallData = mi->HasMovementFlag2(MOVEFLAG2_INTERP_TURNING),
@@ -595,8 +619,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
             continue;
         }
 
-        if (element >= MSETransportGuidByte0 &&
-            element <= MSETransportGuidByte7)
+        if (element >= MSETransportGuidByte0 && element <= MSETransportGuidByte7)
         {
             if (HaveTransportData)
                 data.WriteByteMask(tguid[element - MSETransportGuidByte0]);
@@ -609,8 +632,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
             continue;
         }
 
-        if (element >= MSETransportGuidByte0_2 &&
-            element <= MSETransportGuidByte7_2)
+        if (element >= MSETransportGuidByte0_2 && element <= MSETransportGuidByte7_2)
         {
             if (HaveTransportData)
                 data.WriteByteSeq(tguid[element - MSETransportGuidByte0_2]);
@@ -619,116 +641,120 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
 
         switch (element)
         {
-        case MSEFlags:
-            data.WriteBits(mi->moveFlags, 30);
-            break;
-        case MSEFlags2:
-            data.WriteBits(mi->moveFlags2, 12);
-            break;
-        case MSETimestamp:
-            data << mi->time;
-            break;
-        case MSEHavePitch:
-            data.WriteBit(HavePitch);
-            break;
-        case MSEHaveFallData:
-            data.WriteBit(HaveFallData);
-            break;
-        case MSEHaveFallDirection:
-            if (HaveFallData)
-                data.WriteBit(HaveFallDirection);
-            break;
-        case MSEHaveTransportData:
-            data.WriteBit(HaveTransportData);
-            break;
-        case MSETransportHaveTime2:
-            if (HaveTransportData)
-                data.WriteBit(HaveTransportTime2);
-            break;
-        case MSETransportHaveTime3:
-            if (HaveTransportData)
-                data.WriteBit(HaveTransportTime3);
-            break;
-        case MSEHaveSpline:
-            data.WriteBit(HaveSpline);
-            break;
-        case MSEHaveSplineElev:
-            data.WriteBit(HaveSplineElevation);
-            break;
-        case MSEPositionX:
-            {
+            case MSEFlags:
+                data.WriteBits(mi->moveFlags, 30);
+                break;
+            case MSEFlags2:
+                data.WriteBits(mi->moveFlags2, 12);
+                break;
+            case MSETimestamp:
+                data << mi->time;
+                break;
+            case MSEHavePitch:
+                data.WriteBit(HavePitch);
+                break;
+            case MSEHaveTimeStamp:
+                if (HaveFallData)
+                    data.WriteBit(HaveTime);
+                break;
+            case MSEHaveFallData:
+                data.WriteBit(HaveFallData);
+                break;
+            case MSEHaveFallDirection:
+                if (HaveFallData)
+                    data.WriteBit(HaveFallDirection);
+                break;
+            case MSEHaveTransportData:
+                data.WriteBit(HaveTransportData);
+                break;
+            case MSETransportHaveTime2:
+                if (HaveTransportData)
+                    data.WriteBit(HaveTransportTime2);
+                break;
+            case MSETransportHaveTime3:
+                if (HaveTransportData)
+                    data.WriteBit(HaveTransportTime3);
+                break;
+            case MSEHaveSpline:
+                data.WriteBit(HaveSpline);
+                break;
+            case MSEHaveSplineElev:
+                data.WriteBit(HaveSplineElevation);
+                break;
+            case MSEPositionX:
                 data << mi->pos.x;
+                break;
+            case MSEPositionY:
                 data << mi->pos.y;
+                break;
+            case MSEPositionZ:
                 data << mi->pos.z;
-            }
-            break;
-        case MSEPositionY:
-        case MSEPositionZ:
-            break;  // assume they always go as vector of 3
-        case MSEPositionO:
-            data << mi->pos.o;
-            break;
-        case MSEPitch:
-            if (HavePitch)
-                data << mi->s_pitch;
-            break;
-        case MSEFallTime:
-            if (HaveFallData)
-                data << mi->fallTime;
-            break;
-        case MSESplineElev:
-            if (HaveSplineElevation)
-                data << mi->splineElevation;
-            break;
-        case MSEFallHorizontalSpeed:
-            if (HaveFallDirection)
-                data << mi->jump.xyspeed;
-            break;
-        case MSEFallVerticalSpeed:
-            if (HaveFallData)
-                data << mi->jump.velocity;
-            break;
-        case MSEFallCosAngle:
-            if (HaveFallDirection)
-                data << mi->jump.cosAngle;
-            break;
-        case MSEFallSinAngle:
-            if (HaveFallDirection)
-                data << mi->jump.sinAngle;
-            break;
-        case MSETransportSeat:
-            if (HaveTransportData)
-                data << mi->t_seat;
-            break;
-        case MSETransportPositionO:
-            if (HaveTransportData)
-                data << mi->t_pos.o;
-            break;
-        case MSETransportPositionX:
-            if (HaveTransportData)
-            {
-                data << mi->pos.x;
-                data << mi->pos.y;
-                data << mi->pos.z;
-            }
-            break;
-        case MSETransportPositionY:
-        case MSETransportPositionZ:
-            break;  // assume they always go as vector of 3
-        case MSETransportTime:
-            if (HaveTransportData)
-                data << mi->t_time;
-            break;
-        case MSETransportTime2:
-            if (HaveTransportTime2)
-                data << mi->t_time2;
-            break;
-        case MSETransportTime3:
-            if (HaveTransportTime3)
-                data << mi->fallTime;
-            break;
-        default:
-            WPError(false);
+                break;
+            case MSEPositionO:
+                data << mi->pos.o;
+                break;
+            case MSEPitch:
+                if (HavePitch)
+                    data << mi->s_pitch;
+                break;
+            case MSEFallTime:
+                if (HaveFallData)
+                    data << mi->fallTime;
+                break;
+            case MSESplineElev:
+                if (HaveSplineElevation)
+                    data << mi->splineElevation;
+                break;
+            case MSEFallHorizontalSpeed:
+                if (HaveFallDirection)
+                    data << mi->jump.xyspeed;
+                break;
+            case MSEFallVerticalSpeed:
+                if (HaveFallData)
+                    data << mi->jump.velocity;
+                break;
+            case MSEFallCosAngle:
+                if (HaveFallDirection)
+                    data << mi->jump.cosAngle;
+                break;
+            case MSEFallSinAngle:
+                if (HaveFallDirection)
+                    data << mi->jump.sinAngle;
+                break;
+            case MSETransportSeat:
+                if (HaveTransportData)
+                    data << mi->t_seat;
+                break;
+            case MSETransportPositionO:
+                if (HaveTransportData)
+                    data << mi->t_pos.o;
+                break;
+            case MSETransportPositionX:
+                if (HaveTransportData)
+                    data << mi->pos.x;
+                break;
+            case MSETransportPositionY:
+                if (HaveTransportData)
+                    data << mi->pos.y;
+                break;
+            case MSETransportPositionZ:
+                if (HaveTransportData)
+                    data << mi->pos.z;
+                break;
+            case MSETransportTime:
+                if (HaveTransportData)
+                    data << mi->t_time;
+                break;
+            case MSETransportTime2:
+                if (HaveTransportTime2)
+                    data << mi->t_time2;
+                break;
+            case MSETransportTime3:
+                if (HaveTransportTime3)
+                    data << mi->fallTime;
+                break;
+            default:
+                WPError(false);
         }
     }
 }

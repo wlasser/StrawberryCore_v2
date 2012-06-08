@@ -660,6 +660,7 @@ void WorldSession::HandlePlayerLoginOpcode( WorldPacket & recv_data )
     if (mask[4]) bytes[4] = recv_data.ReadUInt8() ^ 1;
 
     playerGuid = BitConverter::ToUInt64(bytes);
+    sLog.outDebug("Player with GUID %u entering world...", playerGuid);
 
     LoginQueryHolder *holder = new LoginQueryHolder(GetAccountId(), ObjectGuid(playerGuid));
     if (!holder->Initialize())

@@ -338,6 +338,8 @@ enum Opcodes
     SMSG_NEW_WORLD,
     CMSG_BATTLEFIELD_MGR_QUEUE_REQ,
     SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,
+    MSG_START_MOVE_FORWARD,
+    MSG_MOVE_HEARTBEAT,
     MAX_OPCODE_VALUE
 };
 
@@ -489,7 +491,6 @@ enum Opcodes335a
     CMSG_DESTROY_ITEMS                              = 0x0B2,
     SMSG_GAMEOBJECT_CUSTOM_ANIM                     = 0x0B3,
     CMSG_AREATRIGGER                                = 0x0B4,
-    MSG_MOVE_START_FORWARD                          = 0x0B5,
     MSG_MOVE_START_BACKWARD                         = 0x0B6,
     MSG_MOVE_STOP                                   = 0x0B7,
     MSG_MOVE_START_STRAFE_LEFT                      = 0x0B8,
@@ -545,7 +546,6 @@ enum Opcodes335a
     CMSG_FORCE_MOVE_UNROOT_ACK                      = 0x0EB,
     MSG_MOVE_ROOT                                   = 0x0EC,
     MSG_MOVE_UNROOT                                 = 0x0ED,
-    MSG_MOVE_HEARTBEAT                              = 0x0EE,
     SMSG_MOVE_KNOCK_BACK                            = 0x0EF,
     CMSG_MOVE_KNOCK_BACK_ACK                        = 0x0F0,
     MSG_MOVE_KNOCK_BACK                             = 0x0F1,
