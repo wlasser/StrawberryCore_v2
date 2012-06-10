@@ -349,9 +349,6 @@
     <Filter Include="Scripts\kalimdor\caverns_of_time\dragon_soul">
       <UniqueIdentifier>{367726fe-28e0-464d-8989-dba49e88e061}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\kalimdor\caverns_of_time\dragon_soul\NewFilter1">
-      <UniqueIdentifier>{2d468805-175e-4648-8988-c46b9054ac3f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\kalimdor\caverns_of_time\end_time">
       <UniqueIdentifier>{318a8349-5e29-4a64-98c3-4750bbdebadd}</UniqueIdentifier>
     </Filter>
@@ -3154,6 +3151,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\BattlefieldMgr.h">
       <Filter>World/Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dragon_soul\instance_dragon_soul.h">
+      <Filter>Scripts\kalimdor\caverns_of_time\dragon_soul</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
