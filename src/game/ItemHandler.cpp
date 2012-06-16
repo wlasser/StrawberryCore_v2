@@ -313,7 +313,7 @@ void WorldSession::HandleReadItemOpcode( WorldPacket & recv_data )
 
 void WorldSession::HandlePageQuerySkippedOpcode( WorldPacket & recv_data )
 {
-    DEBUG_LOG( "WORLD: Received CMSG_PAGE_TEXT_QUERY" );
+    DEBUG_LOG( "WORLD: Received CMSG_PAGE_TEXT_CACHE" );
 
     uint32 itemid;
     ObjectGuid guid;
@@ -594,24 +594,18 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
     uint8 GuidBytes[] = { 5, 4, 1, 0, 6, 2, 3, 7 };
 
     data.WriteGuidMask(Guid, GuidMask, 2);
-    // Blaaa this should be is numitems * 2, 
-    data << uint8(numitems * 2);
-    data.WriteGuidMask(Guid, GuidMask, 4, 2);
-    data.WriteBit((numitems == 0));
-    data.WriteGuidMask(Guid, GuidMask, 1, 6);
+    data.WriteBits(numitems, 21);
+    data.WriteGuidMask(Guid, GuidMask, 5, 2);
 
-    if (!(numitems == 0))
+    for (uint32 i = 0; i < numitems; i++)
     {
-        for (uint32 i = 0; i < count; i++)
-        {
-            // crItem->ExtendedCost???
-            data.WriteBit(true);
-            // +40-4...packet size???
-            data.WriteBit(true);
-        }
+        data.WriteBit(true);
+        data.WriteBit(true);
     }
 
     data.WriteGuidMask(Guid, GuidMask, 1, 7);
+
+    data.FlushBits();
 
     // Data part...
     float discountMod = _player->GetReputationPriceDiscount(pCreature);
@@ -660,22 +654,24 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
                 // reputation discount
                 uint32 price = (crItem->ExtendedCost == 0 || pProto->Flags2 & ITEM_FLAG2_EXT_COST_REQUIRES_GOLD) ? uint32(floor(pProto->BuyPrice * discountMod)) : 0;
 
+                data << uint32(vendorslot + 1);              // client size expected counting from 1
+                data << uint32(pProto->MaxDurability);
+
+                //if (hasExtendedCost[vendorslot])
+                //    data << uint32(crItem->ExtendedCost);
+
                 data << uint32(itemId);
                 data << uint32(pProto->BuyCount);
-                // crItem->ExtendedCost???
                 data << uint32(price);
                 data << uint32(pProto->DisplayInfoID);
                 data << uint32(crItem->maxcount <= 0 ? 0xFFFFFFFF : pCreature->GetVendorItemCurrentCount(crItem));
-                data << uint32(1);    // Unknown 4.x.x, mostly 1
-                // Hmm?? uint32
-                data << uint32(vendorslot +1);              // client size expected counting from 1
-                data << uint32(pProto->MaxDurability);
+                data << uint32(1);
             }
         }
     }
 
     data.WriteGuidBytes(Guid, GuidBytes, 5, 0);
-    data << uint8((count % 10) == 0 ? count / 10 : (count / 10) + 1);
+    data << uint8(0x74);
     data.WriteGuidBytes(Guid, GuidBytes, 3, 5);
 
     SendPacket(&data);
@@ -1293,9 +1289,9 @@ void WorldSession::HandleItemTextQuery(WorldPacket & recv_data )
     ObjectGuid itemGuid;
     recv_data >> itemGuid;
 
-    DEBUG_LOG("CMSG_ITEM_TEXT_QUERY item guid: %u", itemGuid.GetCounter());
+    DEBUG_LOG("CMSG_ITEM_TEXT_CACHE item guid: %u", itemGuid.GetCounter());
 
-    WorldPacket data(SMSG_ITEM_TEXT_QUERY_RESPONSE, (4+10));// guess size
+    WorldPacket data(SMSG_ITEM_TEXT_CACHE, (4+10));// guess size
 
     if(Item *item = _player->GetItemByGuid(itemGuid))
     {

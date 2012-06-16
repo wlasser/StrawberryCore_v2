@@ -244,5 +244,13 @@ void InitOpcodeTable()
     OPCODE(SMSG_UI_TIME,                      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_NEW_WORLD,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_BATTLEFIELD_MGR_QUEUE_REQ,    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBattlefieldJoinQueueOpcode);
-    OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,STATUS_NEVER,   PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_TRAINER_LIST,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerListOpcode       );
+    OPCODE(SMSG_TRAINER_LIST,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_NPC_CACHE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleNpcTextQueryOpcode      );
+    OPCODE(SMSG_NPC_CACHE,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_PAGE_TEXT_CACHE,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePageTextQueryOpcode     );
+    OPCODE(SMSG_PAGE_TEXT_CACHE,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_PET_NAME_CACHE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePetNameQueryOpcode      );
+    OPCODE(SMSG_PET_NAME_CACHE,               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 };

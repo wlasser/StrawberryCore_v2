@@ -781,7 +781,7 @@ void Guild::Roster(WorldSession *session /*= NULL*/)
 
 void Guild::Query(WorldSession *session)
 {
-    WorldPacket data(SMSG_GUILD_QUERY_RESPONSE, (8*32+200));// we can only guess size
+    WorldPacket data(SMSG_GUILD_CACHE, (8*32+200));// we can only guess size
 
     data << uint32(m_Id);
     data << m_Name;
@@ -802,7 +802,7 @@ void Guild::Query(WorldSession *session)
     data << uint32(0);                                      // probably real ranks count
 
     session->SendPacket( &data );
-    DEBUG_LOG( "WORLD: Sent (SMSG_GUILD_QUERY_RESPONSE)" );
+    DEBUG_LOG( "WORLD: Sent (SMSG_GUILD_CACHE)" );
 }
 
 void Guild::SetEmblem(uint32 emblemStyle, uint32 emblemColor, uint32 borderStyle, uint32 borderColor, uint32 backgroundColor)

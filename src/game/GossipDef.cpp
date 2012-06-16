@@ -250,7 +250,7 @@ void PlayerMenu::SendTalking( uint32 textID )
 {
     GossipText const* pGossip = sObjectMgr.GetGossipText(textID);
 
-    WorldPacket data( SMSG_NPC_TEXT_UPDATE, 100 );          // guess size
+    WorldPacket data( SMSG_NPC_CACHE, 100 );          // guess size
     data << textID;                                         // can be < 0
 
     if (!pGossip)
@@ -312,7 +312,7 @@ void PlayerMenu::SendTalking( uint32 textID )
 
 void PlayerMenu::SendTalking( char const * title, char const * text )
 {
-    WorldPacket data( SMSG_NPC_TEXT_UPDATE, 50 );           // guess size
+    WorldPacket data( SMSG_NPC_CACHE, 50 );           // guess size
     data << uint32(0);
     for(uint32 i = 0; i < 8; ++i)
     {
@@ -580,7 +580,7 @@ void PlayerMenu::SendQuestQueryResponse( Quest const *pQuest )
         }
     }
 
-    WorldPacket data( SMSG_QUEST_QUERY_RESPONSE, 100 );     // guess size
+    WorldPacket data( SMSG_QUEST_CACHE, 100 );     // guess size
 
     data << uint32(pQuest->GetQuestId());                   // quest id
     data << uint32(pQuest->GetQuestMethod());               // Accepted values: 0, 1 or 2. 0==IsAutoComplete() (skip objectives/details)

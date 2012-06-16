@@ -388,7 +388,7 @@ void ArenaTeam::Roster(WorldSession *session)
 
 void ArenaTeam::Query(WorldSession *session)
 {
-    WorldPacket data(SMSG_ARENA_TEAM_QUERY_RESPONSE, 4*7+GetName().size()+1);
+    WorldPacket data(SMSG_ARENA_TEAM_CACHE, 4*7+GetName().size()+1);
     data << uint32(GetId());                                // team id
     data << GetName();                                      // team name
     data << uint32(GetType());                              // arena team type (2=2x2, 3=3x3 or 5=5x5)
@@ -398,7 +398,7 @@ void ArenaTeam::Query(WorldSession *session)
     data << uint32(m_BorderStyle);                          // border style
     data << uint32(m_BorderColor);                          // border color
     session->SendPacket(&data);
-    DEBUG_LOG("WORLD: Sent SMSG_ARENA_TEAM_QUERY_RESPONSE");
+    DEBUG_LOG("WORLD: Sent SMSG_ARENA_TEAM_CACHE");
 }
 
 void ArenaTeam::Stats(WorldSession *session)

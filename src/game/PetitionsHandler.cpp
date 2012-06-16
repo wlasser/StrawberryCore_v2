@@ -292,14 +292,14 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
 
 void WorldSession::HandlePetitionQueryOpcode(WorldPacket & recv_data)
 {
-    DEBUG_LOG("Received opcode CMSG_PETITION_QUERY");
+    DEBUG_LOG("Received opcode CMSG_PETITION_CACHE");
     //recv_data.hexlike();
 
     uint32 guildguid;
     ObjectGuid petitionguid;
     recv_data >> guildguid;                                 // in strawberry always same as GUID_LOPART(petitionguid)
     recv_data >> petitionguid;                              // petition guid
-    DEBUG_LOG("CMSG_PETITION_QUERY Petition %s Guild GUID %u", petitionguid.GetString().c_str(), guildguid);
+    DEBUG_LOG("CMSG_PETITION_CACHE Petition %s Guild GUID %u", petitionguid.GetString().c_str(), guildguid);
 
     SendPetitionQueryOpcode(petitionguid);
 }
@@ -330,11 +330,11 @@ void WorldSession::SendPetitionQueryOpcode(ObjectGuid petitionguid)
     }
     else
     {
-        DEBUG_LOG("CMSG_PETITION_QUERY failed for petition (GUID: %u)", petitionLowGuid);
+        DEBUG_LOG("CMSG_PETITION_CACHE failed for petition (GUID: %u)", petitionLowGuid);
         return;
     }
 
-    WorldPacket data(SMSG_PETITION_QUERY_RESPONSE, (4+8+name.size()+1+1+4*12+2+10));
+    WorldPacket data(SMSG_PETITION_CACHE, (4+8+name.size()+1+1+4*12+2+10));
     data << uint32(petitionLowGuid);                        // guild/team guid (in strawberry always same as GUID_LOPART(petition guid)
     data << ObjectGuid(ownerGuid);                          // charter owner guid
     data << name;                                           // name (guild/arena team)
