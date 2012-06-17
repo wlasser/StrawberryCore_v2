@@ -55,6 +55,7 @@
 
 #include <math.h>
 #include <stdarg.h>
+#include "DB2Stores.h"
 
 float baseMoveSpeed[MAX_MOVE_TYPE] =
 {
@@ -344,10 +345,10 @@ bool Unit::haveOffhandWeapon() const
     else
     {
         uint32 ItemId = GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1);
-        /*ItemEntry const* itemInfo = sItemStore.LookupEntry(ItemId);
+        ItemEntry const* itemInfo = sItemStore.LookupEntry(ItemId);
 
         if (itemInfo && itemInfo->Class == ITEM_CLASS_WEAPON)
-            return true;*/
+            return true;
 
         return false;
     }

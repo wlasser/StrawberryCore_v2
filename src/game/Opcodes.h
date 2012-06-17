@@ -360,6 +360,9 @@ enum Opcodes
     SMSG_PETITION_CACHE,
     CMSG_QUEST_CACHE,
     SMSG_QUEST_CACHE,
+    CMSG_WORLD_TELEPORT,
+    MSG_MOVE_TELEPORT,
+    MSG_MOVE_TELEPORT_ACK,
     MAX_OPCODE_VALUE
 };
 
@@ -373,7 +376,6 @@ enum Opcodes335a
     SMSG_QUERY_OBJECT_POSITION                      = 0x005,
     CMSG_QUERY_OBJECT_ROTATION                      = 0x006,
     SMSG_QUERY_OBJECT_ROTATION                      = 0x007,
-    CMSG_WORLD_TELEPORT                             = 0x008,
     CMSG_TELEPORT_TO_UNIT                           = 0x009,
     CMSG_ZONE_MAP                                   = 0x00A,
     SMSG_ZONE_MAP                                   = 0x00B,
@@ -522,9 +524,7 @@ enum Opcodes335a
     MSG_MOVE_SET_RUN_MODE                           = 0x0C2,
     MSG_MOVE_SET_WALK_MODE                          = 0x0C3,
     MSG_MOVE_TOGGLE_LOGGING                         = 0x0C4,
-    MSG_MOVE_TELEPORT                               = 0x0C5,
     MSG_MOVE_TELEPORT_CHEAT                         = 0x0C6,
-    MSG_MOVE_TELEPORT_ACK                           = 0x0C7,
     MSG_MOVE_TOGGLE_FALL_LOGGING                    = 0x0C8,
     MSG_MOVE_FALL_LAND                              = 0x0C9,
     MSG_MOVE_START_SWIM                             = 0x0CA,
