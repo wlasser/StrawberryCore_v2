@@ -1621,3 +1621,13 @@ void WorldSession::HandleUpdateObjectFailure(WorldPacket & recv_data)
 
     sLog.outError("[Update Object Error] Guid: %i, TypeId: %i, TypeName: %s.", guid.GetCounter(), guid.GetTypeId(), guid.GetTypeName());
 }
+
+void WorldSession::HandlePlayerViolenceLevel(WorldPacket & recv_data)
+{
+    DEBUG_LOG("Recieved PlayerViolenceLevel");
+
+    uint8 violenceLevel;
+    recv_data >> violenceLevel;
+
+    sLog.outDebug("ViolenceLevel from Player: %s, Guid: %u is %u", _player->GetName(), _player->GetObjectGuid(), violenceLevel);
+}
