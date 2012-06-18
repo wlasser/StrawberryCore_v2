@@ -1009,10 +1009,24 @@ void WorldSession::HandleMoveTimeSkippedOpcode( WorldPacket & recv_data )
     /*  WorldSession::Update( WorldTimer::getMSTime() );*/
     DEBUG_LOG( "WORLD: Time Lag/Synchronization Resent/Update" );
 
-    ObjectGuid guid;
-
-    recv_data >> guid.ReadAsPacked();
     recv_data >> Unused<uint32>();
+
+    uint64 playerGuid = 0;
+
+    BitStream mask = recv_data.ReadBitStream(8);
+
+    ByteBuffer bytes(8, true);
+
+    if (mask[3]) bytes[7] = recv_data.ReadUInt8() ^ 1;
+    if (mask[1]) bytes[1] = recv_data.ReadUInt8() ^ 1;
+    if (mask[7]) bytes[2] = recv_data.ReadUInt8() ^ 1;
+    if (mask[6]) bytes[4] = recv_data.ReadUInt8() ^ 1;
+    if (mask[2]) bytes[3] = recv_data.ReadUInt8() ^ 1;
+    if (mask[4]) bytes[6] = recv_data.ReadUInt8() ^ 1;
+    if (mask[5]) bytes[0] = recv_data.ReadUInt8() ^ 1;
+    if (mask[0]) bytes[5] = recv_data.ReadUInt8() ^ 1;
+
+    playerGuid = BitConverter::ToUInt64(bytes);
 
     /*
         ObjectGuid guid;
@@ -1174,21 +1188,21 @@ void WorldSession::HandleWorldTeleportOpcode(WorldPacket& recv_data)
     float Orientation;
 
     recv_data >> mapid;
-    recv_data >> Orientation;
-    recv_data >> PositionY;
     recv_data >> PositionX;
     recv_data >> PositionZ;
+    recv_data >> PositionY;
+    recv_data >> Orientation;
 
     BitStream mask = recv_data.ReadBitStream(8);
     ByteBuffer bytes(8, true);
 
-    if (mask[3]) bytes[6] = recv_data.ReadUInt8() ^ 1;
-    if (mask[2]) bytes[0] = recv_data.ReadUInt8() ^ 1;
+    if (mask[6]) bytes[1] = recv_data.ReadUInt8() ^ 1;
+    if (mask[1]) bytes[0] = recv_data.ReadUInt8() ^ 1;
     if (mask[7]) bytes[2] = recv_data.ReadUInt8() ^ 1;
-    if (mask[6]) bytes[7] = recv_data.ReadUInt8() ^ 1;
-    if (mask[0]) bytes[5] = recv_data.ReadUInt8() ^ 1;
-    if (mask[1]) bytes[1] = recv_data.ReadUInt8() ^ 1;
-    if (mask[5]) bytes[4] = recv_data.ReadUInt8() ^ 1;
+    if (mask[5]) bytes[7] = recv_data.ReadUInt8() ^ 1;
+    if (mask[3]) bytes[4] = recv_data.ReadUInt8() ^ 1;
+    if (mask[2]) bytes[5] = recv_data.ReadUInt8() ^ 1;
+    if (mask[0]) bytes[6] = recv_data.ReadUInt8() ^ 1;
     if (mask[4]) bytes[3] = recv_data.ReadUInt8() ^ 1;
 
     uint64 playerGuid = BitConverter::ToUInt64(bytes);
@@ -1620,4 +1634,12 @@ void WorldSession::HandleUpdateObjectFailure(WorldPacket & recv_data)
     guid = ObjectGuid(BitConverter::ToUInt64(bytes));
 
     sLog.outError("[Update Object Error] Guid: %i, TypeId: %i, TypeName: %s.", guid.GetCounter(), guid.GetTypeId(), guid.GetTypeName());
+}
+
+void WorldSession::HandlePlayerViolenceLevel(WorldPacket & recv_data)
+{
+    DEBUG_LOG("Recieved PlayerViolenceLevel");
+
+    uint8 violenceLevel = 0;
+    recv_data >> violenceLevel;
 }

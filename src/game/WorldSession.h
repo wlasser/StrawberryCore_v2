@@ -877,6 +877,8 @@ class WorldSession
         void HandleQuestPOIQueryOpcode(WorldPacket& recv_data);
 
         void HandleUpdateObjectFailure(WorldPacket& recv_data);
+        void HandlePlayerViolenceLevel(WorldPacket& recv_data);
+
     private:
         // private trade methods
         void moveItems(Item* myItems[], Item* hisItems[]);
