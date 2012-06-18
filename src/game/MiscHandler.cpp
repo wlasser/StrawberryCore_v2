@@ -1626,8 +1626,6 @@ void WorldSession::HandlePlayerViolenceLevel(WorldPacket & recv_data)
 {
     DEBUG_LOG("Recieved PlayerViolenceLevel");
 
-    uint8 violenceLevel;
+    uint8 violenceLevel = 0;
     recv_data >> violenceLevel;
-
-    sLog.outDebug("ViolenceLevel from Player: %s, Guid: %u is %u", _player->GetName(), _player->GetObjectGuid(), violenceLevel);
 }

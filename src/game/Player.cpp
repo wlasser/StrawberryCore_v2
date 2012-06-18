@@ -15087,21 +15087,24 @@ void Player::SendQuestReward( Quest const *pQuest, uint32 XP, Object * questGive
     DEBUG_LOG( "WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid );
     WorldPacket data( SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4) );
     data << uint32(questid);
+    data << uint32(0);                                      // arena points
 
     if ( getLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL) )
-    {
-        data << uint32(XP);
         data << uint32(pQuest->GetRewOrReqMoney());
-    }
     else
-    {
         data << uint32(0);
-        data << uint32(pQuest->GetRewOrReqMoney() + int32(pQuest->GetRewMoneyMaxLevel() * sWorld.getConfig(CONFIG_FLOAT_RATE_DROP_MONEY)));
-    }
 
     data << uint32(10*Strawberry::Honor::hk_honor_at_level(getLevel(), pQuest->GetRewHonorAddition()));
+
+    if ( getLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL) )
+        data << uint32(XP);
+    else
+        data << uint32(pQuest->GetRewOrReqMoney() + int32(pQuest->GetRewMoneyMaxLevel() * sWorld.getConfig(CONFIG_FLOAT_RATE_DROP_MONEY)));
+
     data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(0);                                      // arena points
+
+    data.WriteBit(true);
+
     GetSession()->SendPacket( &data );
 }
 

@@ -384,6 +384,7 @@ void WorldSession::HandleQuestgiverCompleteQuest(WorldPacket& recv_data)
     uint32 quest;
     ObjectGuid guid;
     recv_data >> guid >> quest;
+    recv_data.read_skip<uint8>();
 
     if (!CanInteractWithQuestGiver(guid, "CMSG_QUESTGIVER_COMPLETE_QUEST"))
         return;
@@ -616,7 +617,7 @@ void WorldSession::HandleQuestgiverStatusMultipleQuery(WorldPacket& /*recvPacket
                 dialogStatus = getDialogStatus(_player, questgiver, DIALOG_STATUS_NONE);
 
             data << questgiver->GetObjectGuid();
-            data << uint8(dialogStatus);
+            data << uint32(dialogStatus);
             ++count;
         }
         else if (itr->IsGameObject())
@@ -635,7 +636,7 @@ void WorldSession::HandleQuestgiverStatusMultipleQuery(WorldPacket& /*recvPacket
                 dialogStatus = getDialogStatus(_player, questgiver, DIALOG_STATUS_NONE);
 
             data << questgiver->GetObjectGuid();
-            data << uint8(dialogStatus);
+            data << uint32(dialogStatus);
             ++count;
         }
     }
