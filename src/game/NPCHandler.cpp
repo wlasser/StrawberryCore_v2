@@ -135,6 +135,7 @@ static void SendTrainerSpellHelper(WorldPacket& data, TrainerSpell const* tSpell
     data << uint32(primary_prof_first_rank ? 1 : 0);    // must be equal prev. field to have learn button in enabled state
     data << uint32(!tSpell->IsCastable() && chain_node ? (chain_node->prev ? chain_node->prev : chain_node->req) : 0);
     data << uint32(!tSpell->IsCastable() && chain_node && chain_node->prev ? chain_node->req : 0);
+	//data << uint8(0);// unk
 }
 
 void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
@@ -172,19 +173,22 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
     uint32 maxcount = (cSpells ? cSpells->spellList.size() : 0) + (tSpells ? tSpells->spellList.size() : 0);
     uint32 trainer_type = cSpells && cSpells->trainerType ? cSpells->trainerType : (tSpells ? tSpells->trainerType : 0);
 
-    WorldPacket data( SMSG_TRAINER_LIST, 8+4+4+maxcount*38 + strTitle.size()+1);
+    WorldPacket data( SMSG_TRAINER_LIST, 8+4+4+maxcount*34 + strTitle.size()+1);
     data << ObjectGuid(guid);
-    data << uint32(trainer_type);
-    data << uint32(ci->trainerId);
+	//data << uint32(ci->trainerId);
+    //data << uint32(trainer_type);  
 
     size_t count_pos = data.wpos();
-    data << uint32(maxcount);
+
+	data << uint32(0);//(0 0 0 0)
+	data << uint32(145);//(Unk 0 0 0) seen it in two sniffs one from warrior=145 and other paladin=168 
+	data << uint32(maxcount);
 
     // reputation discount
     float fDiscountMod = _player->GetReputationPriceDiscount(unit);
     bool can_learn_primary_prof = GetPlayer()->GetFreePrimaryProfessionPoints() > 0;
 
-    uint32 count = 0;
+    //uint32 count = 0;
 
     if (cSpells)
     {
@@ -202,7 +206,7 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
 
             SendTrainerSpellHelper(data, tSpell, state, fDiscountMod, can_learn_primary_prof, reqLevel);
 
-            ++count;
+            //++count;
         }
     }
 
@@ -222,13 +226,13 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
 
             SendTrainerSpellHelper(data, tSpell, state, fDiscountMod, can_learn_primary_prof, reqLevel);
 
-            ++count;
+            //++count;
         }
     }
-
+	data << uint8(0);
     data << strTitle;
 
-    data.put<uint32>(count_pos,count);
+    //data.put<uint32>(count_pos,count);
     SendPacket(&data);
 }
 
