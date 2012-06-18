@@ -408,7 +408,7 @@ enum Opcodes
     SMSG_QUESTGIVER_QUEST_DETAILS,
     SMSG_QUESTGIVER_QUEST_LIST,
     SMSG_QUESTGIVER_STATUS,
-
+    CMSG_MOVE_TIME_SKIPPED,
     MAX_OPCODE_VALUE
 };
 
@@ -969,7 +969,6 @@ enum Opcodes335a
     CMSG_MOVE_SPLINE_DONE                           = 0x2C9,
     CMSG_MOVE_FALL_RESET                            = 0x2CA,
     SMSG_INSTANCE_SAVE_CREATED                      = 0x2CB,
-    CMSG_MOVE_TIME_SKIPPED                          = 0x2CE,
     CMSG_MOVE_FEATHER_FALL_ACK                      = 0x2CF,
     CMSG_MOVE_WATER_WALK_ACK                        = 0x2D0,
     CMSG_MOVE_NOT_ACTIVE_MOVER                      = 0x2D1,

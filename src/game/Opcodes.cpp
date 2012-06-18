@@ -308,4 +308,6 @@ void InitOpcodeTable()
     OPCODE(SMSG_QUESTGIVER_QUEST_DETAILS,     STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_QUESTGIVER_QUEST_LIST,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_QUESTGIVER_STATUS,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_MOVE_TIME_SKIPPED,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMoveTimeSkippedOpcode   );
+
 };
