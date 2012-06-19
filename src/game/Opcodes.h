@@ -343,6 +343,9 @@ enum Opcodes
     MSG_MOVE_HEARTBEAT,
     CMSG_TRAINER_LIST,
     SMSG_TRAINER_LIST,
+	CMSG_BUY_TRAINER_SERVICE,
+	SMSG_TRAINER_BUY_SUCCEEDED,
+	SMSG_TRAINER_BUY_FAILED,
     CMSG_NPC_CACHE,
     SMSG_NPC_CACHE,
     CMSG_PAGE_TEXT_CACHE,
@@ -409,6 +412,7 @@ enum Opcodes
     SMSG_QUESTGIVER_QUEST_LIST,
     SMSG_QUESTGIVER_STATUS,
     CMSG_MOVE_TIME_SKIPPED,
+	SMSG_PLAY_SPELL_VISUAL,
     MAX_OPCODE_VALUE
 };
 
@@ -737,9 +741,6 @@ enum Opcodes335a
     CMSG_ACTIVATETAXI                               = 0x1AD,
     SMSG_ACTIVATETAXIREPLY                          = 0x1AE,
     SMSG_NEW_TAXI_PATH                              = 0x1AF,
-    CMSG_TRAINER_BUY_SPELL                          = 0x1B2,
-    SMSG_TRAINER_BUY_SUCCEEDED                      = 0x1B3,
-    SMSG_TRAINER_BUY_FAILED                         = 0x1B4,
     CMSG_BINDER_ACTIVATE                            = 0x1B5,
     SMSG_PLAYERBINDERROR                            = 0x1B6,
     CMSG_BANKER_ACTIVATE                            = 0x1B7,
@@ -791,7 +792,7 @@ enum Opcodes335a
     CMSG_PET_CAST_SPELL                             = 0x1F0,
     MSG_SAVE_GUILD_EMBLEM                           = 0x1F1,
     MSG_TABARDVENDOR_ACTIVATE                       = 0x1F2,
-    SMSG_PLAY_SPELL_VISUAL                          = 0x1F3,
+    //SMSG_PLAY_SPELL_VISUAL                          = 0x1F3,
     SMSG_PLAY_SPELL_IMPACT                          = 0x1F7,
     SMSG_EXPLORATION_EXPERIENCE                     = 0x1F8,
     CMSG_GM_SET_SECURITY_GROUP                      = 0x1F9,

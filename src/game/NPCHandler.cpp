@@ -118,7 +118,6 @@ void WorldSession::SendTrainerList(ObjectGuid guid)
     SendTrainerList(guid, str);
 }
 
-
 static void SendTrainerSpellHelper(WorldPacket& data, TrainerSpell const* tSpell, TrainerSpellState state, float fDiscountMod, bool can_learn_primary_prof, uint32 reqLevel)
 {
     bool primary_prof_first_rank = sSpellMgr.IsPrimaryProfessionFirstRankSpell(tSpell->learnedSpell);
@@ -135,7 +134,6 @@ static void SendTrainerSpellHelper(WorldPacket& data, TrainerSpell const* tSpell
     data << uint32(primary_prof_first_rank ? 1 : 0);    // must be equal prev. field to have learn button in enabled state
     data << uint32(!tSpell->IsCastable() && chain_node ? (chain_node->prev ? chain_node->prev : chain_node->req) : 0);
     data << uint32(!tSpell->IsCastable() && chain_node && chain_node->prev ? chain_node->req : 0);
-	//data << uint8(0);// unk
 }
 
 void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
@@ -174,21 +172,18 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
     uint32 trainer_type = cSpells && cSpells->trainerType ? cSpells->trainerType : (tSpells ? tSpells->trainerType : 0);
 
     WorldPacket data( SMSG_TRAINER_LIST, 8+4+4+maxcount*34 + strTitle.size()+1);
-    data << ObjectGuid(guid);
-	//data << uint32(ci->trainerId);
-    //data << uint32(trainer_type);  
+    data << ObjectGuid(guid); 
+	data << uint32(trainer_type);
+	data << uint32(ci->trainerId);
 
     size_t count_pos = data.wpos();
-
-	data << uint32(0);//(0 0 0 0)
-	data << uint32(145);//(Unk 0 0 0) seen it in two sniffs one from warrior=145 and other paladin=168 
-	data << uint32(maxcount);
+    data << uint32(maxcount);
 
     // reputation discount
     float fDiscountMod = _player->GetReputationPriceDiscount(unit);
     bool can_learn_primary_prof = GetPlayer()->GetFreePrimaryProfessionPoints() > 0;
 
-    //uint32 count = 0;
+    uint32 count = 0;
 
     if (cSpells)
     {
@@ -206,7 +201,7 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
 
             SendTrainerSpellHelper(data, tSpell, state, fDiscountMod, can_learn_primary_prof, reqLevel);
 
-            //++count;
+            ++count;
         }
     }
 
@@ -226,22 +221,21 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
 
             SendTrainerSpellHelper(data, tSpell, state, fDiscountMod, can_learn_primary_prof, reqLevel);
 
-            //++count;
+            ++count;
         }
     }
-	data << uint8(0);
     data << strTitle;
 
-    //data.put<uint32>(count_pos,count);
+	data.put<uint32>(count_pos,count);
     SendPacket(&data);
 }
 
 void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
 {
     ObjectGuid guid;
-    uint32 spellId = 0;
+    uint32 spellId = 0, trainerId = 0;
 
-    recv_data >> guid >> spellId;
+    recv_data >> guid >> trainerId >> spellId;
     DEBUG_LOG("WORLD: Received CMSG_TRAINER_BUY_SPELL Trainer: %s, learn spell id is: %u", guid.GetString().c_str(), spellId);
 
     Creature *unit = GetPlayer()->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_TRAINER);
@@ -294,12 +288,14 @@ void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
 
     _player->ModifyMoney( -int32(nSpellCost) );
 
-    WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);           // visual effect on trainer
-    data << ObjectGuid(guid);
-    data << uint32(0xB3);                                   // index from SpellVisualKit.dbc
+    WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 19);           // visual effect on trainer
+    data << uint32(0);
+    data << uint32(0xB3);									// index from SpellVisualKit.dbc
+	data << uint32(0);
+	data << ObjectGuid(guid);
     SendPacket(&data);
 
-    data.Initialize(SMSG_PLAY_SPELL_IMPACT, 12);            // visual effect on player
+    data.Initialize(SMSG_PLAY_SPELL_IMPACT, 18);            // visual effect on player
     data << _player->GetObjectGuid();
     data << uint32(0x016A);                                 // index from SpellVisualKit.dbc
     SendPacket(&data);
