@@ -289,6 +289,8 @@ void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
         data << ObjectGuid(guid);
         data << uint32(spellId);
         data << uint32(1);                                  // Not enough money for trainer service %spellId%.
+        SendPacket(&data);
+
         return;
     }
 
