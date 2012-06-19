@@ -284,13 +284,19 @@ void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
 
     // check money requirement
     if(_player->GetMoney() < nSpellCost )
+    {
+        WorldPacket data(SMSG_TRAINER_BUY_FAILED, 16);
+        data << ObjectGuid(guid);
+        data << uint32(spellId);
+        data << uint32(1);                                  // Not enough money for trainer service %spellId%.
         return;
+    }
 
     _player->ModifyMoney( -int32(nSpellCost) );
 
     WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);           // visual effect on trainer
     data << ObjectGuid(guid);
-    data << uint32(0xB3);				    // index from SpellVisualKit.dbc
+    data << uint32(0xB3);                                   // index from SpellVisualKit.dbc
     SendPacket(&data);
 
     data.Initialize(SMSG_PLAY_SPELL_IMPACT, 12);            // visual effect on player
