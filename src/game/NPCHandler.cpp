@@ -173,8 +173,8 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
 
     WorldPacket data( SMSG_TRAINER_LIST, 8+4+4+maxcount*34 + strTitle.size()+1);
     data << ObjectGuid(guid); 
-	data << uint32(trainer_type);
-	data << uint32(ci->trainerId);
+    data << uint32(trainer_type);
+    data << uint32(ci->trainerId);
 
     size_t count_pos = data.wpos();
     data << uint32(maxcount);
@@ -225,8 +225,8 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
         }
     }
     data << strTitle;
-
-	data.put<uint32>(count_pos,count);
+    
+    data.put<uint32>(count_pos,count);
     SendPacket(&data);
 }
 
@@ -288,14 +288,12 @@ void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
 
     _player->ModifyMoney( -int32(nSpellCost) );
 
-    WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 19);           // visual effect on trainer
-    data << uint32(0);
-    data << uint32(0xB3);									// index from SpellVisualKit.dbc
-	data << uint32(0);
-	data << ObjectGuid(guid);
+    WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);           // visual effect on trainer
+    data << ObjectGuid(guid);
+    data << uint32(0xB3);				    // index from SpellVisualKit.dbc
     SendPacket(&data);
 
-    data.Initialize(SMSG_PLAY_SPELL_IMPACT, 18);            // visual effect on player
+    data.Initialize(SMSG_PLAY_SPELL_IMPACT, 12);            // visual effect on player
     data << _player->GetObjectGuid();
     data << uint32(0x016A);                                 // index from SpellVisualKit.dbc
     SendPacket(&data);
