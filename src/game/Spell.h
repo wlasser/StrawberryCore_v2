@@ -62,7 +62,8 @@ enum SpellCastFlags
     CAST_FLAG_VISUAL_CHAIN      = 0x00080000,               // wotlk
     CAST_FLAG_UNKNOWN21         = 0x00100000,
     CAST_FLAG_PREDICTED_RUNES   = 0x00200000,               // wotlk, rune cooldown list
-    CAST_FLAG_IMMUNITY          = 0x04000000                // spell cast school imminity info
+    CAST_FLAG_IMMUNITY          = 0x04000000,               // spell cast school imminity info
+    CAST_FLAG_HEAL_PREDICTION   = 0x40000000,
 };
 
 enum SpellFlags

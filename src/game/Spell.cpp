@@ -3930,6 +3930,12 @@ void Spell::SendSpellStart()
         data << uint32(0);                                  // used for SetCastImmunities
     }
 
+    if (castFlags & CAST_FLAG_HEAL_PREDICTION)
+    {
+        data << uint32(0);
+        data << uint8(0);
+    }
+
     m_caster->SendMessageToSet(&data, true);
 }
 
