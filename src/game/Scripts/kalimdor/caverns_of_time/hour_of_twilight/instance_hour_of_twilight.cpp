@@ -80,7 +80,7 @@ void instance_hour_of_twilight::OnCreatureCreate(Creature * creature)
 {
     switch(creature->GetEntry())
     {
-        case BOSS_ARCURION:		m_mNpcEntryGuidStore[BOSS_ARCURION] = creature->GetObjectGuid();       break;
+        case BOSS_ARCURION:        m_mNpcEntryGuidStore[BOSS_ARCURION] = creature->GetObjectGuid();       break;
         case BOSS_ASIRA_DAWNSLAYER:        m_mNpcEntryGuidStore[BOSS_ASIRA_DAWNSLAYER] = creature->GetObjectGuid();       break;
         case BOSS_ARCHBISHOP_BENEDICTUS:     m_mNpcEntryGuidStore[BOSS_ARCHBISHOP_BENEDICTUS] = creature->GetObjectGuid();    break;
     }
@@ -109,7 +109,7 @@ void instance_hour_of_twilight::OnCreatureDeath(Creature * creature)
 void instance_hour_of_twilight::OnCreatureEvade(Creature * creature)
 {
     switch(creature->GetEntry())
-	{
+    {
         case BOSS_ARCURION:        SetData(DATA_ARCURION_EVENT,FAIL);            break;
         case BOSS_ASIRA_DAWNSLAYER:        SetData(DATA_ASIRA_DAWNSLAYER_EVENT,FAIL);            break;
         case BOSS_ARCHBISHOP_BENEDICTUS:     SetData(DATA_ARCHBISHOP_BENEDICTUS_EVENT,FAIL);            break;

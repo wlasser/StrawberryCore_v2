@@ -25,11 +25,11 @@ enum DATA
 
 enum CreatureIds
 {
-	// Creatures
-	BOSS_PEROTH_ARN			= 55085,
-	BOSS_QUEEN_AZSHARA		= 54853,
-	BOSS_CAPTAIN_VAROTHEN	= 55419,
-	BOSS_MANNOROTH			= 54969,
+    // Creatures
+    BOSS_PEROTH_ARN            = 55085,
+    BOSS_QUEEN_AZSHARA        = 54853,
+    BOSS_CAPTAIN_VAROTHEN    = 55419,
+    BOSS_MANNOROTH            = 54969,
 };
 
 class instance_well_of_eternity : public ScriptedInstance

@@ -118,7 +118,7 @@ struct PlayerTalentHolder
 {
     public:
         PlayerTalentHolder();
-		PlayerTalentHolder(uint32 tabId) : m_tabId(tabId), m_talentsLearned(0) { }
+        PlayerTalentHolder(uint32 tabId) : m_tabId(tabId), m_talentsLearned(0) { }
         uint32 GetTabId() const { return m_tabId; }
         uint32 GetTalentCount() const { return m_talentsLearned; }
         PlayerTalentMap &GetTalentMap() { return m_talentMap; }
@@ -126,7 +126,7 @@ struct PlayerTalentHolder
         void SetTabId(uint32 tabId) { m_tabId = tabId; }
         void IncreaseTalentCount() { ++m_talentsLearned; }
         void AddTalentToMap(uint32 talentId,PlayerTalent talent) { m_talentMap[talentId] = talent; }
-		void RemoveTalentFromMap(uint32 talentId) { m_talentMap.erase(talentId); }
+        void RemoveTalentFromMap(uint32 talentId) { m_talentMap.erase(talentId); }
 
     private:
         uint32              m_tabId;

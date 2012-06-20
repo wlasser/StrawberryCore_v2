@@ -80,7 +80,7 @@ void instance_end_time::OnCreatureCreate(Creature * creature)
 {
     switch(creature->GetEntry())
     {
-        case BOSS_BAINE:		m_mNpcEntryGuidStore[BOSS_BAINE] = creature->GetObjectGuid();       break;
+        case BOSS_BAINE:        m_mNpcEntryGuidStore[BOSS_BAINE] = creature->GetObjectGuid();       break;
         case BOSS_JAINA:        m_mNpcEntryGuidStore[BOSS_JAINA] = creature->GetObjectGuid();       break;
         case BOSS_SYLVANAS:     m_mNpcEntryGuidStore[BOSS_SYLVANAS] = creature->GetObjectGuid();    break;
         case BOSS_TYRANDE:      m_mNpcEntryGuidStore[BOSS_TYRANDE] = creature->GetObjectGuid();     break;

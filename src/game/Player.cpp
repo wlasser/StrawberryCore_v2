@@ -2600,34 +2600,27 @@ void Player::GiveLevel(uint32 level)
 
 void Player::UpdateFreeTalentPoints(bool resetIfNeed)
 {
-    sLog.outDebug("Player has free points by field : %u",GetFreeTalentPoints());
-
     uint32 level = getLevel();
     // talents base at level diff ( talents = level - 9 but some can be used already)
     if (level < 10)
     {
-        // Remove all talent points
-        if (m_usedTalentCount > 0)                           // Free any used talents
-        {
-            if (resetIfNeed)
-                resetTalents(true);
-        }
+        resetTalents(true);
         SetFreeTalentPoints(0);
     }
-    else if(level == 10 || (level % 2) == 1 || level > 80)
+    else
     {
-        sLog.outDebug("Calculated TPs: %u",CalculateTalentsPoints());
+        uint32 talentPointsForLevel = CalculateTalentsPoints();
 
-        /*if(level == 10 && m_usedTalentCount == 0) // Just leveld to level 10
-            SetFreeTalentPoints(CalculateTalentsPoints() - m_usedTalentCount);
-        else if(level == 10 && m_usedTalentCount > 0) // Invested a talent
-            SetFreeTalentPoints(GetFreeTalentPoints() - m_usedTalentCount);
-        else if(GetFreeTalentPoints() > 0)
-            SetFreeTalentPoints(CalculateTalentsPoints() - m_usedTalentCount);*/
-        if(GetFreeTalentPoints() > m_usedTalentCount)
-            SetFreeTalentPoints(CalculateTalentsPoints() - m_usedTalentCount);
+        // if used more that have then reset
+        if (m_usedTalentCount > talentPointsForLevel)
+        {
+            if (resetIfNeed && GetSession()->GetSecurity() < SEC_ADMINISTRATOR)
+                resetTalents(true);
+            else
+                SetFreeTalentPoints(0);
+        }
         else
-            SetFreeTalentPoints(0);
+            SetFreeTalentPoints(talentPointsForLevel - m_usedTalentCount);
     }
 }
 
@@ -3190,37 +3183,37 @@ bool Player::addSpell(uint32 spell_id, bool active, bool learning, bool dependen
     {
         for(uint8 i = 0; i <= 3; ++i)
         {
-			TalentEntry const *talentInfo = sTalentStore.LookupEntry(talentPos->talent_id);
-			if(m_talents[m_activeSpec][i].GetTabId() == talentInfo->TalentID)
-			{
-				// update talent map
-				PlayerTalentMap talentMap = m_talents[m_activeSpec][i].GetTalentMap();
-				PlayerTalentMap::iterator iter = talentMap.find(talentPos->talent_id);
-				if (iter != talentMap.end())
-				{
-					// check if ranks different or removed
-					if ((*iter).second.state == PLAYERSPELL_REMOVED || talentPos->rank != (*iter).second.currentRank)
-					{
-						(*iter).second.currentRank = talentPos->rank;
+            TalentEntry const *talentInfo = sTalentStore.LookupEntry(talentPos->talent_id);
+            if(m_talents[m_activeSpec][i].GetTabId() == talentInfo->TalentID)
+            {
+                // update talent map
+                PlayerTalentMap talentMap = m_talents[m_activeSpec][i].GetTalentMap();
+                PlayerTalentMap::iterator iter = talentMap.find(talentPos->talent_id);
+                if (iter != talentMap.end())
+                {
+                    // check if ranks different or removed
+                    if ((*iter).second.state == PLAYERSPELL_REMOVED || talentPos->rank != (*iter).second.currentRank)
+                    {
+                        (*iter).second.currentRank = talentPos->rank;
 
-						if ((*iter).second.state != PLAYERSPELL_NEW)
-							(*iter).second.state = PLAYERSPELL_CHANGED;
-					}
-				}
-				else
-				{
-					PlayerTalent talent;
-					talent.currentRank = talentPos->rank;
-					talent.talentEntry = sTalentStore.LookupEntry(talentPos->talent_id);
-					talent.state       = IsInWorld() ? PLAYERSPELL_NEW : PLAYERSPELL_UNCHANGED;
-					m_talents[m_activeSpec][i].AddTalentToMap(talentPos->talent_id,talent);
-				}
-			}
+                        if ((*iter).second.state != PLAYERSPELL_NEW)
+                            (*iter).second.state = PLAYERSPELL_CHANGED;
+                    }
+                }
+                else
+                {
+                    PlayerTalent talent;
+                    talent.currentRank = talentPos->rank;
+                    talent.talentEntry = sTalentStore.LookupEntry(talentPos->talent_id);
+                    talent.state       = IsInWorld() ? PLAYERSPELL_NEW : PLAYERSPELL_UNCHANGED;
+                    m_talents[m_activeSpec][i].AddTalentToMap(talentPos->talent_id,talent);
+                }
+            }
 
-			// update used talent points count
-			m_usedTalentCount += GetTalentSpellCost(talentPos);
-			UpdateFreeTalentPoints(false);
-			}
+            // update used talent points count
+            m_usedTalentCount += GetTalentSpellCost(talentPos);
+            UpdateFreeTalentPoints(false);
+            }
     }
 
     // update free primary prof.points (if any, can be none in case GM .learn prof. learning)
@@ -17963,22 +17956,22 @@ void Player::_SaveTalents()
     SqlStatement stmtDel = CharacterDatabase.CreateStatement(delTalents, "DELETE FROM character_talent WHERE guid = ? and talent_id = ? and spec = ?");
     SqlStatement stmtIns = CharacterDatabase.CreateStatement(insTalents, "INSERT INTO character_talent (guid, talent_id, current_rank , spec, tabId) VALUES (?, ?, ?, ?, ?)");
 
-	for(uint8 specIdx = 0; specIdx < MAX_TALENT_SPEC_COUNT; ++specIdx)
-	{
-		for(uint8 i = 0; i < 3; ++i)
-		{
-			for(PlayerTalentMap::iterator itr = m_talents[specIdx][i].GetTalentMap().begin(); itr != m_talents[specIdx][i].GetTalentMap().end(); ++itr)
-			{
-				if(itr->second.state == PLAYERSPELL_CHANGED || itr->second.state == PLAYERSPELL_NEW){
-					stmtDel.PExecute(this->GetObjectGuid().GetRawValue(),itr->first,specIdx);
+    for(uint8 specIdx = 0; specIdx < MAX_TALENT_SPEC_COUNT; ++specIdx)
+    {
+        for(uint8 i = 0; i < 3; ++i)
+        {
+            for(PlayerTalentMap::iterator itr = m_talents[specIdx][i].GetTalentMap().begin(); itr != m_talents[specIdx][i].GetTalentMap().end(); ++itr)
+            {
+                if(itr->second.state == PLAYERSPELL_CHANGED || itr->second.state == PLAYERSPELL_NEW){
+                    stmtDel.PExecute(this->GetObjectGuid().GetRawValue(),itr->first,specIdx);
                     stmtIns.PExecute(this->GetObjectGuid().GetRawValue(),itr->first,itr->second.currentRank,specIdx,itr->second.talentEntry->TalentTab);
-				}else if(itr->second.state == PLAYERSPELL_REMOVED){
-					stmtDel.PExecute(this->GetObjectGuid().GetRawValue(),itr->first,specIdx);
-				}
-			}
-		}
-	}
-	
+                }else if(itr->second.state == PLAYERSPELL_REMOVED){
+                    stmtDel.PExecute(this->GetObjectGuid().GetRawValue(),itr->first,specIdx);
+                }
+            }
+        }
+    }
+    
 }
 
 // save player stats -- only for external usage
@@ -21783,17 +21776,25 @@ Item* Player::ConvertItem(Item* item, uint32 newItemId)
 
 uint32 Player::CalculateTalentsPoints() const
 {
-    uint32 talent_points = (getLevel() < 10 ? 0 : ((getLevel() - 9) / 2) + 1);
+    uint32 level = getLevel();
+    uint32 talent_points = (level < 10 ? 0 : ((level - 9) / 2) + 1);
 
-    if (getLevel() > 80 && getLevel() < 84)
+    if (level == 82 || level == 83)
         talent_points += 1;
-    else if (getLevel() >= 84)
+    else if (level >= 84)
         talent_points += 2;
 
-    if (getClass() == CLASS_DEATH_KNIGHT || GetMapId() == 609)
-        return uint32(((getLevel() < 56 ? 0 : getLevel() - 55) + m_questRewardTalentCount) * sWorld.getConfig(CONFIG_FLOAT_RATE_TALENT));
+    if (getClass() == CLASS_DEATH_KNIGHT)
+    {
+        uint32 base_level = 55;
+        uint32 base_talent = level <= base_level ? 0 : level - base_level;
 
-    return uint32((talent_points + m_questRewardTalentCount) * sWorld.getConfig(CONFIG_FLOAT_RATE_TALENT));
+        uint32 talentPointsForLevel = base_talent + m_questRewardTalentCount;
+
+        return uint32(talentPointsForLevel * sWorld.getConfig(CONFIG_FLOAT_RATE_TALENT));
+    }
+
+    return uint32(talent_points * sWorld.getConfig(CONFIG_FLOAT_RATE_TALENT));
 }
 
 bool Player::CanStartFlyInArea(uint32 mapid, uint32 zone, uint32 area) const
@@ -22071,67 +22072,67 @@ void Player::StartTimedAchievementCriteria(AchievementCriteriaTypes type, uint32
 
 PlayerTalent const* Player::GetKnownTalentById(uint32 talentId) const
 {
-	for(uint8 i = 0; i <=3; ++i)
-	{
+    for(uint8 i = 0; i <= 3; ++i)
+    {
         PlayerTalentMap::const_iterator itr = m_talents[m_activeSpec][i].GetTalentMap().find(talentId);
         if(itr != m_talents[m_activeSpec][i].GetTalentMap().end())
             return &itr->second;
-        else if(i == 2)
-            return NULL;
-	}
+    }
+
+    return NULL;
 }
 
 SpellEntry const* Player::GetKnownTalentRankById(uint32 talentId) const
 {
     if (PlayerTalent const* talent = GetKnownTalentById(talentId))
         return sSpellStore.LookupEntry(talent->talentEntry->RankID[talent->currentRank]);
-    else
-        return NULL;
+
+    return NULL;
 }
 
 void Player::LearnTalent(uint32 talentId, uint32 talentRank)
 {
     TalentEntry const* talent = sTalentStore.LookupEntry(talentId);
-	bool dependsOn = false;
+    bool dependsOn = false;
 
-	if(!talent)
-	{
-		sLog.outError("No such talent : %u found for player");
-		return;
-	}
+    if(!talent)
+    {
+        sLog.outError("No such talent : %u found for player");
+        return;
+    }
 
-	PlayerTalent newTalent;
-	newTalent.talentEntry = talent;
+    PlayerTalent newTalent;
+    newTalent.talentEntry = talent;
 
-	for(uint8 i = 0; i < 3; ++i)
-	{
+    for(uint8 i = 0; i < 3; ++i)
+    {
         if(m_talents[m_activeSpec][i].GetTalentCount() < 1)
             m_talents[m_activeSpec][i].SetTabId(talent->TalentTab);
 
-		PlayerTalentMap::iterator itr = m_talents[m_activeSpec][i].GetTalentMap().find(talentId);
-		if(itr != m_talents[m_activeSpec][i].GetTalentMap().end())
-		{
-			if(itr->second.currentRank == talentRank)
-			{
-				sLog.outError("Player with guid : %u has tryed to learn talent : %u with rank : %u while having active the same talent with the same rank",this->GetObjectGuid().GetRawValue(),talentId,talentRank);
-				return;
-			}
+        PlayerTalentMap::iterator itr = m_talents[m_activeSpec][i].GetTalentMap().find(talentId);
+        if(itr != m_talents[m_activeSpec][i].GetTalentMap().end())
+        {
+            if(itr->second.currentRank == talentRank)
+            {
+                sLog.outError("Player with guid : %u has tryed to learn talent : %u with rank : %u while having active the same talent with the same rank",this->GetObjectGuid().GetRawValue(),talentId,talentRank);
+                return;
+            }
 
-			if(talent->DependsOn != 0)
-				dependsOn = true;
-		
-			newTalent.currentRank = talentRank;
-			newTalent.state = PLAYERSPELL_CHANGED;
-		}else{
-			newTalent.currentRank = talentRank;
-			newTalent.state = PLAYERSPELL_NEW;
-			m_talents[m_activeSpec][i].IncreaseTalentCount();
-		}
-		learnSpell(talent->RankID[talentRank],dependsOn);
-		m_talents[m_activeSpec][i].AddTalentToMap(talentId,newTalent);
+            if(talent->DependsOn != 0)
+                dependsOn = true;
+        
+            newTalent.currentRank = talentRank;
+            newTalent.state = PLAYERSPELL_CHANGED;
+        }else{
+            newTalent.currentRank = talentRank;
+            newTalent.state = PLAYERSPELL_NEW;
+            m_talents[m_activeSpec][i].IncreaseTalentCount();
+        }
+        learnSpell(talent->RankID[talentRank],dependsOn);
+        m_talents[m_activeSpec][i].AddTalentToMap(talentId,newTalent);
         m_usedTalentCount += 1;
         return;
-	}   
+    }   
 }
 
 void Player::LearnPetTalent(ObjectGuid petGuid, uint32 talentId, uint32 talentRank)
@@ -22331,35 +22332,42 @@ bool Player::canSeeSpellClickOn(Creature const *c) const
 
 void Player::BuildPlayerTalentsInfoData(WorldPacket *data)
 {
-    sLog.outDebug("Free Talent points : %u \n",GetFreeTalentPoints());
-    sLog.outDebug("Specializations : %u \n",m_specsCount);
-    sLog.outDebug("Activated spec : %u \n",m_activeSpec);
-
     *data << uint32(GetFreeTalentPoints());                 // unspentTalentPoints
     *data << uint8(m_specsCount);                           // talent group count (0, 1 or 2)
     *data << uint8(m_activeSpec);                           // talent group index (0 or 1)
 
-    
-
     if(m_specsCount)
     {
-        // loop through all specs (only 1 for now)
         for(uint32 specIdx = 0; specIdx < m_specsCount; ++specIdx)
         {
+            uint8 talentIdCount = 0;
+            uint32 talentTabId = 0;
+            size_t pos = data->wpos();
+            *data << uint8(talentIdCount);
+
+            size_t pos1 = data->wpos();
+            *data << uint32(talentTabId);
+
+            uint32 const* talentTabIds = GetTalentTabPages(getClass());
+
             for(uint8 i = 0; i <= 3; ++i)
-			{
-				*data << uint32(m_talents[specIdx][i].GetTabId());
-				*data << uint8(m_talents[specIdx][i].GetTalentCount());
+            {
+                talentTabId = m_talents[specIdx][i].GetTabId();
+                talentIdCount = m_talents[specIdx][i].GetTalentCount();
 
-				for(PlayerTalentMap::iterator itr = m_talents[specIdx][i].GetTalentMap().begin(); itr != m_talents[specIdx][i].GetTalentMap().end(); ++itr)
-				{
-					*data << uint32(itr->second.talentEntry->TalentID);
-					*data << uint8(itr->second.currentRank);
-				}
-			}
+                for(PlayerTalentMap::iterator itr = m_talents[specIdx][i].GetTalentMap().begin(); itr != m_talents[specIdx][i].GetTalentMap().end(); ++itr)
+                {
+                    *data << uint32(itr->second.talentEntry->TalentID);
+                    *data << uint8(itr->second.currentRank);
+                }
+            }
 
-            *data << uint8(0); //Glyph count
-            /*in a loop send active glyphs*/
+            data->put<uint8>(pos, talentIdCount);           // put real talentIdCount
+            data->put<uint32>(pos1, talentTabId);           // put real talentTabId
+
+            *data << uint8(MAX_GLYPH_SLOT_INDEX);
+            for(uint8 i = 0; i < MAX_GLYPH_SLOT_INDEX; ++i)
+                *data << uint16(m_glyphs[specIdx][i].GetId());
         }
 
     }

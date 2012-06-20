@@ -80,7 +80,7 @@ void instance_well_of_eternity::OnCreatureCreate(Creature * creature)
 {
     switch(creature->GetEntry())
     {
-        case BOSS_PEROTH_ARN:		m_mNpcEntryGuidStore[BOSS_PEROTH_ARN] = creature->GetObjectGuid();       break;
+        case BOSS_PEROTH_ARN:        m_mNpcEntryGuidStore[BOSS_PEROTH_ARN] = creature->GetObjectGuid();       break;
         case BOSS_QUEEN_AZSHARA:        m_mNpcEntryGuidStore[BOSS_QUEEN_AZSHARA] = creature->GetObjectGuid();       break;
         case BOSS_CAPTAIN_VAROTHEN:     m_mNpcEntryGuidStore[BOSS_CAPTAIN_VAROTHEN] = creature->GetObjectGuid();    break;
         case BOSS_MANNOROTH:     m_mNpcEntryGuidStore[BOSS_MANNOROTH] = creature->GetObjectGuid();    break;
@@ -112,7 +112,7 @@ void instance_well_of_eternity::OnCreatureDeath(Creature * creature)
 void instance_well_of_eternity::OnCreatureEvade(Creature * creature)
 {
     switch(creature->GetEntry())
-	{
+    {
         case BOSS_PEROTH_ARN:        SetData(DATA_PEROTH_ARN_EVENT,FAIL);            break;
         case BOSS_QUEEN_AZSHARA:        SetData(DATA_QUEEN_AZSHARA_EVENT,FAIL);            break;
         case BOSS_CAPTAIN_VAROTHEN:     SetData(DATA_CAPTAIN_VAROTHEN_EVENT,FAIL);            break;

@@ -80,14 +80,14 @@ void instance_dragon_soul::OnCreatureCreate(Creature * creature)
 {
     switch(creature->GetEntry())
     {
-		case BOSS_MORCHOK:					m_mNpcEntryGuidStore[BOSS_MORCHOK] = creature->GetObjectGuid();					break;			
-		case BOSS_WARLORD_ZONOZZ:			m_mNpcEntryGuidStore[BOSS_WARLORD_ZONOZZ] = creature->GetObjectGuid();			break;
-		case BOSS_YORSAHJ_THE_UNSLEEPING:	m_mNpcEntryGuidStore[BOSS_YORSAHJ_THE_UNSLEEPING] = creature->GetObjectGuid();  break;
-		case BOSS_HAGARA_THE_STORMBINDER:	m_mNpcEntryGuidStore[BOSS_HAGARA_THE_STORMBINDER] = creature->GetObjectGuid();  break;
-		case BOSS_ULTRAXION:				m_mNpcEntryGuidStore[BOSS_ULTRAXION] = creature->GetObjectGuid();				break;
-		case BOSS_WARMASTER_BLACKHORN:		m_mNpcEntryGuidStore[BOSS_WARMASTER_BLACKHORN] = creature->GetObjectGuid();     break;
-		case BOSS_SPLINE_OF_DEATHWING:		m_mNpcEntryGuidStore[BOSS_SPLINE_OF_DEATHWING] = creature->GetObjectGuid();     break;
-		case BOSS_MADNESS_OF_DEATHWING:		m_mNpcEntryGuidStore[BOSS_MADNESS_OF_DEATHWING] = creature->GetObjectGuid();    break;
+        case BOSS_MORCHOK:                    m_mNpcEntryGuidStore[BOSS_MORCHOK] = creature->GetObjectGuid();                    break;            
+        case BOSS_WARLORD_ZONOZZ:            m_mNpcEntryGuidStore[BOSS_WARLORD_ZONOZZ] = creature->GetObjectGuid();            break;
+        case BOSS_YORSAHJ_THE_UNSLEEPING:    m_mNpcEntryGuidStore[BOSS_YORSAHJ_THE_UNSLEEPING] = creature->GetObjectGuid();  break;
+        case BOSS_HAGARA_THE_STORMBINDER:    m_mNpcEntryGuidStore[BOSS_HAGARA_THE_STORMBINDER] = creature->GetObjectGuid();  break;
+        case BOSS_ULTRAXION:                m_mNpcEntryGuidStore[BOSS_ULTRAXION] = creature->GetObjectGuid();                break;
+        case BOSS_WARMASTER_BLACKHORN:        m_mNpcEntryGuidStore[BOSS_WARMASTER_BLACKHORN] = creature->GetObjectGuid();     break;
+        case BOSS_SPLINE_OF_DEATHWING:        m_mNpcEntryGuidStore[BOSS_SPLINE_OF_DEATHWING] = creature->GetObjectGuid();     break;
+        case BOSS_MADNESS_OF_DEATHWING:        m_mNpcEntryGuidStore[BOSS_MADNESS_OF_DEATHWING] = creature->GetObjectGuid();    break;
     }
 }
 
@@ -95,14 +95,14 @@ void instance_dragon_soul::OnCreatureEnterCombat(Creature * creature)
 {
     switch(creature->GetEntry())
     {
-		case BOSS_MORCHOK:					SetData(DATA_MORCHOK_EVENT,IN_PROGRESS);					break;				
-		case BOSS_WARLORD_ZONOZZ:			SetData(DATA_WARLORD_ZONOZZ_EVENT,IN_PROGRESS);				break;
-		case BOSS_YORSAHJ_THE_UNSLEEPING:	SetData(DATA_YORSAHJ_THE_UNSLEEPING_EVENT,IN_PROGRESS);     break;
-		case BOSS_HAGARA_THE_STORMBINDER:	SetData(DATA_HAGARA_THE_STORMBINDER_EVENT,IN_PROGRESS);     break;
-		case BOSS_ULTRAXION:				SetData(DATA_ULTRAXION_EVENT,IN_PROGRESS);				break;
-		case BOSS_WARMASTER_BLACKHORN:		SetData(DATA_WARMASTER_BLACKHORN_EVENT,IN_PROGRESS);		break;
-		case BOSS_SPLINE_OF_DEATHWING:		SetData(DATA_SPLINE_OF_DEATHWING_EVENT,IN_PROGRESS);		break;
-		case BOSS_MADNESS_OF_DEATHWING:		SetData(DATA_MADNESS_OF_DEATHWING_EVENT,IN_PROGRESS);		break;
+        case BOSS_MORCHOK:                    SetData(DATA_MORCHOK_EVENT,IN_PROGRESS);                    break;                
+        case BOSS_WARLORD_ZONOZZ:            SetData(DATA_WARLORD_ZONOZZ_EVENT,IN_PROGRESS);                break;
+        case BOSS_YORSAHJ_THE_UNSLEEPING:    SetData(DATA_YORSAHJ_THE_UNSLEEPING_EVENT,IN_PROGRESS);     break;
+        case BOSS_HAGARA_THE_STORMBINDER:    SetData(DATA_HAGARA_THE_STORMBINDER_EVENT,IN_PROGRESS);     break;
+        case BOSS_ULTRAXION:                SetData(DATA_ULTRAXION_EVENT,IN_PROGRESS);                break;
+        case BOSS_WARMASTER_BLACKHORN:        SetData(DATA_WARMASTER_BLACKHORN_EVENT,IN_PROGRESS);        break;
+        case BOSS_SPLINE_OF_DEATHWING:        SetData(DATA_SPLINE_OF_DEATHWING_EVENT,IN_PROGRESS);        break;
+        case BOSS_MADNESS_OF_DEATHWING:        SetData(DATA_MADNESS_OF_DEATHWING_EVENT,IN_PROGRESS);        break;
     }
 }
 
@@ -110,14 +110,14 @@ void instance_dragon_soul::OnCreatureDeath(Creature * creature)
 {
     switch(creature->GetEntry())
     {
-		case BOSS_MORCHOK:					SetData(DATA_MORCHOK_EVENT,DONE);					break;				
-		case BOSS_WARLORD_ZONOZZ:			SetData(DATA_WARLORD_ZONOZZ_EVENT,DONE);			break;
-		case BOSS_YORSAHJ_THE_UNSLEEPING:	SetData(DATA_YORSAHJ_THE_UNSLEEPING_EVENT,DONE);    break;
-		case BOSS_HAGARA_THE_STORMBINDER:	SetData(DATA_HAGARA_THE_STORMBINDER_EVENT,DONE);    break;
-		case BOSS_ULTRAXION:				SetData(DATA_ULTRAXION_EVENT,DONE);					break;
-		case BOSS_WARMASTER_BLACKHORN:		SetData(DATA_WARMASTER_BLACKHORN_EVENT,DONE);		break;
-		case BOSS_SPLINE_OF_DEATHWING:		SetData(DATA_SPLINE_OF_DEATHWING_EVENT,DONE);		break;
-		case BOSS_MADNESS_OF_DEATHWING:		SetData(DATA_MADNESS_OF_DEATHWING_EVENT,DONE);		break;
+        case BOSS_MORCHOK:                    SetData(DATA_MORCHOK_EVENT,DONE);                    break;                
+        case BOSS_WARLORD_ZONOZZ:            SetData(DATA_WARLORD_ZONOZZ_EVENT,DONE);            break;
+        case BOSS_YORSAHJ_THE_UNSLEEPING:    SetData(DATA_YORSAHJ_THE_UNSLEEPING_EVENT,DONE);    break;
+        case BOSS_HAGARA_THE_STORMBINDER:    SetData(DATA_HAGARA_THE_STORMBINDER_EVENT,DONE);    break;
+        case BOSS_ULTRAXION:                SetData(DATA_ULTRAXION_EVENT,DONE);                    break;
+        case BOSS_WARMASTER_BLACKHORN:        SetData(DATA_WARMASTER_BLACKHORN_EVENT,DONE);        break;
+        case BOSS_SPLINE_OF_DEATHWING:        SetData(DATA_SPLINE_OF_DEATHWING_EVENT,DONE);        break;
+        case BOSS_MADNESS_OF_DEATHWING:        SetData(DATA_MADNESS_OF_DEATHWING_EVENT,DONE);        break;
     }
 }
 
@@ -125,15 +125,15 @@ void instance_dragon_soul::OnCreatureEvade(Creature * creature)
 {
     switch(creature->GetEntry())
     {
-		case BOSS_MORCHOK:					SetData(DATA_MORCHOK_EVENT,FAIL);					break;				
-		case BOSS_WARLORD_ZONOZZ:			SetData(DATA_WARLORD_ZONOZZ_EVENT,FAIL);			break;
-		case BOSS_YORSAHJ_THE_UNSLEEPING:	SetData(DATA_YORSAHJ_THE_UNSLEEPING_EVENT,FAIL);    break;
-		case BOSS_HAGARA_THE_STORMBINDER:	SetData(DATA_HAGARA_THE_STORMBINDER_EVENT,FAIL);    break;
-		case BOSS_ULTRAXION:				SetData(DATA_ULTRAXION_EVENT,FAIL);					break;
-		case BOSS_WARMASTER_BLACKHORN:		SetData(DATA_WARMASTER_BLACKHORN_EVENT,FAIL);		break;
-		case BOSS_SPLINE_OF_DEATHWING:		SetData(DATA_SPLINE_OF_DEATHWING_EVENT,FAIL);		break;
-		case BOSS_MADNESS_OF_DEATHWING:		SetData(DATA_MADNESS_OF_DEATHWING_EVENT,FAIL);		break;
-	}
+        case BOSS_MORCHOK:                    SetData(DATA_MORCHOK_EVENT,FAIL);                    break;                
+        case BOSS_WARLORD_ZONOZZ:            SetData(DATA_WARLORD_ZONOZZ_EVENT,FAIL);            break;
+        case BOSS_YORSAHJ_THE_UNSLEEPING:    SetData(DATA_YORSAHJ_THE_UNSLEEPING_EVENT,FAIL);    break;
+        case BOSS_HAGARA_THE_STORMBINDER:    SetData(DATA_HAGARA_THE_STORMBINDER_EVENT,FAIL);    break;
+        case BOSS_ULTRAXION:                SetData(DATA_ULTRAXION_EVENT,FAIL);                    break;
+        case BOSS_WARMASTER_BLACKHORN:        SetData(DATA_WARMASTER_BLACKHORN_EVENT,FAIL);        break;
+        case BOSS_SPLINE_OF_DEATHWING:        SetData(DATA_SPLINE_OF_DEATHWING_EVENT,FAIL);        break;
+        case BOSS_MADNESS_OF_DEATHWING:        SetData(DATA_MADNESS_OF_DEATHWING_EVENT,FAIL);        break;
+    }
 }
 
 InstanceData * GetInstanceData_instance_dragon_soul(Map* pMap)

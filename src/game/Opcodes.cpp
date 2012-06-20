@@ -247,9 +247,9 @@ void InitOpcodeTable()
     OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
     OPCODE(CMSG_TRAINER_LIST,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerListOpcode       );
     OPCODE(SMSG_TRAINER_LIST,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
-    OPCODE(CMSG_BUY_TRAINER_SERVICE,		  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerBuySpellOpcode   );
-    OPCODE(SMSG_TRAINER_BUY_SUCCEEDED,		  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide			  );
-    OPCODE(SMSG_TRAINER_BUY_FAILED,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide			  );
+    OPCODE(CMSG_BUY_TRAINER_SERVICE,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerBuySpellOpcode   );
+    OPCODE(SMSG_TRAINER_BUY_SUCCEEDED,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_TRAINER_BUY_FAILED,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_NPC_CACHE,                    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleNpcTextQueryOpcode      );
     OPCODE(SMSG_NPC_CACHE,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_PAGE_TEXT_CACHE,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandlePageTextQueryOpcode     );
@@ -269,7 +269,7 @@ void InitOpcodeTable()
     OPCODE(MSG_SET_DUNGEON_DIFFICULTY,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetDungeonDifficultyOpcode);
     //OPCODE(SMSG_INSTANCE_DIFFICULTY,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_SEND_UNLEARN_SPELLS,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
-    OPCODE(SMSG_LEARNED_SPELL,				  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide			  );
+    OPCODE(SMSG_LEARNED_SPELL,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_EQUIPMENT_SET,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_EQUIPMENT_SET_ID,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_EQUIPMENT_SET_RESULT,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
@@ -312,7 +312,7 @@ void InitOpcodeTable()
     OPCODE(SMSG_QUESTGIVER_QUEST_LIST,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_QUESTGIVER_STATUS,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_MOVE_TIME_SKIPPED,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMoveTimeSkippedOpcode   );
-    OPCODE(SMSG_PLAY_SPELL_VISUAL,			  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide			  );
+    OPCODE(SMSG_PLAY_SPELL_VISUAL,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_TALENT_UPDATE                 ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
     OPCODE(SMSG_LEVELUP_INFO                  ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
     OPCODE(CMSG_LEARN_TALENT                  ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleLearnTalentOpcode       );

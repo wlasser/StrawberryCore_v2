@@ -446,9 +446,9 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* pQuest, ObjectGuid guid
         }
     }
 
-    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 100);   // guess size
+    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 200);   // guess size
     data << guid;
-    data << uint64(0);                                      // wotlk, something todo with quest sharing?
+    data << uint64(ActivateAccept ? 0 : guid);              // Send guid if ActivateAccept disabled
     data << uint32(pQuest->GetQuestId());
     data << Title;
     data << Details;
@@ -522,12 +522,12 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* pQuest, ObjectGuid guid
         data << uint32(pQuest->XPValue(GetMenuSession()->GetPlayer()));
     }
 
-    // TODO: fixme. rewarded honor points
-    data << uint32(pQuest->GetRewHonorAddition());
+    data << uint32(pQuest->GetCharTitleId());               // CharTitleId, new 2.4.0, player gets this title (id from CharTitles)
     data << uint32(0);                                      // 4.x.x
+    // TODO: fixme. rewarded honor points
     data << float(pQuest->GetRewHonorMultiplier());         // new 3.3.0
-    data << uint32(pQuest->GetRewSpell());                  // reward spell, this spell will display (icon) (casted if RewSpellCast==0)
-    data << uint32(pQuest->GetRewSpellCast());              // casted spell
+    data << uint32(pQuest->GetBonusTalents());              // bonus talents
+    data << uint32(pQuest->GetRewHonorAddition());
     data << uint32(0);                                      // 4.x.x
 
     for(int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)        // reward factions ids
@@ -537,14 +537,12 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* pQuest, ObjectGuid guid
         data << int32(pQuest->RewRepValueId[i]);
 
     for(int i = 0; i < QUEST_REPUTATIONS_COUNT; ++i)        // reward reputation override. No bonus is expected given
-        data << int32(0);
-        //data << int32(pQuest->RewRepValue[i]);            // current field for store of rep value, can be reused to implement "override value"
+        data << int32(pQuest->RewRepValue[i]);              // current field for store of rep value, can be reused to implement "override value"
 
-    data << uint32(pQuest->GetCharTitleId());               // CharTitleId, new 2.4.0, player gets this title (id from CharTitles)
-    data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(0);
+    data << uint32(pQuest->GetRewSpell());                  // reward spell, this spell will display (icon) (casted if RewSpellCast==0)
+    data << uint32(pQuest->GetRewSpellCast());              // casted spell
 
-    for(int i = 0; i < QUEST_CURRENCY_REWARD_COUNT; ++i)                               // 4.0.0 currency reward id and count
+    for(int i = 0; i < QUEST_CURRENCY_REWARD_COUNT; ++i)    // 4.0.0 currency reward id and count
     {
         data << pQuest->CurrencyRewardId[i];
         data << pQuest->CurrencyRewardCount[i];
@@ -643,16 +641,16 @@ void PlayerMenu::SendQuestQueryResponse( Quest const *pQuest )
     data << uint32(pQuest->GetSrcItemId());                 // source item id
     data << uint32(pQuest->GetQuestFlags());                // quest flags
 
-    data << uint32(0);                                      // 4.x.x
+    data << uint32(0);                                      // MinimapTargetMark
 
     data << uint32(pQuest->GetCharTitleId());               // CharTitleId, new 2.4.0, player gets this title (id from CharTitles)
     data << uint32(pQuest->GetPlayersSlain());              // players slain
     data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(0);                                      // bonus arena points
-    data << uint32(0);                                      // rew rep show mask?
 
+    data << uint32(0);                                      // bonus arena points
     data << uint32(0);                                      // 4.x.x
     data << uint32(0);                                      // 4.x.x
+    data << uint32(0);                                      // rew rep show mask?
     data << uint32(pQuest->GetPortraitGiver()); 
     data << uint32(pQuest->GetPortraitTurnIn()); 
 
