@@ -888,28 +888,20 @@ void Map::SendInitSelf( Player * player )
 {
     sLog.outString("Creating player data for himself %u", player->GetGUIDLow());
 
-    UpdateData data(GetId());
+    UpdateData data(player->GetMapId());
 
     // attach to player data current transport data
     if(Transport* transport = player->GetTransport())
-    {
         transport->BuildCreateUpdateBlockForPlayer(&data, player);
-    }
 
     // build data for self presence in world at own client (one time for map)
     player->BuildCreateUpdateBlockForPlayer(&data, player);
 
     // build other passengers at transport also (they always visible and marked as visible and will not send at visibility update at add to map
     if(Transport* transport = player->GetTransport())
-    {
         for(Transport::PlayerSet::const_iterator itr = transport->GetPassengers().begin();itr!=transport->GetPassengers().end();++itr)
-        {
             if(player!=(*itr) && player->HaveAtClient(*itr))
-            {
                 (*itr)->BuildCreateUpdateBlockForPlayer(&data, player);
-            }
-        }
-    }
 
     WorldPacket packet;
     data.BuildPacket(&packet);
@@ -925,20 +917,24 @@ void Map::SendInitTransports( Player * player )
     if (tmap.find(player->GetMapId()) == tmap.end())
         return;
 
-    UpdateData transData(GetId());
+    UpdateData transData(player->GetMapId());
+
     MapManager::TransportSet& tset = tmap[player->GetMapId()];
 
     for (MapManager::TransportSet::const_iterator i = tset.begin(); i != tset.end(); ++i)
     {
         // send data for current transport in other place
         if((*i) != player->GetTransport() && (*i)->GetMapId()==i_id)
-        {
             (*i)->BuildCreateUpdateBlockForPlayer(&transData, player);
-        }
     }
 
     WorldPacket packet;
     transData.BuildPacket(&packet);
+
+    // Prevent sending transport maps in player update object
+    if (packet.ReadUInt16() != player->GetMapId())
+        return;
+
     player->GetSession()->SendPacket(&packet);
 }
 
@@ -951,7 +947,7 @@ void Map::SendRemoveTransports( Player * player )
     if (tmap.find(player->GetMapId()) == tmap.end())
         return;
 
-    UpdateData transData(GetId());
+    UpdateData transData(player->GetMapId());
     MapManager::TransportSet& tset = tmap[player->GetMapId()];
 
     // except used transport
@@ -961,6 +957,11 @@ void Map::SendRemoveTransports( Player * player )
 
     WorldPacket packet;
     transData.BuildPacket(&packet);
+
+    // Prevent sending transport maps in player update object
+    if (packet.ReadUInt16() != player->GetMapId())
+        return;
+
     player->GetSession()->SendPacket(&packet);
 }
 
