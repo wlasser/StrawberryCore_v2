@@ -15416,7 +15416,7 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
     SetUInt32Value(UNIT_FIELD_LEVEL, fields[6].GetUInt8());
     SetUInt32Value(PLAYER_XP, fields[7].GetUInt32());
 
-    _LoadIntoDataField(fields[59].GetString(), PLAYER_EXPLORED_ZONES_1, PLAYER_EXPLORED_ZONES_SIZE);
+    _LoadIntoDataField(fields[58].GetString(), PLAYER_EXPLORED_ZONES_1, PLAYER_EXPLORED_ZONES_SIZE);
     _LoadIntoDataField(fields[60].GetString(), PLAYER__FIELD_KNOWN_TITLES, KNOWN_TITLES_SIZE*2);
 
     InitDisplayIds();                                       // model, scale and model data
