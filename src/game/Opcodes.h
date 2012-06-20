@@ -414,6 +414,10 @@ enum Opcodes
     SMSG_QUESTGIVER_STATUS,
     CMSG_MOVE_TIME_SKIPPED,
     SMSG_PLAY_SPELL_VISUAL,
+    SMSG_TALENT_UPDATE,
+    SMSG_LEVELUP_INFO,
+    CMSG_LEARN_TALENT,
+    CMSG_LEARN_PREVIEW_TALENTS,
     MAX_OPCODE_VALUE
 };
 
@@ -768,7 +772,7 @@ enum Opcodes335a
     SMSG_AURACASTLOG                                = 0x1D1,
     CMSG_RECLAIM_CORPSE                             = 0x1D2,
     CMSG_WRAP_ITEM                                  = 0x1D3,
-    SMSG_LEVELUP_INFO                               = 0x1D4,
+    /*SMSG_LEVELUP_INFO                               = 0x1D4,*/
     MSG_MINIMAP_PING                                = 0x1D5,
     SMSG_RESISTLOG                                  = 0x1D6,
     CMSG_SET_SKILL_CHEAT                            = 0x1D8,
@@ -868,7 +872,7 @@ enum Opcodes335a
     SMSG_DEBUGAURAPROC                              = 0x24D,
     SMSG_SPELLDAMAGESHIELD                          = 0x24F,
     SMSG_SPELLNONMELEEDAMAGELOG                     = 0x250,
-    CMSG_LEARN_TALENT                               = 0x251,
+    /*CMSG_LEARN_TALENT                               = 0x251,*/
     SMSG_RESURRECT_FAILED                           = 0x252,
     CMSG_TOGGLE_PVP                                 = 0x253,
     MSG_AUCTION_HELLO                               = 0x255,

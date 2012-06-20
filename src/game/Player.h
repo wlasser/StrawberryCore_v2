@@ -112,7 +112,27 @@ struct PlayerTalent
 };
 
 typedef UNORDERED_MAP<uint32, PlayerSpell> PlayerSpellMap;
-typedef UNORDERED_MAP<uint32, PlayerTalent> PlayerTalentMap;
+typedef std::map<uint32, PlayerTalent> PlayerTalentMap;
+
+struct PlayerTalentHolder
+{
+    public:
+        PlayerTalentHolder();
+		PlayerTalentHolder(uint32 tabId) : m_tabId(tabId), m_talentsLearned(0) { }
+        uint32 GetTabId() const { return m_tabId; }
+        uint32 GetTalentCount() const { return m_talentsLearned; }
+        PlayerTalentMap &GetTalentMap() { return m_talentMap; }
+        PlayerTalentMap const &GetTalentMap() const { return m_talentMap; }
+        void SetTabId(uint32 tabId) { m_tabId = tabId; }
+        void IncreaseTalentCount() { ++m_talentsLearned; }
+        void AddTalentToMap(uint32 talentId,PlayerTalent talent) { m_talentMap[talentId] = talent; }
+		void RemoveTalentFromMap(uint32 talentId) { m_talentMap.erase(talentId); }
+
+    private:
+        uint32              m_tabId;
+        uint8               m_talentsLearned;
+        PlayerTalentMap     m_talentMap;
+};
 
 // Spell modifier (used for modify other spells)
 struct SpellModifier
@@ -1614,8 +1634,8 @@ class Player : public Unit
         void learnQuestRewardedSpells(Quest const* quest);
         void learnSpellHighRank(uint32 spellid);
 
-        uint32 GetFreeTalentPoints() const { return 0/*GetUInt32Value(PLAYER_CHARACTER_POINTS1)*/; }
-        void SetFreeTalentPoints(uint32 points) { 0/*SetUInt32Value(PLAYER_CHARACTER_POINTS1,points)*/; }
+        uint32 GetFreeTalentPoints() const { return GetUInt32Value(PLAYER_CHARACTER_POINTS); }
+        void SetFreeTalentPoints(uint32 points) { SetUInt32Value(PLAYER_CHARACTER_POINTS,points);}
         void UpdateFreeTalentPoints(bool resetIfNeed = true);
         bool resetTalents(bool no_cost = false, bool all_specs = false);
         uint32 resetTalentsCost() const;
@@ -1653,8 +1673,8 @@ class Player : public Unit
 
         SpellCooldowns const& GetSpellCooldownMap() const { return m_spellCooldowns; }
 
-        PlayerTalent const* GetKnownTalentById(int32 talentId) const;
-        SpellEntry const* GetKnownTalentRankById(int32 talentId) const;
+        PlayerTalent const* GetKnownTalentById(uint32 talentId) const;
+        SpellEntry const* GetKnownTalentRankById(uint32 talentId) const;
 
         void AddSpellMod(Aura* aura, bool apply);
         template <class T> T ApplySpellMod(uint32 spellId, SpellModOp op, T &basevalue, Spell const* spell = NULL);
@@ -2483,7 +2503,7 @@ class Player : public Unit
 
         PlayerMails m_mail;
         PlayerSpellMap m_spells;
-        PlayerTalentMap m_talents[MAX_TALENT_SPEC_COUNT];
+        PlayerTalentHolder m_talents[MAX_TALENT_SPEC_COUNT][3];
         SpellCooldowns m_spellCooldowns;
         uint32 m_lastPotionId;                              // last used health/mana potion in combat, that block next potion use
 
