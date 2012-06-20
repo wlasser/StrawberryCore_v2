@@ -267,7 +267,6 @@ void InitOpcodeTable()
     OPCODE(SMSG_NOTIFY_DANCE,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_GET_LEARNED_DANCE_MOVES,      STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(MSG_SET_DUNGEON_DIFFICULTY,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetDungeonDifficultyOpcode);
-    OPCODE(SMSG_TALENT_UPDATE,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     //OPCODE(SMSG_INSTANCE_DIFFICULTY,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_SEND_UNLEARN_SPELLS,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_LEARNED_SPELL,				  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide			  );
@@ -315,6 +314,7 @@ void InitOpcodeTable()
     OPCODE(CMSG_MOVE_TIME_SKIPPED,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMoveTimeSkippedOpcode   );
     OPCODE(SMSG_PLAY_SPELL_VISUAL,			  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide			  );
     OPCODE(SMSG_TALENT_UPDATE                 ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_LEVELUP_INFO                  ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
     OPCODE(CMSG_LEARN_TALENT                  ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleLearnTalentOpcode       );
     OPCODE(CMSG_LEARN_PREVIEW_TALENTS         ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleLearnPreviewTalents     );
 };
