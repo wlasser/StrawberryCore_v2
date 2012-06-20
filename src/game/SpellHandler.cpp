@@ -337,11 +337,11 @@ void WorldSession::HandleGameobjectReportUse(WorldPacket& recvPacket)
 
 void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 {
-    uint32 spellId;
+    uint32 spellId, glyphIndex;
     uint8  cast_count, unk_flags;
     recvPacket >> cast_count;
     recvPacket >> spellId;
-    recvPacket.read_skip<uint32>();
+    recvPacket >> glyphIndex;
     recvPacket >> unk_flags;                                // flags (if 0x02 - some additional data are received)
 
     // ignore for remote control state (for player case)
@@ -440,6 +440,7 @@ void WorldSession::HandleCastSpellOpcode(WorldPacket& recvPacket)
 
     Spell *spell = new Spell(mover, spellInfo, false);
     spell->m_cast_count = cast_count;                       // set count of casts
+    spell->m_glyphIndex = glyphIndex;
     spell->prepare(&targets);
 }
 
