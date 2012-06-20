@@ -340,6 +340,10 @@ enum Opcodes
     SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,
     MSG_START_MOVE_FORWARD,
     MSG_MOVE_HEARTBEAT,
+    SMSG_TALENT_UPDATE,
+    SMSG_LEVELUP_INFO,
+    CMSG_LEARN_TALENT,
+    CMSG_LEARN_PREVIEW_TALENTS,
     MAX_OPCODE_VALUE
 };
 
@@ -734,7 +738,7 @@ enum Opcodes335a
     SMSG_AURACASTLOG                                = 0x1D1,
     CMSG_RECLAIM_CORPSE                             = 0x1D2,
     CMSG_WRAP_ITEM                                  = 0x1D3,
-    SMSG_LEVELUP_INFO                               = 0x1D4,
+    /*SMSG_LEVELUP_INFO                               = 0x1D4,*/
     MSG_MINIMAP_PING                                = 0x1D5,
     SMSG_RESISTLOG                                  = 0x1D6,
     CMSG_SET_SKILL_CHEAT                            = 0x1D8,
@@ -837,7 +841,7 @@ enum Opcodes335a
     SMSG_DEBUGAURAPROC                              = 0x24D,
     SMSG_SPELLDAMAGESHIELD                          = 0x24F,
     SMSG_SPELLNONMELEEDAMAGELOG                     = 0x250,
-    CMSG_LEARN_TALENT                               = 0x251,
+    /*CMSG_LEARN_TALENT                               = 0x251,*/
     SMSG_RESURRECT_FAILED                           = 0x252,
     CMSG_TOGGLE_PVP                                 = 0x253,
     MSG_AUCTION_HELLO                               = 0x255,
@@ -1389,7 +1393,6 @@ enum Opcodes335a
     CMSG_SAVE_EQUIPMENT_SET                         = 0x4BD,
     CMSG_ON_MISSILE_TRAJECTORY_COLLISION            = 0x4BE,
     SMSG_NOTIFY_MISSILE_TRAJECTORY_COLLISION        = 0x4BF,
-    SMSG_TALENT_UPDATE                              = 0x4C0,
     CMSG_LEARN_TALENT_GROUP                         = 0x4C1,
     CMSG_PET_LEARN_TALENT_GROUP                     = 0x4C2,
     CMSG_SET_ACTIVE_TALENT_GROUP_OBSOLETE           = 0x4C3,

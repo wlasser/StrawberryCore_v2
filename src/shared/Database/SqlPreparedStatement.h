@@ -243,6 +243,17 @@ class SqlStatement
             return Execute();
         }
 
+        template<typename ParamType1, typename ParamType2, typename ParamType3, typename ParamType4, typename ParamType5>
+        bool PExecute(ParamType1 param1, ParamType2 param2, ParamType3 param3, ParamType4 param4,ParamType5 param5)
+        {
+            arg(param1);
+            arg(param2);
+            arg(param3);
+            arg(param4);
+            arg(param5);
+            return Execute();
+        }
+
         //bind parameters with specified type
         void addBool(bool var) { arg(var); }
         void addUInt8(uint8 var) { arg(var); }

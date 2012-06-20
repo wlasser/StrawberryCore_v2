@@ -245,4 +245,8 @@ void InitOpcodeTable()
     OPCODE(SMSG_NEW_WORLD,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_BATTLEFIELD_MGR_QUEUE_REQ,    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBattlefieldJoinQueueOpcode);
     OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_TALENT_UPDATE                 ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_LEVELUP_INFO                  ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_LEARN_TALENT                  ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleLearnTalentOpcode       );
+    OPCODE(CMSG_LEARN_PREVIEW_TALENTS         ,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleLearnPreviewTalents     );
 };
