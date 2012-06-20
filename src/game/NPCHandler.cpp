@@ -118,25 +118,22 @@ void WorldSession::SendTrainerList(ObjectGuid guid)
     SendTrainerList(guid, str);
 }
 
-
 static void SendTrainerSpellHelper(WorldPacket& data, TrainerSpell const* tSpell, TrainerSpellState state, float fDiscountMod, bool can_learn_primary_prof, uint32 reqLevel)
 {
     bool primary_prof_first_rank = sSpellMgr.IsPrimaryProfessionFirstRankSpell(tSpell->learnedSpell);
     SpellChainNode const* chain_node = sSpellMgr.GetSpellChainNode(tSpell->learnedSpell);
 
     data << uint32(tSpell->spell);                      // learned spell (or cast-spell in profession case)
-    data << uint8(state==TRAINER_SPELL_GREEN_DISABLED ? TRAINER_SPELL_GREEN : state);
+    data << uint8(state == TRAINER_SPELL_GREEN_DISABLED ? TRAINER_SPELL_GREEN : state);
     data << uint32(floor(tSpell->spellCost * fDiscountMod));
-
-    data << uint32(primary_prof_first_rank && can_learn_primary_prof ? 1 : 0);
-    // primary prof. learn confirmation dialog
-    data << uint32(primary_prof_first_rank ? 1 : 0);    // must be equal prev. field to have learn button in enabled state
     data << uint8(reqLevel);
     data << uint32(tSpell->reqSkill);
     data << uint32(tSpell->reqSkillValue);
+    data << uint32(primary_prof_first_rank && can_learn_primary_prof ? 1 : 0);
+    // primary prof. learn confirmation dialog
+    data << uint32(primary_prof_first_rank ? 1 : 0);    // must be equal prev. field to have learn button in enabled state
     data << uint32(!tSpell->IsCastable() && chain_node ? (chain_node->prev ? chain_node->prev : chain_node->req) : 0);
     data << uint32(!tSpell->IsCastable() && chain_node && chain_node->prev ? chain_node->req : 0);
-    data << uint32(0);
 }
 
 void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
@@ -174,9 +171,10 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
     uint32 maxcount = (cSpells ? cSpells->spellList.size() : 0) + (tSpells ? tSpells->spellList.size() : 0);
     uint32 trainer_type = cSpells && cSpells->trainerType ? cSpells->trainerType : (tSpells ? tSpells->trainerType : 0);
 
-    WorldPacket data( SMSG_TRAINER_LIST, 8+4+4+maxcount*38 + strTitle.size()+1);
-    data << ObjectGuid(guid);
+    WorldPacket data( SMSG_TRAINER_LIST, 8+4+4+maxcount*34 + strTitle.size()+1);
+    data << ObjectGuid(guid); 
     data << uint32(trainer_type);
+    data << uint32(ci->trainerId);
 
     size_t count_pos = data.wpos();
     data << uint32(maxcount);
@@ -226,9 +224,8 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
             ++count;
         }
     }
-
     data << strTitle;
-
+    
     data.put<uint32>(count_pos,count);
     SendPacket(&data);
 }
@@ -236,9 +233,9 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
 void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
 {
     ObjectGuid guid;
-    uint32 spellId = 0;
+    uint32 spellId = 0, trainerId = 0;
 
-    recv_data >> guid >> spellId;
+    recv_data >> guid >> trainerId >> spellId;
     DEBUG_LOG("WORLD: Received CMSG_TRAINER_BUY_SPELL Trainer: %s, learn spell id is: %u", guid.GetString().c_str(), spellId);
 
     Creature *unit = GetPlayer()->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_TRAINER);
@@ -287,7 +284,15 @@ void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
 
     // check money requirement
     if(_player->GetMoney() < nSpellCost )
+    {
+        WorldPacket data(SMSG_TRAINER_BUY_FAILED, 16);
+        data << ObjectGuid(guid);
+        data << uint32(spellId);
+        data << uint32(1);                                  // Not enough money for trainer service %spellId%.
+        SendPacket(&data);
+
         return;
+    }
 
     _player->ModifyMoney( -int32(nSpellCost) );
 

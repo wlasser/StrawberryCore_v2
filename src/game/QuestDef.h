@@ -32,6 +32,8 @@ class ObjectMgr;
 
 #define MAX_QUEST_LOG_SIZE 25
 
+#define QUEST_CURRENCY_REQUIRED_COUNT 4
+#define QUEST_CURRENCY_REWARD_COUNT 4
 #define QUEST_OBJECTIVES_COUNT 4
 #define QUEST_ITEM_OBJECTIVES_COUNT 6
 #define QUEST_SOURCE_ITEM_IDS_COUNT 4
@@ -223,6 +225,7 @@ class Quest
         int32  GetRequiredMinRepValue() const { return RequiredMinRepValue; }
         uint32 GetRequiredMaxRepFaction() const { return RequiredMaxRepFaction; }
         int32  GetRequiredMaxRepValue() const { return RequiredMaxRepValue; }
+        uint32 GetRequiredSpell() const { return RequiredSpell; }
         uint32 GetSuggestedPlayers() const { return SuggestedPlayers; }
         uint32 GetLimitTime() const { return LimitTime; }
         int32  GetPrevQuestId() const { return PrevQuestId; }
@@ -233,6 +236,8 @@ class Quest
         uint32 GetCharTitleId() const { return CharTitleId; }
         uint32 GetPlayersSlain() const { return PlayersSlain; }
         uint32 GetBonusTalents() const { return BonusTalents; }
+        uint32 GetPortraitGiver() const { return PortraitGiver; }
+        uint32 GetPortraitTurnIn() const { return PortraitTurnIn; }
         uint32 GetSrcItemId() const { return SrcItemId; }
         uint32 GetSrcItemCount() const { return SrcItemCount; }
         uint32 GetSrcSpell() const { return SrcSpell; }
@@ -243,6 +248,10 @@ class Quest
         std::string GetRequestItemsText() const { return RequestItemsText; }
         std::string GetEndText() const { return EndText; }
         std::string GetCompletedText() const { return CompletedText; }
+        std::string GetPortraitGiverText() const { return PortraitGiverText; }
+        std::string GetPortraitGiverName() const { return PortraitGiverName; }
+        std::string GetPortraitTurnInText() const { return PortraitTurnInText; }
+        std::string GetPortraitTurnInName() const { return PortraitTurnInName; }
         int32  GetRewOrReqMoney() const;
         uint32 GetRewHonorAddition() const { return RewHonorAddition; }
         float GetRewHonorMultiplier() const { return RewHonorMultiplier; }
@@ -260,6 +269,8 @@ class Quest
         uint32 GetCompleteEmote() const { return CompleteEmote; }
         uint32 GetQuestStartScript() const { return QuestStartScript; }
         uint32 GetQuestCompleteScript() const { return QuestCompleteScript; }
+        uint32 GetSoundAcceptId() const { return SoundAcceptId; }
+        uint32 GetSoundTurnInId() const { return SoundTurnInId; }
 
         bool   IsRepeatable() const { return m_SpecialFlags & QUEST_SPECIAL_FLAG_REPEATABLE; }
         bool   IsAutoComplete() const { return QuestMethod ? false : true; }
@@ -296,6 +307,10 @@ class Quest
         uint32 DetailsEmoteDelay[QUEST_EMOTE_COUNT];
         uint32 OfferRewardEmote[QUEST_EMOTE_COUNT];
         uint32 OfferRewardEmoteDelay[QUEST_EMOTE_COUNT];
+        uint32 CurrencyRewardId[QUEST_CURRENCY_REWARD_COUNT];
+        uint32 CurrencyRewardCount[QUEST_CURRENCY_REWARD_COUNT];
+        uint32 CurrencyRequiredId[QUEST_CURRENCY_REQUIRED_COUNT];
+        uint32 CurrencyRequiredCount[QUEST_CURRENCY_REQUIRED_COUNT];
 
         uint32 GetReqItemsCount() const { return m_reqitemscount; }
         uint32 GetReqCreatureOrGOcount() const { return m_reqCreatureOrGOcount; }
@@ -334,6 +349,7 @@ class Quest
         int32  RequiredMinRepValue;
         uint32 RequiredMaxRepFaction;
         int32  RequiredMaxRepValue;
+        uint32 RequiredSpell;
         uint32 SuggestedPlayers;
         uint32 LimitTime;
         uint32 m_QuestFlags;
@@ -341,6 +357,8 @@ class Quest
         uint32 CharTitleId;
         uint32 PlayersSlain;
         uint32 BonusTalents;
+        uint32 PortraitGiver;
+        uint32 PortraitTurnIn;
         int32  PrevQuestId;
         int32  NextQuestId;
         int32  ExclusiveGroup;
@@ -356,6 +374,10 @@ class Quest
         std::string RequestItemsText;
         std::string EndText;
         std::string CompletedText;
+        std::string PortraitGiverText;
+        std::string PortraitGiverName;
+        std::string PortraitTurnInText;
+        std::string PortraitTurnInName;
         uint32 RewHonorAddition;
         float RewHonorMultiplier;
         int32  RewOrReqMoney;
@@ -372,6 +394,8 @@ class Quest
         uint32 CompleteEmote;
         uint32 QuestStartScript;
         uint32 QuestCompleteScript;
+        uint32 SoundAcceptId;
+        uint32 SoundTurnInId;
 };
 
 enum QuestUpdateState

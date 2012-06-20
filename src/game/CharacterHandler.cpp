@@ -799,7 +799,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
         }
     }
 
-    data.Initialize(SMSG_LEARNED_DANCE_MOVES, 4+4);
+    data.Initialize(SMSG_GET_LEARNED_DANCE_MOVES, 4+4);
     data << uint32(0);
     data << uint32(0);
     SendPacket(&data);

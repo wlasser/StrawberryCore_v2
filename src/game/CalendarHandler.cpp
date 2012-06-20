@@ -27,7 +27,7 @@
 
 void WorldSession::HandleCalendarGetCalendar(WorldPacket &/*recv_data*/)
 {
-    DEBUG_LOG("WORLD: CMSG_CALENDAR_GET_CALENDAR");         // empty
+    DEBUG_LOG("WORLD: CMSG_GET_CALENDER");         // empty
 
     time_t cur_time = time(NULL);
 

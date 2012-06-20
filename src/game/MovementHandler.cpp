@@ -209,12 +209,23 @@ void WorldSession::HandleMoveTeleportAckOpcode(WorldPacket& recv_data)
 {
     DEBUG_LOG("MSG_MOVE_TELEPORT_ACK");
 
-    ObjectGuid guid;
-
-    recv_data >> guid.ReadAsPacked();
-
     uint32 counter, time;
     recv_data >> counter >> time;
+
+    BitStream mask = recv_data.ReadBitStream(8);
+    ByteBuffer bytes(8, true);
+
+    if (mask[7]) bytes[4] = recv_data.ReadUInt8() ^ 1;
+    if (mask[6]) bytes[2] = recv_data.ReadUInt8() ^ 1;
+    if (mask[5]) bytes[7] = recv_data.ReadUInt8() ^ 1;
+    if (mask[3]) bytes[6] = recv_data.ReadUInt8() ^ 1;
+    if (mask[0]) bytes[5] = recv_data.ReadUInt8() ^ 1;
+    if (mask[2]) bytes[1] = recv_data.ReadUInt8() ^ 1;
+    if (mask[4]) bytes[3] = recv_data.ReadUInt8() ^ 1;
+    if (mask[1]) bytes[0] = recv_data.ReadUInt8() ^ 1;
+
+    ObjectGuid guid = (ObjectGuid)BitConverter::ToUInt64(bytes);
+
     DEBUG_LOG("Guid: %s", guid.GetString().c_str());
     DEBUG_LOG("Counter %u, time %u", counter, time/IN_MILLISECONDS);
 
@@ -260,9 +271,6 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
     DEBUG_LOG("WORLD: Recvd %s (%u, 0x%X) opcode", LookupOpcodeName(opcode), opcode, opcode);
 
     Unit *mover = _player->GetMover();
-
-    STRAWBERRY_ASSERT(mover != NULL);                                  // there must always be a mover
-
     Player *plMover = mover->GetTypeId() == TYPEID_PLAYER ? (Player*)mover : NULL;
 
     // ignore, waiting processing in WorldSession::HandleMoveWorldportAckOpcode and WorldSession::HandleMoveTeleportAck
@@ -276,123 +284,24 @@ void WorldSession::HandleMovementOpcodes( WorldPacket & recv_data )
     MovementInfo movementInfo;
     ReadMovementInfo(recv_data, &movementInfo);
 
-    // prevent tampered movement data
-    if (movementInfo.guid != mover->GetObjectGuid())
-    {
-        sLog.outError("Error: Different Guids. MoveInfo: %u, Mover: %u", movementInfo.guid.GetRawValue(), mover->GetObjectGuid().GetRawValue());
+    /*----------------*/
+
+    if (!VerifyMovementInfo(movementInfo, movementInfo.guid))
         return;
-    }
-
-    /* handle special cases */
-    if (movementInfo.moveFlags & MOVEFLAG_ONTRANSPORT)
-    {
-        // transports size limited
-        // (also received at zeppelin leave by some reason with t_* as absolute in continent coordinates, can be safely skipped)
-        if (movementInfo.t_pos.x > 50 || movementInfo.t_pos.y > 50 || movementInfo.t_pos.z > 50)
-        {
-            recv_data.rfinish();                   // prevent warnings spam
-            return;
-        }
-
-        if (!Strawberry::IsValidMapCoord(movementInfo.pos.x + movementInfo.t_pos.x, movementInfo.pos.y + movementInfo.t_pos.y),
-            movementInfo.pos.z + movementInfo.t_pos.z, movementInfo.pos.o + movementInfo.t_pos.o)
-        {
-            recv_data.rfinish();                   // prevent warnings spam
-            return;
-        }
-
-        // if we boarded a transport, add us to it
-        if (plMover && !plMover->GetTransport())
-        {
-            // elevators also cause the client to send MOVEMENTFLAG_ONTRANSPORT - just unmount if the guid can be found in the transport list
-            for (MapManager::TransportSet::const_iterator iter = sMapMgr.m_Transports.begin(); iter != sMapMgr.m_Transports.end(); ++iter)
-            {
-                if ((*iter)->GetObjectGuid() == movementInfo.t_guid)
-                {
-                    plMover->m_transport = (*iter);
-                    (*iter)->AddPassenger(plMover);
-                    break;
-                }
-            }
-        }
-
-        if (!mover->GetTransport() && !mover->GetVehicle())
-        {
-            GameObject *go = mover->GetMap()->GetGameObject(movementInfo.t_guid);
-            if (!go || go->GetGoType() != GAMEOBJECT_TYPE_TRANSPORT)
-                movementInfo.moveFlags &= ~MOVEFLAG_ONTRANSPORT;
-        }
-    }
-    else if (plMover && plMover->GetTransport())                // if we were on a transport, leave
-    {
-        plMover->m_transport->RemovePassenger(plMover);
-        plMover->m_transport = NULL;
-        movementInfo.t_time = 0;
-        movementInfo.t_seat = -1;
-    }
 
     // fall damage generation (ignore in flight case that can be triggered also at lags in moment teleportation to another map).
-    if (opcode == MSG_MOVE_FALL_LAND && plMover)
+    if (opcode == MSG_MOVE_FALL_LAND && plMover && !plMover->IsTaxiFlying())
         plMover->HandleFall(movementInfo);
 
-    if (plMover && ((movementInfo.moveFlags & MOVEFLAG_SWIMMING) != 0) != plMover->IsInWater())
-    {
-        // now client not include swimming flag in case jumping under water
-        plMover->SetInWater(!plMover->IsInWater());// || plMover->GetMap()->IsUnderWater(movementInfo.pos.x, movementInfo.pos.y, movementInfo.pos.y));
-    }
-
-    /*----------------------*/
-
     /* process position-change */
-    WorldPacket data(SMSG_PLAYER_MOVE, recv_data.size());
-    movementInfo.time = WorldTimer::getMSTime();
-    movementInfo.guid = mover->GetObjectGuid();
-    WriteMovementInfo(data, &movementInfo);
-    mover->SendMessageToSet(&data, _player);
+    HandleMoverRelocation(movementInfo);
 
-    mover->m_movementInfo = movementInfo;
-
-    // this is almost never true (not sure why it is sometimes, but it is), normally use mover->IsVehicle()
-    if (mover->GetVehicle())
-    {
-        mover->SetOrientation(movementInfo.pos.o);
-        return;
-    }
-
-    sLog.outDebug("Updated Position GUID(%u): %f, %f, %f, %f", movementInfo.guid.GetCounter(), movementInfo.pos.x, movementInfo.pos.y, movementInfo.pos.z, movementInfo.pos.o);
-    mover->SetPosition(movementInfo.pos.x, movementInfo.pos.y, movementInfo.pos.z, movementInfo.pos.o, false);
-
-    if (plMover)                                            // nothing is charmed, or player charmed
-    {
+    if (plMover)
         plMover->UpdateFallInformationIfNeed(movementInfo, opcode);
 
-        if (movementInfo.pos.z < -500.0f)
-        {
-            //if (!(plMover->InBattleground()
-            //    && plMover->GetBattleground()
-            //    && plMover->GetBattleground()->HandlePlayerUnderMap(_player)))
-            {
-                // NOTE: this is actually called many times while falling
-                // even after the player has been teleported away
-                // TODO: discard movement packets after the player is rooted
-                if (plMover->isAlive())
-                {
-                    plMover->EnvironmentalDamage(DAMAGE_FALL_TO_VOID, GetPlayer()->GetMaxHealth());
-                    // pl can be alive if GM/etc
-                    if (!plMover->isAlive())
-                    {
-                        // change the death state to CORPSE to prevent the death timer from
-                        // starting in the next player update
-                        plMover->KillPlayer();
-                        plMover->BuildPlayerRepop();
-                    }
-                }
-
-                // cancel the death timer here if started
-                //plMover->RepopAtGraveyard();
-            }
-        }
-    }
+    WorldPacket data(SMSG_PLAYER_MOVE, recv_data.size());
+    WriteMovementInfo(data, &movementInfo);
+    mover->SendMessageToSetExcept(&data, _player);
 }
 
 void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
@@ -404,10 +313,11 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
         HaveMovementFlags2 = true,
         HaveOrientation = true,
         HaveTimeStamp = true,
-        HavePitch = false,
+        HavePitch = true,
         HaveFallData = false,
         HaveFallDirection = false,
-        HaveSplineElevation = false,
+        HaveSplineElevation = true,
+        HaveUnknownBit = false,
         HaveSpline = false;
 
     MovementStatusElements *sequence = GetMovementStatusElementsSequence(data.GetOpcodeEnum());
@@ -461,7 +371,8 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                     mi->moveFlags2 = data.ReadBits(12);
                 break;
             case MSEHaveUnknownBit:
-                data.ReadBit();
+                HaveUnknownBit = data.ReadBit();
+                break;
             case MSETimestamp:
                 if (MSEHaveTimeStamp)
                     data >> mi->time;
@@ -470,7 +381,7 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                 HaveTimeStamp = !data.ReadBit();
                 break;
             case MSEHaveOrientation:
-                HaveOrientation = data.ReadBit();
+                HaveOrientation = !data.ReadBit();
                 break;
             case MSEHaveMovementFlags:
                 HaveMovementFlags = !data.ReadBit();
@@ -479,7 +390,7 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                 HaveMovementFlags2 = !data.ReadBit();
                 break;
             case MSEHavePitch:
-                HavePitch = data.ReadBit();
+                HavePitch = !data.ReadBit();
                 break;
             case MSEHaveFallData:
                 HaveFallData = data.ReadBit();
@@ -503,7 +414,7 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                 HaveSpline = data.ReadBit();
                 break;
             case MSEHaveSplineElev:
-                HaveSplineElevation = data.ReadBit();
+                HaveSplineElevation = !data.ReadBit();
                 break;
             case MSEPositionX:
                 data >> mi->pos.x;
@@ -597,8 +508,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
         HaveTransportTime2 = (mi->moveFlags2 & MOVEFLAG2_INTERP_MOVEMENT) != 0,
         HaveTransportTime3 = false,
         HaveTime = true,
-        HavePitch = (mi->HasMovementFlag(MovementFlags(MOVEFLAG_SWIMMING | MOVEFLAG_FLYING))) 
-        || (mi->moveFlags2 & MOVEFLAG2_ALLOW_PITCHING),
+        HavePitch = (mi->HasMovementFlag(MovementFlags(MOVEFLAG_SWIMMING | MOVEFLAG_FLYING))) || (mi->moveFlags2 & MOVEFLAG2_ALLOW_PITCHING),
         HaveFallData = mi->HasMovementFlag2(MOVEFLAG2_INTERP_TURNING),
         HaveFallDirection = mi->HasMovementFlag(MOVEFLAG_SAFE_FALL),
         HaveSplineElevation = mi->HasMovementFlag(MOVEFLAG_SPLINE_ELEVATION),
@@ -641,21 +551,33 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
 
         switch (element)
         {
+            case MSEHaveMovementFlags:
+                data.WriteBit(!mi->GetMovementFlags());
+                break;
+            case MSEHaveMovementFlags2:
+                data.WriteBit(!mi->GetMovementFlags2());
+                break;
             case MSEFlags:
-                data.WriteBits(mi->moveFlags, 30);
+                if (mi->GetMovementFlags())
+                    data.WriteBits(mi->moveFlags, 30);
                 break;
             case MSEFlags2:
-                data.WriteBits(mi->moveFlags2, 12);
+                if (mi->GetMovementFlags2())
+                    data.WriteBits(mi->moveFlags2, 12);
                 break;
             case MSETimestamp:
-                data << mi->time;
+                if (HaveTime)
+                    data << mi->time;
                 break;
             case MSEHavePitch:
-                data.WriteBit(HavePitch);
+                data.WriteBit(!HavePitch);
                 break;
             case MSEHaveTimeStamp:
                 if (HaveFallData)
                     data.WriteBit(HaveTime);
+                break;
+            case MSEHaveUnknownBit:
+                data.WriteBit(false);
                 break;
             case MSEHaveFallData:
                 data.WriteBit(HaveFallData);
@@ -679,7 +601,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
                 data.WriteBit(HaveSpline);
                 break;
             case MSEHaveSplineElev:
-                data.WriteBit(HaveSplineElevation);
+                data.WriteBit(!HaveSplineElevation);
                 break;
             case MSEPositionX:
                 data << mi->pos.x;
@@ -696,6 +618,9 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
             case MSEPitch:
                 if (HavePitch)
                     data << mi->s_pitch;
+                break;
+            case MSEHaveOrientation:
+                data.WriteBit(false);
                 break;
             case MSEFallTime:
                 if (HaveFallData)

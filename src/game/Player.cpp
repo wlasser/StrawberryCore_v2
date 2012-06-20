@@ -3366,9 +3366,9 @@ void Player::learnSpell(uint32 spell_id, bool dependent)
     // prevent duplicated entires in spell book, also not send if not in world (loading)
     if (learning && IsInWorld())
     {
-        WorldPacket data(SMSG_LEARNED_SPELL, 6);
+        WorldPacket data(SMSG_LEARNED_SPELL, 8);
         data << uint32(spell_id);
-        data << uint16(0);                                  // 3.3.3 unk
+        data << uint32(0);                                  // 4.3.4 unk
         GetSession()->SendPacket(&data);
     }
 
@@ -15108,21 +15108,24 @@ void Player::SendQuestReward( Quest const *pQuest, uint32 XP, Object * questGive
     DEBUG_LOG( "WORLD: Sent SMSG_QUESTGIVER_QUEST_COMPLETE quest = %u", questid );
     WorldPacket data( SMSG_QUESTGIVER_QUEST_COMPLETE, (4+4+4+4+4) );
     data << uint32(questid);
+    data << uint32(0);                                      // arena points
 
     if ( getLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL) )
-    {
-        data << uint32(XP);
         data << uint32(pQuest->GetRewOrReqMoney());
-    }
     else
-    {
         data << uint32(0);
-        data << uint32(pQuest->GetRewOrReqMoney() + int32(pQuest->GetRewMoneyMaxLevel() * sWorld.getConfig(CONFIG_FLOAT_RATE_DROP_MONEY)));
-    }
 
     data << uint32(10*Strawberry::Honor::hk_honor_at_level(getLevel(), pQuest->GetRewHonorAddition()));
+
+    if ( getLevel() < sWorld.getConfig(CONFIG_UINT32_MAX_PLAYER_LEVEL) )
+        data << uint32(XP);
+    else
+        data << uint32(pQuest->GetRewOrReqMoney() + int32(pQuest->GetRewMoneyMaxLevel() * sWorld.getConfig(CONFIG_FLOAT_RATE_DROP_MONEY)));
+
     data << uint32(pQuest->GetBonusTalents());              // bonus talents
-    data << uint32(0);                                      // arena points
+
+    data.WriteBit(true);
+
     GetSession()->SendPacket( &data );
 }
 
@@ -22491,7 +22494,7 @@ void Player::BuildEnchantmentsInfoData(WorldPacket *data)
 void Player::SendEquipmentSetList()
 {
     uint32 count = 0;
-    WorldPacket data(SMSG_LOAD_EQUIPMENT_SET, 4);
+    WorldPacket data(SMSG_EQUIPMENT_SET, 4);
     size_t count_pos = data.wpos();
     data << uint32(count);                                  // count placeholder
     for(EquipmentSets::iterator itr = m_EquipmentSets.begin(); itr != m_EquipmentSets.end(); ++itr)

@@ -326,13 +326,13 @@ void WorldSession::HandleNpcTextQueryOpcode( WorldPacket & recv_data )
     recv_data >> textID;
     recv_data >> guid;
 
-    DETAIL_LOG("WORLD: CMSG_NPC_TEXT_QUERY ID '%u'", textID);
+    DETAIL_LOG("WORLD: CMSG_NPC_CACHE ID '%u'", textID);
 
     _player->SetTargetGuid(guid);
 
     GossipText const* pGossip = sObjectMgr.GetGossipText(textID);
 
-    WorldPacket data( SMSG_NPC_TEXT_UPDATE, 100 );          // guess size
+    WorldPacket data( SMSG_NPC_CACHE, 100 );          // guess size
     data << textID;
 
     if (!pGossip)
@@ -390,12 +390,12 @@ void WorldSession::HandleNpcTextQueryOpcode( WorldPacket & recv_data )
 
     SendPacket( &data );
 
-    DEBUG_LOG( "WORLD: Sent SMSG_NPC_TEXT_UPDATE" );
+    DEBUG_LOG( "WORLD: Sent SMSG_NPC_CACHE" );
 }
 
 void WorldSession::HandlePageTextQueryOpcode( WorldPacket & recv_data )
 {
-    DETAIL_LOG("WORLD: Received CMSG_PAGE_TEXT_QUERY");
+    DETAIL_LOG("WORLD: Received CMSG_PAGE_TEXT_CACHE");
     recv_data.hexlike();
 
     uint32 pageID;
@@ -406,7 +406,7 @@ void WorldSession::HandlePageTextQueryOpcode( WorldPacket & recv_data )
     {
         PageText const *pPage = sPageTextStore.LookupEntry<PageText>( pageID );
                                                             // guess size
-        WorldPacket data( SMSG_PAGE_TEXT_QUERY_RESPONSE, 50 );
+        WorldPacket data(SMSG_PAGE_TEXT_CACHE, 50);
         data << pageID;
 
         if (!pPage)
@@ -436,7 +436,7 @@ void WorldSession::HandlePageTextQueryOpcode( WorldPacket & recv_data )
         }
         SendPacket( &data );
 
-        DEBUG_LOG( "WORLD: Sent SMSG_PAGE_TEXT_QUERY_RESPONSE" );
+        DEBUG_LOG("WORLD: Sent SMSG_PAGE_TEXT_CACHE");
     }
 }
 

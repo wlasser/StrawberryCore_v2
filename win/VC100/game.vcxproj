@@ -1114,6 +1114,7 @@
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\blackfathom_deeps\blackfathom_deeps.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\culling_of_stratholme\culling_of_stratholme.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dark_portal\dark_portal.h" />
+    <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\dragon_soul\instance_dragon_soul.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\end_time\instance_end_time.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjal.h" />
     <ClInclude Include="..\..\src\game\Scripts\kalimdor\caverns_of_time\hyjal\hyjalAI.h" />
