@@ -3763,7 +3763,8 @@ bool Player::resetTalents(bool no_cost, bool all_specs)
 
     if (m_usedTalentCount == 0 && !all_specs)
     {
-        UpdateFreeTalentPoints(false);                      // for fix if need counter
+        SetFreeTalentPoints(0);
+        //UpdateFreeTalentPoints(false);                      // for fix if need counter
         return false;
     }
 
