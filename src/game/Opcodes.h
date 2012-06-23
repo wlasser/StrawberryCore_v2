@@ -417,6 +417,9 @@ enum Opcodes
     SMSG_LEVELUP_INFO,
     CMSG_LEARN_TALENT,
     CMSG_LEARN_PREVIEW_TALENTS,
+    CMSG_WHO,
+    SMSG_WHO,
+    CMSG_CANCEL_AURA,
     MAX_OPCODE_VALUE
 };
 
@@ -482,8 +485,6 @@ enum Opcodes335a
     CMSG_GAMETIME_SET                               = 0x044,
     CMSG_GAMESPEED_SET                              = 0x046,
     CMSG_SERVERTIME                                 = 0x048,
-    CMSG_WHO                                        = 0x062,
-    SMSG_WHO                                        = 0x063,
     CMSG_WHOIS                                      = 0x064,
     SMSG_WHOIS                                      = 0x065,
     CMSG_CONTACT_LIST                               = 0x066,
@@ -665,7 +666,6 @@ enum Opcodes335a
     SMSG_SPELL_FAILURE                              = 0x133,
     SMSG_SPELL_COOLDOWN                             = 0x134,
     SMSG_COOLDOWN_EVENT                             = 0x135,
-    CMSG_CANCEL_AURA                                = 0x136,
     SMSG_PET_CAST_FAILED                            = 0x138,
     MSG_CHANNEL_START                               = 0x139,
     MSG_CHANNEL_UPDATE                              = 0x13A,
