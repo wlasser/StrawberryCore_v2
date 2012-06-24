@@ -1272,13 +1272,14 @@ void WorldSession::HandleWhoisOpcode(WorldPacket& recv_data)
 
     std::string msg = charname + "'s " + "account is " + acc + ", e-mail: " + email + ", last ip: " + lastip;
 
-    WorldPacket data(SMSG_WHOIS, msg.size()+1);
+    // Unknown opcode
+    /*WorldPacket data(SMSG_WHOIS, msg.size()+1);
     data << msg;
-    _player->GetSession()->SendPacket(&data);
+    _player->GetSession()->SendPacket(&data);*/
 
     delete result;
 
-    DEBUG_LOG("Received whois command from player %s for character %s", GetPlayer()->GetName(), charname.c_str());
+    DEBUG_LOG("Received whois command from player %s for character %s, msg: %s", GetPlayer()->GetName(), charname.c_str(), msg.c_str());
 }
 
 void WorldSession::HandleComplainOpcode( WorldPacket & recv_data )
@@ -1642,4 +1643,13 @@ void WorldSession::HandlePlayerViolenceLevel(WorldPacket & recv_data)
 
     uint8 violenceLevel = 0;
     recv_data >> violenceLevel;
+}
+
+void WorldSession::HandleWorldStateUITimerUpdate(WorldPacket& /*recv_data*/)
+{
+    DEBUG_LOG("WORLD: CMSG_WORLD_STATE_UI_TIMER_UPDATE");
+
+    WorldPacket data(SMSG_WORLD_STATE_UI_TIMER_UPDATE, 4);
+    data << uint32(time(NULL));
+    SendPacket(&data);
 }

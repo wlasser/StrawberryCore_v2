@@ -671,7 +671,7 @@ void WorldSession::HandlePlayerLoginOpcode( WorldPacket & recv_data )
     uint64 playerGuid = 0;
     m_playerLoading = true;
 
-    DEBUG_LOG( "WORLD: Recvd Player Logon Message" );
+    DEBUG_LOG( "WORLD: Recvd Player Logon Message size %u", recv_data.size());
 
     BitStream mask = recv_data.ReadBitStream(8);
 

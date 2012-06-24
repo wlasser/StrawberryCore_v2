@@ -320,4 +320,38 @@ void InitOpcodeTable()
     OPCODE(CMSG_WHO,                          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWhoOpcode               );
     OPCODE(SMSG_WHO,                          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_CANCEL_AURA,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleCancelAuraOpcode        );
+
+    //  ******************
+    // ****** Custom ******
+    //  ******************
+
+    OPCODE(CMSG_CONTACT_LIST,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleContactListOpcode       );
+    OPCODE(SMSG_CONTACT_LIST,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+
+    OPCODE(CMSG_ADD_FRIEND,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAddFriendOpcode         );
+    OPCODE(CMSG_DEL_FRIEND,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleDelFriendOpcode         );
+    OPCODE(CMSG_ADD_IGNORE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAddIgnoreOpcode         );
+    OPCODE(CMSG_DEL_IGNORE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleDelIgnoreOpcode         );
+    OPCODE(SMSG_FRIEND_STATUS,                STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_SET_CONTACT_NOTES,            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetContactNotesOpcode   );
+
+    OPCODE(CMSG_WHOIS,                        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWhoisOpcode             );
+    //OPCODE(SMSG_WHOIS,                        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+
+    OPCODE(CMSG_GROUP_INVITE,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGroupInviteOpcode       );
+    OPCODE(SMSG_PARTY_COMMAND_RESULT,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_GROUP_LIST,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_GROUP_SET_LEADER,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGroupSetLeaderOpcode    );
+    OPCODE(SMSG_GROUP_SET_LEADER,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+
+    OPCODE(SMSG_PLAYED_TIME,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+
+    OPCODE(CMSG_WORLD_STATE_UI_TIMER_UPDATE,  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWorldStateUITimerUpdate );
+    OPCODE(SMSG_WORLD_STATE_UI_TIMER_UPDATE,  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+
+    OPCODE(SMSG_FLIGHT_SPLINE_SYNC,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+
+    OPCODE(CMSG_EMOTE,                        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleEmoteOpcode            );
+    OPCODE(SMSG_EMOTE,                        STATUS_NEVER,    PROCESS_INPLACE,       &WorldSession::HandleServerSide             );
+    OPCODE(CMSG_TEXT_EMOTE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,  &WorldSession::HandleTextEmoteOpcode        );
 };
