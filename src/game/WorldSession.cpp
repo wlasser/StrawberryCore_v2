@@ -204,9 +204,6 @@ void WorldSession::LogUnprocessedTail(WorldPacket *packet)
         LookupOpcodeName(packet->GetOpcode()),
         packet->GetOpcode(),
         packet->rpos(),packet->wpos());
-
-    sLog.outError("Opcode: ");
-    packet->hexlike();
 }
 
 /// Update the WorldSession (triggered by World update)

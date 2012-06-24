@@ -48,18 +48,15 @@ void WorldSession::SendPartyResult(PartyOperation operation, const std::string& 
     data << member;                                         // max len 48
     data << uint32(res);
     data << uint32(0);                                      // LFD cooldown related (used with ERR_PARTY_LFG_BOOT_COOLDOWN_S and ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S)
-    data << uint64(0);                                      // some guid
 
     SendPacket( &data );
 }
 
 void WorldSession::HandleGroupInviteOpcode( WorldPacket & recv_data )
 {
-    recv_data.read_skip<uint32>();                          // unknown
-    recv_data.read_skip<uint32>();                          // unknown
-    recv_data.read_skip<uint32>();                          // unknown
     std::string membername;
     recv_data >> membername;
+    recv_data.read_skip<uint32>();                           // roles mask?
 
     // attempt add selected player
 

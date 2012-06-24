@@ -879,8 +879,6 @@ class WorldSession
         void HandleUpdateObjectFailure(WorldPacket& recv_data);
         void HandlePlayerViolenceLevel(WorldPacket& recv_data);
 
-        void HandleWorldStateUITimerUpdate(WorldPacket& recv_data);
-
     private:
         // private trade methods
         void moveItems(Item* myItems[], Item* hisItems[]);
