@@ -505,7 +505,6 @@ enum Opcodes335a
     CMSG_GAMETIME_SET                               = 0x044,
     CMSG_GAMESPEED_SET                              = 0x046,
     CMSG_SERVERTIME                                 = 0x048,
-    SMSG_WHOIS                                      = 0x065,
     SMSG_GROUP_INVITE                               = 0x06F,
     CMSG_GROUP_CANCEL                               = 0x070,
     SMSG_GROUP_CANCEL                               = 0x071,
