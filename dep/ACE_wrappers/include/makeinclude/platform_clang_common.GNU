@@ -1,7 +1,12 @@
 # -*- Makefile -*-
-# $Id: platform_clang_common.GNU 91093 2010-07-15 09:12:20Z wotte $
+# $Id: platform_clang_common.GNU 94795 2011-10-19 19:14:06Z wotte $
 #
 # Common file help turn on/off explicit template instantiation
+
+ifeq ($(openmp),1)
+FLAGS_C_CC += -fopenmp
+LDFLAGS += -fopenmp
+endif
 
 ifeq ($(CXX),insure)
   # insure does not pass through the -dumpversion option.

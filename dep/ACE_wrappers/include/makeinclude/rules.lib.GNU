@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 #----------------------------------------------------------------------------
-#       $Id: rules.lib.GNU 91974 2010-09-23 16:17:42Z mitza $
+#       $Id: rules.lib.GNU 95604 2012-03-09 20:41:18Z mitza $
 #
 #       Build libraries (i.e., contain no binary executables)
 #       GNU version
@@ -172,7 +172,7 @@ $(VLIB): $(VLOBJS)
 	$(AR.cc.override)
     else
 	([ "`echo $(TMPINCDIR:%=%/*.o)`" != "$(TMPINCDIR:%=%/*.o)" ] && echo $(TMPINCDIR:%=%/*.o); \
-	echo $(filter %.o, $?)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+	echo $(filter %.o, $^)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
     endif
   endif
   ifdef ibmcxx_build

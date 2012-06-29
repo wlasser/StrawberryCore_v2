@@ -216,6 +216,7 @@ void InitOpcodeTable()
     OPCODE(CMSG_SPIRIT_HEALER_ACTIVATE,       STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSpiritHealerActivateOpcode);
     OPCODE(CMSG_ATTACKSWING,                  STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::HandleAttackSwingOpcode       );
     OPCODE(SMSG_ATTACKSTART,                  STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_ATTACKSTOP,                   STATUS_LOGGEDIN, PROCESS_INPLACE,      &WorldSession::HandleAttackStopOpcode        );
     OPCODE(SMSG_ATTACKSTOP,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_ATTACKERSTATEUPDATE,          STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_ATTACKSWING_NOTINRANGE,       STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );

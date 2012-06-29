@@ -121,7 +121,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_ETCL_Parserd.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\lib\ACE_ETCL_Parserd.lib</ImportLibrary>
@@ -159,7 +159,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_ETCL_Parser.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
@@ -199,7 +199,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_ETCL_Parserd.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\lib\ACE_ETCL_Parserd.lib</ImportLibrary>
@@ -244,7 +244,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_ETCL_Parser.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>

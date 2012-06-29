@@ -121,7 +121,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACEd.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\lib\ACEd.lib</ImportLibrary>
@@ -159,7 +159,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
@@ -199,7 +199,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACEd.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\lib\ACEd.lib</ImportLibrary>
@@ -244,7 +244,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
@@ -351,8 +351,6 @@
     </ClCompile>
     <ClCompile Include="Copy_Disabled.cpp">
     </ClCompile>
-    <ClCompile Include="Countdown_Time.cpp">
-    </ClCompile>
     <ClCompile Include="Date_Time.cpp">
     </ClCompile>
     <ClCompile Include="DEV.cpp">
@@ -391,6 +389,8 @@
     </ClCompile>
     <ClCompile Include="Event_Handler.cpp">
     </ClCompile>
+    <ClCompile Include="Event_Handler_Handle_Timeout_Upcall.cpp">
+    </ClCompile>
     <ClCompile Include="FIFO.cpp">
     </ClCompile>
     <ClCompile Include="FIFO_Recv.cpp">
@@ -422,8 +422,6 @@
     <ClCompile Include="Functor_String.cpp">
     </ClCompile>
     <ClCompile Include="Get_Opt.cpp">
-    </ClCompile>
-    <ClCompile Include="gethrtime.cpp">
     </ClCompile>
     <ClCompile Include="Handle_Ops.cpp">
     </ClCompile>
@@ -825,6 +823,8 @@
     </ClCompile>
     <ClCompile Include="Throughput_Stats.cpp">
     </ClCompile>
+    <ClCompile Include="Time_Policy.cpp">
+    </ClCompile>
     <ClCompile Include="Time_Value.cpp">
     </ClCompile>
     <ClCompile Include="Timeprobe.cpp">
@@ -883,6 +883,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Abstract_Timer_Queue.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Acceptor.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -1010,6 +1016,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Containers_T.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Countdown_Time_T.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -1297,6 +1309,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Time_Policy_T.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Timeprobe_T.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -1322,6 +1340,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Timer_Queue_Adapters.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Timer_Queue_Iterator.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -1389,10 +1413,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Abstract_Timer_Queue.h" />
     <ClInclude Include="Acceptor.h" />
     <ClInclude Include="ACE.h" />
     <ClInclude Include="ACE_export.h" />
     <ClInclude Include="ace_wchar.h" />
+    <ClInclude Include="ace_wchar.inl" />
     <ClInclude Include="Activation_Queue.h" />
     <ClInclude Include="Active_Map_Manager.h" />
     <ClInclude Include="Active_Map_Manager_T.h" />
@@ -1449,41 +1475,35 @@
     <ClInclude Include="Condition_T.h" />
     <ClInclude Include="Condition_Thread_Mutex.h" />
     <ClInclude Include="config-aix-5.x.h" />
+    <ClInclude Include="config-aix-7.h" />
     <ClInclude Include="config-all.h" />
+    <ClInclude Include="config-android.h" />
     <ClInclude Include="config-cygwin32.h" />
-    <ClInclude Include="config-doxygen.h" />
     <ClInclude Include="config-freebsd.h" />
     <ClInclude Include="config-g++-common.h" />
-    <ClInclude Include="config-ghs-common.h" />
     <ClInclude Include="config-hpux-11.00.h" />
     <ClInclude Include="config-icc-common.h" />
     <ClInclude Include="config-integritySCA.h" />
     <ClInclude Include="config-kfreebsd.h" />
-    <ClInclude Include="config-linux-common.h" />
     <ClInclude Include="config-linux.h" />
     <ClInclude Include="config-lite.h" />
     <ClInclude Include="config-lynxos.h" />
-    <ClInclude Include="config-macosx-iphone-hardware.h" />
-    <ClInclude Include="config-macosx-iphone-simulator.h" />
+    <ClInclude Include="config-macosx-iOS-hardware.h" />
+    <ClInclude Include="config-macosx-iOS-simulator.h" />
     <ClInclude Include="config-macosx-leopard.h" />
+    <ClInclude Include="config-macosx-lion.h" />
     <ClInclude Include="config-macosx-panther.h" />
     <ClInclude Include="config-macosx-snowleopard.h" />
     <ClInclude Include="config-macosx-tiger.h" />
     <ClInclude Include="config-macosx.h" />
     <ClInclude Include="config-macros.h" />
-    <ClInclude Include="config-minimal.h" />
-    <ClInclude Include="config-mvs.h" />
     <ClInclude Include="config-netbsd.h" />
     <ClInclude Include="config-openbsd.h" />
     <ClInclude Include="config-openvms.h" />
     <ClInclude Include="config-pharlap.h" />
     <ClInclude Include="config-posix-nonetworking.h" />
     <ClInclude Include="config-posix.h" />
-    <ClInclude Include="config-qnx-neutrino.h" />
-    <ClInclude Include="config-qnx-rtp-62x.h" />
-    <ClInclude Include="config-qnx-rtp-common.h" />
-    <ClInclude Include="config-qnx-rtp-pre62x.h" />
-    <ClInclude Include="config-qnx-rtp.h" />
+    <ClInclude Include="config-qnx.h" />
     <ClInclude Include="config-rtems.h" />
     <ClInclude Include="config-suncc-common.h" />
     <ClInclude Include="config-sunos5.10.h" />
@@ -1495,17 +1515,13 @@
     <ClInclude Include="config-sunos5.7.h" />
     <ClInclude Include="config-sunos5.8.h" />
     <ClInclude Include="config-sunos5.9.h" />
-    <ClInclude Include="config-tandem-nsk-mips-v2.h" />
-    <ClInclude Include="config-tandem-nsk-mips-v3.h" />
-    <ClInclude Include="config-tandem.h" />
-    <ClInclude Include="config-visualage.h" />
     <ClInclude Include="config-vxworks.h" />
     <ClInclude Include="config-vxworks6.4.h" />
     <ClInclude Include="config-vxworks6.5.h" />
     <ClInclude Include="config-vxworks6.6.h" />
     <ClInclude Include="config-vxworks6.7.h" />
     <ClInclude Include="config-vxworks6.8.h" />
-    <ClInclude Include="config-win32-borland.h" />
+    <ClInclude Include="config-vxworks6.9.h" />
     <ClInclude Include="config-win32-cegcc.h" />
     <ClInclude Include="config-win32-common.h" />
     <ClInclude Include="config-win32-dmc.h" />
@@ -1518,6 +1534,7 @@
     <ClInclude Include="config-win32-msvc.h" />
     <ClInclude Include="config-win32.h" />
     <ClInclude Include="config-WinCE.h" />
+    <ClInclude Include="config-windows.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="Configuration_Import_Export.h" />
@@ -1528,6 +1545,7 @@
     <ClInclude Include="Copy_Disabled.h" />
     <ClInclude Include="CORBA_macros.h" />
     <ClInclude Include="Countdown_Time.h" />
+    <ClInclude Include="Countdown_Time_T.h" />
     <ClInclude Include="Date_Time.h" />
     <ClInclude Include="Default_Constants.h" />
     <ClInclude Include="DEV.h" />
@@ -1551,6 +1569,7 @@
     <ClInclude Include="Env_Value_T.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Event_Handler.h" />
+    <ClInclude Include="Event_Handler_Handle_Timeout_Upcall.h" />
     <ClInclude Include="Event_Handler_T.h" />
     <ClInclude Include="FIFO.h" />
     <ClInclude Include="FIFO_Recv.h" />
@@ -1678,6 +1697,7 @@
     <ClInclude Include="Object_Manager_Base.h" />
     <ClInclude Include="Obstack.h" />
     <ClInclude Include="Obstack_T.h" />
+    <ClInclude Include="OS.h" />
     <ClInclude Include="OS_Errno.h" />
     <ClInclude Include="os_include\arpa\os_inet.h" />
     <ClInclude Include="os_include\net\os_if.h" />
@@ -1701,6 +1721,7 @@
     <ClInclude Include="os_include\os_glob.h" />
     <ClInclude Include="os_include\os_grp.h" />
     <ClInclude Include="os_include\os_iconv.h" />
+    <ClInclude Include="os_include\os_ifaddrs.h" />
     <ClInclude Include="os_include\os_intrin.h" />
     <ClInclude Include="os_include\os_inttypes.h" />
     <ClInclude Include="os_include\os_iso646.h" />
@@ -1898,7 +1919,6 @@
     <ClInclude Include="Stack_Trace.h" />
     <ClInclude Include="Static_Object_Lock.h" />
     <ClInclude Include="Stats.h" />
-    <ClInclude Include="Strategies.h" />
     <ClInclude Include="Strategies_T.h" />
     <ClInclude Include="Stream.h" />
     <ClInclude Include="Stream_Modules.h" />
@@ -1935,6 +1955,8 @@
     <ClInclude Include="Thread_Mutex.h" />
     <ClInclude Include="Thread_Semaphore.h" />
     <ClInclude Include="Throughput_Stats.h" />
+    <ClInclude Include="Time_Policy.h" />
+    <ClInclude Include="Time_Policy_T.h" />
     <ClInclude Include="Time_Value.h" />
     <ClInclude Include="Timeprobe.h" />
     <ClInclude Include="Timeprobe_T.h" />
@@ -1946,6 +1968,7 @@
     <ClInclude Include="Timer_List_T.h" />
     <ClInclude Include="Timer_Queue.h" />
     <ClInclude Include="Timer_Queue_Adapters.h" />
+    <ClInclude Include="Timer_Queue_Iterator.h" />
     <ClInclude Include="Timer_Queue_T.h" />
     <ClInclude Include="Timer_Queuefwd.h" />
     <ClInclude Include="Timer_Wheel.h" />
@@ -2181,7 +2204,6 @@
     <None Include="Base_Thread_Adapter.inl" />
     <None Include="Based_Pointer_T.inl" />
     <None Include="Basic_Stats.inl" />
-    <None Include="Basic_Types.inl" />
     <None Include="Bound_Ptr.inl" />
     <None Include="Cache_Map_Manager_T.inl" />
     <None Include="Caching_Strategies_T.inl" />
@@ -2196,7 +2218,7 @@
     <None Include="Configuration.inl" />
     <None Include="Containers.inl" />
     <None Include="Containers_T.inl" />
-    <None Include="Countdown_Time.inl" />
+    <None Include="Countdown_Time_T.inl" />
     <None Include="Date_Time.inl" />
     <None Include="DEV.inl" />
     <None Include="DEV_Addr.inl" />
@@ -2211,6 +2233,7 @@
     <None Include="Env_Value_T.inl" />
     <None Include="Event.inl" />
     <None Include="Event_Handler.inl" />
+    <None Include="Event_Handler_Handle_Timeout_Upcall.inl" />
     <None Include="Event_Handler_T.inl" />
     <None Include="FIFO.inl" />
     <None Include="FIFO_Recv.inl" />
@@ -2402,9 +2425,12 @@
     <None Include="Thread_Manager.inl" />
     <None Include="Thread_Mutex.inl" />
     <None Include="Thread_Semaphore.inl" />
+    <None Include="Time_Policy.inl" />
+    <None Include="Time_Policy_T.inl" />
     <None Include="Time_Value.inl" />
     <None Include="Timeprobe.inl" />
     <None Include="Timer_Queue_Adapters.inl" />
+    <None Include="Timer_Queue_Iterator.inl" />
     <None Include="Timer_Queue_T.inl" />
     <None Include="TLI.inl" />
     <None Include="TLI_Connector.inl" />

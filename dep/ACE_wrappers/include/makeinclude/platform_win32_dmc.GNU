@@ -1,4 +1,5 @@
-# $Id: platform_win32_dmc.GNU 91285 2010-08-05 08:29:30Z johnnyw $
+# -*- Makefile -*-
+# $Id: platform_win32_dmc.GNU 93405 2011-02-17 19:30:42Z olli $
 
 # debug = 1
 # optimize = 1
@@ -35,7 +36,7 @@ SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
 PRELIB  = @true
 
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
+CCFLAGS += $(CFLAGS)
 
 # Dmc doesn't have rwho
 rwho = 0

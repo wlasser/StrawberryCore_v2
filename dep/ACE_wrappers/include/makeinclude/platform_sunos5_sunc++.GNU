@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 
-# $Id: platform_sunos5_sunc++.GNU 92140 2010-10-04 12:37:52Z johnnyw $
+# $Id: platform_sunos5_sunc++.GNU 93548 2011-03-15 19:32:30Z olli $
 
 # SunOS 5.x (Solaris 2.x) with Sun C++ 4.2 and 5.x
 #
@@ -161,8 +161,6 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
   endif # compat4 requested
 endif # CC 5.0 or later
 
-CCFLAGS         += $(TEMPLATES_FLAG)
-
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
 
@@ -227,7 +225,7 @@ ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
 endif
 
 LDFLAGS         += -xildoff
-
+CPPFLAGS        += -D_POSIX_PTHREAD_SEMANTICS
 OCFLAGS         += -xO4
 PIC             = -KPIC
 AR              = CC

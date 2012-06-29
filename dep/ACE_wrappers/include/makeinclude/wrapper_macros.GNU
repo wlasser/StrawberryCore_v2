@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
 #----------------------------------------------------------------------------
-#  $Id: wrapper_macros.GNU 92151 2010-10-05 07:27:20Z johnnyw $
+#  $Id: wrapper_macros.GNU 95440 2012-01-17 05:19:09Z jonesc $
 #----------------------------------------------------------------------------
 #
 #  ACE supports the following flags.  They can be enabled either on
@@ -117,9 +117,6 @@
 #  DLD          Name of dynamic linker
 #  LD           Name of linker
 #  IDL          Name of the CORBA IDL compiler
-#  TEMPLATES_FLAG
-#               Flag to pass to the compiler to control the instantiation of
-# 		templates.
 #  INSBIN       Binary (executable) installation directory
 #  INSINC       Include file installation directory
 #  INSMAN       Manpage installation directory
@@ -157,6 +154,9 @@
 #  PLATFORM_SCTP_LIBS
 #               Platform libraries required for SCTP
 #  PRELINK      Executable to precede linking, such as quantify
+#  PREPROCESS.c Command to preprocess C
+#  PREPROCESS.cc
+#               Command to preprocess C++
 #  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
 #               The base directory in which Pure products will produce
@@ -193,13 +193,13 @@ endif # static_libs
 
 #### Set up the build ACE version in case the platform_macros.GNU wants it.
 ifeq (cmd,$(findstring cmd,$(SHELL)))
-ACE_MAJOR_VERSION := $(shell awk "/ACE_MAJOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk "/ACE_MINOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk "/ACE_BETA_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_MAJOR_VERSION := $(shell awk "/ACE_MAJOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_MINOR_VERSION := $(shell awk "/ACE_MINOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk "/ACE_BETA_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
 else
-ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 endif
 
 ACE_VERSION = $(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
@@ -217,7 +217,6 @@ endif # alternate_platform_macros
 
 # Define some variables to silence warnings
 GHS ?=
-CHORUS ?=
 AIX_TEMPLATE_HACK ?=
 
 # $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
@@ -242,12 +241,24 @@ threads ?= 1
 symlinks ?= relative
 link_groups ?= 0
 mcpp ?= 0
+root_is_symlink ?= 0
 
 SOVERSION ?=
 SONAME ?=
 
-ifeq ($(PWD),)
-  PWD=$(shell pwd)
+ifeq ($(root_is_symlink),1)
+  ifneq ($(symlinks),relative)
+    warn_output:=$(warning WARNING: You should really use relative library symlinks with symlinked root)
+  endif
+  use_pwd_call = 1
+  ### use 'real' pwd command from shell; internal make command resolves symlinks
+  ifeq ($(PWD),)
+    PWD=$(shell $(SHELL) -c pwd)
+  endif
+else
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
 endif
 
 ifeq ($(ACE_MKDIR),)
@@ -278,14 +289,14 @@ IDL_CLIENT_HDR_EXT ?= C.h
 IDL_CLIENT_INL_EXT ?= C.inl
 IDL_CLIENT_SRC_EXT ?= C.cpp
 IDL_SERVER_HDR_EXT ?= S.h
-IDL_SERVER_INL_EXT ?= S.inl
 IDL_SERVER_SRC_EXT ?= S.cpp
 IDL_SERVER_THDR_EXT ?= S_T.h
 IDL_SERVER_TINL_EXT ?= S_T.inl
 IDL_SERVER_TSRC_EXT ?= S_T.cpp
+IDL_GEN_FILES_DIR ?= .
 
 ifeq (default,$(origin LEX))
-LEX = flex
+  LEX = flex
 endif
 
 EXEEXT ?=
@@ -450,7 +461,7 @@ endif
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
 ifeq (default,$(origin YACC))
-YACC = bison
+  YACC = bison
 endif
 
 #----------------------------------------------------------------------------
@@ -485,10 +496,6 @@ endif # debug
 
 ifeq ($(debug),)
   CPPFLAGS += -DACE_NDEBUG
-# Disable the RCSID for release/non-debug builds.
-  ifeq (,$(findstring ACE_USE_RCSID,$(CPPFLAGS)))
-    CPPFLAGS += -DACE_USE_RCSID=0
-  endif
 else
   CFLAGS  += $(DCFLAGS)
   CCFLAGS += $(DCCFLAGS)
@@ -840,8 +847,7 @@ pipes ?= 0
 # of intermediate files. This can be disabled by setting pipes to 0 in the
 # platform_macros.GNU file.
 ifeq ($(pipes),1)
-   CFLAGS += -pipe
-   CCFLAGS += -pipe
+   FLAGS_C_CC += -pipe
 endif # pipes
 
 # RMCast is turned on by default
@@ -921,30 +927,33 @@ PTDIRS ?=
 PRELINK ?=
 POSTLINK ?=
 PURELINK ?=
-TEMPLATES_FLAG ?=
 MVCMD ?=
+PREPROCESS_OPT ?= -E
+PREPROCESS_SUFFIX ?= i
 
-COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
-COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+COMPILE.c       = $(CC) $(CFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) -c
+COMPILE.cc      = $(CXX) $(CCFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(PTDIRS) -c
+PREPROCESS.c   ?= $(CC) $(PREPROCESS_OPT) $(CFLAGS) $(CPPFLAGS)
+PREPROCESS.cc  ?= $(CXX) $(PREPROCESS_OPT) $(CCFLAGS) $(CPPFLAGS)
 RC ?=
 
 COMPILE.rc      = $(RC) $(RCFLAGS)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects
-COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(PTDIRS)
 
 ifeq ($(LINK.c),override)
   LINK.c  = $(LINK.c.override)
 else
-  LINK.c  = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) \
+  LINK.c  = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(LDFLAGS) \
             $(LDLIBS) $(LIBS)
 endif # LINK.c.override
 
 ifeq ($(LINK.cc),override)
   LINK.cc = $(LINK.cc.override)
 else
-  LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
+  LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(FLAGS_C_CC) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
 ifeq ($(SOLINK.cc),override)

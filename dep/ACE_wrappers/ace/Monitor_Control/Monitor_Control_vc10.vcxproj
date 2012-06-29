@@ -121,7 +121,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;ACE_ETCL_Parserd.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;ACE_ETCL_Parserd.lib;iphlpapi.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_Monitor_Controld.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\lib\ACE_Monitor_Controld.lib</ImportLibrary>
@@ -159,7 +159,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;ACE_ETCL_Parser.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;ACE_ETCL_Parser.lib;iphlpapi.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_Monitor_Control.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>
@@ -199,7 +199,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;ACE_ETCL_Parserd.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACEd.lib;ACE_ETCLd.lib;ACE_ETCL_Parserd.lib;iphlpapi.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_Monitor_Controld.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\lib\ACE_Monitor_Controld.lib</ImportLibrary>
@@ -244,7 +244,7 @@
     </ResourceCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;ACE_ETCL_Parser.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ACE.lib;ACE_ETCL.lib;ACE_ETCL_Parser.lib;iphlpapi.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)ACE_Monitor_Control.dll</OutputFile>
       <AdditionalLibraryDirectories>.;..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeReferences>true</OptimizeReferences>

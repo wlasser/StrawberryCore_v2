@@ -1,4 +1,4 @@
-# $Id: platform_macosx_icc.GNU 91285 2010-08-05 08:29:30Z johnnyw $
+# $Id: platform_macosx_icc.GNU 93359 2011-02-11 11:33:12Z mcorino $
 
 threads ?= 1
 debug ?= 1
@@ -45,7 +45,7 @@ ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
+CCFLAGS += $(CFLAGS) -ip
 DCFLAGS += -g -debug full
 DLD     = $(CXX)
 LD      = $(CXX)

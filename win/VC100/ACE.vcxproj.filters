@@ -148,9 +148,6 @@
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Copy_Disabled.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Countdown_Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Date_Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -943,6 +940,15 @@
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\XTI_ATM_Mcast.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Countdown_Time_T.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Time_Policy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Event_Handler_Handle_Timeout_Upcall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Acceptor.h">
@@ -1354,9 +1360,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\CORBA_macros.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Countdown_Time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Date_Time.h">
@@ -2742,6 +2745,15 @@
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\XTI_ATM_Mcast.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Countdown_Time_T.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Time_Policy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Event_Handler_Handle_Timeout_Upcall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\dep\ACE_wrappers\ace\ACE.inl">
@@ -2871,9 +2883,6 @@
       <Filter>Inline Files</Filter>
     </None>
     <None Include="..\..\dep\ACE_wrappers\ace\Containers_T.inl">
-      <Filter>Inline Files</Filter>
-    </None>
-    <None Include="..\..\dep\ACE_wrappers\ace\Countdown_Time.inl">
       <Filter>Inline Files</Filter>
     </None>
     <None Include="..\..\dep\ACE_wrappers\ace\Date_Time.inl">
@@ -3570,6 +3579,15 @@
       <Filter>Inline Files</Filter>
     </None>
     <None Include="..\..\dep\ACE_wrappers\ace\XTI_ATM_Mcast.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="..\..\dep\ACE_wrappers\ace\Countdown_Time_T.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="..\..\dep\ACE_wrappers\ace\Time_Policy.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="..\..\dep\ACE_wrappers\ace\Event_Handler_Handle_Timeout_Upcall.inl">
       <Filter>Inline Files</Filter>
     </None>
   </ItemGroup>

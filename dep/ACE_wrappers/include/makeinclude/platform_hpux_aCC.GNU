@@ -1,4 +1,4 @@
-# $Id: platform_hpux_aCC.GNU 91285 2010-08-05 08:29:30Z johnnyw $
+# $Id: platform_hpux_aCC.GNU 93143 2011-01-21 17:36:13Z shuston $
 #
 # This is for HP-UX 11.x using the aC++ compiler.
 #
@@ -45,16 +45,15 @@ else
   endif
 endif
 
+# Want to be able to do [unsigned] long long.
+CCFLAGS += -ext
+
 ifeq (1,$(stdcpplib))
   CCFLAGS += -AA
   ifeq (03,$(CXXMAJORVERS))
     # Warning 930 is spurious when new(std::nothrow) is used. Reported to HP
     # as support call 3201224717. (Steve Huston, 23-Nov-2002)
     CCFLAGS += +W930
-    # aCC 3.31 has poor member template support.
-    ifeq (31,$(CXXMINORVERS))
-      CCFLAGS += -DACE_LACKS_MEMBER_TEMPLATES
-    endif
   endif
 # Compile errors using -AA and +noeh together - HP problem report
 # JAGad12608, fix slated for Dec 2001 Release -- Steve Huston, April 10, 2001.
@@ -66,25 +65,7 @@ endif
 # and specified compiler options.
 ifeq ($(threads),1)
   THR_DEFS = -DACE_HAS_THREADS
-
-  # x.30 was the first version offering -mt. So, if it's a .2x version,
-  # set the defs by hand; anything else, use -mt. This leaves out .1x
-  # versions, which should be no problem at this point.
-  ifeq (,$(filter 2%,$(CXXMINORVERS)))
-    CC_THR_DEFS += -mt
-  else
-    # Different for v2 vs. v1 C++ library selection.
-    ifeq (1,$(stdcpplib))
-      THR_DEFS += -D_RWSTD_MULTI_THREAD
-    else
-      THR_DEFS += -DRWSTD_MULTI_THREAD -D_THREAD_SAFE
-    endif
-
-    # For HP-UX 11.x, choose kernel threads over CMA (user) threads.
-    ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-      THR_DEFS += -D_POSIX_C_SOURCE=199506L
-    endif
-  endif
+  CC_THR_DEFS += -mt
 else
   THR_DEFS = -DACE_HAS_THREADS=0
   # On HP-UX 11, even without building for threads, the *_r reentrant
