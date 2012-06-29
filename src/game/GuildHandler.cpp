@@ -627,11 +627,27 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     guild->Roster();                                        // broadcast for tab rights update
 }
 
+void WorldSession::HandleGuildRanksOpcode(WorldPacket& recvPacket)
+{
+    DEBUG_LOG("WORLD: Received CMSG_GUILD_RANKS");
+
+    ObjectGuid guildId;
+    recvPacket >> guildId;
+
+    if (Guild* guild = sGuildMgr.GetGuildById(_player->GetGuildId()))
+    {
+        guild->SendGuildRankInfo(this);
+        return;
+    }
+    SendGuildCommandResult(GUILD_CREATE_S, "", ERR_GUILD_PLAYER_NOT_IN_GUILD);    
+}
+
 void WorldSession::HandleGuildAddRankOpcode(WorldPacket& recvPacket)
 {
     DEBUG_LOG("WORLD: Received CMSG_GUILD_ADD_RANK");
 
     std::string rankname;
+    recvPacket.read_skip(5);
     recvPacket >> rankname;
 
     Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId());
@@ -656,9 +672,12 @@ void WorldSession::HandleGuildAddRankOpcode(WorldPacket& recvPacket)
     guild->Roster();                                        // broadcast for tab rights update
 }
 
-void WorldSession::HandleGuildDelRankOpcode(WorldPacket& /*recvPacket*/)
+void WorldSession::HandleGuildDelRankOpcode(WorldPacket& recvPacket)
 {
     DEBUG_LOG("WORLD: Received CMSG_GUILD_DEL_RANK");
+
+    uint32 rankId;
+    recvPacket >> rankId;
 
     Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId());
     if (!guild)

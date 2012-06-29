@@ -807,10 +807,14 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
         Guild* guild = sGuildMgr.GetGuildById(pCurrChar->GetGuildId());
         if(guild)
         {
+            pCurrChar->SetUInt32Value(PLAYER_GUILDLEVEL, uint32(0));//guild->GetLevel()));
+            pCurrChar->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GLEVEL_ENABLED);
+
             data.Initialize(SMSG_GUILD_EVENT, (1+1+guild->GetMOTD().size()+1));
             data << uint8(GE_MOTD);
-            data << uint8(1);
+            data << uint8(2);
             data << guild->GetMOTD();
+            data << uint8(0);
             SendPacket(&data);
             DEBUG_LOG( "WORLD: Sent guild-motd (SMSG_GUILD_EVENT)" );
 
