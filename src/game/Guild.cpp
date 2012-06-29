@@ -138,6 +138,9 @@ bool Guild::Create(Player* leader, std::string gname)
         "VALUES('%u','%s','%u', '%s', '%s','" UI64FMTD "','%u','%u','%u','%u','%u','" UI64FMTD "')",
         m_Id, gname.c_str(), m_LeaderGuid.GetCounter(), dbGINFO.c_str(), dbMOTD.c_str(), uint64(m_CreatedDate), m_EmblemStyle, m_EmblemColor, m_BorderStyle, m_BorderColor, m_BackgroundColor, m_GuildBankMoney);
     CharacterDatabase.CommitTransaction();
+    
+    // Add reputation to leader
+    leader->GetReputationMgr().SetReputation(sFactionStore.LookupEntry(1168), 1);
 
     CreateDefaultGuildRanks(lSession->GetSessionDbLocaleIndex());
 
@@ -236,6 +239,9 @@ bool Guild::AddMember(ObjectGuid plGuid, uint32 plRank)
         pl->SetInGuild(m_Id);
         pl->SetRank(newmember.RankId);
         pl->SetGuildIdInvited(0);
+        pl->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GLEVEL_ENABLED);
+        pl->SetUInt32Value(PLAYER_GUILDLEVEL, uint32(1));//GetLevel()));
+        pl->GetReputationMgr().SetReputation(sFactionStore.LookupEntry(1168), 1);
     }
 
     UpdateAccountsNumber();
@@ -692,6 +698,51 @@ void Guild::SetRankRights(uint32 rankId, uint32 rights)
     CharacterDatabase.PExecute("UPDATE guild_rank SET rights='%u' WHERE rid='%u' AND guildid='%u'", rights, rankId, m_Id);
 }
 
+void Guild::SendGuildRankInfo(WorldSession* session)
+{
+    WorldPacket data7(SMSG_GUILD_RANKS);
+
+    uint32 count = m_Ranks.size();
+    data7.WriteBits(count, 18);
+    for (uint32 k = 0; k < count; k++)
+        data7.WriteBits(m_Ranks[k].Name.length(), 7);
+
+    for (uint32 i = 0; i < count; i++)
+    {
+        if (i == 0)
+        {
+            data7 << uint32(0);
+            for (uint32 j = 0; j < GUILD_BANK_MAX_TABS; ++j)
+            {
+                data7 << uint32(0xFFFFFFFF);
+                data7 << uint32(0xFFFFFFFF);
+            }
+            data7 << uint32(0xFFFFFFFF);
+            data7 << uint32(14548927);
+            data7.append(m_Ranks[i].Name.c_str(), m_Ranks[i].Name.size());
+            data7 << uint32(i);
+        }
+        else
+        {
+            data7 << uint32(i);//Creation Order
+            for (uint32 j = 0; j < GUILD_BANK_MAX_TABS; ++j)
+            {
+                data7 << uint32(m_Ranks[i].TabSlotPerDay[j]);
+                data7 << uint32(m_Ranks[i].TabRight[j]);
+            }
+            data7 << uint32(m_Ranks[i].BankMoneyPerDay);
+            data7 << uint32(m_Ranks[i].Rights);
+            data7.append(m_Ranks[i].Name.c_str(), m_Ranks[i].Name.size());
+            data7 << uint32(i);
+        }
+    }
+
+    if (session)
+        session->SendPacket(&data7);
+    else
+        BroadcastPacket(&data7);
+}
+
 /**
  * Disband guild including cleanup structures and DB
  *
@@ -724,8 +775,7 @@ void Guild::Disband()
 }
 
 void Guild::Roster(WorldSession *session /*= NULL*/)
-{
-                                                            // we can only guess size
+{                                                            // we can only guess size
     WorldPacket data(SMSG_GUILD_ROSTER, (4+MOTD.length()+1+GINFO.length()+1+4+m_Ranks.size()*(4+4+GUILD_BANK_MAX_TABS*(4+4))+members.size()*50));
     data << uint32(members.size());
     data << MOTD;
@@ -776,6 +826,8 @@ void Guild::Roster(WorldSession *session /*= NULL*/)
         session->SendPacket(&data);
     else
         BroadcastPacket(&data);
+
+    SendGuildRankInfo(session);
     DEBUG_LOG( "WORLD: Sent (SMSG_GUILD_ROSTER)" );
 }
 
