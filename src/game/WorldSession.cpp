@@ -175,6 +175,9 @@ void WorldSession::SendPacket(WorldPacket const* packet)
 
     #endif                                                  // !STRAWBERRY_DEBUG
 
+    if (strcmp(opcodeTable[packet->GetOpcode()].name, "UNKNOWN") == 0)
+        sLog.outError("Sent unknown opcode %X to account %u player %s", packet->GetOpcode(), GetAccountId(), GetPlayer() ? GetPlayer()->GetGuidStr().c_str() : "UNKNOWN");
+
     if (m_Socket->SendPacket (*packet) == -1)
         m_Socket->CloseSocket ();
 }

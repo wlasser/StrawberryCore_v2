@@ -1,4 +1,4 @@
-# $Id: platform_linux_icc.GNU 86019 2009-07-14 12:13:09Z wotte $
+# $Id: platform_linux_icc.GNU 95695 2012-04-12 11:26:10Z johnnyw $
 
 # This file should allow ACE to be built on Linux, using the Intel compiler.
 
@@ -39,6 +39,9 @@ endif
 ifeq (11.0,$(findstring 11.0,$(CXX_VERSION)))
   CFLAGS += -wd1684
 endif
+ifeq (12.0,$(findstring 12.0,$(CXX_VERSION)))
+  no_hidden_visibility ?= 0
+endif
 
 no_hidden_visibility ?= 1
 
@@ -54,12 +57,16 @@ ifeq ($(ipo),1)
   CPPFLAGS += -ipo
 endif
 
+ifeq ($(c++0x),1)
+  CCFLAGS += -std=c++0x
+endif
+
 CFLAGS  += -w1
 ifeq ($(threads),1)
-    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
+    CPPFLAGS  += -D_REENTRANT
 endif # threads
 
-CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG) -ip
+CCFLAGS += $(CFLAGS) -ip
 DCFLAGS += -g -debug full
 DLD     = $(CXX)
 LD      = $(CXX)
@@ -67,9 +74,7 @@ LIBS    += -ldl
 
 ifeq ($(threads),1)
   LIBS += -lpthread
-  ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
-    LIBS += -lrt
-  endif
+  LIBS += -lrt
 endif
 
 OCFLAGS += -O3
@@ -94,7 +99,7 @@ ifeq ($(shared_libs), 1)
   ifneq ($static_libs_only), 1)
     LDFLAGS += -Wl,-E
     ifneq ($(no_hidden_visibility),1)
-      CCFLAGS += -fvisibility=hidden
+      CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     else
       CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
     endif # no_hidden_visibility
@@ -111,4 +116,3 @@ ifeq ($(threads),1)
        PRELIB = @true
     endif # ! PRELIB
 endif
-

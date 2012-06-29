@@ -1,5 +1,5 @@
 # -*- Makefile -*-
-# $Id: platform_vxworks6.3.GNU 91326 2010-08-09 16:04:31Z mitza $
+# $Id: platform_vxworks6.3.GNU 93393 2011-02-15 20:42:17Z olli $
 # VxWorks 6.3
 
 #### Notes:
@@ -332,11 +332,6 @@ else
 endif
 endif
 endif
-
-# TEMPLATES_FLAG is set by platform_g++_common.GNU
-ifneq ($(TEMPLATES_FLAG),) # If specified, add it to the CCFLAGS
-  CPPFLAGS += $(TEMPLATES_FLAG)
-endif
 endif  # TOOL_FAMILY == gnu
 
 ifeq ("$(TOOL_FAMILY)","diab")
@@ -369,7 +364,7 @@ ifneq ($(optimize),1)
   CC_OPTIM_NORMAL =
 endif
 
-CCFLAGS         += $(C++FLAGS)
+CCFLAGS         += $(C++FLAGS) $(FLAGS_C_CC)
 
 ifeq ($(VXWORKSLINK), 1)
 

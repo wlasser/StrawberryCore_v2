@@ -1,5 +1,5 @@
 # -*- Makefile -*-
-# $Id: platform_linux_common.GNU 91626 2010-09-07 10:59:20Z johnnyw $
+# $Id: platform_linux_common.GNU 93462 2011-03-02 12:45:06Z olli $
 
 # We always include config-linux.h on Linux platforms.
 ACE_PLATFORM_CONFIG ?= config-linux.h
@@ -45,24 +45,23 @@ PLATFORM_BOOST_CPPFLAGS ?=
 PLATFORM_BOOST_LDLAGS ?=
 PLATFORM_BOOST_UTF_LIBS ?= -lboost_unit_test_framework
 
-ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
-  PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tk*/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
-  PLATFORM_TK_LIBS=$(shell . /usr/lib/tk*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-  PLATFORM_TK_LDFLAGS=
-
-  PLATFORM_TCL_CPPFLAGS=
-  PLATFORM_TCL_LIBS=-ltcl8.4
-  PLATFORM_TCL_LDFLAGS=
+ifeq ($(buildbits),64)
+PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib64/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
+PLATFORM_TK_LIBS=$(shell . /usr/lib64/tkConfig.sh && echo -n $$TK_LIB_FLAG)
 else
-  PLATFORM_TK_CPPFLAGS=-I$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_INC_DIR $$TK_DEFS)
-  PLATFORM_TK_LIBS=$(shell . /usr/lib*/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-  PLATFORM_TK_LDFLAGS=
-
-
-  PLATFORM_TCL_CPPFLAGS=
-  PLATFORM_TCL_LIBS=-ltcl
-  PLATFORM_TCL_LDFLAGS=
+PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
+PLATFORM_TK_LIBS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_LIB_FLAG)
 endif
+PLATFORM_TK_LDFLAGS=
+
+ifeq ($(buildbits),64)
+PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
+PLATFORM_TCL_LIBS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
+else
+PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
+PLATFORM_TCL_LIBS=$(shell . /usr/lib/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
+endif
+PLATFORM_TCL_LDFLAGS=
 
 PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
 PLATFORM_QT_LIBS ?= -lqt-mt
@@ -82,9 +81,6 @@ ifeq ($(sctp),lksctp)
   PLATFORM_SCTP_LDFLAGS?= -L/usr/local/lib
   PLATFORM_SCTP_LIBS?= -lsctp
 endif
-
-PLATFORM_AIO_SUPPORT := \
-       $(shell test "`ls -L /usr/lib*/librt.so* /lib*/librt.so*`" && echo -DACE_HAS_AIO_CALLS)
 
 GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION 2> /dev/null || echo Unknown)
 ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))

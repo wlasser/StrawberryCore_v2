@@ -1,15 +1,27 @@
 # -*- Makefile -*-
-# $Id: platform_g++_common.GNU 91626 2010-09-07 10:59:20Z johnnyw $
+# $Id: platform_g++_common.GNU 94795 2011-10-19 19:14:06Z wotte $
+
+ifeq ($(openmp),1)
+FLAGS_C_CC += -fopenmp
+LDFLAGS += -fopenmp
+endif
 
 ifeq ($(insure),1)
   CC  = insure
   CXX = insure
 else
   ifneq ($(CROSS_COMPILE),)
+    CROSS-COMPILE = 1
     # Build using the cross-tools
-    CC  = ${CROSS_COMPILE}gcc
-    CXX = ${CROSS_COMPILE}g++
-    AR  = ${CROSS_COMPILE}ar
+    ifneq ($($CROSS_COMPILE_POSTFIX),)
+      CC  = ${CROSS_COMPILE}gcc{$CROSS_COMPILE_POSTFIX}
+      CXX = ${CROSS_COMPILE}g++{$CROSS_COMPILE_POSTFIX}
+      AR  = ${CROSS_COMPILE}ar{$CROSS_COMPILE_POSTFIX}
+    else
+      CC  = ${CROSS_COMPILE}gcc
+      CXX = ${CROSS_COMPILE}g++
+      AR  = ${CROSS_COMPILE}ar
+    endif
     # Cross-linker requires this for linked in shared libs that depend
     # themselves on other shared libs (not directly linked in)
     LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
@@ -19,6 +31,8 @@ else
       TAO_IDL_DEP = $(TAO_IDL)
       TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_idl2
       TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+      TAO_IDL3_TO_XMI = $(HOST_ROOT)/TAO/CIAO/bin/tao_idl3_to_xmi
+      TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
       # make sure to use the target compiler, not the cross-compiler
       # as preprocessor for the cross-compiled idl tools
       TAO_IDL_PREPROCESSOR = gcc
@@ -40,6 +54,19 @@ ifneq ($(TCPU),)
   endif
 endif
 
+ifeq ($(gprof),1)
+  FLAGS_C_CC += -pg
+  LDFLAGS += -pg
+endif
+
+ifeq ($(c++0x),1)
+  CCFLAGS += --std=c++0x
+endif
+
+ifeq ($(gcov),1)
+  FLAGS_C_CC += -fprofile-arcs -ftest-coverage
+endif
+
 ifeq ($(CXX),insure)
   # insure does not pass through the -dumpversion option.
   CXX_FOR_VERSION_TEST ?= g++
@@ -53,6 +80,11 @@ ifeq (cmd,$(findstring cmd,$(SHELL)))
 CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
 else
 CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+endif
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
+else
+CXX_MINOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/^[0-9]*\.//' | sed -e 's/\..*$$//')
 endif
 ifeq ($(findstring $(CXX_MAJOR_VERSION),1 2 3),$(CXX_MAJOR_VERSION))
 GXX_4_OR_BETTER := 0
@@ -106,8 +138,24 @@ ifeq ($(GNU_LD),1)
   STATIC_LINK_FLAG ?= -static
 endif # GNU_LD
 
+ifeq ($(no-optimize-sibling-calls), 1)
+  FLAGS_C_CC += -fno-optimize-sibling-calls
+endif
+
 ifeq ($(no_strict_aliasing), 1)
   CCFLAGS += -fno-strict-aliasing
+else
+  ifneq ($(no_strict_aliasing), 0)
+    # if not explicitly disabled enable suppression of strict-aliasing checks by default
+    # for GCC >= 4.2; these checks and the resulting warnings are very controversial and
+    # popular opinion on the web seems to be that it brings little practical value and a
+    # lot of pain to attempt to solve code issues and the best way to deal is to suppress
+    ifeq ($(GXX_4_OR_BETTER), 1)
+      ifneq ($(findstring $(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION),4.1),$(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION))
+        CCFLAGS += -fno-strict-aliasing
+      endif
+    endif
+  endif
 endif
 
 ifeq ($(shared_libs), 1)
@@ -162,15 +210,11 @@ else
   endif # GXX_4_OR_BETTER == 1
 endif # shared_libs
 
-# GCC 2.x needs this to compile TAO correctly 
-ifeq ($(CXX_MAJOR_VERSION), 2)
-  CCFLAGS += -ftemplate-depth-23
-endif
-
 minimaltoc ?= 0
-
 ifeq ($(minimaltoc),1)
   FLAGS_C_CC += -mminimal-toc
 endif
 
+pipes ?= 1
 
+FLAGS_C_CC += -Wall -W -Wpointer-arith

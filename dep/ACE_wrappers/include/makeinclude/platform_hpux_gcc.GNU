@@ -1,4 +1,4 @@
-# $Id: platform_hpux_gcc.GNU 91285 2010-08-05 08:29:30Z johnnyw $
+# $Id: platform_hpux_gcc.GNU 93403 2011-02-17 18:54:42Z olli $
 #
 
 buildbits ?= 64
@@ -102,4 +102,4 @@ endif
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-CCFLAGS		+= $(CFLAGS) $(TEMPLATES_FLAG) -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
+CCFLAGS		+= -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)

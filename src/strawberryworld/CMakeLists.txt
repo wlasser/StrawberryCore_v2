@@ -93,7 +93,7 @@ set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINK_FLAGS
 )
 
 install(TARGETS ${EXECUTABLE_NAME} DESTINATION ${BIN_DIR})
-install(FILES run-arctiumworld DESTINATION ${BIN_DIR})
+install(FILES run-strawberryworld DESTINATION ${BIN_DIR})
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/strawberryworld.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/strawberryworld.conf.dist)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/strawberryworld.conf.dist DESTINATION ${CONF_DIR})
 

@@ -162,9 +162,6 @@
     <ClCompile Include="Copy_Disabled.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Countdown_Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Date_Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -222,6 +219,9 @@
     <ClCompile Include="Event_Handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Event_Handler_Handle_Timeout_Upcall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="FIFO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -268,9 +268,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Get_Opt.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gethrtime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Handle_Ops.cpp">
@@ -873,6 +870,9 @@
     <ClCompile Include="Throughput_Stats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Time_Policy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Time_Value.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -959,6 +959,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Abstract_Timer_Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Acceptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -969,6 +972,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ace_wchar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ace_wchar.inl">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Activation_Queue.h">
@@ -1139,22 +1145,22 @@
     <ClInclude Include="config-aix-5.x.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="config-aix-7.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="config-all.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-cygwin32.h">
+    <ClInclude Include="config-android.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-doxygen.h">
+    <ClInclude Include="config-cygwin32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-freebsd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-g++-common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-ghs-common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-hpux-11.00.h">
@@ -1169,9 +1175,6 @@
     <ClInclude Include="config-kfreebsd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-linux-common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="config-linux.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1181,13 +1184,16 @@
     <ClInclude Include="config-lynxos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-macosx-iphone-hardware.h">
+    <ClInclude Include="config-macosx-iOS-hardware.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-macosx-iphone-simulator.h">
+    <ClInclude Include="config-macosx-iOS-simulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-macosx-leopard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="config-macosx-lion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-macosx-panther.h">
@@ -1203,12 +1209,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-macros.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-minimal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-mvs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-netbsd.h">
@@ -1229,19 +1229,7 @@
     <ClInclude Include="config-posix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-qnx-neutrino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-qnx-rtp-62x.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-qnx-rtp-common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-qnx-rtp-pre62x.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-qnx-rtp.h">
+    <ClInclude Include="config-qnx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-rtems.h">
@@ -1277,18 +1265,6 @@
     <ClInclude Include="config-sunos5.9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-tandem-nsk-mips-v2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-tandem-nsk-mips-v3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-tandem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="config-visualage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="config-vxworks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1307,7 +1283,7 @@
     <ClInclude Include="config-vxworks6.8.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config-win32-borland.h">
+    <ClInclude Include="config-vxworks6.9.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="config-win32-cegcc.h">
@@ -1346,6 +1322,9 @@
     <ClInclude Include="config-WinCE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="config-windows.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1374,6 +1353,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Countdown_Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Countdown_Time_T.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Date_Time.h">
@@ -1443,6 +1425,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Event_Handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Event_Handler_Handle_Timeout_Upcall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Event_Handler_T.h">
@@ -1826,6 +1811,9 @@
     <ClInclude Include="Obstack_T.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="OS_Errno.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1893,6 +1881,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="os_include\os_iconv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="os_include\os_ifaddrs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="os_include\os_intrin.h">
@@ -2486,9 +2477,6 @@
     <ClInclude Include="Stats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Strategies.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Strategies_T.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -2597,6 +2585,12 @@
     <ClInclude Include="Throughput_Stats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Time_Policy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time_Policy_T.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Time_Value.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -2628,6 +2622,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Timer_Queue_Adapters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer_Queue_Iterator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Timer_Queue_T.h">
@@ -2929,9 +2926,6 @@
     <None Include="Basic_Stats.inl">
       <Filter>Inline Files</Filter>
     </None>
-    <None Include="Basic_Types.inl">
-      <Filter>Inline Files</Filter>
-    </None>
     <None Include="Bound_Ptr.inl">
       <Filter>Inline Files</Filter>
     </None>
@@ -2974,7 +2968,7 @@
     <None Include="Containers_T.inl">
       <Filter>Inline Files</Filter>
     </None>
-    <None Include="Countdown_Time.inl">
+    <None Include="Countdown_Time_T.inl">
       <Filter>Inline Files</Filter>
     </None>
     <None Include="Date_Time.inl">
@@ -3017,6 +3011,9 @@
       <Filter>Inline Files</Filter>
     </None>
     <None Include="Event_Handler.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="Event_Handler_Handle_Timeout_Upcall.inl">
       <Filter>Inline Files</Filter>
     </None>
     <None Include="Event_Handler_T.inl">
@@ -3592,6 +3589,12 @@
     <None Include="Thread_Semaphore.inl">
       <Filter>Inline Files</Filter>
     </None>
+    <None Include="Time_Policy.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="Time_Policy_T.inl">
+      <Filter>Inline Files</Filter>
+    </None>
     <None Include="Time_Value.inl">
       <Filter>Inline Files</Filter>
     </None>
@@ -3599,6 +3602,9 @@
       <Filter>Inline Files</Filter>
     </None>
     <None Include="Timer_Queue_Adapters.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="Timer_Queue_Iterator.inl">
       <Filter>Inline Files</Filter>
     </None>
     <None Include="Timer_Queue_T.inl">
@@ -3675,6 +3681,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Abstract_Timer_Queue.cpp">
+      <Filter>Template Files</Filter>
+    </ClCompile>
     <ClCompile Include="Acceptor.cpp">
       <Filter>Template Files</Filter>
     </ClCompile>
@@ -3739,6 +3748,9 @@
       <Filter>Template Files</Filter>
     </ClCompile>
     <ClCompile Include="Containers_T.cpp">
+      <Filter>Template Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Countdown_Time_T.cpp">
       <Filter>Template Files</Filter>
     </ClCompile>
     <ClCompile Include="Dump_T.cpp">
@@ -3882,6 +3894,9 @@
     <ClCompile Include="Test_and_Set.cpp">
       <Filter>Template Files</Filter>
     </ClCompile>
+    <ClCompile Include="Time_Policy_T.cpp">
+      <Filter>Template Files</Filter>
+    </ClCompile>
     <ClCompile Include="Timeprobe_T.cpp">
       <Filter>Template Files</Filter>
     </ClCompile>
@@ -3895,6 +3910,9 @@
       <Filter>Template Files</Filter>
     </ClCompile>
     <ClCompile Include="Timer_Queue_Adapters.cpp">
+      <Filter>Template Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer_Queue_Iterator.cpp">
       <Filter>Template Files</Filter>
     </ClCompile>
     <ClCompile Include="Timer_Queue_T.cpp">

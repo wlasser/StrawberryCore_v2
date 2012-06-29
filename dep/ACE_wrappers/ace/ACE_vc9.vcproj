@@ -76,7 +76,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies=""
+				AdditionalDependencies=" iphlpapi.lib"
 				OutputFile="$(OutDir)\ACEd.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -156,7 +156,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies=""
+				AdditionalDependencies=" iphlpapi.lib"
 				OutputFile="$(OutDir)\ACE.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -242,7 +242,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/machine:AMD64"
-				AdditionalDependencies=""
+				AdditionalDependencies=" iphlpapi.lib"
 				OutputFile="$(OutDir)\ACEd.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -323,7 +323,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/machine:AMD64"
-				AdditionalDependencies=""
+				AdditionalDependencies=" iphlpapi.lib"
 				OutputFile="$(OutDir)\ACE.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -485,9 +485,6 @@
 				RelativePath="Copy_Disabled.cpp">
 			</File>
 			<File
-				RelativePath="Countdown_Time.cpp">
-			</File>
-			<File
 				RelativePath="Date_Time.cpp">
 			</File>
 			<File
@@ -545,6 +542,9 @@
 				RelativePath="Event_Handler.cpp">
 			</File>
 			<File
+				RelativePath="Event_Handler_Handle_Timeout_Upcall.cpp">
+			</File>
+			<File
 				RelativePath="FIFO.cpp">
 			</File>
 			<File
@@ -591,9 +591,6 @@
 			</File>
 			<File
 				RelativePath="Get_Opt.cpp">
-			</File>
-			<File
-				RelativePath="gethrtime.cpp">
 			</File>
 			<File
 				RelativePath="Handle_Ops.cpp">
@@ -1196,6 +1193,9 @@
 				RelativePath="Throughput_Stats.cpp">
 			</File>
 			<File
+				RelativePath="Time_Policy.cpp">
+			</File>
+			<File
 				RelativePath="Time_Value.cpp">
 			</File>
 			<File
@@ -1284,6 +1284,9 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hh">
 			<File
+				RelativePath="Abstract_Timer_Queue.h">
+			</File>
+			<File
 				RelativePath="Acceptor.h">
 			</File>
 			<File
@@ -1294,6 +1297,9 @@
 			</File>
 			<File
 				RelativePath="ace_wchar.h">
+			</File>
+			<File
+				RelativePath="ace_wchar.inl">
 			</File>
 			<File
 				RelativePath="Activation_Queue.h">
@@ -1464,22 +1470,22 @@
 				RelativePath="config-aix-5.x.h">
 			</File>
 			<File
+				RelativePath="config-aix-7.h">
+			</File>
+			<File
 				RelativePath="config-all.h">
 			</File>
 			<File
-				RelativePath="config-cygwin32.h">
+				RelativePath="config-android.h">
 			</File>
 			<File
-				RelativePath="config-doxygen.h">
+				RelativePath="config-cygwin32.h">
 			</File>
 			<File
 				RelativePath="config-freebsd.h">
 			</File>
 			<File
 				RelativePath="config-g++-common.h">
-			</File>
-			<File
-				RelativePath="config-ghs-common.h">
 			</File>
 			<File
 				RelativePath="config-hpux-11.00.h">
@@ -1494,9 +1500,6 @@
 				RelativePath="config-kfreebsd.h">
 			</File>
 			<File
-				RelativePath="config-linux-common.h">
-			</File>
-			<File
 				RelativePath="config-linux.h">
 			</File>
 			<File
@@ -1506,13 +1509,16 @@
 				RelativePath="config-lynxos.h">
 			</File>
 			<File
-				RelativePath="config-macosx-iphone-hardware.h">
+				RelativePath="config-macosx-iOS-hardware.h">
 			</File>
 			<File
-				RelativePath="config-macosx-iphone-simulator.h">
+				RelativePath="config-macosx-iOS-simulator.h">
 			</File>
 			<File
 				RelativePath="config-macosx-leopard.h">
+			</File>
+			<File
+				RelativePath="config-macosx-lion.h">
 			</File>
 			<File
 				RelativePath="config-macosx-panther.h">
@@ -1528,12 +1534,6 @@
 			</File>
 			<File
 				RelativePath="config-macros.h">
-			</File>
-			<File
-				RelativePath="config-minimal.h">
-			</File>
-			<File
-				RelativePath="config-mvs.h">
 			</File>
 			<File
 				RelativePath="config-netbsd.h">
@@ -1554,19 +1554,7 @@
 				RelativePath="config-posix.h">
 			</File>
 			<File
-				RelativePath="config-qnx-neutrino.h">
-			</File>
-			<File
-				RelativePath="config-qnx-rtp-62x.h">
-			</File>
-			<File
-				RelativePath="config-qnx-rtp-common.h">
-			</File>
-			<File
-				RelativePath="config-qnx-rtp-pre62x.h">
-			</File>
-			<File
-				RelativePath="config-qnx-rtp.h">
+				RelativePath="config-qnx.h">
 			</File>
 			<File
 				RelativePath="config-rtems.h">
@@ -1602,18 +1590,6 @@
 				RelativePath="config-sunos5.9.h">
 			</File>
 			<File
-				RelativePath="config-tandem-nsk-mips-v2.h">
-			</File>
-			<File
-				RelativePath="config-tandem-nsk-mips-v3.h">
-			</File>
-			<File
-				RelativePath="config-tandem.h">
-			</File>
-			<File
-				RelativePath="config-visualage.h">
-			</File>
-			<File
 				RelativePath="config-vxworks.h">
 			</File>
 			<File
@@ -1632,7 +1608,7 @@
 				RelativePath="config-vxworks6.8.h">
 			</File>
 			<File
-				RelativePath="config-win32-borland.h">
+				RelativePath="config-vxworks6.9.h">
 			</File>
 			<File
 				RelativePath="config-win32-cegcc.h">
@@ -1671,6 +1647,9 @@
 				RelativePath="config-WinCE.h">
 			</File>
 			<File
+				RelativePath="config-windows.h">
+			</File>
+			<File
 				RelativePath="config.h">
 			</File>
 			<File
@@ -1699,6 +1678,9 @@
 			</File>
 			<File
 				RelativePath="Countdown_Time.h">
+			</File>
+			<File
+				RelativePath="Countdown_Time_T.h">
 			</File>
 			<File
 				RelativePath="Date_Time.h">
@@ -1768,6 +1750,9 @@
 			</File>
 			<File
 				RelativePath="Event_Handler.h">
+			</File>
+			<File
+				RelativePath="Event_Handler_Handle_Timeout_Upcall.h">
 			</File>
 			<File
 				RelativePath="Event_Handler_T.h">
@@ -2151,6 +2136,9 @@
 				RelativePath="Obstack_T.h">
 			</File>
 			<File
+				RelativePath="OS.h">
+			</File>
+			<File
 				RelativePath="OS_Errno.h">
 			</File>
 			<File
@@ -2218,6 +2206,9 @@
 			</File>
 			<File
 				RelativePath="os_include\os_iconv.h">
+			</File>
+			<File
+				RelativePath="os_include\os_ifaddrs.h">
 			</File>
 			<File
 				RelativePath="os_include\os_intrin.h">
@@ -2811,9 +2802,6 @@
 				RelativePath="Stats.h">
 			</File>
 			<File
-				RelativePath="Strategies.h">
-			</File>
-			<File
 				RelativePath="Strategies_T.h">
 			</File>
 			<File
@@ -2922,6 +2910,12 @@
 				RelativePath="Throughput_Stats.h">
 			</File>
 			<File
+				RelativePath="Time_Policy.h">
+			</File>
+			<File
+				RelativePath="Time_Policy_T.h">
+			</File>
+			<File
 				RelativePath="Time_Value.h">
 			</File>
 			<File
@@ -2953,6 +2947,9 @@
 			</File>
 			<File
 				RelativePath="Timer_Queue_Adapters.h">
+			</File>
+			<File
+				RelativePath="Timer_Queue_Iterator.h">
 			</File>
 			<File
 				RelativePath="Timer_Queue_T.h">
@@ -3782,9 +3779,6 @@
 				RelativePath="Basic_Stats.inl">
 			</File>
 			<File
-				RelativePath="Basic_Types.inl">
-			</File>
-			<File
 				RelativePath="Bound_Ptr.inl">
 			</File>
 			<File
@@ -3827,7 +3821,7 @@
 				RelativePath="Containers_T.inl">
 			</File>
 			<File
-				RelativePath="Countdown_Time.inl">
+				RelativePath="Countdown_Time_T.inl">
 			</File>
 			<File
 				RelativePath="Date_Time.inl">
@@ -3870,6 +3864,9 @@
 			</File>
 			<File
 				RelativePath="Event_Handler.inl">
+			</File>
+			<File
+				RelativePath="Event_Handler_Handle_Timeout_Upcall.inl">
 			</File>
 			<File
 				RelativePath="Event_Handler_T.inl">
@@ -4445,6 +4442,12 @@
 				RelativePath="Thread_Semaphore.inl">
 			</File>
 			<File
+				RelativePath="Time_Policy.inl">
+			</File>
+			<File
+				RelativePath="Time_Policy_T.inl">
+			</File>
+			<File
 				RelativePath="Time_Value.inl">
 			</File>
 			<File
@@ -4452,6 +4455,9 @@
 			</File>
 			<File
 				RelativePath="Timer_Queue_Adapters.inl">
+			</File>
+			<File
+				RelativePath="Timer_Queue_Iterator.inl">
 			</File>
 			<File
 				RelativePath="Timer_Queue_T.inl">
@@ -4529,6 +4535,33 @@
 		<Filter
 			Name="Template Files"
 			Filter="">
+			<File
+				RelativePath="Abstract_Timer_Queue.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="Acceptor.cpp">
 				<FileConfiguration
@@ -5098,6 +5131,33 @@
 			</File>
 			<File
 				RelativePath="Containers_T.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Countdown_Time_T.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true">
@@ -6393,6 +6453,33 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="Time_Policy_T.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="Timeprobe_T.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -6502,6 +6589,33 @@
 			</File>
 			<File
 				RelativePath="Timer_Queue_Adapters.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Timer_Queue_Iterator.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true">

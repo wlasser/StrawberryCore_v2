@@ -56,7 +56,7 @@ void WorldSession::HandleGroupInviteOpcode( WorldPacket & recv_data )
 {
     std::string membername;
     recv_data >> membername;
-    recv_data.read_skip<uint32>();                          // roles mask?
+    recv_data.read_skip<uint32>();                           // roles mask?
 
     // attempt add selected player
 

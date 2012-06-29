@@ -1,7 +1,7 @@
-# $Id: platform_aix_ibm.GNU 91285 2010-08-05 08:29:30Z johnnyw $
+# $Id: platform_aix_ibm.GNU 93986 2011-04-22 18:40:06Z shuston $
 
 # This file is for use with AIX 5.x and up, using either of the IBM
-# compilers (Visual Age C++ 6 or newer compiler).
+# compilers (Visual Age C++ 6 or newer XL C++ compiler).
 
 debug ?= 1
 distrib ?= 0
@@ -111,6 +111,13 @@ else
       # try-catch blocks.
       CCFLAGS     += -qeh=v6
     else
+      # Until there's a reason to change, use the V9 settings for V10.1 and 11.
+      ifeq ($(XLCVERSION),0x0a01)
+        XLCVERSION = 0x0900
+      endif
+      ifeq ($(XLCVERSION),0x0b01)
+        XLCVERSION = 0x0900
+      endif
       ifeq ($(XLCVERSION),0x0900)
         CCFLAGS += -qflag=w:w
         ifeq ($(templates),manual)
@@ -147,8 +154,6 @@ else
   # Using 32bit the staticinline option works.
   #CCFLAGS += -qstaticinline
 endif
-
-CCFLAGS += -qfuncsect
 
 # The Visual Age preprocessor is not usable with the TAO_IDL compiler.
 # At the moment an idl file just contains includes of other idl files

@@ -7406,7 +7406,7 @@ bool ObjectMgr::LoadStrawberryStrings(DatabaseType& db, char const* table, int32
 
     sLog.outString();
     if (min_value == MIN_STRAWBERRY_STRING_ID)
-        sLog.outString( ">> Loaded %u MaNGOS strings from table %s", count,table);
+        sLog.outString( ">> Loaded %u Strawberry strings from table %s", count,table);
     else
         sLog.outString( ">> Loaded %u string templates from %s", count,table);
 

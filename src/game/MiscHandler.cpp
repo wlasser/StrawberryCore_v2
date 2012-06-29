@@ -443,7 +443,6 @@ void WorldSession::HandleAddFriendOpcode( WorldPacket & recv_data )
     std::string friendNote;
 
     recv_data >> friendName;
-
     recv_data >> friendNote;
 
     if(!normalizePlayerName(friendName))
@@ -451,8 +450,7 @@ void WorldSession::HandleAddFriendOpcode( WorldPacket & recv_data )
 
     CharacterDatabase.escape_string(friendName);            // prevent SQL injection - normal name don't must changed by this call
 
-    DEBUG_LOG( "WORLD: %s asked to add friend : '%s'",
-        GetPlayer()->GetName(), friendName.c_str() );
+    DEBUG_LOG( "WORLD: %s asked to add friend : '%s'", GetPlayer()->GetName(), friendName.c_str() );
 
     CharacterDatabase.AsyncPQuery(&WorldSession::HandleAddFriendOpcodeCallBack, GetAccountId(), friendNote, "SELECT guid, race FROM characters WHERE name = '%s'", friendName.c_str());
 }
@@ -1643,3 +1641,4 @@ void WorldSession::HandlePlayerViolenceLevel(WorldPacket & recv_data)
     uint8 violenceLevel = 0;
     recv_data >> violenceLevel;
 }
+

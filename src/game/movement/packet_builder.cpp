@@ -59,21 +59,21 @@ namespace Movement
 
         switch(splineflags & MoveSplineFlag::Mask_Final_Facing)
         {
-        default:
-            data << uint8(MonsterMoveNormal);
-            break;
-        case MoveSplineFlag::Final_Target:
-            data << uint8(MonsterMoveFacingTarget);
-            data << move_spline.facing.target;
-            break;
-        case MoveSplineFlag::Final_Angle:
-            data << uint8(MonsterMoveFacingAngle);
-            data << move_spline.facing.angle;
-            break;
-        case MoveSplineFlag::Final_Point:
-            data << uint8(MonsterMoveFacingSpot);
-            data << move_spline.facing.f.x << move_spline.facing.f.y << move_spline.facing.f.z;
-            break;
+            case MoveSplineFlag::FinalTarget:
+                data << uint8(MonsterMoveFacingTarget);
+                data << move_spline.facing.target;
+                break;
+            case MoveSplineFlag::FinalOrientation:
+                data << uint8(MonsterMoveFacingAngle);
+                data << move_spline.facing.angle;
+                break;
+            case MoveSplineFlag::FinalPoint:
+                data << uint8(MonsterMoveFacingSpot);
+                data << move_spline.facing.f.x << move_spline.facing.f.y << move_spline.facing.f.z;
+                break;
+            default:
+                data << uint8(MonsterMoveNormal);
+                break;
         }
 
         // add fake Enter_Cycle flag - needed for client-side cyclic movement (client will erase first spline vertex after first cycle done)
@@ -153,15 +153,20 @@ namespace Movement
         uint32 nodes = move_spline.getPath().size();
 
         data.WriteBits(SPLINEMODE_LINEAR, 2);
-        data.WriteBit(false);
+        data.WriteBit(1);
         data.WriteBits(nodes, 22);
         data.WriteBits(SPLINETYPE_NORMAL, 2);
 
-        if (splineFlags.walkmode)
+        if (splineFlags.final_target)
         {
+            uint64 Guid = move_spline.facing.target;
+
             uint8 guidMask[] = { 4, 3, 7, 2, 6, 1, 0, 5 };
-            data.WriteGuidMask(move_spline.facing.target, guidMask, 8);
+            data.WriteGuidMask(Guid, guidMask, 8);
         }
+
+        data.WriteBit(0);
+        data.WriteBits(0, 25);
     }
 
     void PacketBuilder::WriteData(const MoveSpline& move_spline, ByteBuffer& data)
@@ -171,10 +176,15 @@ namespace Movement
 
         data << move_spline.timePassed();
 
-        if (splineFlags.walkmode)
+        if (splineFlags.orientationFixed)
+            data << move_spline.facing.angle;
+
+        if (splineFlags.final_target)
         {
+            uint64 Guid = move_spline.facing.target;
+
             uint8 guidBytes[] = { 5, 3, 7, 1, 6, 4, 2, 0 };
-            data.WriteGuidBytes(move_spline.facing.target, guidBytes, 8, 0);
+            data.WriteGuidBytes(Guid, guidBytes, 8, 0);
         }
 
         for (uint32 i = 0; i < nodes; i++)
@@ -185,13 +195,12 @@ namespace Movement
         }
 
         if(splineFlags.flying)
-            data << move_spline.facing.f.z << move_spline.facing.f.y << move_spline.facing.f.x;
+            data << move_spline.facing.f.x << move_spline.facing.f.z << move_spline.facing.f.y;
 
-        data << float(0.f);
+        data << float(1.f);
         data << uint32(0);
 
-        if (splineFlags.orientationFixed)
-            data << move_spline.facing.angle;
+        data << move_spline.effect_start_time;
 
         data << float(1.f);
 

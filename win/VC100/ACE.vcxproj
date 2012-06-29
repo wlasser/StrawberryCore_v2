@@ -408,7 +408,7 @@
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Connection_Recycling_Strategy.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Containers.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Copy_Disabled.cpp" />
-    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Countdown_Time.cpp" />
+    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Countdown_Time_T.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Date_Time.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\DEV.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\DEV_Addr.cpp" />
@@ -428,6 +428,7 @@
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Encoding_Converter_Factory.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Event.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Event_Handler.cpp" />
+    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Event_Handler_Handle_Timeout_Upcall.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\FIFO.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\FIFO_Recv.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\FIFO_Recv_Msg.cpp" />
@@ -645,6 +646,7 @@
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Thread_Mutex.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Thread_Semaphore.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Throughput_Stats.cpp" />
+    <ClCompile Include="..\..\dep\ACE_wrappers\ace\Time_Policy.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Time_Value.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\Timeprobe.cpp" />
     <ClCompile Include="..\..\dep\ACE_wrappers\ace\TLI.cpp" />
@@ -812,7 +814,7 @@
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Containers_T.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Copy_Disabled.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\CORBA_macros.h" />
-    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Countdown_Time.h" />
+    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Countdown_Time_T.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Date_Time.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Default_Constants.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\DEV.h" />
@@ -836,6 +838,7 @@
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Env_Value_T.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Event.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Event_Handler.h" />
+    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Event_Handler_Handle_Timeout_Upcall.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Event_Handler_T.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\FIFO.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\FIFO_Recv.h" />
@@ -1220,6 +1223,7 @@
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Thread_Mutex.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Thread_Semaphore.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Throughput_Stats.h" />
+    <ClInclude Include="..\..\dep\ACE_wrappers\ace\Time_Policy.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Time_Value.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Timeprobe.h" />
     <ClInclude Include="..\..\dep\ACE_wrappers\ace\Timeprobe_T.h" />
@@ -1319,7 +1323,7 @@
     <None Include="..\..\dep\ACE_wrappers\ace\Configuration.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Containers.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Containers_T.inl" />
-    <None Include="..\..\dep\ACE_wrappers\ace\Countdown_Time.inl" />
+    <None Include="..\..\dep\ACE_wrappers\ace\Countdown_Time_T.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Date_Time.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\DEV.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\DEV_Addr.inl" />
@@ -1334,6 +1338,7 @@
     <None Include="..\..\dep\ACE_wrappers\ace\Env_Value_T.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Event.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Event_Handler.inl" />
+    <None Include="..\..\dep\ACE_wrappers\ace\Event_Handler_Handle_Timeout_Upcall.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Event_Handler_T.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\FIFO.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\FIFO_Recv.inl" />
@@ -1525,6 +1530,7 @@
     <None Include="..\..\dep\ACE_wrappers\ace\Thread_Manager.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Thread_Mutex.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Thread_Semaphore.inl" />
+    <None Include="..\..\dep\ACE_wrappers\ace\Time_Policy.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Time_Value.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Timeprobe.inl" />
     <None Include="..\..\dep\ACE_wrappers\ace\Timer_Queue_Adapters.inl" />
