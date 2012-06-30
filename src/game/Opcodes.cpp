@@ -350,4 +350,11 @@ void InitOpcodeTable()
     OPCODE(CMSG_GUILD_RANKS,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildRanksOpcode        );
     OPCODE(CMSG_GUILD_ADD_RANK,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildAddRankOpcode      );
     OPCODE(CMSG_GUILD_DEL_RANK,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildDelRankOpcode      );
+    OPCODE(CMSG_GUILD_ORDER_RANK,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildOrderRankOpcode    );
+    OPCODE(CMSG_GUILD_BANK_BUY_TAB,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildBankBuyTab         );
+    OPCODE(CMSG_GUILD_MOTD,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildMOTDOpcode         );
+    OPCODE(CMSG_GUILD_INFO_TEXT,              STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildInfoTextOpcode     );
+    OPCODE(CMSG_GUILD_LEAVE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildLeaveOpcode        );
+    OPCODE(SMSG_GUILD_BANK_LIST,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_CHAT_MESSAGE_GUILD,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMessagechatOpcode       );
 };

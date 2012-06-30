@@ -69,6 +69,11 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
         case CMSG_CHAT_MESSAGE_SAY:
             type = CHAT_MSG_SAY;
             break;
+        case CMSG_CHAT_MESSAGE_WHISPER:
+            type = CHAT_MSG_WHISPER;
+            break;
+        case CMSG_CHAT_MESSAGE_GUILD:
+            type = CHAT_MSG_GUILD;
     }
 
     if(type >= MAX_CHAT_MSG_TYPE)

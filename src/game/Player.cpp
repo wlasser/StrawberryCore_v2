@@ -81,8 +81,6 @@
 #define SKILL_PERM_BONUS(x)    int16(PAIR32_HIPART(x))
 #define MAKE_SKILL_BONUS(t, p) MAKE_PAIR32(t,p)
 
-#define MAKE_NEW_GUID(l, e, h)   uint64(uint64(l) | (uint64(e) << 24) | (uint64(h) << 48))//temp?
-
 enum CharacterFlags
 {
     CHARACTER_FLAG_NONE                 = 0x00000000,
@@ -11483,8 +11481,8 @@ void Player::SetInGuild (uint32 GuildId)
     if (GuildId != 0)
     {
         WorldPacket data7(SMSG_GUILD_INVITE);
-        data7 << uint64(MAKE_NEW_GUID(GuildId, 0, 0x1FF6));
-        SetUInt64Value(OBJECT_FIELD_DATA, MAKE_NEW_GUID(GuildId, 0, 0x1FF6));
+        data7 << uint64(GuildId);
+        SetUInt64Value(OBJECT_FIELD_DATA, uint64(GuildId));
         SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) | 0x00010000);
     }
     else

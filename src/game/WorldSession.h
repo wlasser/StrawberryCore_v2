@@ -580,9 +580,10 @@ class WorldSession
         void HandleGuildSetOfficerNoteOpcode(WorldPacket& recvPacket);
         void HandleGuildRankOpcode(WorldPacket& recvPacket);
         void HandleGuildRanksOpcode(WorldPacket& recvPacket);
+        void HandleGuildOrderRankOpcode(WorldPacket& recvPacket);
         void HandleGuildAddRankOpcode(WorldPacket& recvPacket);
         void HandleGuildDelRankOpcode(WorldPacket& recvPacket);
-        void HandleGuildChangeInfoTextOpcode(WorldPacket& recvPacket);
+        void HandleGuildInfoTextOpcode(WorldPacket& recvPacket);
         void HandleSaveGuildEmblemOpcode(WorldPacket& recvPacket);
 
         void HandleTaxiNodeStatusQueryOpcode(WorldPacket& recvPacket);

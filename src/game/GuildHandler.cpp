@@ -478,6 +478,8 @@ void WorldSession::HandleGuildMOTDOpcode(WorldPacket& recvPacket)
 
     std::string MOTD;
 
+    recvPacket.read_skip<uint16>();
+
     if (!recvPacket.empty())
         recvPacket >> MOTD;
     else
@@ -578,8 +580,9 @@ void WorldSession::HandleGuildSetOfficerNoteOpcode(WorldPacket& recvPacket)
 void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
 {
     std::string rankname;
-    uint32 rankId;
-    uint32 rights, MoneyPerDay;
+    uint8 unk;
+    uint32 rankId, oldrankId;
+    uint32 newrights, oldrights, MoneyPerDay;
 
     DEBUG_LOG("WORLD: Received CMSG_GUILD_RANK");
 
@@ -599,10 +602,8 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
     }
 
     recvPacket >> rankId;
-    recvPacket >> rights;
-    recvPacket >> rankname;
-    recvPacket >> MoneyPerDay;
-
+    recvPacket >> oldrights;
+    recvPacket >> newrights;
     for (int i = 0; i < GUILD_BANK_MAX_TABS; ++i)
     {
         uint32 BankRights;
@@ -612,16 +613,19 @@ void WorldSession::HandleGuildRankOpcode(WorldPacket& recvPacket)
         recvPacket >> BankSlotPerDay;
         guild->SetBankRightsAndSlots(rankId, uint8(i), uint16(BankRights & 0xFF), uint16(BankSlotPerDay), true);
     }
-
-    DEBUG_LOG("WORLD: Changed RankName to %s , Rights to 0x%.4X", rankname.c_str(), rights);
+    recvPacket >> MoneyPerDay;
+    recvPacket >> oldrankId;
+    recvPacket >> unk;
+    recvPacket >> rankname;
+    DEBUG_LOG("WORLD: Changed RankName to %s , Rights to 0x%.4X", rankname.c_str(), newrights);
 
     guild->SetBankMoneyPerDay(rankId, MoneyPerDay);
     guild->SetRankName(rankId, rankname);
 
     if (rankId == GR_GUILDMASTER)                           // prevent loss leader rights
-        rights = GR_RIGHT_ALL;
+        newrights = GR_RIGHT_ALL;
 
-    guild->SetRankRights(rankId, rights);
+    guild->SetRankRights(rankId, newrights);
 
     guild->Query(this);
     guild->Roster();                                        // broadcast for tab rights update
@@ -640,6 +644,16 @@ void WorldSession::HandleGuildRanksOpcode(WorldPacket& recvPacket)
         return;
     }
     SendGuildCommandResult(GUILD_CREATE_S, "", ERR_GUILD_PLAYER_NOT_IN_GUILD);    
+}
+
+void WorldSession::HandleGuildOrderRankOpcode(WorldPacket& recvPacket)
+{
+    DEBUG_LOG("WORLD: Received CMSG_GUILD_ORDER_RANK");
+
+    uint32 rankId;
+    uint8 pos;
+    recvPacket >> rankId;
+    recvPacket >> pos;
 }
 
 void WorldSession::HandleGuildAddRankOpcode(WorldPacket& recvPacket)
@@ -709,11 +723,12 @@ void WorldSession::SendGuildCommandResult(uint32 typecmd, const std::string& str
     DEBUG_LOG("WORLD: Sent (SMSG_GUILD_COMMAND_RESULT)");
 }
 
-void WorldSession::HandleGuildChangeInfoTextOpcode(WorldPacket& recvPacket)
+void WorldSession::HandleGuildInfoTextOpcode(WorldPacket& recvPacket)
 {
     DEBUG_LOG("WORLD: Received CMSG_GUILD_INFO_TEXT");
 
     std::string GINFO;
+    recvPacket.read_skip<uint16>();//Unk
     recvPacket >> GINFO;
 
     Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId());

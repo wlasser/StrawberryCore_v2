@@ -2403,12 +2403,12 @@ void Guild::MoveFromCharToBank( Player * pl, uint8 PlayerBag, uint8 PlayerSlot, 
     }
 }
 
-void Guild::BroadcastEvent(GuildEvents event, ObjectGuid guid, char const* str1 /*=NULL*/, char const* str2 /*=NULL*/, char const* str3 /*=NULL*/)
+void Guild::BroadcastEvent(GuildEvents guildEvent, ObjectGuid guid, char const* str1 /*=NULL*/, char const* str2 /*=NULL*/, char const* str3 /*=NULL*/)
 {
     uint8 strCount = !str1 ? 0 : (!str2 ? 1 : (!str3 ? 2 : 3));
 
-    WorldPacket data(SMSG_GUILD_EVENT, 1 + 1 + 1*strCount + (!guid ? 0 : 8));
-    data << uint8(event);
+    WorldPacket data(SMSG_GUILD_EVENT, 1 + 1 + strCount + (!guid ? 0 : 8));
+    data << uint8(guildEvent);
     data << uint8(strCount);
 
     if (str3)
