@@ -22,6 +22,7 @@
 
 #include "Common.h"
 #include "ByteBuffer.h"
+#include "Opcodes.h"
 
 // Note: m_opcode and size stored in platfom dependent format
 // ignore endianess until send, and converted at receive

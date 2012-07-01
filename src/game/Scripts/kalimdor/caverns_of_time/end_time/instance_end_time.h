@@ -7,6 +7,8 @@
 
 #define MAX_ENCOUNTER 5
 
+#include "pchdef.h"
+
 enum Data64
 {
     DATA_ECHO_BAINE,

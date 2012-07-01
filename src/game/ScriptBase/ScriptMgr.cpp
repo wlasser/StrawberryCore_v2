@@ -2,6 +2,7 @@
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
+#include "pchdef.h"
 #include "Config/Config.h"
 #include "Database/DatabaseEnv.h"
 #include "DBCStores.h"
@@ -15,7 +16,7 @@ typedef std::vector<Script*> SDScriptVec;
 int num_sc_scripts;
 SDScriptVec m_scripts;
 
-INSTANTIATE_SINGLETON_1(ScriptMgr);
+INSTANTIATE_SINGLETON_1( ScriptMgr );
 
 void FillSpellSummary();
 

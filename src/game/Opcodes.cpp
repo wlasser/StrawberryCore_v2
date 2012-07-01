@@ -21,6 +21,8 @@
     \ingroup u2w
 */
 
+#include "WorldSocketMgr.h"
+
 #include <ace/ACE.h>
 #include <ace/Log_Msg.h>
 #include <ace/Reactor.h>

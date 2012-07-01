@@ -44,6 +44,7 @@
 #include "Config/Config.h"
 #include "Database/DatabaseEnv.h"
 #include "WorldSocket.h"
+#include "Opcodes.h"
 
 /**
 * This is a helper class to WorldSocketMgr ,that manages
