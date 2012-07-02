@@ -1264,3 +1264,33 @@ void WorldSession::SendSaveGuildEmblem( uint32 msg )
     data << uint32(msg);                                    // not part of guild
     SendPacket( &data );
 }
+
+void WorldSession::HandleGuildRewardsListOpcode(WorldPacket& recv_data)
+{
+    uint32 GuildId = GetPlayer()->GetGuildId();
+    if (!GuildId)
+        return;
+    
+    recv_data.read_skip<uint32>();
+    
+    GuildRewardsVec const& rewards = sGuildMgr.GetGuildRewards();
+    if (rewards.empty())
+        return;
+
+    uint32 count = rewards.size();
+
+    WorldPacket data(SMSG_GUILD_REWARDS_LIST, 3+((4+4+8+4+4+4) * rewards.size())+4);
+    data.WriteBits(count, 21);
+
+    for (uint32 i = 0; i < count; i++)
+    {
+        data << uint32(rewards[i].standing);
+        data << uint32(rewards[i].races);
+        data << uint32(rewards[i].item);
+        data << uint64(rewards[i].price);
+        data << uint32(0);//always 0
+        data << uint32(rewards[i].achievement);
+    }
+    data << uint32(GuildId);
+    SendPacket(&data);
+}

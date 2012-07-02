@@ -26,24 +26,38 @@
 class Guild;
 class ObjectGuid;
 
+struct GuildRewardsEntry
+{
+    uint32 item;
+    uint32 price;
+    uint32 achievement;
+    uint32 standing;
+    uint32 races;
+};
+typedef std::vector<GuildRewardsEntry> GuildRewardsVec;
+
 class GuildMgr
 {
-        typedef UNORDERED_MAP<uint32, Guild*> GuildMap;
+    typedef UNORDERED_MAP<uint32, Guild*> GuildMap;
+    
+    GuildMap m_GuildMap;
+    GuildRewardsVec  mGuildRewards;
 
-        GuildMap m_GuildMap;
-    public:
-        GuildMgr();
-        ~GuildMgr();
-
-        void AddGuild(Guild* guild);
-        void RemoveGuild(uint32 guildId);
-
-        Guild* GetGuildById(uint32 guildId) const;
-        Guild* GetGuildByName(std::string const& name) const;
-        Guild* GetGuildByLeader(ObjectGuid const& guid) const;
-        std::string GetGuildNameById(uint32 guildId) const;
-
-        void LoadGuilds();
+public:
+    GuildMgr();
+    ~GuildMgr();
+    
+    void AddGuild(Guild* guild);
+    void RemoveGuild(uint32 guildId);
+    
+    Guild* GetGuildById(uint32 guildId) const;
+    Guild* GetGuildByName(std::string const& name) const;
+    Guild* GetGuildByLeader(ObjectGuid const& guid) const;
+    std::string GetGuildNameById(uint32 guildId) const;
+    GuildRewardsVec const& GetGuildRewards() { return mGuildRewards; }
+    
+    void LoadGuilds();
+    void LoadGuildRewards();    
 };
 
 #define sGuildMgr Strawberry::Singleton<GuildMgr>::Instance()

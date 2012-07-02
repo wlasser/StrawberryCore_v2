@@ -700,47 +700,31 @@ void Guild::SetRankRights(uint32 rankId, uint32 rights)
 
 void Guild::SendGuildRankInfo(WorldSession* session)
 {
-    WorldPacket data7(SMSG_GUILD_RANKS);
+    WorldPacket data(SMSG_GUILD_RANKS);
 
     uint32 count = m_Ranks.size();
-    data7.WriteBits(count, 18);
+    data.WriteBits(count, 18);
     for (uint32 k = 0; k < count; k++)
-        data7.WriteBits(m_Ranks[k].Name.length(), 7);
+        data.WriteBits(m_Ranks[k].Name.length(), 7);
 
     for (uint32 i = 0; i < count; i++)
     {
-        if (i == 0)
+        data << uint32(i);//Creation Order
+        for (uint32 j = 0; j < GUILD_BANK_MAX_TABS; ++j)
         {
-            data7 << uint32(0);
-            for (uint32 j = 0; j < GUILD_BANK_MAX_TABS; ++j)
-            {
-                data7 << uint32(0xFFFFFFFF);
-                data7 << uint32(0xFFFFFFFF);
-            }
-            data7 << uint32(0xFFFFFFFF);
-            data7 << uint32(14548927);
-            data7.append(m_Ranks[i].Name.c_str(), m_Ranks[i].Name.size());
-            data7 << uint32(i);
+            data << uint32(m_Ranks[i].TabSlotPerDay[j]);
+            data << uint32(m_Ranks[i].TabRight[j]);
         }
-        else
-        {
-            data7 << uint32(i);//Creation Order
-            for (uint32 j = 0; j < GUILD_BANK_MAX_TABS; ++j)
-            {
-                data7 << uint32(m_Ranks[i].TabSlotPerDay[j]);
-                data7 << uint32(m_Ranks[i].TabRight[j]);
-            }
-            data7 << uint32(m_Ranks[i].BankMoneyPerDay);
-            data7 << uint32(m_Ranks[i].Rights);
-            data7.append(m_Ranks[i].Name.c_str(), m_Ranks[i].Name.size());
-            data7 << uint32(i);
-        }
+        data << uint32(m_Ranks[i].BankMoneyPerDay);
+        data << uint32(m_Ranks[i].Rights);
+        data.append(m_Ranks[i].Name.c_str(), m_Ranks[i].Name.size());
+        data << uint32(i);//order
     }
 
     if (session)
-        session->SendPacket(&data7);
+        session->SendPacket(&data);
     else
-        BroadcastPacket(&data7);
+        BroadcastPacket(&data);
 }
 
 /**
@@ -2106,7 +2090,6 @@ void Guild::SwapItems(Player * pl, uint8 BankTab, uint8 BankTabSlot, uint8 BankT
         DisplayGuildBankContentUpdate(BankTabDst, BankTabSlotDst);
 }
 
-
 void Guild::MoveFromBankToChar( Player * pl, uint8 BankTab, uint8 BankTabSlot, uint8 PlayerBag, uint8 PlayerSlot, uint32 SplitedAmount)
 {
     Item *pItemBank = GetItem(BankTab, BankTabSlot);
@@ -2253,7 +2236,6 @@ void Guild::MoveFromBankToChar( Player * pl, uint8 BankTab, uint8 BankTabSlot, u
     }
     DisplayGuildBankContentUpdate(BankTab, BankTabSlot);
 }
-
 
 void Guild::MoveFromCharToBank( Player * pl, uint8 PlayerBag, uint8 PlayerSlot, uint8 BankTab, uint8 BankTabSlot, uint32 SplitedAmount )
 {
@@ -2462,3 +2444,5 @@ bool GuildItemPosCount::isContainedIn(GuildItemPosCountVec const &vec) const
 
     return false;
 }
+
+//Rewards
