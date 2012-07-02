@@ -72,6 +72,7 @@ void WorldSession::HandleGuildInviteOpcode(WorldPacket& recvPacket)
     std::string Invitedname, plname;
     Player * player = NULL;
 
+    recvPacket.read_skip<uint8>();
     recvPacket >> Invitedname;
 
     if(normalizePlayerName(Invitedname))

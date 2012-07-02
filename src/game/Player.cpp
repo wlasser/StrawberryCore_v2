@@ -11480,8 +11480,8 @@ void Player::SetInGuild (uint32 GuildId)
     m_guildId = GuildId;
     if (GuildId != 0)
     {
-        WorldPacket data7(SMSG_GUILD_INVITE);
-        data7 << uint64(GuildId);
+        WorldPacket data(SMSG_GUILD_INVITE);
+        data << uint64(GuildId);
         SetUInt64Value(OBJECT_FIELD_DATA, uint64(GuildId));
         SetUInt32Value(OBJECT_FIELD_TYPE, GetUInt32Value(OBJECT_FIELD_TYPE) | 0x00010000);
     }

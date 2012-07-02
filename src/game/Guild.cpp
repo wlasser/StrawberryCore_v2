@@ -774,7 +774,7 @@ void Guild::Disband()
     sGuildMgr.RemoveGuild(m_Id);
 }
 
-void Guild::Roster(WorldSession *session /*= NULL*/)
+void Guild::Roster(WorldSession *session)
 {                                                            // we can only guess size
     WorldPacket data(SMSG_GUILD_ROSTER, (4+MOTD.length()+1+GINFO.length()+1+4+m_Ranks.size()*(4+4+GUILD_BANK_MAX_TABS*(4+4))+members.size()*50));
     data << uint32(members.size());
