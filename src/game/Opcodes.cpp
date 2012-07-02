@@ -359,4 +359,6 @@ void InitOpcodeTable()
     OPCODE(CMSG_GUILD_LEAVE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildLeaveOpcode        );
     OPCODE(SMSG_GUILD_BANK_LIST,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_CHAT_MESSAGE_GUILD,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMessagechatOpcode       );
+    OPCODE(CMSG_GUILD_REWARDS_LIST,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildRewardsListOpcode  );
+    OPCODE(SMSG_GUILD_REWARDS_LIST,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 };

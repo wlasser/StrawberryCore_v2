@@ -165,3 +165,44 @@ void GuildMgr::LoadGuilds()
     sLog.outString();
     sLog.outString(">> Loaded %u guild definitions", count);
 }
+
+void GuildMgr::LoadGuildRewards()
+{
+    uint32 count = 0;
+
+    QueryResult* result = WorldDatabase.Query("SELECT item_entry,price,achievement,standing,races FROM guild_rewards ORDER BY achievement ASC");
+
+    if (!result)
+    {
+        BarGoLink bar(1);
+
+        bar.step();
+
+        sLog.outString();
+        sLog.outString(">> Loaded %u guild reward definitions", count);
+        return;
+    }
+    BarGoLink bar(result->GetRowCount());
+    
+    do
+    {
+        Field *fields = result->Fetch();
+
+        bar.step();
+
+        GuildRewardsEntry reward;
+        reward.item        = fields[0].GetUInt32();
+        reward.price       = fields[1].GetUInt32();
+        reward.achievement = fields[2].GetUInt32();
+        reward.standing    = fields[3].GetUInt32();
+        reward.races       = fields[4].GetUInt32();
+        mGuildRewards.push_back(reward);
+
+        ++count;
+    } while(result->NextRow());
+
+    delete result;
+    
+    sLog.outString();
+    sLog.outString(">> Loaded %u guild reward definitions", count);
+}

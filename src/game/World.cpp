@@ -1272,6 +1272,9 @@ void World::SetInitialWorldSettings()
     sLog.outString( "Loading Guilds..." );
     sGuildMgr.LoadGuilds();
 
+    sLog.outString( "Loading Guild Rewards...");
+    sGuildMgr.LoadGuildRewards();
+
     sLog.outString( "Loading ArenaTeams..." );
     sObjectMgr.LoadArenaTeams();
 
