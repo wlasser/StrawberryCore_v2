@@ -349,7 +349,61 @@ pAuraProcHandler AuraProcHandler[TOTAL_AURAS]=
     &Unit::HandleNULLProc,                                  //313 0 spells in 3.3
     &Unit::HandleNULLProc,                                  //314 1 test spell (reduce duration of silince/magic)
     &Unit::HandleNULLProc,                                  //315 underwater walking
-    &Unit::HandleNULLProc                                   //316 makes haste affect HOT/DOT ticks
+    &Unit::HandleNULLProc,                                  //316 makes haste affect HOT/DOT ticks
+    &Unit::HandleNULLProc,                                  //317 Unknown
+    &Unit::HandleNULLProc,                                  //318 Unknown
+    &Unit::HandleNULLProc,                                  //319 Unknown
+    &Unit::HandleNULLProc,                                  //320 Unknown
+    &Unit::HandleNULLProc,                                  //321 Unknown
+    &Unit::HandleNULLProc,                                  //322 Unknown
+    &Unit::HandleNULLProc,                                  //323 Unknown
+    &Unit::HandleNULLProc,                                  //324 Unknown
+    &Unit::HandleNULLProc,                                  //325 Unknown
+    &Unit::HandleNULLProc,                                  //326 Unknown
+    &Unit::HandleNULLProc,                                  //327 Unknown
+    &Unit::HandleNULLProc,                                  //328 Unknown
+    &Unit::HandleNULLProc,                                  //328 Unknown
+    &Unit::HandleNULLProc,                                  //329 Unknown
+    &Unit::HandleNULLProc,                                  //330 Unknown
+    &Unit::HandleNULLProc,                                  //331 Unknown
+    &Unit::HandleNULLProc,                                  //332 Unknown
+    &Unit::HandleNULLProc,                                  //333 Unknown
+    &Unit::HandleNULLProc,                                  //334 Unknown
+    &Unit::HandleNULLProc,                                  //335 Unknown
+    &Unit::HandleNULLProc,                                  //336 Unknown
+    &Unit::HandleNULLProc,                                  //337 Unknown
+    &Unit::HandleNULLProc,                                  //338 Unknown
+    &Unit::HandleNULLProc,                                  //339 Unknown
+    &Unit::HandleNULLProc,                                  //340 Unknown
+    &Unit::HandleNULLProc,                                  //341 Unknown
+    &Unit::HandleNULLProc,                                  //342 Unknown
+    &Unit::HandleNULLProc,                                  //343 Unknown
+    &Unit::HandleNULLProc,                                  //344 Unknown
+    &Unit::HandleNULLProc,                                  //345 Unknown
+    &Unit::HandleNULLProc,                                  //346 Unknown
+    &Unit::HandleNULLProc,                                  //348 Unknown
+    &Unit::HandleNULLProc,                                  //349 Unknown
+    &Unit::HandleNULLProc,                                  //350 Unknown
+    &Unit::HandleNULLProc,                                  //351 Unknown
+    &Unit::HandleNULLProc,                                  //352 Unknown
+    &Unit::HandleNULLProc,                                  //353 Unknown
+    &Unit::HandleNULLProc,                                  //354 Unknown
+    &Unit::HandleNULLProc,                                  //355 Unknown
+    &Unit::HandleNULLProc,                                  //356 Unknown
+    &Unit::HandleNULLProc,                                  //357 Unknown
+    &Unit::HandleNULLProc,                                  //358 Unknown
+    &Unit::HandleNULLProc,                                  //359 Unknown
+    &Unit::HandleNULLProc,                                  //360 Unknown
+    &Unit::HandleNULLProc,                                  //361 Unknown
+    &Unit::HandleNULLProc,                                  //362 Unknown
+    &Unit::HandleNULLProc,                                  //363 Unknown
+    &Unit::HandleNULLProc,                                  //364 Unknown
+    &Unit::HandleNULLProc,                                  //365 Unknown
+    &Unit::HandleNULLProc,                                  //366 Unknown
+    &Unit::HandleNULLProc,                                  //367 Unknown
+    &Unit::HandleNULLProc,                                  //368 Unknown
+    &Unit::HandleNULLProc,                                  //369 Unknown
+    &Unit::HandleNULLProc                                   //370 Unknown
 };
 
 bool Unit::IsTriggeredAtSpellProcEvent(Unit *pVictim, SpellAuraHolder* holder, SpellEntry const* procSpell, uint32 procFlag, uint32 procExtra, WeaponAttackType attType, bool isVictim, SpellProcEventEntry const*& spellProcEvent )

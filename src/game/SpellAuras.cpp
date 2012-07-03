@@ -366,7 +366,61 @@ pAuraHandler AuraHandler[TOTAL_AURAS]=
     &Aura::HandleNULL,                                      //313 0 spells in 3.3
     &Aura::HandleNULL,                                      //314 1 test spell (reduce duration of silince/magic)
     &Aura::HandleNULL,                                      //315 underwater walking
-    &Aura::HandleNULL                                       //316 makes haste affect HOT/DOT ticks
+    &Aura::HandleNULL,                                      //316 makes haste affect HOT/DOT ticks
+    &Aura::HandleNULL,                                      //317 9 spells in 4.3
+    &Aura::HandleNULL,                                      //318 12 spells in 4.3
+    &Aura::HandleNULL,                                      //319 40 spells in 4.3
+    &Aura::HandleNULL,                                      //320 2 spells in 4.3
+    &Aura::HandleNULL,                                      //321 1 spells in 4.3
+    &Aura::HandleNULL,                                      //322 5 spells in 4.3
+    &Aura::HandleNULL,                                      //323 0 spells in 4.3
+    &Aura::HandleNULL,                                      //324 2 spells in 4.3
+    &Aura::HandleNULL,                                      //325 0 spells in 4.3
+    &Aura::HandleNULL,                                      //326 20 spells in 4.3
+    &Aura::HandleNULL,                                      //327 0 spells in 3.3
+    &Aura::HandleNULL,                                      //328 0 spells in 3.3
+    &Aura::HandleNULL,                                      //329 0 spells in 3.3
+    &Aura::HandleNULL,                                      //330 0 spells in 3.3
+    &Aura::HandleNULL,                                      //331 0 spells in 3.3
+    &Aura::HandleNULL,                                      //332 0 spells in 3.3
+    &Aura::HandleNULL,                                      //333 0 spells in 3.3
+    &Aura::HandleNULL,                                      //334 0 spells in 3.3
+    &Aura::HandleNULL,                                      //335 0 spells in 3.3
+    &Aura::HandleNULL,                                      //336 0 spells in 3.3
+    &Aura::HandleNULL,                                      //337 0 spells in 3.3
+    &Aura::HandleNULL,                                      //338 0 spells in 3.3
+    &Aura::HandleNULL,                                      //339 0 spells in 3.3
+    &Aura::HandleNULL,                                      //340 0 spells in 3.3
+    &Aura::HandleNULL,                                      //341 0 spells in 3.3
+    &Aura::HandleNULL,                                      //342 0 spells in 3.3
+    &Aura::HandleNULL,                                      //343 0 spells in 3.3
+    &Aura::HandleNULL,                                      //344 0 spells in 3.3
+    &Aura::HandleNULL,                                      //345 0 spells in 3.3
+    &Aura::HandleNULL,                                      //346 0 spells in 3.3
+    &Aura::HandleNULL,                                      //347 0 spells in 3.3
+    &Aura::HandleNULL,                                      //348 0 spells in 3.3
+    &Aura::HandleNULL,                                      //349 0 spells in 3.3
+    &Aura::HandleNULL,                                      //350 0 spells in 3.3
+    &Aura::HandleNULL,                                      //351 0 spells in 3.3
+    &Aura::HandleNULL,                                      //352 0 spells in 3.3
+    &Aura::HandleNULL,                                      //353 0 spells in 3.3
+    &Aura::HandleNULL,                                      //354 0 spells in 3.3
+    &Aura::HandleNULL,                                      //355 0 spells in 3.3
+    &Aura::HandleNULL,                                      //356 0 spells in 3.3
+    &Aura::HandleNULL,                                      //357 0 spells in 3.3
+    &Aura::HandleNULL,                                      //358 0 spells in 3.3
+    &Aura::HandleNULL,                                      //359 0 spells in 3.3
+    &Aura::HandleNULL,                                      //360 0 spells in 3.3
+    &Aura::HandleNULL,                                      //361 0 spells in 3.3
+    &Aura::HandleNULL,                                      //362 0 spells in 3.3
+    &Aura::HandleNULL,                                      //363 0 spells in 3.3
+    &Aura::HandleNULL,                                      //364 0 spells in 3.3
+    &Aura::HandleNULL,                                      //365 0 spells in 3.3
+    &Aura::HandleNULL,                                      //366 0 spells in 3.3
+    &Aura::HandleNULL,                                      //367 0 spells in 3.3
+    &Aura::HandleNULL,                                      //368 0 spells in 3.3
+    &Aura::HandleNULL,                                      //369 0 spells in 3.3
+    &Aura::HandleNULL                                       //370 0 spells in 3.3
 };
 
 static AuraType const frozenAuraTypes[] = { SPELL_AURA_MOD_ROOT, SPELL_AURA_MOD_STUN, SPELL_AURA_NONE };
