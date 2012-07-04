@@ -20,11 +20,11 @@
 #include "BattlefieldMgr.h"
 #include "DBCStores.h"
 
-Battlefield::Battlefield(uint8 BattleId,uint32 WarTime,uint32 NoWarTime)
+Battlefield::Battlefield(uint8 BattleId)
 {
     m_battleId = BattleId;
     m_zoneId = sWorldPvPAreaStore.LookupEntry(BattleId)->ZoneId;
-    if(m_zoneId < 5000)
+    if(BattleId == BATTLEFIELD_WG)
     {
         m_map = sMapMgr.FindMap(571);
     }
@@ -39,13 +39,9 @@ Battlefield::Battlefield(uint8 BattleId,uint32 WarTime,uint32 NoWarTime)
     }
 
     m_battleInProgress = false;
-
-    OnBattlefieldCreated();
 }
 Battlefield::~Battlefield()
 {
-    BeforeBattlefieldDeleted();
-
     for(uint8 i = 0; i < MAX_TEAM; ++i)
     {
         delete m_raidGroup[i];
@@ -67,4 +63,6 @@ void Battlefield::Update(uint32 uiDiff)
         else 
             m_nextBattleTimer -= uiDiff;
     }
+
+    OnUpdate(uiDiff);
 }

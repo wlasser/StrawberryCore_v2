@@ -18,6 +18,7 @@
 
 #include "pchdef.h"
 #include "BattlefieldMgr.h"
+#include "BattlefieldWG.h"
 
 INSTANTIATE_SINGLETON_1(BattlefieldMgr);
 
@@ -36,8 +37,7 @@ void BattlefieldMgr::Initialize()
 {
     sLog.outDebug("Creating Battlefields");
 
-    Battlefield * wintergrasp = new Battlefield(BATTLEFIELD_WG,5000000,5000000);
-    m_battlefieldList[BATTLEFIELD_WG] = wintergrasp;
+    m_battlefieldList[BATTLEFIELD_WG] = new BattlefieldWG();
 }
 
 void BattlefieldMgr::Update(uint32 uiDiff)

@@ -48,7 +48,7 @@ class Battlefield
 
     public:
 
-        Battlefield(uint8 BattleId,uint32 WarTime,uint32 NoWarTime);
+        Battlefield(uint8 BattleId);
         ~Battlefield();
         
         void Update(uint32 uiDiff);
@@ -75,12 +75,6 @@ class Battlefield
 
     protected:
         // Battlefield API
-
-        //Called on creation of the battlefield
-        virtual void OnBattlefieldCreated();
-
-        //Called before deleting the battlefield
-        virtual void BeforeBattlefieldDeleted();
 
         //Called before battle has started
         virtual void BeforeBattleStarted();

@@ -22,7 +22,7 @@
 
 void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
 {
-    uint64 playerGuid = 0;
+    uint64 battlefieldGuid = 0;
     bool canJoin = false;
 
     BitStream mask = recv_data.ReadBitStream(8);
@@ -38,13 +38,8 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
     if (mask[7]) bytes[5] = recv_data.ReadUInt8() ^ 1;
     if (mask[0]) bytes[0] = recv_data.ReadUInt8() ^ 1;
 
-    playerGuid = BitConverter::ToUInt64(bytes);
-    //ObjectGuid playerGuid;
-    //recv_data >> playerGuid.ReadAsPacked();
-    sLog.outDebug( "Player with guid: %u ", playerGuid);
-    //Player * plr = ObjectAccessor::FindPlayer((ObjectGuid)playerGuid);
-    /*if(plr->HasFreeBattleGroundQueueId())
-        canJoin = true;*/
+    battlefieldGuid = BitConverter::ToUInt64(bytes);
+    sLog.outDebug( "Player with guid: %u ", battlefieldGuid);
+    
 
-   //sBattlefieldMgr.SendQueueRequestResponse(plr,canJoin);
 }
