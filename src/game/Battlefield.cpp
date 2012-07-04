@@ -17,36 +17,54 @@
  */
 
 #include "Battlefield.h"
+#include "BattlefieldMgr.h"
+#include "DBCStores.h"
 
-Battlefield::Battlefield(uint8 BattleId,uint32 zoneId, uint32 WarTime,uint32 NoWarTime)
+Battlefield::Battlefield(uint8 BattleId,uint32 WarTime,uint32 NoWarTime)
 {
     m_battleId = BattleId;
-    m_zoneId = zoneId;
-    m_nextBattleTimer = NoWarTime;
-    m_battleDurationTimer = WarTime;
-}
+    m_zoneId = sWorldPvPAreaStore.LookupEntry(BattleId)->ZoneId;
+    if(m_zoneId < 5000)
+    {
+        m_map = sMapMgr.FindMap(571);
+    }
+    else
+    {
+        m_map = sMapMgr.FindMap(732);
+    }
 
+    for(uint8 i = 0; i < MAX_TEAM; ++i)
+    {
+        m_raidGroup[i] = new Group();
+    }
+
+    m_battleInProgress = false;
+
+    OnBattlefieldCreated();
+}
 Battlefield::~Battlefield()
 {
+    BeforeBattlefieldDeleted();
 
+    for(uint8 i = 0; i < MAX_TEAM; ++i)
+    {
+        delete m_raidGroup[i];
+    }
 }
 
 void Battlefield::Update(uint32 uiDiff)
 {
-
-}
-
-void Battlefield::InvitePlayersInZone()
-{
-    Map::PlayerList playersInMap = sMapMgr.FindMap(571)->GetPlayers();
-    for(Map::PlayerList::iterator itr = playersInMap.begin(); itr != playersInMap.end(); ++itr)
+    if(m_battleInProgress)
     {
-        Player* plr = (*itr).getSource();
-        uint16 team = plr->GetTeam();
-        if((team == ALLIANCE && (uint32)m_queuedPlayers[TEAM_ALLIANCE].size() <= 40) || (team == ALLIANCE && (uint32)m_queuedPlayers[TEAM_ALLIANCE].size() <= 40))
-        {
-            sBattlefieldMgr.SendInvitePlayerToQueue(plr);
-        }
-    }
 
+    }
+    else
+    {
+        if(m_nextBattleTimer <= uiDiff)
+        {
+
+        }
+        else 
+            m_nextBattleTimer -= uiDiff;
+    }
 }

@@ -42,28 +42,28 @@ typedef char const* const* DBCString;                       //char* DBCStrings[M
 
 struct AchievementEntry
 {
-    uint32    ID;                                           // 0        m_ID
-    uint32    factionFlag;                                  // 1        m_faction -1=all, 0=horde, 1=alliance
-    uint32    mapID;                                        // 2        m_instance_id -1=none
-    //uint32 parentAchievement;                             // 3        m_supercedes its Achievement parent (can`t start while parent uncomplete, use its Criteria if don`t have own, use its progress on begin)
-    DBCString name;                                         // 4        m_title_lang
-    //char *description;                                    // 5        m_description_lang
-    uint32    categoryId;                                   // 6        m_category
-    uint32    points;                                       // 7        m_points
-    //uint32 OrderInCategory;                               // 8        m_ui_order
-    uint32    flags;                                        // 9        m_flags
-    //uint32    icon;                                       // 10       m_iconID
-    //char *titleReward;                                    // 11       m_reward_lang
-    uint32 count;                                           // 12       m_minimum_criteria - need this count of completed criterias (own or referenced achievement criterias)
-    uint32 refAchievement;                                  // 13       m_shares_criteria - referenced achievement (counting of all completed criterias)
+    uint32      ID;                                           // 0        m_ID
+    uint32      factionFlag;                                  // 1        m_faction -1=all, 0=horde, 1=alliance
+    uint32      mapID;                                        // 2        m_instance_id -1=none
+    uint32      parentAchievement;                            // 3        m_supercedes its Achievement parent (can`t start while parent uncomplete, use its Criteria if don`t have own, use its progress on begin)
+    DBCString   name;                                         // 4        m_title_lang
+    DBCString   description;                                  // 5        m_description_lang
+    uint32      categoryId;                                   // 6        m_category
+    uint32      points;                                       // 7        m_points
+    uint32      OrderInCategory;                              // 8        m_ui_order
+    uint32      flags;                                        // 9        m_flags
+    uint32      icon;                                         // 10       m_iconID
+    DBCString   titleReward;                                 // 11       m_reward_lang
+    uint32      count;                                        // 12       m_minimum_criteria - need this count of completed criterias (own or referenced achievement criterias)
+    uint32      refAchievement;                               // 13       m_shares_criteria - referenced achievement (counting of all completed criterias)
 };
 
 struct AchievementCategoryEntry
 {
     uint32    ID;                                           // 0        m_ID
     uint32    parentCategory;                               // 1        m_parent -1 for main category
-    //char *name;                                           // 2        m_name_lang
-    //uint32    sortOrder;                                  // 3        m_ui_order
+    DBCString name;                                           // 2        m_name_lang
+    uint32    sortOrder;                                  // 3        m_ui_order
 };
 
 struct AchievementCriteriaEntry
@@ -1253,26 +1253,26 @@ struct MailTemplateEntry
 
 struct MapEntry
 {
-    uint32  MapID;                                          // 0        m_ID
-    //char*       internalname;                             // 1        m_Directory
-    uint32  map_type;                                       // 2        m_InstanceType
-    //uint32 mapFlags;                                      // 3        m_Flags (0x100 - CAN_CHANGE_PLAYER_DIFFICULTY)
-    //uint32 unk4;                                          // 4 4.0.1
-    //uint32 isPvP;                                         // 5        m_PVP 0 or 1 for battlegrounds (not arenas)
-    DBCString name;                                         // 6        m_MapName_lang
-    uint32  linked_zone;                                    // 7        m_areaTableID
-    //char*     hordeIntro;                                 // 8        m_MapDescription0_lang
-    //char*     allianceIntro;                              // 9        m_MapDescription1_lang
-    uint32  multimap_id;                                    // 10       m_LoadingScreenID (LoadingScreens.dbc)
-    //float   BattlefieldMapIconScale;                      // 11       m_minimapIconScale
-    int32   ghost_entrance_map;                             // 12       m_corpseMapID map_id of entrance map in ghost mode (continent always and in most cases = normal entrance)
-    float   ghost_entrance_x;                               // 13       m_corpseX entrance x coordinate in ghost mode  (in most cases = normal entrance)
-    float   ghost_entrance_y;                               // 14       m_corpseY entrance y coordinate in ghost mode  (in most cases = normal entrance)
-    //uint32  timeOfDayOverride;                            // 15       m_timeOfDayOverride
-    uint32  addon;                                          // 16       m_expansionID
-    //uint32 unkTime;                                       // 17       m_raidOffset
-    //uint32 maxPlayers;                                    // 18       m_maxPlayers
-    uint32 NextPhaseMap;                                    // 19 - MapId for next phase.
+    uint32      MapID;                                          // 0        m_ID
+    DBCString   internalname;                                   // 1        m_Directory
+    uint32      map_type;                                       // 2        m_InstanceType
+    uint32      mapFlags;                                       // 3        m_Flags (0x100 - CAN_CHANGE_PLAYER_DIFFICULTY)
+    uint32      unk4;                                           // 4 4.0.1
+    uint32      isPvP;                                          // 5        m_PVP 0 or 1 for battlegrounds (not arenas)
+    DBCString   name;                                           // 6        m_MapName_lang
+    uint32      linked_zone;                                    // 7        m_areaTableID
+    DBCString   hordeIntro;                                     // 8        m_MapDescription0_lang
+    DBCString   allianceIntro;                                  // 9        m_MapDescription1_lang
+    uint32      multimap_id;                                    // 10       m_LoadingScreenID (LoadingScreens.dbc)
+    float       BattlefieldMapIconScale;                        // 11       m_minimapIconScale
+    int32       ghost_entrance_map;                             // 12       m_corpseMapID map_id of entrance map in ghost mode (continent always and in most cases = normal entrance)
+    float       ghost_entrance_x;                               // 13       m_corpseX entrance x coordinate in ghost mode  (in most cases = normal entrance)
+    float       ghost_entrance_y;                               // 14       m_corpseY entrance y coordinate in ghost mode  (in most cases = normal entrance)
+    uint32      timeOfDayOverride;                              // 15       m_timeOfDayOverride
+    uint32      addon;                                          // 16       m_expansionID
+    uint32      unkTime;                                        // 17       m_raidOffset
+    uint32      maxPlayers;                                     // 18       m_maxPlayers
+    uint32      NextPhaseMap;                                   // 19 - MapId for next phase.
 
     // Helpers
     uint32 Expansion() const { return addon; }
@@ -1302,13 +1302,13 @@ struct MapEntry
 
 struct MapDifficultyEntry
 {
-    //uint32      Id;                                       // 0        m_ID
+    uint32      Id;                                         // 0        m_ID
     uint32      MapId;                                      // 1        m_mapID
     uint32      Difficulty;                                 // 2        m_difficulty (for arenas: arena slot)
-    //char*       areaTriggerText;                          // 3        m_message_lang (text showed when transfer to map failed)
+    DBCString   areaTriggerText;                            // 3        m_message_lang (text showed when transfer to map failed)
     uint32      resetTime;                                  // 4,       m_raidDuration in secs, 0 if no fixed reset time
     uint32      maxPlayers;                                 // 5,       m_maxPlayers some heroic versions have 0 when expected same amount as in normal version
-    //char*       difficultyString;                         // 6        m_difficultystring
+    DBCString   difficultyString;                           // 6        m_difficultystring
 };
 
 struct MovieEntry
@@ -1540,12 +1540,12 @@ struct SkillLineAbilityEntry
 
 struct SoundEntriesEntry
 {
-    uint32    Id;                                           // 0        m_ID
-    //uint32    Type;                                       // 1        m_soundType
-    //char*     InternalName;                               // 2        m_name
-    //char*     FileName[10];                               // 3-12     m_File[10]
-    //uint32    Unk13[10];                                  // 13-22    m_Freq[10]
-    //char*     Path;                                       // 23       m_DirectoryBase
+    uint32          Id;                                     // 0        m_ID
+    uint32          Type;                                   // 1        m_soundType
+    DBCString       InternalName;                           // 2        m_name
+    DBCString       FileName[10];                           // 3-12     m_File[10]
+    DBCString       Unk13[10];                              // 13-22    m_Freq[10]
+    DBCString       Path;                                   // 23       m_DirectoryBase
                                                             // 24       m_volumeFloat
                                                             // 25       m_flags
                                                             // 26       m_minDistance
@@ -2328,6 +2328,17 @@ struct WorldSafeLocsEntry
     float     y;                                            // 3        m_locY
     float     z;                                            // 4        m_locZ
     //char*   name;                                         // 5        m_AreaName_lang
+};
+
+struct WorldPvPAreaEntry
+{
+    uint32      Id;                                         // 0 m_battlefieldId
+    uint32      ZoneId;                                     // 1 m_zoneId
+    uint32      NoWarTimeState;                             // 2 m_noWarTimeState
+    uint32      WarTimeState;                               // 3 m_warTimeState
+    uint32      ukn1;                                       // 4 m_unk1 not known yet, both 900
+    uint32      minLevel;                                   // 5 m_minLevel
+    uint32      ukn2;                                       // 6 m_unk2
 };
 
 // GCC have alternative #pragma pack() syntax and old gcc version not support pack(pop), also any gcc version not support it at some platform

@@ -72,6 +72,7 @@ enum HighGuid
     HIGHGUID_VEHICLE        = 0xF15,                        // blizz F15/F55
     HIGHGUID_DYNAMICOBJECT  = 0xF10,                        // blizz F10/F50
     HIGHGUID_CORPSE         = 0xF50,                        // blizz F10/F50 used second variant to resolve conflict with HIGHGUID_DYNAMICOBJECT
+    HIGHGUID_BATTLEFIELD    = 0x1F1,                        // used ONLY for battlefields (WG/TB)
     HIGHGUID_MO_TRANSPORT   = 0x1FC,                        // blizz 1FC (for GAMEOBJECT_TYPE_MO_TRANSPORT)
     HIGHGUID_INSTANCE       = 0x1F4,                        // blizz 1F4
     HIGHGUID_GROUP          = 0x1F5,                        // blizz 1F5
@@ -144,6 +145,7 @@ class ObjectGuid
         bool IsMOTransport()       const { return GetHigh() == HIGHGUID_MO_TRANSPORT;         }
         bool IsInstance()          const { return GetHigh() == HIGHGUID_INSTANCE;             }
         bool IsGroup()             const { return GetHigh() == HIGHGUID_GROUP;                }
+        bool IsBattlefield()       const { return GetHigh() == HIGHGUID_BATTLEFIELD;          }
 
         static TypeID GetTypeId(HighGuid high)
         {
@@ -190,6 +192,7 @@ class ObjectGuid
                 case HIGHGUID_MO_TRANSPORT:
                 case HIGHGUID_INSTANCE:
                 case HIGHGUID_GROUP:
+                case HIGHGUID_BATTLEFIELD:
                     return false;
                 case HIGHGUID_GAMEOBJECT:
                 case HIGHGUID_TRANSPORT:

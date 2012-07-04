@@ -20,7 +20,7 @@
 #ifndef STRAWBERRY_DBCSFRM_H
 #define STRAWBERRY_DBCSFRM_H
 
-const char Achievementfmt[]="niixsxiixixxii";
+const char Achievementfmt[]="niiissiiiiisii";
 const char AchievementCriteriafmt[]="niiiiiiiixsiiiiixxxxxxx";
 const char AreaTableEntryfmt[]="iiinixxxxxisixxxxxxxxxxxxx";
 const char AreaGroupEntryfmt[]="niiiiiii";
@@ -80,8 +80,8 @@ const char ItemRandomSuffixfmt[]="nsxiiiiiiiiii";
 const char ItemSetEntryfmt[]="dsxxxxxxxxxxxxxxxxxiiiiiiiiiiiiiiiiii";
 const char LockEntryfmt[]="niiiiiiiiiiiiiiiiiiiiiiiixxxxxxxx";
 const char MailTemplateEntryfmt[]="nxs";
-const char MapEntryfmt[]="nxixxxsixxixiffxixxi";
-const char MapDifficultyEntryfmt[]="diixiix";
+const char MapEntryfmt[]="nsiiiisissififfiiiii";
+const char MapDifficultyEntryfmt[]="niisiis";
 const char MovieEntryfmt[]="nxxx";
 const char OverrideSpellDatafmt[]="niiiiiiiiiixx";
 const char QuestFactionRewardfmt[]="niiiiiiiiii";
@@ -95,7 +95,7 @@ const char ScalingStatValuesfmt[]="iniiiiiiiiiiiiiiiiiiiixxxxxxxxxxxxxxxxxxxxxxx
 const char SkillLinefmt[]="nisxixi";
 const char SkillLineAbilityfmt[]="niiiixxiiiiixx";
 const char SkillRaceClassInfofmt[]="diiiiixxx";
-const char SoundEntriesfmt[]="nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+const char SoundEntriesfmt[]="nissssssssssssssssssssssxxxxxxxxxxx";
 const char SpellCastTimefmt[]="nixx";
 const char SpellDurationfmt[]="niii";
 const char SpellDifficultyfmt[]="niiii";
@@ -137,5 +137,6 @@ const char WMOAreaTableEntryfmt[]="niiixxxxxiixxxx";
 const char WorldMapAreaEntryfmt[]="xinxffffixxxxx";
 const char WorldMapOverlayEntryfmt[]="nxiiiixxxxxxxxx";
 const char WorldSafeLocsEntryfmt[]="nifffx";
+const char WorldPvPAreaEnrtyfmt[]="niiiiii";
 
 #endif

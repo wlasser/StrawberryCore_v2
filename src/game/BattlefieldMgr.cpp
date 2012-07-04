@@ -28,12 +28,16 @@ BattlefieldMgr::BattlefieldMgr()
 
 BattlefieldMgr::~BattlefieldMgr()
 {
-
+    for(BattlefieldList::iterator itr = m_battlefieldList.begin(); itr != m_battlefieldList.end(); ++itr)
+        delete itr->second;
 }
 
 void BattlefieldMgr::Initialize()
 {
-    sLog.outDebug("Creating battlefields");
+    sLog.outDebug("Creating Battlefields");
+
+    Battlefield * wintergrasp = new Battlefield(BATTLEFIELD_WG,5000000,5000000);
+    m_battlefieldList[BATTLEFIELD_WG] = wintergrasp;
 }
 
 void BattlefieldMgr::Update(uint32 uiDiff)
@@ -53,13 +57,13 @@ void BattlefieldMgr::AddPlayerToQueue(Player* plr)
 void BattlefieldMgr::SendQueueRequestResponse(Player* plr,bool canJoin)
 {
     WorldPacket data(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,11);
+    
 
-    data << uint8(0);
-    data << uint32(4197);
-    data << uint64(1);
-    data << uint64(plr->GetObjectGuid().GetRawValue());
-    data << uint8(1);
-    data << uint8(1);
+
+    if(canJoin)
+    {
+
+    }
 }
 
 void BattlefieldMgr::SendInvitePlayerToQueue(Player * player)

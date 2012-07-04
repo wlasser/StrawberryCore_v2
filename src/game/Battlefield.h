@@ -22,6 +22,7 @@
 #include "BattlefieldMgr.h"
 #include "MapManager.h"
 #include "Group.h"
+#include "GameObject.h"
 
 enum Battlefields
 {
@@ -35,6 +36,8 @@ enum Teams
     TEAM_HORDE
 };
 
+#define MAX_TEAM 2
+
 typedef std::list<Player *> PlayerList;
 
 class Map;
@@ -45,12 +48,12 @@ class Battlefield
 
     public:
 
-        Battlefield(uint8 BattleId,uint32 zoneId, uint32 WarTime,uint32 NoWarTime);
+        Battlefield(uint8 BattleId,uint32 WarTime,uint32 NoWarTime);
         ~Battlefield();
         
-        virtual void Update(uint32 uiDiff);
-        virtual void BattleStart();
-        virtual void BattleEnd();
+        void Update(uint32 uiDiff);
+        void BattleStart();
+        void BattleEnd();
 
         void PlayerJoin(Player* player);
         void PlayerLeave(Player* player);
@@ -63,11 +66,30 @@ class Battlefield
         uint8           m_battleId;
         uint32          m_nextBattleTimer;
         uint32          m_battleDurationTimer;
+        uint32          m_preBattleTimer;
         uint32          m_zoneId;
         bool            m_battleInProgress;
-        PlayerList      m_queuedPlayers[2];
-        Group*          m_raidGroup;
+        PlayerList      m_queuedPlayers[MAX_TEAM];
+        Group*          m_raidGroup[MAX_TEAM];
         Map*            m_map;
+
+    protected:
+        // Battlefield API
+
+        //Called on creation of the battlefield
+        virtual void OnBattlefieldCreated();
+
+        //Called before deleting the battlefield
+        virtual void BeforeBattlefieldDeleted();
+
+        //Called before battle has started
+        virtual void BeforeBattleStarted();
+
+        //Called after Battle has ended
+        virtual void AfterBattleEnded();
+
+        //Called on world tick
+        virtual void OnUpdate(uint32 uiDiff);
 
     private:
         void InvitePlayersInZone();
