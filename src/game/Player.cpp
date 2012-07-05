@@ -1906,7 +1906,7 @@ void Player::HandleCanFly(bool enable)
 {
     WorldPacket data(enable ? SMSG_MOVE_SET_CAN_FLY : SMSG_MOVE_UNSET_CAN_FLY, 12);
 
-    uint64 guid = GetObjectGuid();
+    ObjectGuid guid = GetObjectGuid();
 
     uint8 guidMaskSetFly[] = { 1, 6, 5, 0, 7, 4, 2, 3 };
     uint8 guidBytesSetFly[] = { 6, 3, 2, 1, 4, 7, 0, 5 };

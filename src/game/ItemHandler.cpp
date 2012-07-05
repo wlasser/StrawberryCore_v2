@@ -588,8 +588,9 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
 
     uint8 count = 0;
 
-    WorldPacket data( SMSG_LIST_INVENTORY, (8+1+numitems*8*4) );
-    uint64 Guid = uint64(vendorguid);
+    WorldPacket data(SMSG_LIST_INVENTORY, (8+1+numitems*8*4));
+
+    ObjectGuid Guid = vendorguid;
     uint8 GuidMask[] = { 1, 0, 3, 6, 5, 2, 7, 4 };
     uint8 GuidBytes[] = { 5, 4, 1, 0, 6, 2, 3, 7 };
 

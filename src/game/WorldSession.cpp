@@ -575,7 +575,7 @@ void WorldSession::SendNotification(int32 string_id,...)
 
 void WorldSession::SendSetPhaseShift(uint32 phaseMask)
 {
-    uint64 guid = uint64(_player->GetObjectGuid());
+    ObjectGuid guid = _player->GetObjectGuid();
     uint8 guidMask[] = { 2, 3, 1, 6, 4, 5, 0, 7 };
     uint8 guidBytes[] = { 7, 4, 1, 2, 6, 3, 0, 5 };
 
