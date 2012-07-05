@@ -2431,6 +2431,12 @@
     <ClCompile Include="..\..\src\game\BattlefieldMgr.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\Battlefield.cpp">
+      <Filter>World/Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\BattlefieldWG.cpp">
+      <Filter>World/Handlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -3153,6 +3159,12 @@
       <Filter>Server</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\BattlefieldMgr.h">
+      <Filter>World/Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\Battlefield.h">
+      <Filter>World/Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\BattlefieldWG.h">
       <Filter>World/Handlers</Filter>
     </ClInclude>
   </ItemGroup>
