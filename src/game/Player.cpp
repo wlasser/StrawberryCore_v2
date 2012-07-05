@@ -2072,7 +2072,7 @@ void Player::RegenerateAll(uint32 diff)
     Regenerate(POWER_MANA, diff);
 
     if (getClass() == CLASS_DEATH_KNIGHT)
-        Regenerate(POWER_RUNE, diff);
+        Regenerate(POWER_RUNES, diff);
 
     if (getClass() == CLASS_HUNTER)
         Regenerate(POWER_FOCUS, diff);
@@ -2125,7 +2125,7 @@ void Player::Regenerate(Powers power, uint32 diff)
             float RunicPowerDecreaseRate = sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_RUNICPOWER_LOSS);
             addvalue = 30 * RunicPowerDecreaseRate;         // 3 RunicPower by tick
         }   break;
-        case POWER_RUNE:
+        case POWER_RUNES:
         {
             if (getClass() != CLASS_DEATH_KNIGHT)
                 break;
@@ -2144,7 +2144,6 @@ void Player::Regenerate(Powers power, uint32 diff)
                 }
             }
         }   break;
-        case POWER_HAPPINESS:
         case POWER_HEALTH:
             break;
     }
@@ -2616,7 +2615,6 @@ void Player::GiveLevel(uint32 level)
     if(GetPower(POWER_RAGE) > GetMaxPower(POWER_RAGE))
         SetPower(POWER_RAGE, GetMaxPower(POWER_RAGE));
     SetPower(POWER_FOCUS, 0);
-    SetPower(POWER_HAPPINESS, 0);
 
     _ApplyAllLevelScaleItemMods(true);
 
@@ -2829,7 +2827,6 @@ void Player::InitStatsForLevel(bool reapplyMods)
     if(GetPower(POWER_RAGE) > GetMaxPower(POWER_RAGE))
         SetPower(POWER_RAGE, GetMaxPower(POWER_RAGE));
     SetPower(POWER_FOCUS, 0);
-    SetPower(POWER_HAPPINESS, 0);
     SetPower(POWER_RUNIC_POWER, 0);
 
     // update level to hunter/summon pet
