@@ -59,6 +59,8 @@ class Battlefield
         void PlayerLeave(Player* player);
         bool IsBattleInProgress() const { return m_battleInProgress; } ;
 
+        ObjectGuid getGuid() const { return m_battlefiledGuid;}
+
     protected:
         uint8           m_defenderTeam;
         uint8           m_attackerTeam;
@@ -72,18 +74,19 @@ class Battlefield
         PlayerList      m_queuedPlayers[MAX_TEAM];
         Group*          m_raidGroup[MAX_TEAM];
         Map*            m_map;
+        ObjectGuid      m_battlefiledGuid;
 
     protected:
         // Battlefield API
 
         //Called before battle has started
-        virtual void BeforeBattleStarted();
+        virtual void BeforeBattleStarted() = 0;
 
         //Called after Battle has ended
-        virtual void AfterBattleEnded();
+        virtual void AfterBattleEnded() = 0;
 
         //Called on world tick
-        virtual void OnUpdate(uint32 uiDiff);
+        virtual void OnUpdate(uint32 uiDiff) = 0;
 
     private:
         void InvitePlayersInZone();

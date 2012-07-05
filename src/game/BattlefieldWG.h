@@ -27,6 +27,8 @@ class BattlefieldWG : public Battlefield
         BattlefieldWG();
 
         void OnUpdate(uint32 uiDiff);
+        void BeforeBattleStarted();
+        void AfterBattleEnded();
 };
 
 #endif

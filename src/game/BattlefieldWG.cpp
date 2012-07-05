@@ -20,10 +20,20 @@
 
 BattlefieldWG::BattlefieldWG() : Battlefield(BATTLEFIELD_WG)
 {
-
+    m_map = sMapMgr.FindMap(571);
 }
 
 void BattlefieldWG::OnUpdate(uint32 uiDiff)
+{
+
+}
+
+void BattlefieldWG::BeforeBattleStarted()
+{
+
+}
+
+void BattlefieldWG::AfterBattleEnded()
 {
 
 }

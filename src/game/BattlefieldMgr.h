@@ -35,7 +35,7 @@ class Player;
 class Battlefield;
 
 typedef std::list<Player*> PlayerQueue;
-typedef std::map<uint8,Battlefield* > BattlefieldList;
+typedef std::map<uint64,Battlefield* > BattlefieldList;
 
 class BattlefieldMgr
 {
@@ -48,6 +48,8 @@ class BattlefieldMgr
         void Initialize();
         void Update(uint32 uiDiff);
         void AddPlayerToQueue(Player* plr);
+
+        Battlefield * FindBattlefield(uint64 guid);
 
         void SendQueueRequestResponse(Player* plr,bool canJoin);
         void SendInvitePlayerToQueue(Player * player);

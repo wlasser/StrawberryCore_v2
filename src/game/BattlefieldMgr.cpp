@@ -37,7 +37,8 @@ void BattlefieldMgr::Initialize()
 {
     sLog.outDebug("Creating Battlefields");
 
-    m_battlefieldList[BATTLEFIELD_WG] = new BattlefieldWG();
+    Battlefield * WG = new BattlefieldWG();
+    m_battlefieldList[WG->getGuid().GetRawValue()] = WG;
 }
 
 void BattlefieldMgr::Update(uint32 uiDiff)
@@ -56,17 +57,20 @@ void BattlefieldMgr::AddPlayerToQueue(Player* plr)
 
 void BattlefieldMgr::SendQueueRequestResponse(Player* plr,bool canJoin)
 {
-    WorldPacket data(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,11);
+    //WorldPacket data(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,11);
     
-
-
-    if(canJoin)
-    {
-
-    }
 }
 
 void BattlefieldMgr::SendInvitePlayerToQueue(Player * player)
 {
 
+}
+
+Battlefield * BattlefieldMgr::FindBattlefield(uint64 guid)
+{
+    BattlefieldList::const_iterator itr = m_battlefieldList.find(guid);
+    if(itr != m_battlefieldList.end())
+        return itr->second;
+    else
+        return NULL;
 }

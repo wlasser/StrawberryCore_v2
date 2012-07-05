@@ -39,7 +39,7 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
     if (mask[0]) bytes[0] = recv_data.ReadUInt8() ^ 1;
 
     battlefieldGuid = BitConverter::ToUInt64(bytes);
-    sLog.outDebug( "Player with guid: %u ", battlefieldGuid);
+    sLog.outDebug( "Battlefield with guid: %u ", battlefieldGuid);
     
-
+    Battlefield * battlefield = sBattlefieldMgr.FindBattlefield(battlefieldGuid);
 }
