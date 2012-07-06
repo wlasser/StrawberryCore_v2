@@ -5951,11 +5951,8 @@ bool ChatHandler::HandleGMFlyCommand(char* args)
     if (!target)
         target = m_session->GetPlayer();
 
-    WorldPacket data(12);
-    data.SetOpcode(value ? SMSG_MOVE_SET_CAN_FLY : SMSG_MOVE_UNSET_CAN_FLY);
-    data << target->GetPackGUID();
-    data << uint32(0);                                      // unknown
-    target->SendMessageToSet(&data, true);
+    value ? target->HandleCanFly(true) : target->HandleCanFly(false);
+
     PSendSysMessage(LANG_COMMAND_FLYMODE_STATUS, GetNameLink(target).c_str(), args);
     return true;
 }

@@ -160,7 +160,7 @@ namespace Movement
 
         if (splineFlags.final_target)
         {
-            uint64 Guid = move_spline.facing.target;
+            ObjectGuid Guid = (ObjectGuid)move_spline.facing.target;
 
             uint8 guidMask[] = { 4, 3, 7, 2, 6, 1, 0, 5 };
             data.WriteGuidMask(Guid, guidMask, 8);

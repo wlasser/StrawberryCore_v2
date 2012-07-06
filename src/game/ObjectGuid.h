@@ -60,11 +60,9 @@ enum TypeMask
 
 enum HighGuid
 {
-    HIGHGUID_ITEM           = 0x470,                        // blizz 470
-    HIGHGUID_CONTAINER      = 0x470,                        // blizz 470
-    HIGHGUID_PLAYER         = 0x000,                        // blizz 070 (temporary reverted back to 0 high guid
-                                                            // in result unknown source visibility player with
-                                                            // player problems. please reapply only after its resolve)
+    HIGHGUID_ITEM           = 0x440,                        // blizz 440
+    HIGHGUID_CONTAINER      = 0x440,                        // blizz 440
+    HIGHGUID_PLAYER         = 0x000,                        // blizz 040
     HIGHGUID_GAMEOBJECT     = 0xF11,                        // blizz F11/F51
     HIGHGUID_TRANSPORT      = 0xF12,                        // blizz F12/F52 (for GAMEOBJECT_TYPE_TRANSPORT)
     HIGHGUID_UNIT           = 0xF13,                        // blizz F13/F53
