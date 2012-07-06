@@ -21,6 +21,7 @@
 BattlefieldWG::BattlefieldWG() : Battlefield(BATTLEFIELD_WG)
 {
     m_map = sMapMgr.FindMap(571);
+    m_zoneId = 4197;
 }
 
 void BattlefieldWG::OnUpdate(uint32 uiDiff)

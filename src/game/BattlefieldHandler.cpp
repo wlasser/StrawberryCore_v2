@@ -39,7 +39,47 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
     if (mask[0]) bytes[0] = recv_data.ReadUInt8() ^ 1;
 
     battlefieldGuid = BitConverter::ToUInt64(bytes);
-    sLog.outDebug( "Battlefield with guid: %u ", battlefieldGuid);
+
+    WorldPacket send_data(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,11);
     
-    Battlefield * battlefield = sBattlefieldMgr.FindBattlefield(battlefieldGuid);
+    Battlefield * Battlefield = sBattlefieldMgr.FindBattlefield(battlefieldGuid);
+    BattlefieldQueue * Queue = sBattlefieldMgr.GetQueueForBattlefield(battlefieldGuid);
+    uint8 BattlefieldGuidMask[] = { 1, 6, 5, 7, 0, 4, 3, 2};
+    uint8 BattlefieldBytes[] = { 1, 3, 6, 7, 0, 2, 4, 5};
+    uint8 QueueGuidMask[] = { 7, 3, 0, 4, 2, 6, 1, 5};
+    uint8 QueueGuidBytes[] = { 2, 5, 3, 0, 4, 6, 1, 7};
+
+    send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,4);
+    if(Queue)
+    {
+        send_data.WriteBit(1);
+    }
+    else
+    {
+        send_data.WriteBit(0);
+    }
+    send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,2,4);
+    send_data.FlushBits();
+
+    if(Queue)
+    {
+        send_data.WriteGuidMask(Queue->GetId(),QueueGuidMask,8);
+        send_data.FlushBits();
+    }
+
+    send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,2,6);
+    send_data.FlushBits();
+
+    if(Queue)
+    {
+        send_data.WriteGuidBytes(Queue->GetId(),QueueGuidBytes,8,0);
+    }
+
+    send_data.WriteGuidBytes(battlefieldGuid,BattlefieldBytes,8,0);
+
+    send_data << uint32(Battlefield->GetZoneId());
+
+    SendPacket(&send_data);
+
+    sBattlefieldMgr.SendInvitePlayerToQueue(_player);
 }
