@@ -248,6 +248,7 @@ void InitOpcodeTable()
     OPCODE(SMSG_NEW_WORLD,                    STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_BATTLEFIELD_MGR_QUEUE_REQ,    STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBattlefieldJoinQueueOpcode);
     OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,STATUS_LOGGEDIN,PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_INVITE, STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
     OPCODE(CMSG_TRAINER_LIST,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerListOpcode       );
     OPCODE(SMSG_TRAINER_LIST,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_BUY_TRAINER_SERVICE,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerBuySpellOpcode   );
@@ -361,5 +362,7 @@ void InitOpcodeTable()
     OPCODE(CMSG_CHAT_MESSAGE_GUILD,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMessagechatOpcode       );
     OPCODE(CMSG_GUILD_REWARDS_LIST,           STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleGuildRewardsListOpcode  );
     OPCODE(SMSG_GUILD_REWARDS_LIST,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_MOVE_SET_CAN_FLY,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_MOVE_UNSET_CAN_FLY,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_ALL_ACHIEVEMENT_DATA,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 };

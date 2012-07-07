@@ -23,16 +23,7 @@
 Battlefield::Battlefield(uint8 BattleId)
 {
     m_battleId = BattleId;
-    m_battlefiledGuid = ObjectGuid(HIGHGUID_BATTLEFIELD,uint32(131000 + m_battleId));
-    /*m_zoneId = sWorldPvPAreaStore.LookupEntry(BattleId)->ZoneId;
-    if(BattleId == BATTLEFIELD_WG)
-    {
-        m_map = sMapMgr.FindMap(571);
-    }
-    else
-    {
-        m_map = sMapMgr.FindMap(732);
-    }*/
+    m_battlefiledGuid = ObjectGuid(HIGHGUID_BATTLEFIELD,uint32(131072 + m_battleId));
 
     for(uint8 i = 0; i < MAX_TEAM; ++i)
     {

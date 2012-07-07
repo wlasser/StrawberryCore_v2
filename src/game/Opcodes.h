@@ -461,6 +461,8 @@ enum Opcodes
     CMSG_GUILD_LEAVE,
     CMSG_GUILD_REWARDS_LIST,
     SMSG_GUILD_REWARDS_LIST,
+    SMSG_MOVE_SET_CAN_FLY,
+    SMSG_MOVE_UNSET_CAN_FLY,
     MAX_OPCODE_VALUE
 };
 
@@ -1085,8 +1087,6 @@ enum Opcodes335a
     CMSG_MOVE_SET_CAN_TRANSITION_BETWEEN_SWIM_AND_FLY_ACK = 0x340,
     MSG_MOVE_START_SWIM_CHEAT                       = 0x341,
     MSG_MOVE_STOP_SWIM_CHEAT                        = 0x342,
-    SMSG_MOVE_SET_CAN_FLY                           = 0x343,
-    SMSG_MOVE_UNSET_CAN_FLY                         = 0x344,
     CMSG_MOVE_SET_CAN_FLY_ACK                       = 0x345,
     CMSG_MOVE_SET_FLY                               = 0x346,
     CMSG_SOCKET_GEMS                                = 0x347,

@@ -60,6 +60,7 @@ class Battlefield
         bool IsBattleInProgress() const { return m_battleInProgress; } ;
 
         ObjectGuid getGuid() const { return m_battlefiledGuid;}
+        uint32 GetZoneId() { return m_zoneId; }
 
     protected:
         uint8           m_defenderTeam;

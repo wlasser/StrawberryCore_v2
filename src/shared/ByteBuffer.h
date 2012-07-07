@@ -23,8 +23,6 @@
 #include "Log.h"
 #include "Utilities/ByteConverter.h"
 
-
-
 class ByteBufferException
 {
     public:
@@ -136,7 +134,7 @@ class ByteBuffer
             _bitpos = 8;
         }
 
-        bool WriteBit(uint32 bit)
+        template <typename T> bool WriteBit(T bit)
         {
             --_bitpos;
             if (bit)

@@ -235,7 +235,7 @@ void Object::DestroyForPlayer( Player *target, bool anim ) const
 
 void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 {
-    uint64 Guid = uint64(((Unit*)this)->GetObjectGuid());
+    ObjectGuid Guid = ((Unit*)this)->GetObjectGuid();
     uint8 GuidMask[] = { 3, 4, 0, 1, 2 };
 
     if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
@@ -284,7 +284,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         bool interPolatedTurning = unit->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_INTERP_TURNING;
         bool jumping = unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_FALLING;
 
-        uint64 Guid2 = uint64(unit->GetObjectGuid());
+        ObjectGuid Guid2 = unit->GetObjectGuid();
         uint8 GuidMask2[] = { 7, 3, 2, 5, 4, 6, 0, 1 };
 
         data->WriteBit(!(unit->m_movementInfo.GetMovementFlags()));
@@ -309,7 +309,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 
         if(isTransport)
         {
-            uint64 tGuid = uint64(unit->GetTransport()->GetObjectGuid());
+            ObjectGuid tGuid = unit->GetTransport()->GetObjectGuid();
             uint8 tGuidMask[] = { 1, 4, 0, 6, 7, 5, 3, 2 };
 
             data->WriteGuidMask(tGuid, tGuidMask, 1, 0);
@@ -346,7 +346,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
     {
         uint8 guidMask[] = { 2, 7, 0, 4, 5, 6, 1, 3 };
         if (Unit *victim = ((Unit*)this)->getVictim())
-            data->WriteGuidMask(uint64(victim->GetObjectGuid()), guidMask, 8);
+            data->WriteGuidMask(victim->GetObjectGuid(), guidMask, 8);
         else
             data->WriteBits(0, 8);
     }
@@ -372,7 +372,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         bool interPolatedTurning = unit->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_INTERP_TURNING;
         bool jumping = unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_FALLING;
 
-        uint64 Guid3 = uint64(unit->GetObjectGuid());
+        ObjectGuid Guid3 = unit->GetObjectGuid();
         uint8 GuidBytes3[] = { 4, 5, 3, 0, 7, 1, 2, 6 };
 
         data->WriteGuidBytes(Guid3, GuidBytes3, 1, 0);
@@ -410,11 +410,11 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         {
             const Unit* tUnit = ((Unit*)this);
 
-            uint64 tGuid = 0;
+            ObjectGuid tGuid;
             if (tUnit->GetVehicle())
-                tGuid = uint64(tUnit->GetVehicle()->GetBase()->GetObjectGuid());
+                tGuid = tUnit->GetVehicle()->GetBase()->GetObjectGuid();
             else if (tUnit->GetTransport())
-                tGuid = uint64(tUnit->GetTransport()->GetObjectGuid());
+                tGuid = tUnit->GetTransport()->GetObjectGuid();
 
             uint8 guidBytes[] = { 5, 7, 3, 0, 1, 6, 2, 4 };
 
@@ -483,7 +483,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
     {
         uint8 guidBytes[] = { 4, 0, 3, 5, 7, 6, 2, 1 };
         if (Unit *victim = ((Unit*)this)->getVictim())
-            data->WriteGuidBytes(uint64(victim->GetObjectGuid()), guidBytes, 8, 0);
+            data->WriteGuidBytes(victim->GetObjectGuid(), guidBytes, 8, 0);
         else
             for(int i = 0; i < 8; i++)
                 *data << uint8(0);

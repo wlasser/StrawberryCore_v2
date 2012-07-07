@@ -1902,6 +1902,38 @@ bool Player::TeleportToBGEntryPoint()
     return TeleportTo(m_bgData.joinPos);
 }
 
+void Player::HandleCanFly(bool enable)
+{
+    WorldPacket data(enable ? SMSG_MOVE_SET_CAN_FLY : SMSG_MOVE_UNSET_CAN_FLY, 12);
+
+    ObjectGuid guid = GetObjectGuid();
+
+    uint8 guidMaskSetFly[] = { 1, 6, 5, 0, 7, 4, 2, 3 };
+    uint8 guidBytesSetFly[] = { 6, 3, 2, 1, 4, 7, 0, 5 };
+
+    uint8 guidMaskUnsetFly[] = { 1, 4, 2, 5, 0, 3, 6, 7 };
+    uint8 guidBytesUnsetFly[] = { 4, 6, 1, 0, 2, 3, 5, 7 };
+
+    if (enable)
+    {
+        data.WriteGuidMask(guid, guidMaskSetFly, 8);
+
+        data.WriteGuidBytes(guid, guidBytesSetFly, 2, 0);
+        data << uint32(sWorld.GetGameTime());
+        data.WriteGuidBytes(guid, guidBytesSetFly, 6, 2);
+    }
+    else 
+    {
+        data.WriteGuidMask(guid, guidMaskUnsetFly, 8);
+
+        data.WriteGuidBytes(guid, guidBytesUnsetFly, 2, 0);
+        data << uint32(sWorld.GetGameTime());
+        data.WriteGuidBytes(guid, guidBytesUnsetFly, 6, 2);
+    }
+
+    SendDirectMessage(&data);
+}
+
 void Player::ProcessDelayedOperations()
 {
     if(m_DelayedOperations == 0)
@@ -2040,7 +2072,7 @@ void Player::RegenerateAll(uint32 diff)
     Regenerate(POWER_MANA, diff);
 
     if (getClass() == CLASS_DEATH_KNIGHT)
-        Regenerate(POWER_RUNE, diff);
+        Regenerate(POWER_RUNES, diff);
 
     if (getClass() == CLASS_HUNTER)
         Regenerate(POWER_FOCUS, diff);
@@ -2093,7 +2125,7 @@ void Player::Regenerate(Powers power, uint32 diff)
             float RunicPowerDecreaseRate = sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_RUNICPOWER_LOSS);
             addvalue = 30 * RunicPowerDecreaseRate;         // 3 RunicPower by tick
         }   break;
-        case POWER_RUNE:
+        case POWER_RUNES:
         {
             if (getClass() != CLASS_DEATH_KNIGHT)
                 break;
@@ -2112,7 +2144,6 @@ void Player::Regenerate(Powers power, uint32 diff)
                 }
             }
         }   break;
-        case POWER_HAPPINESS:
         case POWER_HEALTH:
             break;
     }
@@ -2584,7 +2615,6 @@ void Player::GiveLevel(uint32 level)
     if(GetPower(POWER_RAGE) > GetMaxPower(POWER_RAGE))
         SetPower(POWER_RAGE, GetMaxPower(POWER_RAGE));
     SetPower(POWER_FOCUS, 0);
-    SetPower(POWER_HAPPINESS, 0);
 
     _ApplyAllLevelScaleItemMods(true);
 
@@ -2797,7 +2827,6 @@ void Player::InitStatsForLevel(bool reapplyMods)
     if(GetPower(POWER_RAGE) > GetMaxPower(POWER_RAGE))
         SetPower(POWER_RAGE, GetMaxPower(POWER_RAGE));
     SetPower(POWER_FOCUS, 0);
-    SetPower(POWER_HAPPINESS, 0);
     SetPower(POWER_RUNIC_POWER, 0);
 
     // update level to hunter/summon pet

@@ -4453,7 +4453,7 @@ void Spell::TakePower()
 
     Powers powerType = Powers(m_spellInfo->powerType);
 
-    if(powerType == POWER_RUNE)
+    if(powerType == POWER_RUNES)
     {
         CheckOrTakeRunePower(true);
         return;
@@ -6350,10 +6350,7 @@ uint32 Spell::CalculatePowerCost(SpellEntry const* spellInfo, Unit* caster, Spel
             case POWER_RAGE:
             case POWER_FOCUS:
             case POWER_ENERGY:
-            case POWER_HAPPINESS:
-                powerCost += manaCostPct * caster->GetMaxPower(Powers(spellInfo->powerType)) / 100;
-                break;
-            case POWER_RUNE:
+            case POWER_RUNES:
             case POWER_RUNIC_POWER:
                 DEBUG_LOG("Spell::CalculateManaCost: Not implemented yet!");
                 break;
@@ -6412,8 +6409,8 @@ SpellCastResult Spell::CheckPower()
         return SPELL_FAILED_UNKNOWN;
     }
 
-    //check rune cost only if a spell has PowerType == POWER_RUNE
-    if (m_spellInfo->powerType == POWER_RUNE)
+    //check rune cost only if a spell has PowerType == POWER_RUNES
+    if (m_spellInfo->powerType == POWER_RUNES)
     {
         SpellCastResult failReason = CheckOrTakeRunePower(false);
         if (failReason != SPELL_CAST_OK)
