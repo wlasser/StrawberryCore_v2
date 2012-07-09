@@ -365,4 +365,6 @@ void InitOpcodeTable()
     OPCODE(SMSG_MOVE_SET_CAN_FLY,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_MOVE_UNSET_CAN_FLY,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_ALL_ACHIEVEMENT_DATA,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_QUERY_INSPECT_ACHIEVEMENTS,   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQueryInspectAchievementsOpcode);
+    OPCODE(SMSG_RESPOND_INSPECT_ACHIEVEMENTS, STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 };

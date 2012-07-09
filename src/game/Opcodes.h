@@ -463,6 +463,8 @@ enum Opcodes
     SMSG_GUILD_REWARDS_LIST,
     SMSG_MOVE_SET_CAN_FLY,
     SMSG_MOVE_UNSET_CAN_FLY,
+    CMSG_QUERY_INSPECT_ACHIEVEMENTS,
+    SMSG_RESPOND_INSPECT_ACHIEVEMENTS,
     MAX_OPCODE_VALUE
 };
 
@@ -1335,8 +1337,6 @@ enum Opcodes335a
     CMSG_SET_GLYPH_SLOT                             = 0x466,
     CMSG_SET_GLYPH                                  = 0x467,
     SMSG_DYNAMIC_DROP_ROLL_RESULT                   = 0x469,
-    CMSG_QUERY_INSPECT_ACHIEVEMENTS                 = 0x46B,
-    SMSG_RESPOND_INSPECT_ACHIEVEMENTS               = 0x46C,
     CMSG_DISMISS_CONTROLLED_VEHICLE                 = 0x46D,
     CMSG_COMPLETE_ACHIEVEMENT_CHEAT                 = 0x46E,
     SMSG_QUESTUPDATE_ADD_PVP_KILL                   = 0x46F,
