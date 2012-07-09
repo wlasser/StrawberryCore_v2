@@ -758,11 +758,11 @@ void LoadDBCStores(const std::string& dataPath)
     }
 
     // Check loaded DBC files proper version
-    if (!sAreaStore.LookupEntry(4713)              ||       // last area (areaflag) added in 4.3.0a
-        !sCharTitlesStore.LookupEntry(287)         ||       // last char title added in 4.3.0a
-        !sGemPropertiesStore.LookupEntry(2250)     ||       // last gem property added in 4.3.0a
-        !sMapStore.LookupEntry(980)                ||       // last map added in 4.3.0a
-        !sSpellStore.LookupEntry(110966)           )        // last added spell in 4.3.0a
+    if (!sAreaStore.LookupEntry(5995)              ||       // last area (areaflag) added in 4.3.4
+        !sCharTitlesStore.LookupEntry(287)         ||       // last char title added in 4.3.4
+        !sGemPropertiesStore.LookupEntry(2250)     ||       // last gem property added in 4.3.4
+        !sMapStore.LookupEntry(980)                ||       // last map added in 4.3.4
+        !sSpellStore.LookupEntry(121820)           )        // last added spell in 4.3.4
     {
         sLog.outError("\nYou have mixed version DBC files. Please re-extract DBC files for one from client build: %s",AcceptableClientBuildsListStr().c_str());
         Log::WaitBeforeContinueIfNeed();
@@ -871,30 +871,27 @@ uint32 GetAreaFlagByMapId(uint32 mapid)
 
 uint32 GetVirtualMapForMapAndZone(uint32 mapid, uint32 zoneId)
 {
-    if(mapid != 530 && mapid != 571)                        // speed for most cases
+    if (mapid != 530 && mapid != 571 && mapid != 732)            // speed for most cases
         return mapid;
 
-    if(WorldMapAreaEntry const* wma = sWorldMapAreaStore.LookupEntry(zoneId))
+    if (WorldMapAreaEntry const* wma = sWorldMapAreaStore.LookupEntry(zoneId))
         return wma->virtual_map_id >= 0 ? wma->virtual_map_id : wma->map_id;
 
     return mapid;
 }
 
-ContentLevels GetContentLevelsForMapAndZone(uint32 mapid, uint32 zoneId)
+ContentLevels GetContentLevelsForMap(uint32 mapid)
 {
-    mapid = GetVirtualMapForMapAndZone(mapid,zoneId);
-    if(mapid < 2)
-        return CONTENT_1_60;
-
     MapEntry const* mapEntry = sMapStore.LookupEntry(mapid);
-    if(!mapEntry)
+    if (!mapEntry)
         return CONTENT_1_60;
 
-    switch(mapEntry->Expansion())
+    switch (mapEntry->Expansion())
     {
         default: return CONTENT_1_60;
         case 1:  return CONTENT_61_70;
         case 2:  return CONTENT_71_80;
+        case 3:  return CONTENT_81_85;
     }
 }
 
