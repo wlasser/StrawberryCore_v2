@@ -1,0 +1,3 @@
+DELETE FROM `opcodes` WHERE `OpcodeValue` IN (21925);
+INSERT INTO `opcodes` VALUES
+('SMSG_PLAY_SPELL_VISUAL', '21925', '15595', '15595');

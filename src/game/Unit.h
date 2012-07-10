@@ -2005,6 +2005,8 @@ class Unit : public WorldObject
         VehicleKit* GetVehicleKit() const { return m_pVehicleKit; }
         void RemoveVehicleKit();
 
+        void BuildSendPlayVisual(WorldPacket* data, uint32 value, bool impact);
+
     protected:
         explicit Unit ();
 

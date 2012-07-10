@@ -11277,3 +11277,15 @@ void Unit::DisableSpline()
     m_movementInfo.RemoveMovementFlag(MovementFlags(MOVEFLAG_SPLINE_ENABLED|MOVEFLAG_FORWARD));
     movespline->_Interrupt();
 }
+
+void Unit::BuildSendPlayVisual(WorldPacket* data, uint32 value, bool impact)
+{
+    *data << uint32(0);         // unk, seems always 0
+    *data << uint32(value);
+    *data << uint32(impact ? 1 : 0);
+
+    uint8 guidMask[8] = { 4, 7, 5, 3, 1, 2, 0, 6 };
+    uint8 byteOrder[8] = { 0, 4, 1, 6, 7, 2, 3, 5 };
+    data->WriteGuidMask(GetObjectGuid(), guidMask, 8);
+    data->WriteGuidBytes(GetObjectGuid(), byteOrder, 8, 0);
+}
