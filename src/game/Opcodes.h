@@ -465,6 +465,11 @@ enum Opcodes
     SMSG_MOVE_UNSET_CAN_FLY,
     CMSG_QUERY_INSPECT_ACHIEVEMENTS,
     SMSG_RESPOND_INSPECT_ACHIEVEMENTS,
+    SMSG_FORCE_MOVE_ROOT,
+    CMSG_FORCE_MOVE_ROOT_ACK,
+    CMSG_FORCE_MOVE_UNROOT_ACK,
+    SMSG_FORCE_MOVE_UNROOT,
+    SMSG_STANDSTATE_UPDATE,
     MAX_OPCODE_VALUE
 };
 
@@ -628,10 +633,6 @@ enum Opcodes335a
     CMSG_FORCE_RUN_BACK_SPEED_CHANGE_ACK            = 0x0E5,
     SMSG_FORCE_SWIM_SPEED_CHANGE                    = 0x0E6,
     CMSG_FORCE_SWIM_SPEED_CHANGE_ACK                = 0x0E7,
-    SMSG_FORCE_MOVE_ROOT                            = 0x0E8,
-    CMSG_FORCE_MOVE_ROOT_ACK                        = 0x0E9,
-    SMSG_FORCE_MOVE_UNROOT                          = 0x0EA,
-    CMSG_FORCE_MOVE_UNROOT_ACK                      = 0x0EB,
     MSG_MOVE_ROOT                                   = 0x0EC,
     MSG_MOVE_UNROOT                                 = 0x0ED,
     SMSG_MOVE_KNOCK_BACK                            = 0x0EF,
@@ -949,7 +950,6 @@ enum Opcodes335a
     CMSG_GMTICKETSYSTEM_TOGGLE                      = 0x29A,
     CMSG_CANCEL_GROWTH_AURA                         = 0x29B,
     SMSG_CANCEL_AUTO_REPEAT                         = 0x29C,
-    SMSG_STANDSTATE_UPDATE                          = 0x29D,
     SMSG_LOOT_ALL_PASSED                            = 0x29E,
     SMSG_LOOT_ROLL_WON                              = 0x29F,
     CMSG_LOOT_ROLL                                  = 0x2A0,

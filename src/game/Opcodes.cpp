@@ -367,4 +367,9 @@ void InitOpcodeTable()
     OPCODE(SMSG_ALL_ACHIEVEMENT_DATA,         STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_QUERY_INSPECT_ACHIEVEMENTS,   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleQueryInspectAchievementsOpcode);
     OPCODE(SMSG_RESPOND_INSPECT_ACHIEVEMENTS, STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_FORCE_MOVE_ROOT,              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_FORCE_MOVE_UNROOT,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_FORCE_MOVE_ROOT_ACK,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMoveRootAck             );
+    OPCODE(CMSG_FORCE_MOVE_UNROOT_ACK,        STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleMoveUnRootAck           );
+    OPCODE(SMSG_STANDSTATE_UPDATE,            STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 };

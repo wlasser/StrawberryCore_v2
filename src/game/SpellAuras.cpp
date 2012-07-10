@@ -4409,8 +4409,7 @@ void Aura::HandleAuraModStun(bool apply, bool Real)
         }
 
         WorldPacket data(SMSG_FORCE_MOVE_ROOT, 8);
-        data << target->GetPackGUID();
-        data << uint32(0);
+        target->BuildForceMoveRootPacket(&data, true, 0);
         target->SendMessageToSet(&data, true);
 
         // Summon the Naj'entus Spine GameObject on target if spell is Impaling Spine
@@ -4466,9 +4465,8 @@ void Aura::HandleAuraModStun(bool apply, bool Real)
             if(target->getVictim() && target->isAlive())
                 target->SetTargetGuid(target->getVictim()->GetObjectGuid());
 
-            WorldPacket data(SMSG_FORCE_MOVE_UNROOT, 8+4);
-            data << target->GetPackGUID();
-            data << uint32(0);
+            WorldPacket data(SMSG_FORCE_MOVE_UNROOT, 8 + 4);
+            target->BuildForceMoveRootPacket(&data, false, 0);
             target->SendMessageToSet(&data, true);
         }
 
@@ -4703,8 +4701,7 @@ void Aura::HandleAuraModRoot(bool apply, bool Real)
             if(!target->hasUnitState(UNIT_STAT_ON_VEHICLE))
             {
                 WorldPacket data(SMSG_FORCE_MOVE_ROOT, 10);
-                data << target->GetPackGUID();
-                data << uint32(2);
+                target->BuildForceMoveRootPacket(&data, true, 2);
                 target->SendMessageToSet(&data, true);
             }
 
@@ -4753,8 +4750,7 @@ void Aura::HandleAuraModRoot(bool apply, bool Real)
             if(target->GetTypeId() == TYPEID_PLAYER)
             {
                 WorldPacket data(SMSG_FORCE_MOVE_UNROOT, 10);
-                data << target->GetPackGUID();
-                data << (uint32)2;
+                target->BuildForceMoveRootPacket(&data, false, 2);
                 target->SendMessageToSet(&data, true);
             }
         }

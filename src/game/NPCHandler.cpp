@@ -297,11 +297,11 @@ void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
     _player->ModifyMoney( -int32(nSpellCost) );
 
     WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);           // visual effect on trainer
-    unit->BuildSendPlayVisual(&data, 0xB3, false);
+    unit->BuildSendPlayVisualPacket(&data, 0xB3, false);
     SendPacket(&data);
 
     data.Initialize(SMSG_PLAY_SPELL_VISUAL, 12);            // visual effect on player
-    _player->BuildSendPlayVisual(&data, 0x016A, true);
+    _player->BuildSendPlayVisualPacket(&data, 0x016A, true);
     SendPacket(&data);
 
     // learn explicitly or cast explicitly
