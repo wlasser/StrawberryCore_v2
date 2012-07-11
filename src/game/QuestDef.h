@@ -30,7 +30,7 @@ class Player;
 
 class ObjectMgr;
 
-#define MAX_QUEST_LOG_SIZE 25
+#define MAX_QUEST_LOG_SIZE 50
 
 #define QUEST_CURRENCY_REQUIRED_COUNT 4
 #define QUEST_CURRENCY_REWARD_COUNT 4

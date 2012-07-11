@@ -543,6 +543,14 @@ enum eCorpseFields
     CORPSE_FIELD_DYNAMIC_FLAGS                       = OBJECT_END + 0x1B,
     CORPSE_END                                       = OBJECT_END + 0x1C
 };
+enum eAreaTriggerFields
+{
+    AREATRIGGER_SPELLID                              = OBJECT_END + 0x0,
+    AREATRIGGER_SPELLVISUALID                        = OBJECT_END + 0x1,
+    AREATRIGGER_DURATION                             = OBJECT_END + 0x2,
+    AREATRIGGER_FINAL_POS                            = OBJECT_END + 0x3,
+    AREATRIGGER_END                                  = OBJECT_END + 0x6
+};
 
 #define PLAYER_END_NOT_SELF PLAYER_FIELD_INV_SLOT_HEAD
 #endif

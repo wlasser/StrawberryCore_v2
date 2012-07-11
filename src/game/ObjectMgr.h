@@ -302,6 +302,17 @@ struct QuestPOI
 typedef std::vector<QuestPOI> QuestPOIVector;
 typedef UNORDERED_MAP<uint32, QuestPOIVector> QuestPOIMap;
 
+struct QuestPhaseMaps
+{
+    uint16 MapId;
+    uint32 PhaseMask;
+
+    QuestPhaseMaps(uint16 mapId, uint32 phaseMask) : MapId(mapId), PhaseMask(phaseMask) {}
+};
+
+typedef std::vector<QuestPhaseMaps> QuestPhaseMapsVector;
+typedef UNORDERED_MAP<uint32, QuestPhaseMapsVector> QuestPhaseMapsMap;
+
 #define WEATHER_SEASONS 4
 struct WeatherSeasonChances
 {
@@ -635,6 +646,15 @@ class ObjectMgr
             return NULL;
         }
 
+        QuestPhaseMapsVector const* GetQuestPhaseMapVector(uint32 questId)
+        {
+            QuestPhaseMapsMap::const_iterator itr = mQuestPhaseMap.find(questId);
+            if(itr != mQuestPhaseMap.end())
+                return &itr->second;
+
+            return NULL;
+        }
+
         VehicleAccessoryList const* GetVehicleAccessoryList(uint32 uiEntry) const
         {
             VehicleAccessoryMap::const_iterator itr = m_VehicleAccessoryMap.find(uiEntry);
@@ -708,6 +728,7 @@ class ObjectMgr
 
         void LoadPointsOfInterest();
         void LoadQuestPOI();
+        void LoadQuestPhaseMaps();
 
         void LoadNPCSpellClickSpells();
 
@@ -1133,6 +1154,7 @@ class ObjectMgr
         PointOfInterestMap  mPointsOfInterest;
 
         QuestPOIMap         mQuestPOIMap;
+        QuestPhaseMapsMap   mQuestPhaseMap;
 
         WeatherZoneMap      mWeatherZoneMap;
 

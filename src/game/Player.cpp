@@ -4041,8 +4041,6 @@ void Player::InitVisibleBits()
 
 void Player::BuildCreateUpdateBlockForPlayer( UpdateData *data, Player *target ) const
 {
-    Unit::BuildCreateUpdateBlockForPlayer( data, target );
-
     if(target == this)
     {
         for(int i = 0; i < EQUIPMENT_SLOT_END; ++i)
@@ -4066,6 +4064,24 @@ void Player::BuildCreateUpdateBlockForPlayer( UpdateData *data, Player *target )
 
             m_items[i]->BuildCreateUpdateBlockForPlayer( data, target );
         }
+    }
+
+    SetPhaseAndMap(target);
+    Unit::BuildCreateUpdateBlockForPlayer( data, target );
+}
+
+void Player::SetPhaseAndMap(Player* target) const
+{
+    QueryResult *result = CharacterDatabase.PQuery("SELECT map, phase FROM character_phase_data WHERE guid = '%u'", target->GetGUIDLow());
+
+    if (result)
+    {
+        Field *fields = result->Fetch();
+
+        uint16 mapId = fields[0].GetUInt16();
+        uint32 phase = fields[1].GetUInt32();
+
+        target->GetSession()->SendSetPhaseShift(phase, mapId);
     }
 }
 
@@ -15168,6 +15184,18 @@ void Player::SendQuestReward( Quest const *pQuest, uint32 XP, Object * questGive
     data.WriteBit(true);
 
     GetSession()->SendPacket( &data );
+
+    QuestPhaseMapsVector const* QuestPhaseVector = sObjectMgr.GetQuestPhaseMapVector(questid);
+    if (QuestPhaseVector)
+    {
+        for(QuestPhaseMapsVector::const_iterator itr = QuestPhaseVector->begin(); itr != QuestPhaseVector->end(); ++itr)
+        {
+                GetSession()->SendSetPhaseShift(itr->MapId, itr->PhaseMask);
+                CharacterDatabase.PExecute("INSERT INTO character_phase_data` WHERE `guid` = %u", GetSession()->GetPlayer()->GetGUIDLow()); 
+                CharacterDatabase.PExecute("INSERT INTO character_phase_data` (`guid`, `map`, `phase`) VALUES (%u, %u, %u)", GetSession()->GetPlayer()->GetGUIDLow(), itr->MapId, itr->PhaseMask);
+        }
+    }
+
 }
 
 void Player::SendQuestFailed( uint32 quest_id, InventoryResult reason)

@@ -5289,7 +5289,7 @@ void Unit::setPowerType(Powers new_powertype)
 FactionTemplateEntry const* Unit::getFactionTemplateEntry() const
 {
     FactionTemplateEntry const* entry = sFactionTemplateStore.LookupEntry(getFaction());
-    if(!entry)
+    if (!entry)
     {
         static ObjectGuid guid;                             // prevent repeating spam same faction problem
 
