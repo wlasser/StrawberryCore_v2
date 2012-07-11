@@ -11277,3 +11277,37 @@ void Unit::DisableSpline()
     m_movementInfo.RemoveMovementFlag(MovementFlags(MOVEFLAG_SPLINE_ENABLED|MOVEFLAG_FORWARD));
     movespline->_Interrupt();
 }
+
+void Unit::BuildSendPlayVisualPacket(WorldPacket* data, uint32 value, bool impact)
+{
+    *data << uint32(0);         // unk, seems always 0
+    *data << uint32(value);
+    *data << uint32(impact ? 1 : 0);
+
+    uint8 guidMask[8] = { 4, 7, 5, 3, 1, 2, 0, 6 };
+    uint8 byteOrder[8] = { 0, 4, 1, 6, 7, 2, 3, 5 };
+    data->WriteGuidMask(GetObjectGuid(), guidMask, 8);
+    data->WriteGuidBytes(GetObjectGuid(), byteOrder, 8, 0);
+}
+
+void Unit::BuildForceMoveRootPacket(WorldPacket* data, bool apply, uint32 value)
+{
+    if (apply)
+    {
+        uint8 guidMask[8] = { 2, 7, 6, 0, 5, 4, 1, 3 };
+        uint8 byteOrder[8] = { 1, 0, 2, 5, 3, 4, 7, 6 };
+        data->WriteGuidMask(GetObjectGuid(), guidMask, 8);
+        data->WriteGuidBytes(GetObjectGuid(), byteOrder, 4, 0);
+        *data << uint32(value);
+        data->WriteGuidBytes(GetObjectGuid(), byteOrder, 4, 4);
+    }
+    else
+    {
+        uint8 guidMask[8] = { 0, 1, 3, 7, 5, 2, 4, 6 };
+        uint8 byteOrder[8] = { 3, 6, 1, 2, 0, 7, 4, 5 };
+        data->WriteGuidMask(GetObjectGuid(), guidMask, 8);
+        data->WriteGuidBytes(GetObjectGuid(), byteOrder, 3, 0);
+        *data << uint32(value);
+        data->WriteGuidBytes(GetObjectGuid(), byteOrder, 5, 3);
+    }
+}
