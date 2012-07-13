@@ -758,6 +758,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder *holder)
     data.WriteBit(true);  // Unknown
     data.WriteBit(false); // EnableVoiceChat, not sure
     data.WriteBit(false); // Unknown
+    data.FlushBits();
     
     data << uint32(1);    // Only seen 1
     data << uint32(0);    // Unknown, like random values
