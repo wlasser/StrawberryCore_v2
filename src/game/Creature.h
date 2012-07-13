@@ -553,7 +553,7 @@ class Creature : public Unit
         bool CanTrainAndResetTalentsOf(Player* pPlayer) const;
 
         bool IsOutOfThreatArea(Unit* pVictim) const;
-        void FillGuidsListFromThreatList(std::vector<ObjectGuid>& guids, uint32 maxamount = 0);
+        void FillGuidsListFromThreatList(GuidVector& guids, uint32 maxamount = 0);
 
         bool IsImmuneToSpell(SpellEntry const* spellInfo);
                                                             // redefine Unit::IsImmuneToSpell
@@ -577,6 +577,8 @@ class Creature : public Unit
         }
 
         uint32 GetLevelForTarget(Unit const* target) const; // overwrite Unit::GetLevelForTarget for boss level support
+
+        uint8 getRace() const override;
 
         bool IsInEvadeMode() const;
 
@@ -818,9 +820,9 @@ class AssistDelayEvent : public BasicEvent
     private:
         AssistDelayEvent();
 
-        ObjectGuid              m_victimGuid;
-        std::vector<ObjectGuid> m_assistantGuids;
-        Unit&                   m_owner;
+        ObjectGuid m_victimGuid;
+        GuidVector m_assistantGuids;
+        Unit&      m_owner;
 };
 
 class ForcedDespawnDelayEvent : public BasicEvent

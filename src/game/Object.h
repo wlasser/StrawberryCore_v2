@@ -57,8 +57,8 @@ enum TempSummonType
 
 enum PhaseMasks
 {
-    PHASEMASK_NORMAL   = 0x00000001,
-    PHASEMASK_ANYWHERE = 0xFFFFFFFF
+    PHASEMASK_NORMAL   = 0x0001,
+    PHASEMASK_ANYWHERE = 0xFFFF
 };
 
 class WorldPacket;
@@ -547,7 +547,7 @@ class WorldObject : public Object
         void PlayDirectSound(uint32 sound_id, Player* target = NULL);
 
         void SendObjectDeSpawnAnim(ObjectGuid guid);
-        void SendGameObjectCustomAnim(ObjectGuid guid);
+        void SendGameObjectCustomAnim(ObjectGuid guid, uint32 animId = 0);
 
         virtual bool IsHostileTo(Unit const* unit) const =0;
         virtual bool IsFriendlyTo(Unit const* unit) const =0;

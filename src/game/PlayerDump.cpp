@@ -666,6 +666,7 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
                 break;
             }
             case DTT_EQSET_TABLE:
+            {
                 if (!changenth(line, 1, newguid))           // character_equipmentsets.guid update
                     ROLLBACK(DUMP_FILE_BROKEN);
                 if (!changeGuid(line, 2, eqsets, sObjectMgr.m_EquipmentSetIds.GetNextAfterMaxUsed()))
@@ -674,7 +675,7 @@ DumpReturn PlayerDumpReader::LoadDump(const std::string& file, uint32 account, s
                     if(!changeGuid(line, 6+i, items, sObjectMgr.m_ItemGuids.GetNextAfterMaxUsed()))
                         ROLLBACK(DUMP_FILE_BROKEN);
                 break;
-
+            }
             default:
                 sLog.outError("Unknown dump table type: %u",type);
                 break;

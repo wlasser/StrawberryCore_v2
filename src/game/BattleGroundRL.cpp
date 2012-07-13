@@ -40,7 +40,6 @@ BattleGroundRL::BattleGroundRL()
 
 BattleGroundRL::~BattleGroundRL()
 {
-
 }
 
 void BattleGroundRL::Update(uint32 diff)

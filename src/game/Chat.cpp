@@ -521,6 +521,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "areatrigger_tavern",          SEC_ADMINISTRATOR, true,  &ChatHandler::HandleReloadAreaTriggerTavernCommand,       "", NULL },
         { "areatrigger_teleport",        SEC_ADMINISTRATOR, true,  &ChatHandler::HandleReloadAreaTriggerTeleportCommand,     "", NULL },
         { "command",                     SEC_ADMINISTRATOR, true,  &ChatHandler::HandleReloadCommandCommand,                 "", NULL },
+        { "conditions",                  SEC_ADMINISTRATOR, true,  &ChatHandler::HandleReloadConditionsCommand,              "", NULL },
         { "creature_ai_scripts",         SEC_ADMINISTRATOR, true,  &ChatHandler::HandleReloadEventAIScriptsCommand,          "", NULL },
         { "creature_ai_summons",         SEC_ADMINISTRATOR, true,  &ChatHandler::HandleReloadEventAISummonsCommand,          "", NULL },
         { "creature_ai_texts",           SEC_ADMINISTRATOR, true,  &ChatHandler::HandleReloadEventAITextsCommand,            "", NULL },
@@ -795,7 +796,6 @@ ChatCommand * ChatHandler::getCommandTable()
         { "linkgrave",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleLinkGraveCommand,           "", NULL },
         { "neargrave",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleNearGraveCommand,           "", NULL },
         { "explorecheat",   SEC_ADMINISTRATOR,  false, &ChatHandler::HandleExploreCheatCommand,        "", NULL },
-        { "hover",          SEC_ADMINISTRATOR,  false, &ChatHandler::HandleHoverCommand,               "", NULL },
         { "levelup",        SEC_ADMINISTRATOR,  false, &ChatHandler::HandleLevelUpCommand,             "", NULL },
         { "showarea",       SEC_ADMINISTRATOR,  false, &ChatHandler::HandleShowAreaCommand,            "", NULL },
         { "hidearea",       SEC_ADMINISTRATOR,  false, &ChatHandler::HandleHideAreaCommand,            "", NULL },
@@ -1504,14 +1504,14 @@ valid examples:
     std::istringstream reader(message);
     char buffer[256];
 
-    uint32 color;
+    uint32 color = 0;
 
-    ItemPrototype const* linkedItem;
-    Quest const* linkedQuest;
-    SpellEntry const *linkedSpell;
-    AchievementEntry const* linkedAchievement;
-    ItemRandomPropertiesEntry const* itemProperty;
-    ItemRandomSuffixEntry const* itemSuffix;
+    ItemPrototype const* linkedItem = NULL;
+    Quest const* linkedQuest = NULL;
+    SpellEntry const *linkedSpell= NULL;
+    AchievementEntry const* linkedAchievement = NULL;
+    ItemRandomPropertiesEntry const* itemProperty = NULL;
+    ItemRandomSuffixEntry const* itemSuffix = NULL;
 
     while(!reader.eof())
     {
@@ -1888,7 +1888,7 @@ valid examples:
                     if (linkedSpell)
                     {
                         // spells with that flag have a prefix of "$PROFESSION: "
-                        if (linkedSpell->Attributes & SPELL_ATTR_TRADESPELL)
+                        if (linkedSpell->HasAttribute(SPELL_ATTR_TRADESPELL))
                         {
                             // lookup skillid
                             SkillLineAbilityMapBounds bounds = sSpellMgr.GetSkillLineAbilityMapBounds(linkedSpell->Id);

@@ -37,7 +37,6 @@ struct SpellEntry;
 class DynamicObject : public WorldObject
 {
     public:
-        typedef std::set<ObjectGuid> AffectedSet;
         explicit DynamicObject();
 
         void AddToWorld();
@@ -53,7 +52,6 @@ class DynamicObject : public WorldObject
         Unit* GetCaster() const;
         float GetRadius() const { return m_radius; }
         DynamicObjectType GetType() const { return (DynamicObjectType)GetByteValue(DYNAMICOBJECT_BYTES,0); }
-        AffectedSet GetAffected() const { return m_affected; };
         bool IsAffecting(Unit *unit) const { return m_affected.find(unit->GetObjectGuid()) != m_affected.end(); }
         void AddAffected(Unit *unit) { m_affected.insert(unit->GetObjectGuid()); }
         void RemoveAffected(Unit *unit) { m_affected.erase(unit->GetObjectGuid()); }
@@ -77,7 +75,7 @@ class DynamicObject : public WorldObject
         int32 m_aliveDuration;
         float m_radius;                                     // radius apply persistent effect, 0 = no persistent effect
         bool m_positive;
-        AffectedSet m_affected;
+        GuidSet m_affected;
     private:
         GridReference<DynamicObject> m_gridRef;
 };

@@ -208,7 +208,10 @@ class ObjectGuid
         uint64 m_guid;
 };
 
-typedef std::set<ObjectGuid> ObjectGuidSet;
+// Some Shared defines
+typedef std::set<ObjectGuid> GuidSet;
+typedef std::list<ObjectGuid> GuidList;
+typedef std::vector<ObjectGuid> GuidVector;
 
 //minimum buffer size for packed guid is 9 bytes
 #define PACKED_GUID_MIN_BUFFER_SIZE 9
