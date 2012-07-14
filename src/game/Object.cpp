@@ -236,40 +236,22 @@ void Object::DestroyForPlayer( Player *target, bool anim ) const
 void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 {
     ObjectGuid Guid = ((Unit*)this)->GetObjectGuid();
-    uint8 GuidMask[] = { 3, 4, 0, 1, 2 };
+    uint8 GuidMask[] = { 7, 3, 2, 5, 4, 6, 0, 1 };
 
-    if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
-        data->WriteGuidMask(Guid, GuidMask, 2, 0);
-    else
-        data->WriteBits(false, 2);
-
+    data->WriteBit(false);
+    data->WriteBit(false);
     data->WriteBit(flags & UPDATEFLAG_ROTATION);
     data->WriteBit(flags & UPDATEFLAG_ANIM_KITS);                // AnimKits
     data->WriteBit(flags & UPDATEFLAG_HAS_ATTACKING_TARGET);
-
-    if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
-        data->WriteGuidMask(Guid, GuidMask, 1, 2);
-    else
-        data->WriteBit(false);
-
+    data->WriteBit(flags & UPDATEFLAG_SELF);
     data->WriteBit(flags & UPDATEFLAG_VEHICLE);
     data->WriteBit(flags & UPDATEFLAG_LIVING);
-    data->WriteBits(0, 24);                                 // Byte Counter
-
-    if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
-        data->WriteGuidMask(Guid, GuidMask, 1, 3);
-    else
-        data->WriteBit(false);
-
+    data->WriteBits(0, 24);                                      // Byte Counter
+    data->WriteBit(false);
     data->WriteBit(false);        // flags & UPDATEFLAG_HAS_POSITION Game Object Position
     data->WriteBit((flags & UPDATEFLAG_LIVING) == 0);       // Stationary Position
     data->WriteBit(false);
-
-    if (((Unit*)this)->GetTypeId() == TYPEID_PLAYER)
-        data->WriteGuidMask(Guid, GuidMask, 1, 4);
-    else
-        data->WriteBit(false);
-
+    data->WriteBit(false);
     data->WriteBit(flags & UPDATEFLAG_TRANSPORT);
 
     if (flags & UPDATEFLAG_LIVING)
@@ -284,8 +266,6 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         bool interPolatedTurning = unit->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_INTERP_TURNING;
         bool jumping = unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_FALLING;
 
-        ObjectGuid Guid2 = unit->GetObjectGuid();
-        uint8 GuidMask2[] = { 7, 3, 2, 5, 4, 6, 0, 1 };
 
         data->WriteBit(!(unit->m_movementInfo.GetMovementFlags()));
         if (unit->GetTypeId() == TYPEID_ITEM || unit->GetTypeId() == TYPEID_CONTAINER)
@@ -293,7 +273,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         else
             data->WriteBit(false);
 
-        data->WriteGuidMask(Guid2, GuidMask2, 3, 0);
+        data->WriteGuidMask(Guid, GuidMask, 3, 0);
 
         if(unit->m_movementInfo.GetMovementFlags())
             data->WriteBits(unit->m_movementInfo.GetMovementFlags(), 30);
@@ -303,7 +283,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         data->WriteBit(player && player->isInFlight());
         data->WriteBit(interPolatedTurning);
         data->WriteBit(!(unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_SPLINE_ELEVATION));
-        data->WriteGuidMask(Guid2, GuidMask2, 1, 3);
+        data->WriteGuidMask(Guid, GuidMask, 1, 3);
         data->WriteBit(isTransport);
         data->WriteBit(!false);
 
@@ -319,7 +299,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
             data->WriteGuidMask(tGuid, tGuidMask, 4, 4);
         }
 
-        data->WriteGuidMask(Guid2, GuidMask2, 1, 4);
+        data->WriteGuidMask(Guid, GuidMask, 1, 4);
 
         if (player && player->isInFlight())
         {
@@ -329,12 +309,12 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
                 Movement::PacketBuilder::WriteBytes(*unit->movespline, *data);
         }
 
-        data->WriteGuidMask(Guid2, GuidMask2, 1, 5);
+        data->WriteGuidMask(Guid, GuidMask, 1, 5);
 
         if(interPolatedTurning)
             data->WriteBit(jumping);
 
-        data->WriteGuidMask(Guid2, GuidMask2, 2, 6);
+        data->WriteGuidMask(Guid, GuidMask, 2, 6);
         data->WriteBit(false);    // Unknown 4.3.3
         data->WriteBit(!unit->m_movementInfo.GetMovementFlags2());
 
@@ -372,10 +352,9 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         bool interPolatedTurning = unit->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_INTERP_TURNING;
         bool jumping = unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_FALLING;
 
-        ObjectGuid Guid3 = unit->GetObjectGuid();
-        uint8 GuidBytes3[] = { 4, 5, 3, 0, 7, 1, 2, 6 };
+        uint8 GuidBytes[] = { 4, 5, 3, 0, 7, 1, 2, 6 };
 
-        data->WriteGuidBytes(Guid3, GuidBytes3, 1, 0);
+        data->WriteGuidBytes(Guid, GuidBytes, 1, 0);
 
         *data << unit->GetSpeed(MOVE_RUN_BACK);
 
@@ -404,7 +383,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         }
 
         *data << unit->GetPositionZ();
-        data->WriteGuidBytes(Guid3, GuidBytes3, 1, 1);
+        data->WriteGuidBytes(Guid, GuidBytes, 1, 1);
 
         if (flags & UPDATEFLAG_TRANSPORT)
         {
@@ -437,17 +416,17 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 
         *data << unit->GetPositionX();
         *data << unit->GetSpeed(MOVE_PITCH_RATE);
-        data->WriteGuidBytes(Guid3, GuidBytes3, 2, 2);
+        data->WriteGuidBytes(Guid, GuidBytes, 2, 2);
         *data << unit->GetSpeed(MOVE_SWIM);
         *data << unit->GetPositionY();
-        data->WriteGuidBytes(Guid3, GuidBytes3, 3, 4);
+        data->WriteGuidBytes(Guid, GuidBytes, 3, 4);
         *data << unit->GetSpeed(MOVE_WALK);
 
         if(flags & UPDATEFLAG_TRANSPORT)
             *data << uint32(WorldTimer::getMSTime());
 
         *data << unit->GetSpeed(MOVE_FLIGHT_BACK);
-        data->WriteGuidBytes(Guid3, GuidBytes3, 1, 7);
+        data->WriteGuidBytes(Guid, GuidBytes, 1, 7);
         *data << unit->GetSpeed(MOVE_TURN_RATE);
 
         if (!(unit->GetTypeId() == TYPEID_ITEM) || ! (unit->GetTypeId() == TYPEID_CONTAINER))
@@ -1046,7 +1025,7 @@ void WorldObject::Relocate(float x, float y, float z, float orientation)
     m_position.z = z;
     m_position.o = orientation;
 
-    if(isType(TYPEMASK_UNIT))
+    if (isType(TYPEMASK_UNIT))
         ((Unit*)this)->m_movementInfo.ChangePosition(x, y, z, orientation);
 }
 
@@ -1056,7 +1035,7 @@ void WorldObject::Relocate(float x, float y, float z)
     m_position.y = y;
     m_position.z = z;
 
-    if(isType(TYPEMASK_UNIT))
+    if (isType(TYPEMASK_UNIT))
         ((Unit*)this)->m_movementInfo.ChangePosition(x, y, z, GetOrientation());
 }
 
@@ -1064,7 +1043,7 @@ void WorldObject::SetOrientation(float orientation)
 {
     m_position.o = orientation;
 
-    if(isType(TYPEMASK_UNIT))
+    if (isType(TYPEMASK_UNIT))
         ((Unit*)this)->m_movementInfo.ChangeOrientation(orientation);
 }
 
@@ -1188,8 +1167,7 @@ bool WorldObject::IsWithinLOS(float ox, float oy, float oz) const
 {
     float x,y,z;
     GetPosition(x,y,z);
-    VMAP::IVMapManager *vMapManager = VMAP::VMapFactory::createOrGetVMapManager();
-    return vMapManager->isInLineOfSight(GetMapId(), x, y, z+2.0f, ox, oy, oz+2.0f);
+    return GetMap()->IsInLineOfSight(x, y, z+2.0f, ox, oy, oz+2.0f);
 }
 
 bool WorldObject::GetDistanceOrder(WorldObject const* obj1, WorldObject const* obj2, bool is3D /* = true */) const
@@ -1603,11 +1581,11 @@ void WorldObject::SendObjectDeSpawnAnim(ObjectGuid guid)
     SendMessageToSet(&data, true);
 }
 
-void WorldObject::SendGameObjectCustomAnim(ObjectGuid guid)
+void WorldObject::SendGameObjectCustomAnim(ObjectGuid guid, uint32 animId /*= 0*/)
 {
     WorldPacket data(SMSG_GAMEOBJECT_CUSTOM_ANIM, 8+4);
     data << ObjectGuid(guid);
-    data << uint32(0);                                      // not known what this is
+    data << uint32(animId);
     SendMessageToSet(&data, true);
 }
 

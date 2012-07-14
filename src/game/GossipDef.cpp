@@ -446,7 +446,7 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* pQuest, ObjectGuid guid
         }
     }
 
-    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 200);   // guess size
+    WorldPacket data(SMSG_QUESTGIVER_QUEST_DETAILS, 100);   // guess size
     data << guid;
     data << uint64(ActivateAccept ? 0 : guid);              // Send guid if ActivateAccept disabled
     data << uint32(pQuest->GetQuestId());
@@ -544,8 +544,8 @@ void PlayerMenu::SendQuestGiverQuestDetails(Quest const* pQuest, ObjectGuid guid
 
     for(int i = 0; i < QUEST_CURRENCY_REWARD_COUNT; ++i)    // 4.0.0 currency reward id and count
     {
-        data << pQuest->CurrencyRewardId[i];
-        data << pQuest->CurrencyRewardCount[i];
+        data << uint32(pQuest->CurrencyRewardId[i]);
+        data << uint32(pQuest->CurrencyRewardCount[i]);
     }
 
     data << uint32(0);                                      // bonus arena points
