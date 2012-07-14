@@ -59,12 +59,10 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
         send_data.WriteBit(0);
     }
     send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,2,4);
-    send_data.FlushBits();
 
     if(Queue)
     {
         send_data.WriteGuidMask(Queue->GetId(),QueueGuidMask,8);
-        send_data.FlushBits();
     }
 
     send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,2,6);
