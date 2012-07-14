@@ -569,6 +569,7 @@ void LoadDBCStores(const std::string& dataPath)
             continue;
 
         SpellEntry const* spellInfo = sSpellStore.LookupEntry(skillLine->spellId);
+
         if (spellInfo && (spellInfo->Attributes & (SPELL_ATTR_UNK4 | SPELL_ATTR_PASSIVE | SPELL_ATTR_UNK7 | SPELL_ATTR_UNK8)) == (SPELL_ATTR_UNK4 | SPELL_ATTR_PASSIVE | SPELL_ATTR_UNK7 | SPELL_ATTR_UNK8))
         {
             for (unsigned int i = 1; i < sCreatureFamilyStore.GetNumRows(); ++i)
@@ -757,7 +758,7 @@ void LoadDBCStores(const std::string& dataPath)
     }
 
     // Check loaded DBC files proper version
-    if (!sAreaStore.LookupEntry(4713)             ||       // last area (areaflag) added in 4.3.4
+    if (!sAreaStore.LookupEntry(4713)              ||       // last area (areaflag) added in 4.3.4
         !sCharTitlesStore.LookupEntry(287)         ||       // last char title added in 4.3.4
         !sGemPropertiesStore.LookupEntry(2250)     ||       // last gem property added in 4.3.4
         !sMapStore.LookupEntry(980)                ||       // last map added in 4.3.4

@@ -130,7 +130,13 @@ enum PartyResult
     ERR_VOTE_KICK_REASON_NEEDED         = 27,
     ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE = 28,
     ERR_PARTY_LFG_BOOT_LOOT_ROLLS       = 29,
-    ERR_PARTY_LFG_TELEPORT_IN_COMBAT    = 30
+    ERR_PARTY_LFG_TELEPORT_IN_COMBAT    = 30,
+    ERR_PARTY_ALREADY_IN_BATTLEGROUND_QUEUE = 31,
+    ERR_PARTY_CONFIRMING_BATTLEGROUND_QUEUE = 32,
+    ERR_CROSS_REALM_RAID_INVITE         = 33,
+    ERR_RAID_DISALLOWED_BY_CROSS_REALM  = 34,
+    ERR_PARTY_ROLE_NOT_AVAILABLE        = 35,
+    ERR_PARTY_LFG_BOOT_VOTE_REGISTERED  = 36,
 };
 
 enum LfgJoinResult
@@ -880,6 +886,7 @@ class WorldSession
 
         void HandleUpdateObjectFailure(WorldPacket& recv_data);
         void HandlePlayerViolenceLevel(WorldPacket& recv_data);
+        void HandleLogDisconnect(WorldPacket& recv_data);
 
     private:
         // private trade methods

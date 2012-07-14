@@ -563,6 +563,8 @@ void WorldSession::HandleResponseCharacterCreateOpcode( WorldPacket & recv_data 
 
         if (mapId)
             CharacterDatabase.PExecute("INSERT INTO character_phase_data (`guid`, `map`) VALUES (%u, %u)", pNewChar->GetGUIDLow(), mapId);
+
+        delete result;
     }
 
     data << (uint8)CHAR_CREATE_SUCCESS;

@@ -2568,14 +2568,12 @@ void Player::GiveLevel(uint32 level)
     WorldPacket data(SMSG_LEVELUP_INFO, (4+4+MAX_POWERS*4+MAX_STATS*4));
     data << uint32(level);
     data << uint32(int32(classInfo.basehealth) - int32(GetCreateHealth()));
-    // for(int i = 0; i < MAX_POWERS; ++i)                  // Powers loop (0-6)
+    // for(int i = 0; i < MAX_POWERS; ++i)                  // Powers loop (0-4)
     data << uint32(int32(classInfo.basemana)   - int32(GetCreateMana()));
     data << uint32(0);
     data << uint32(0);
     data << uint32(0);
     data << uint32(0);
-    /*data << uint32(0);
-    data << uint32(0);*/
     // end for
     for(int i = STAT_STRENGTH; i < MAX_STATS; ++i)          // Stats loop (0-4)
         data << uint32(int32(info.stats[i]) - GetCreateStat(Stats(i)));
@@ -4079,8 +4077,10 @@ void Player::SetPhaseAndMap(Player* target) const
 
         uint16 mapId = fields[0].GetUInt16();
         uint32 phase = fields[1].GetUInt32();
-        
+
         target->GetSession()->SendSetPhaseShift(phase, mapId);
+
+        delete result;
     }
 }
 
@@ -8371,9 +8371,10 @@ void Player::SendNotifyLootItemRemoved(uint8 lootSlot)
 
 void Player::SendUpdateWorldState(uint32 Field, uint32 Value)
 {
-    WorldPacket data(SMSG_UPDATE_WORLD_STATE, 8);
+    WorldPacket data(SMSG_UPDATE_WORLD_STATE, 8 + 1);
     data << Field;
     data << Value;
+    data << uint8(0);
     GetSession()->SendPacket(&data);
 }
 
@@ -15297,9 +15298,9 @@ void Player::SendQuestReward( Quest const *pQuest, uint32 XP, Object * questGive
     {
         for(QuestPhaseMapsVector::const_iterator itr = QuestPhaseVector->begin(); itr != QuestPhaseVector->end(); ++itr)
         {
-                GetSession()->SendSetPhaseShift(itr->MapId, itr->PhaseMask);
-                CharacterDatabase.PExecute("INSERT INTO character_phase_data` WHERE `guid` = %u", GetSession()->GetPlayer()->GetGUIDLow()); 
-                CharacterDatabase.PExecute("INSERT INTO character_phase_data` (`guid`, `map`, `phase`) VALUES (%u, %u, %u)", GetSession()->GetPlayer()->GetGUIDLow(), itr->MapId, itr->PhaseMask);
+            GetSession()->SendSetPhaseShift(itr->MapId, itr->PhaseMask);
+            CharacterDatabase.PExecute("DELETE FROM `character_phase_data` WHERE `guid` = %u", GetSession()->GetPlayer()->GetGUIDLow()); 
+            CharacterDatabase.PExecute("INSERT INTO `character_phase_data` (`guid`, `map`, `phase`) VALUES (%u, %u, %u)", GetSession()->GetPlayer()->GetGUIDLow(), itr->MapId, itr->PhaseMask);
         }
     }
 
@@ -23405,3 +23406,4 @@ PlayerTalentHolder::PlayerTalentHolder()
 {
 
 }
+

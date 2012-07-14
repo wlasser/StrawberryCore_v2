@@ -1610,3 +1610,8 @@ void WorldSession::HandlePlayerViolenceLevel(WorldPacket & recv_data)
     recv_data >> violenceLevel;
 }
 
+void WorldSession::HandleLogDisconnect(WorldPacket& recv_data)
+{
+    recv_data.read_skip<uint32>();
+}
+
