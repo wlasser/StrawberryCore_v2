@@ -55,9 +55,40 @@ void WorldSession::SendPartyResult(PartyOperation operation, const std::string& 
 
 void WorldSession::HandleGroupInviteOpcode( WorldPacket & recv_data )
 {
-    std::string membername;
-    recv_data >> membername;
-    recv_data.read_skip<uint32>();                           // roles mask?
+    recv_data.read_skip<uint32>();      // cross-realm part related
+    recv_data.read_skip<uint32>();      // roles mask?
+
+    bool mask[8];
+    mask[2] = recv_data.ReadBit();
+    mask[7] = recv_data.ReadBit();
+
+    uint32 realmLen = recv_data.ReadBits(9);
+
+    mask[3] = recv_data.ReadBit();
+
+    uint32 nameLen = recv_data.ReadBits(10);
+
+    mask[5] = recv_data.ReadBit();
+    mask[4] = recv_data.ReadBit();
+    mask[6] = recv_data.ReadBit();
+    mask[0] = recv_data.ReadBit();
+    mask[1] = recv_data.ReadBit();
+
+    ByteBuffer guidBytes(8, true);
+    if (mask[4]) guidBytes[4] = recv_data.ReadUInt8() ^ 1;
+    if (mask[7]) guidBytes[7] = recv_data.ReadUInt8() ^ 1;
+    if (mask[6]) guidBytes[6] = recv_data.ReadUInt8() ^ 1;
+
+    std::string membername = recv_data.ReadString(nameLen);
+    std::string realm = recv_data.ReadString(realmLen);
+
+    if (mask[1]) guidBytes[1] = recv_data.ReadUInt8() ^ 1;
+    if (mask[0]) guidBytes[0] = recv_data.ReadUInt8() ^ 1;
+    if (mask[5]) guidBytes[5] = recv_data.ReadUInt8() ^ 1;
+    if (mask[3]) guidBytes[3] = recv_data.ReadUInt8() ^ 1;
+    if (mask[2]) guidBytes[2] = recv_data.ReadUInt8() ^ 1;
+
+    //ObjectGuid guid = ObjectGuid(BitConverter::ToUInt64(guidBytes));    // unused
 
     // attempt add selected player
 
