@@ -48,6 +48,7 @@ void WorldSession::SendPartyResult(PartyOperation operation, const std::string& 
     data << member;                                         // max len 48
     data << uint32(res);
     data << uint32(0);                                      // LFD cooldown related (used with ERR_PARTY_LFG_BOOT_COOLDOWN_S and ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S)
+    data << ObjectGuid();                                   // if result == 27 (ERR_VOTE_KICK_REASON_NEEDED), then it's guid of player being kicked (member's guid)
 
     SendPacket( &data );
 }
