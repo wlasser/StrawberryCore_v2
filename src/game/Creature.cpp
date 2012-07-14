@@ -542,10 +542,10 @@ void Creature::Update(uint32 update_diff, uint32 diff)
                 m_corpseDecayTimer -= update_diff;
                 if (m_groupLootId)
                 {
-                    if(update_diff < m_groupLootTimer)
-                        m_groupLootTimer -= update_diff;
-                    else
+                    if (m_groupLootTimer <= update_diff)
                         StopGroupLoot();
+                    else
+                        m_groupLootTimer -= update_diff;
                 }
             }
 
@@ -2241,6 +2241,12 @@ bool Creature::HasSpellCooldown(uint32 spell_id) const
     return (itr != m_CreatureSpellCooldowns.end() && itr->second > time(NULL)) || HasCategoryCooldown(spell_id);
 }
 
+uint8 Creature::getRace() const
+{
+    uint8 race = Unit::getRace();
+    return race ? race : GetCreatureModelRace(GetNativeDisplayId());
+}
+
 bool Creature::IsInEvadeMode() const
 {
     return !i_motionMaster.empty() && i_motionMaster.GetCurrentMovementGeneratorType() == HOME_MOTION_TYPE;
@@ -2516,7 +2522,7 @@ void Creature::ApplyGameEventSpells(GameEventCreatureData const* eventData, bool
         CastSpell(this, cast_spell, true);
 }
 
-void Creature::FillGuidsListFromThreatList( std::vector<ObjectGuid>& guids, uint32 maxamount /*= 0*/ )
+void Creature::FillGuidsListFromThreatList(GuidVector& guids, uint32 maxamount /*= 0*/)
 {
     if (!CanHaveThreatList())
         return;

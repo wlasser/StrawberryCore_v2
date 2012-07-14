@@ -1318,11 +1318,12 @@ void BattleGroundMgr::BuildPvpLogDataPacket(WorldPacket *data, BattleGround *bg)
         }
         else
         {
-            Player *plr = sObjectMgr.GetPlayer(itr->first);
             Team team = bg->GetPlayerTeam(itr->first);
-            if (!team && plr)
-                team = plr->GetTeam();
-            if (( bg->GetWinner()==0 && team == ALLIANCE ) || ( bg->GetWinner()==1 && team==HORDE ))
+            if (!team)
+                if (Player* player = sObjectMgr.GetPlayer(itr->first))
+                    team = player->GetTeam();
+
+            if (bg->GetWinner() == team && team != TEAM_NONE)
                 *data << uint8(1);
             else
                 *data << uint8(0);
@@ -1582,7 +1583,7 @@ uint32 BattleGroundMgr::CreateBattleGround(BattleGroundTypeId bgTypeId, bool IsA
         case BATTLEGROUND_RV: bg = new BattleGroundRV; break;
         case BATTLEGROUND_IC: bg = new BattleGroundIC; break;
         case BATTLEGROUND_RB: bg = new BattleGroundRB; break;
-        default:bg = new BattleGround;   break;             // placeholder for non implemented BG
+        default:              bg = new BattleGround;   break;                           // placeholder for non implemented BG
     }
 
     bg->SetMapId(MapID);

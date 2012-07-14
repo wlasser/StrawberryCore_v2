@@ -29,7 +29,7 @@
 
 UpdateData::UpdateData(uint16 map) : m_map(map), m_blockCount(0) { }
 
-void UpdateData::AddOutOfRangeGUID(ObjectGuidSet& guids)
+void UpdateData::AddOutOfRangeGUID(GuidSet& guids)
 {
     m_outOfRangeGUIDs.insert(guids.begin(),guids.end());
 }
@@ -59,7 +59,7 @@ bool UpdateData::BuildPacket(WorldPacket *packet)
         buf << uint8(UPDATETYPE_OUT_OF_RANGE_OBJECTS);
         buf << uint32(m_outOfRangeGUIDs.size());
 
-        for(ObjectGuidSet::const_iterator i = m_outOfRangeGUIDs.begin(); i != m_outOfRangeGUIDs.end(); ++i)
+        for(GuidSet::const_iterator i = m_outOfRangeGUIDs.begin(); i != m_outOfRangeGUIDs.end(); ++i)
             buf << i->WriteAsPacked();
     }
 

@@ -105,7 +105,6 @@ enum BattleGroundSpells
 enum BattleGroundTimeIntervals
 {
     RESURRECTION_INTERVAL           = 30000,                // ms
-    //REMIND_INTERVAL                 = 10000,                // ms
     INVITATION_REMIND_TIME          = 20000,                // ms
     INVITE_ACCEPT_WAIT_TIME         = 40000,                // ms
     TIME_TO_AUTOREMOVE              = 120000,               // ms
@@ -201,13 +200,6 @@ enum BattleGroundType
 {
     TYPE_BATTLEGROUND     = 3,
     TYPE_ARENA            = 4
-};
-
-enum BattleGroundWinner
-{
-    WINNER_HORDE            = 0,
-    WINNER_ALLIANCE         = 1,
-    WINNER_NONE             = 2
 };
 
 enum BattleGroundTeamIndex
@@ -325,7 +317,7 @@ class BattleGround
 
         int32 GetStartDelayTime() const     { return m_StartDelayTime; }
         ArenaType GetArenaType() const          { return m_ArenaType; }
-        uint8 GetWinner() const             { return m_Winner; }
+        Team GetWinner() const              { return m_Winner; }
         uint32 GetBattlemasterEntry() const;
         uint32 GetBonusHonorFromKill(uint32 kills) const;
 
@@ -344,7 +336,7 @@ class BattleGround
         void SetRated(bool state)           { m_IsRated = state; }
         void SetArenaType(ArenaType type)   { m_ArenaType = type; }
         void SetArenaorBGType(bool _isArena) { m_IsArena = _isArena; }
-        void SetWinner(uint8 winner)        { m_Winner = winner; }
+        void SetWinner(Team winner)         { m_Winner = winner; }
 
         void ModifyStartDelayTime(int diff) { m_StartDelayTime -= diff; }
         void SetStartDelayTime(int Time)    { m_StartDelayTime = Time; }
@@ -506,11 +498,8 @@ class BattleGround
 
         void HandleTriggerBuff(ObjectGuid go_guid);
 
-        // TODO: make this protected:
-        typedef std::vector<ObjectGuid> BGObjects;
-        typedef std::vector<ObjectGuid> BGCreatures;
         // TODO drop m_BGObjects
-        BGObjects m_BgObjects;
+        GuidVector m_BgObjects;
         void SpawnBGObject(ObjectGuid guid, uint32 respawntime);
         bool AddObject(uint32 type, uint32 entry, float x, float y, float z, float o, float rotation0, float rotation1, float rotation2, float rotation3, uint32 respawnTime = 0);
         void SpawnBGCreature(ObjectGuid guid, uint32 respawntime);
@@ -532,8 +521,8 @@ class BattleGround
 
         struct EventObjects
         {
-            BGObjects gameobjects;
-            BGCreatures creatures;
+            GuidVector gameobjects;
+            GuidVector creatures;
         };
 
         // cause we create it dynamicly i use a map - to avoid resizing when
@@ -582,7 +571,7 @@ class BattleGround
         ArenaType  m_ArenaType;                             // 2=2v2, 3=3v3, 5=5v5
         bool   m_InBGFreeSlotQueue;                         // used to make sure that BG is only once inserted into the BattleGroundMgr.BGFreeSlotQueue[bgTypeId] deque
         bool   m_IsArena;
-        uint8  m_Winner;                                    // 0=alliance, 1=horde, 2=none
+        Team   m_Winner;
         int32  m_StartDelayTime;
         bool   m_IsRated;                                   // is this battle rated?
         bool   m_PrematureCountDown;

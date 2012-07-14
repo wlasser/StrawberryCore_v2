@@ -40,7 +40,6 @@ BattleGroundBE::BattleGroundBE()
 
 BattleGroundBE::~BattleGroundBE()
 {
-
 }
 
 void BattleGroundBE::Update(uint32 diff)
