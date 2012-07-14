@@ -301,12 +301,10 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 
         data->WriteGuidMask(Guid, GuidMask, 1, 4);
 
-        if (player && player->isInFlight())
+        if (isSplineEnabled)
         {
-            data->WriteBit(isSplineEnabled);
-
-            if (isSplineEnabled)
-                Movement::PacketBuilder::WriteBytes(*unit->movespline, *data);
+            data->WriteBit(true);
+            Movement::PacketBuilder::WriteBytes(*unit->movespline, *data);
         }
 
         data->WriteGuidMask(Guid, GuidMask, 1, 5);
@@ -376,11 +374,8 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         if (unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_SPLINE_ENABLED)
             *data << unit->m_movementInfo.splineElevation;
 
-        if (player && player->isInFlight())
-        {
-            if (isSplineEnabled)
-                Movement::PacketBuilder::WriteData(*unit->movespline, *data);
-        }
+        if (isSplineEnabled)
+            Movement::PacketBuilder::WriteData(*unit->movespline, *data);
 
         *data << unit->GetPositionZ();
         data->WriteGuidBytes(Guid, GuidBytes, 1, 1);
