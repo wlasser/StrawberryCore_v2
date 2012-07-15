@@ -38,8 +38,8 @@ void BattlefieldMgr::Initialize()
     sLog.outDebug("Creating Battlefields");
 
     Battlefield * WG = new BattlefieldWG();
-    m_battlefieldList[WG->getGuid().GetRawValue()] = WG;
-    m_queueMap[WG->getGuid().GetRawValue()] = new BattlefieldQueue(BATTLEFIELD_WG);
+    m_battlefieldList[WG->getGuid()] = WG;
+    m_queueMap[WG->getGuid()] = new BattlefieldQueue(BATTLEFIELD_WG);
 }
 
 void BattlefieldMgr::Update(uint32 uiDiff)
@@ -58,7 +58,7 @@ void BattlefieldMgr::SendInvitePlayerToQueue(Player * player)
     //player->GetSession()->SendPacket(&send_data);
 }
 
-Battlefield * BattlefieldMgr::FindBattlefield(uint64 guid)
+Battlefield * BattlefieldMgr::FindBattlefield(ObjectGuid guid)
 {
     BattlefieldList::const_iterator itr = m_battlefieldList.find(guid);
     if(itr != m_battlefieldList.end())

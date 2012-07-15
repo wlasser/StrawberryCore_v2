@@ -42,7 +42,7 @@ class BattlefieldQueue
     friend class BattlefieldMgr;
 
     public:
-        BattlefieldQueue(uint8 battleId) { m_queueId = battleId + urand(battleId,50); }
+        BattlefieldQueue(uint8 battleId) { m_queueId = battleId /*+ urand(battleId,50)*/; }
         uint64 GetId() { return m_queueId; }
         bool HasEnoughSpace() { return m_inQueue.size() <= 40 ? true : false ; }
         void AddPlayerToQueue(Player * plr) { m_inQueue.push_back(plr); }
@@ -53,7 +53,7 @@ class BattlefieldQueue
         uint64          m_queueId;
 };
 
-typedef std::map<uint64,BattlefieldQueue* > BattlefieldQueueMap;
+typedef std::map<ObjectGuid,BattlefieldQueue* > BattlefieldQueueMap;
 
 class BattlefieldMgr
 {
@@ -66,8 +66,8 @@ class BattlefieldMgr
         void Initialize();
         void Update(uint32 uiDiff);
 
-        Battlefield * FindBattlefield(uint64 guid);
-        BattlefieldQueue * GetQueueForBattlefield(uint64 guid) { return m_queueMap[guid]; }
+        Battlefield * FindBattlefield(ObjectGuid guid);
+        BattlefieldQueue * GetQueueForBattlefield(ObjectGuid guid) { return m_queueMap[guid]; }
 
         void SendInvitePlayerToQueue(Player * player);
 
