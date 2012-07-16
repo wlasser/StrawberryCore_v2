@@ -462,7 +462,11 @@ bool ChatHandler::HandleAccountOnlineListCommand(char* args)
 
     ///- Get the list of accounts ID logged to the realm
     //                                                 0   1         2        3        4
-    QueryResult *result = LoginDatabase.PQuery("SELECT id, username, last_ip, gmlevel, expansion FROM account WHERE active_realm_id = %u", realmID);
+    QueryResult *result = LoginDatabase.PQuery("SELECT a.username, a.last_ip, aa.gmlevel, a.expansion "
+                                 "FROM account a "
+                                 "LEFT JOIN account_access aa "
+                                 "ON (a.id = aa.id) "
+                                 "WHERE a.id = '%u'", realmID);
 
     return ShowAccountListHelper(result,&limit);
 }
