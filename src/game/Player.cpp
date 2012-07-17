@@ -2637,7 +2637,6 @@ void Player::UpdateFreeTalentPoints(bool resetIfNeed)
     else
     {
         uint32 talentPointsForLevel = CalculateTalentsPoints();
-
         // if used more that have then reset
         if (m_usedTalentCount > talentPointsForLevel)
         {
@@ -3235,11 +3234,7 @@ bool Player::addSpell(uint32 spell_id, bool active, bool learning, bool dependen
                     m_talents[m_activeSpec][i].AddTalentToMap(talentPos->talent_id,talent);
                 }
             }
-
-            // update used talent points count
-            m_usedTalentCount += GetTalentSpellCost(talentPos);
-            UpdateFreeTalentPoints(false);
-            }
+        }
     }
 
     // update free primary prof.points (if any, can be none in case GM .learn prof. learning)
@@ -3462,7 +3457,7 @@ void Player::removeSpell(uint32 spell_id, bool disabled, bool learn_low_rank, bo
                 else
                     m_talents[m_activeSpec][i].RemoveTalentFromMap(iter->first);
             }
-            else
+            else if(i == 2)
                 sLog.outError("removeSpell: Player (GUID: %u) has talent spell (id: %u) but doesn't have talent",GetGUIDLow(), spell_id );
         }
         // free talent points
@@ -16996,13 +16991,10 @@ void Player::_LoadTalents(QueryResult *result)
             
             m_talents[spec][holderId].AddTalentToMap(talentEntry->TalentID,talent);
             m_talents[spec][holderId].IncreaseTalentCount();
+            ++m_usedTalentCount;
         }
         while (result->NextRow());
         delete result;
-        for(uint8 i = 0; i < 3; ++i)
-        {
-            m_usedTalentCount += m_talents[m_activeSpec][i].GetTalentCount();
-        }
     }
 }
 
@@ -22288,37 +22280,51 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank)
     }
 
     PlayerTalent newTalent;
+    PlayerTalentHolder * holder;
+    bool holderIsSet = false;
     newTalent.talentEntry = talent;
 
     for(uint8 i = 0; i < 3; ++i)
     {
-        if(m_talents[m_activeSpec][i].GetTalentCount() < 1)
-            m_talents[m_activeSpec][i].SetTabId(talent->TalentTab);
-
-        PlayerTalentMap::iterator itr = m_talents[m_activeSpec][i].GetTalentMap().find(talentId);
-        if(itr != m_talents[m_activeSpec][i].GetTalentMap().end())
+        if(m_talents[m_activeSpec][i].GetTabId() == talent->TalentTab)
         {
-            if(itr->second.currentRank == talentRank)
-            {
-                sLog.outError("Player with guid : %u has tryed to learn talent : %u with rank : %u while having active the same talent with the same rank",this->GetObjectGuid().GetRawValue(),talentId,talentRank);
-                return;
-            }
-
-            if(talent->DependsOn != 0)
-                dependsOn = true;
-        
-            newTalent.currentRank = talentRank;
-            newTalent.state = PLAYERSPELL_CHANGED;
-        }else{
-            newTalent.currentRank = talentRank;
-            newTalent.state = PLAYERSPELL_NEW;
-            m_talents[m_activeSpec][i].IncreaseTalentCount();
+            holder = &m_talents[m_activeSpec][i];
         }
-        learnSpell(talent->RankID[talentRank],dependsOn);
-        m_talents[m_activeSpec][i].AddTalentToMap(talentId,newTalent);
-        m_usedTalentCount += 1;
-        return;
-    }   
+        if((m_talents[m_activeSpec][i].GetTabId() == 0 || m_talents[m_activeSpec][i].GetTabId() > 1000) && (!holderIsSet))
+        {
+            m_talents[m_activeSpec][i].SetTabId(talent->TalentTab);
+            holderIsSet = true;
+            holder = &m_talents[m_activeSpec][i];
+        }
+    }
+
+    PlayerTalentMap::iterator itr = holder->GetTalentMap().find(talentId);
+    if(itr != holder->GetTalentMap().end())
+    {
+        if(itr->second.currentRank == talentRank)
+        {
+            sLog.outError("Player with guid: %u has tried to learn a talent with rank that he knows, skipping",this->GetObjectGuid().GetRawValue());
+            return;
+        }
+        newTalent.state = PLAYERSPELL_CHANGED;
+        if(talent->DependsOn != 0)
+            dependsOn = true;
+
+        holder->RemoveTalentFromMap(talentId);
+    }
+    else
+    {
+        newTalent.state = PLAYERSPELL_NEW;
+    }
+    newTalent.currentRank = talentRank;
+    learnSpell(talent->RankID[talentRank],dependsOn);
+    holder->AddTalentToMap(talentId,newTalent);
+    for(uint8 i = 0; i <= talentRank +1; ++i)
+    {
+        holder->IncreaseTalentCount();
+    }
+    m_usedTalentCount += (talentRank + 1);
+    UpdateFreeTalentPoints(false);
 }
 
 void Player::LearnPetTalent(ObjectGuid petGuid, uint32 talentId, uint32 talentRank)
@@ -22526,30 +22532,25 @@ void Player::BuildPlayerTalentsInfoData(WorldPacket *data)
     {
         for(uint32 specIdx = 0; specIdx < m_specsCount; ++specIdx)
         {
-            uint8 talentIdCount = 0;
-            uint32 talentTabId = 0;
-            size_t pos = data->wpos();
-            *data << uint8(talentIdCount);
-
-            size_t pos1 = data->wpos();
-            *data << uint32(talentTabId);
-
-            uint32 const* talentTabIds = GetTalentTabPages(getClass());
-
-            for(uint8 i = 0; i <= 3; ++i)
+            for(uint8 i = 0; i < 3; ++i)
             {
-                talentTabId = m_talents[specIdx][i].GetTabId();
-                talentIdCount = m_talents[specIdx][i].GetTalentCount();
-
-                for(PlayerTalentMap::iterator itr = m_talents[specIdx][i].GetTalentMap().begin(); itr != m_talents[specIdx][i].GetTalentMap().end(); ++itr)
+                if(m_talents[specIdx][i].GetTalentCount() > 0)
                 {
-                    *data << uint32(itr->second.talentEntry->TalentID);
-                    *data << uint8(itr->second.currentRank);
+                    *data << uint32(m_talents[specIdx][i].GetTabId());
+                    *data << uint8(m_talents[specIdx][i].GetTalentCount());
+
+                    for(PlayerTalentMap::iterator itr = m_talents[specIdx][i].GetTalentMap().begin(); itr != m_talents[specIdx][i].GetTalentMap().end(); ++itr)
+                    {
+                        *data << uint32(itr->second.talentEntry->TalentID);
+                        *data << uint8(itr->second.currentRank);
+                    }
+                }
+                else
+                {
+                    *data << uint32(0);
+                    *data << uint8(0);
                 }
             }
-
-            data->put<uint8>(pos, talentIdCount);           // put real talentIdCount
-            data->put<uint32>(pos1, talentTabId);           // put real talentTabId
 
             *data << uint8(MAX_GLYPH_SLOT_INDEX);
             for(uint8 i = 0; i < MAX_GLYPH_SLOT_INDEX; ++i)

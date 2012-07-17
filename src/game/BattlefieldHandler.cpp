@@ -22,7 +22,7 @@
 
 void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
 {
-    uint64 battlefieldGuid = 0;
+    ObjectGuid battlefieldGuid;
     bool canJoin = false;
 
     BitStream mask = recv_data.ReadBitStream(8);
@@ -38,7 +38,7 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
     if (mask[7]) bytes[5] = recv_data.ReadUInt8() ^ 1;
     if (mask[0]) bytes[0] = recv_data.ReadUInt8() ^ 1;
 
-    battlefieldGuid = BitConverter::ToUInt64(bytes);
+    battlefieldGuid = ObjectGuid(HIGHGUID_BATTLEFIELD,(uint32)BitConverter::ToUInt64(bytes));
 
     WorldPacket send_data(SMSG_BATTLEFIELD_MGR_QUEUE_REQ_RESP,11);
     
@@ -49,7 +49,9 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
     uint8 QueueGuidMask[] = { 7, 3, 0, 4, 2, 6, 1, 5};
     uint8 QueueGuidBytes[] = { 2, 5, 3, 0, 4, 6, 1, 7};
 
-    send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,4);
+    send_data.WriteGuidMask(Battlefield->getGuid(),BattlefieldGuidMask,4);
+    send_data.WriteBit(0);      //unk bit
+    send_data.WriteGuidMask(Battlefield->getGuid(),BattlefieldGuidMask,1,4);
     if(Queue)
     {
         send_data.WriteBit(1);
@@ -58,7 +60,7 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
     {
         send_data.WriteBit(0);
     }
-    send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,2,4);
+    send_data.WriteGuidMask(Battlefield->getGuid(),BattlefieldGuidMask,1,5); //correct do not touch!!
     send_data.FlushBits();
 
     if(Queue)
@@ -67,15 +69,15 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
         send_data.FlushBits();
     }
 
-    send_data.WriteGuidMask(battlefieldGuid,BattlefieldGuidMask,2,6);
+    send_data.WriteGuidMask(Battlefield->getGuid(),BattlefieldGuidMask,2,6);
     send_data.FlushBits();
 
-    if(Queue)
+    /*if(Queue)
     {
         send_data.WriteGuidBytes(Queue->GetId(),QueueGuidBytes,8,0);
-    }
+    }*/
 
-    send_data.WriteGuidBytes(battlefieldGuid,BattlefieldBytes,8,0);
+    send_data.WriteGuidBytes(Battlefield->getGuid(),BattlefieldBytes,8,0);
 
     send_data << uint32(Battlefield->GetZoneId());
 
