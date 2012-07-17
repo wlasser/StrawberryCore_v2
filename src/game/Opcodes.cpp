@@ -417,4 +417,8 @@ void InitOpcodeTable()
     OPCODE(MSG_MOVE_START_PITCH_DOWN,         STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMovementOpcodes         );
     OPCODE(MSG_MOVE_START_PITCH_UP,           STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMovementOpcodes         );
     OPCODE(MSG_MOVE_STOP_PITCH,               STATUS_LOGGEDIN, PROCESS_THREADSAFE,   &WorldSession::HandleMovementOpcodes         );
+    OPCODE(MSG_MOVE_TELEPORT,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                    );
+    OPCODE(MSG_MOVE_WORLDPORT_ACK,            STATUS_TRANSFER, PROCESS_THREADUNSAFE, &WorldSession::HandleMoveWorldportAckOpcode  );
+    OPCODE(SMSG_TRANSFER_PENDING,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                    );
+    OPCODE(SMSG_TRANSFER_ABORTED,             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleNULL                    );
 };
