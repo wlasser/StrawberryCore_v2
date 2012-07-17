@@ -259,8 +259,8 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         Unit* unit = ((Unit*)this);
         Player *player = ((Player*)unit);
 
-        bool isTransport = unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_ONTRANSPORT;
-        bool isSplineEnabled = unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_SPLINE_ENABLED;
+        bool isTransport = unit->m_movementInfo.t_guid;
+        bool isSplineEnabled = unit->IsSplineEnabled();
         bool swimming = ((unit->m_movementInfo.GetMovementFlags() & (MOVEFLAG_SWIMMING | MOVEFLAG_FLYING)) ||
                         (unit->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_ALLOW_PITCHING));
         bool interPolatedTurning = unit->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_INTERP_TURNING;
@@ -343,7 +343,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
         const Player* player = ((Player*)this);
         const Unit* unit = ((Unit*)this);
 
-        bool isSplineEnabled = unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_SPLINE_ENABLED;
+        bool isSplineEnabled = unit->IsSplineEnabled();
         bool swimming = ((unit->m_movementInfo.GetMovementFlags() & (MOVEFLAG_SWIMMING | MOVEFLAG_FLYING)) ||
                         (unit->m_movementInfo.GetMovementFlags2() & MOVEFLAG2_ALLOW_PITCHING));
 
@@ -371,7 +371,7 @@ void Object::BuildMovementUpdate(ByteBuffer* data, uint16 flags) const
 
         *data << unit->GetSpeed(MOVE_SWIM_BACK);
 
-        if (unit->m_movementInfo.GetMovementFlags() & MOVEFLAG_SPLINE_ENABLED)
+        if (unit->IsSplineEnabled())
             *data << unit->m_movementInfo.splineElevation;
 
         if (isSplineEnabled)

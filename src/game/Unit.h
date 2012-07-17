@@ -616,29 +616,27 @@ enum MovementFlags
     MOVEFLAG_PITCH_UP           = 0x00000040,
     MOVEFLAG_PITCH_DOWN         = 0x00000080,
     MOVEFLAG_WALK_MODE          = 0x00000100,               // Walking
-    MOVEFLAG_ONTRANSPORT        = 0x00000200,
-    MOVEFLAG_LEVITATING         = 0x00000400,
-    MOVEFLAG_ROOT               = 0x00000800,
-    MOVEFLAG_FALLING            = 0x00001000,
-    MOVEFLAG_FALLINGFAR         = 0x00002000,
-    MOVEFLAG_PENDINGSTOP        = 0x00004000,
-    MOVEFLAG_PENDINGSTRAFESTOP  = 0x00008000,
-    MOVEFLAG_PENDINGFORWARD     = 0x00010000,
-    MOVEFLAG_PENDINGBACKWARD    = 0x00020000,
-    MOVEFLAG_PENDINGSTRAFELEFT  = 0x00040000,
-    MOVEFLAG_PENDINGSTRAFERIGHT = 0x00080000,
-    MOVEFLAG_PENDINGROOT        = 0x00100000,
-    MOVEFLAG_SWIMMING           = 0x00200000,               // appears with fly flag also
-    MOVEFLAG_ASCENDING          = 0x00400000,               // swim up also
-    MOVEFLAG_DESCENDING         = 0x00800000,               // swim down also
-    MOVEFLAG_CAN_FLY            = 0x01000000,               // can fly in 3.3?
-    MOVEFLAG_FLYING             = 0x02000000,               // Actual flying mode
-    MOVEFLAG_SPLINE_ELEVATION   = 0x04000000,               // used for flight paths
-    MOVEFLAG_SPLINE_ENABLED     = 0x08000000,               // used for flight paths
-    MOVEFLAG_WATERWALKING       = 0x10000000,               // prevent unit from falling through water
-    MOVEFLAG_SAFE_FALL          = 0x20000000,               // active rogue safe fall spell (passive)
-    MOVEFLAG_HOVER              = 0x40000000,
-    MOVEFLAG_LOCAL_DIRTY        = 0x80000000,
+    MOVEFLAG_LEVITATING         = 0x00000200,
+    MOVEFLAG_ROOT               = 0x00000400,
+    MOVEFLAG_FALLING            = 0x00000800,
+    MOVEFLAG_FALLINGFAR         = 0x00001000,
+    MOVEFLAG_PENDINGSTOP        = 0x00002000,
+    MOVEFLAG_PENDINGSTRAFESTOP  = 0x00004000,
+    MOVEFLAG_PENDINGFORWARD     = 0x00008000,
+    MOVEFLAG_PENDINGBACKWARD    = 0x00010000,
+    MOVEFLAG_PENDINGSTRAFELEFT  = 0x00020000,
+    MOVEFLAG_PENDINGSTRAFERIGHT = 0x00040000,
+    MOVEFLAG_PENDINGROOT        = 0x00080000,
+    MOVEFLAG_SWIMMING           = 0x00100000,               // appears with fly flag also
+    MOVEFLAG_ASCENDING          = 0x00200000,               // swim up also
+    MOVEFLAG_DESCENDING         = 0x00400000,               // swim down also
+    MOVEFLAG_CAN_FLY            = 0x00800000,               // can fly in 3.3?
+    MOVEFLAG_FLYING             = 0x01000000,               // Actual flying mode
+    MOVEFLAG_SPLINE_ELEVATION   = 0x02000000,               // used for flight paths
+    MOVEFLAG_WATERWALKING       = 0x04000000,               // prevent unit from falling through water
+    MOVEFLAG_SAFE_FALL          = 0x08000000,               // active rogue safe fall spell (passive)
+    MOVEFLAG_HOVER              = 0x10000000,
+    MOVEFLAG_LOCAL_DIRTY        = 0x20000000,
 };
 
 // flags that use in movement check for example at spell casting
@@ -2002,6 +2000,8 @@ class Unit : public WorldObject
 
         void BuildSendPlayVisualPacket(WorldPacket* data, uint32 value, bool impact);
         void BuildForceMoveRootPacket(WorldPacket* data, bool apply, uint32 value);
+
+        bool IsSplineEnabled() const;
 
     protected:
         explicit Unit ();

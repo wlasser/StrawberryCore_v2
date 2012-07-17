@@ -10828,24 +10828,10 @@ void MovementInfo::BuildMovementPacket(ByteBuffer *data) const
 {
     Unit *unit = ((Unit*)this);
 
-    if (unit->GetTypeId() == TYPEID_PLAYER)
-    {
-        Player *player = ((Player*)unit);
-        if(player->GetTransport())
-            player->m_movementInfo.AddMovementFlag(MOVEFLAG_ONTRANSPORT);
-        else
-            player->m_movementInfo.RemoveMovementFlag(MOVEFLAG_ONTRANSPORT);
-    }
-
-    if (unit->GetTransport() || unit->GetVehicle())
-        unit->m_movementInfo.AddMovementFlag(MOVEFLAG_ONTRANSPORT);
-    else
-        unit->m_movementInfo.RemoveMovementFlag(MOVEFLAG_ONTRANSPORT);
-
     // Update movement info time
     unit->m_movementInfo.UpdateTime(WorldTimer::getMSTime());
 
-    bool onTransport = GetMovementFlags() & MOVEFLAG_ONTRANSPORT;
+    bool onTransport = t_guid;
     bool hasInterpolatedMovement = moveFlags2 & MOVEFLAG2_INTERP_MOVEMENT;
     bool time3 = false;
     bool swimming = ((GetMovementFlags() & (MOVEFLAG_SWIMMING | MOVEFLAG_FLYING))
@@ -11312,7 +11298,7 @@ void Unit::UpdateSplineMovement(uint32 t_diff)
 
 void Unit::DisableSpline()
 {
-    m_movementInfo.RemoveMovementFlag(MovementFlags(MOVEFLAG_SPLINE_ENABLED|MOVEFLAG_FORWARD));
+    m_movementInfo.RemoveMovementFlag(MOVEFLAG_FORWARD);
     movespline->_Interrupt();
 }
 
@@ -11349,3 +11335,9 @@ void Unit::BuildForceMoveRootPacket(WorldPacket* data, bool apply, uint32 value)
         data->WriteGuidBytes(GetObjectGuid(), byteOrder, 5, 3);
     }
 }
+
+bool Unit::IsSplineEnabled() const
+{
+    return !movespline->Finalized();
+}
+

@@ -360,7 +360,7 @@ void TradeData::SetSpell( uint32 spell_id, Item* castItem /*= NULL*/ )
     Update(false);                                          // send spell info to caster self
 }
 
-void TradeData::SetMoney( uint32 money )
+void TradeData::SetMoney( uint64 money )
 {
     if (m_money == money)
         return;
@@ -3234,7 +3234,7 @@ bool Player::addSpell(uint32 spell_id, bool active, bool learning, bool dependen
                     m_talents[m_activeSpec][i].AddTalentToMap(talentPos->talent_id,talent);
                 }
             }
-		}
+        }
     }
 
     // update free primary prof.points (if any, can be none in case GM .learn prof. learning)
@@ -16991,7 +16991,7 @@ void Player::_LoadTalents(QueryResult *result)
             
             m_talents[spec][holderId].AddTalentToMap(talentEntry->TalentID,talent);
             m_talents[spec][holderId].IncreaseTalentCount();
-			++m_usedTalentCount;
+            ++m_usedTalentCount;
         }
         while (result->NextRow());
         delete result;
@@ -22281,21 +22281,21 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank)
 
     PlayerTalent newTalent;
     PlayerTalentHolder * holder;
-	bool holderIsSet = false;
+    bool holderIsSet = false;
     newTalent.talentEntry = talent;
 
     for(uint8 i = 0; i < 3; ++i)
     {
-		if(m_talents[m_activeSpec][i].GetTabId() == talent->TalentTab)
+        if(m_talents[m_activeSpec][i].GetTabId() == talent->TalentTab)
         {
             holder = &m_talents[m_activeSpec][i];
         }
-		if((m_talents[m_activeSpec][i].GetTabId() == 0 || m_talents[m_activeSpec][i].GetTabId() > 1000) && (!holderIsSet))
-		{
-			m_talents[m_activeSpec][i].SetTabId(talent->TalentTab);
-			holderIsSet = true;
-			holder = &m_talents[m_activeSpec][i];
-		}
+        if((m_talents[m_activeSpec][i].GetTabId() == 0 || m_talents[m_activeSpec][i].GetTabId() > 1000) && (!holderIsSet))
+        {
+            m_talents[m_activeSpec][i].SetTabId(talent->TalentTab);
+            holderIsSet = true;
+            holder = &m_talents[m_activeSpec][i];
+        }
     }
 
     PlayerTalentMap::iterator itr = holder->GetTalentMap().find(talentId);
@@ -22305,7 +22305,7 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank)
         {
             sLog.outError("Player with guid: %u has tried to learn a talent with rank that he knows, skipping",this->GetObjectGuid().GetRawValue());
             return;
-        }        
+        }
         newTalent.state = PLAYERSPELL_CHANGED;
         if(talent->DependsOn != 0)
             dependsOn = true;
@@ -22319,12 +22319,12 @@ void Player::LearnTalent(uint32 talentId, uint32 talentRank)
     newTalent.currentRank = talentRank;
     learnSpell(talent->RankID[talentRank],dependsOn);
     holder->AddTalentToMap(talentId,newTalent);
-	for(uint8 i = 0; i <= talentRank +1; ++i)
-	{
-		holder->IncreaseTalentCount();
-	}
+    for(uint8 i = 0; i <= talentRank +1; ++i)
+    {
+        holder->IncreaseTalentCount();
+    }
     m_usedTalentCount += (talentRank + 1);
-	UpdateFreeTalentPoints(false);
+    UpdateFreeTalentPoints(false);
 }
 
 void Player::LearnPetTalent(ObjectGuid petGuid, uint32 talentId, uint32 talentRank)
@@ -22531,7 +22531,7 @@ void Player::BuildPlayerTalentsInfoData(WorldPacket *data)
     if(m_specsCount)
     {
         for(uint32 specIdx = 0; specIdx < m_specsCount; ++specIdx)
-        {          
+        {
             for(uint8 i = 0; i < 3; ++i)
             {
                 if(m_talents[specIdx][i].GetTalentCount() > 0)
