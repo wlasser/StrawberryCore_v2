@@ -385,4 +385,16 @@ void InitOpcodeTable()
     OPCODE(CMSG_LOG_DISCONNECT,               STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleLogDisconnect           );
     OPCODE(SMSG_UPDATE_WORLD_STATE,           STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(SMSG_PLAY_SOUND,                   STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_INITIATE_TRADE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleInitiateTradeOpcode     );
+    OPCODE(SMSG_TRADE_STATUS,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_BEGIN_TRADE,                  STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBeginTradeOpcode        );
+    OPCODE(CMSG_BUSY_TRADE,                   STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBusyTradeOpcode         );
+    OPCODE(CMSG_IGNORE_TRADE,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleIgnoreTradeOpcode       );
+    OPCODE(CMSG_ACCEPT_TRADE,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleAcceptTradeOpcode       );
+    OPCODE(CMSG_UNACCEPT_TRADE,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleUnacceptTradeOpcode     );
+    OPCODE(CMSG_CANCEL_TRADE,                 STATUS_LOGGEDIN_OR_RECENTLY_LOGGEDOUT, PROCESS_THREADUNSAFE, &WorldSession::HandleCancelTradeOpcode);
+    OPCODE(CMSG_SET_TRADE_ITEM,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetTradeItemOpcode      );
+    OPCODE(CMSG_CLEAR_TRADE_ITEM,             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleClearTradeItemOpcode    );
+    OPCODE(CMSG_SET_TRADE_GOLD,               STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleSetTradeGoldOpcode      );
+    OPCODE(SMSG_TRADE_STATUS_EXTENDED,        STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
 };

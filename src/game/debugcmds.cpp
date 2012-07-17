@@ -1154,3 +1154,17 @@ bool ChatHandler::HandleDebugSpellModsCommand(char* args)
 
     return true;
 }
+
+bool ChatHandler::HandleDebugSendTradeStatusCommand(char* args)
+{
+    if (!*args)
+        return false;
+
+    uint32 status;
+    if (!ExtractUInt32(&args, status))
+        return false;
+
+    m_session->SendTradeStatus(TradeStatus(status));
+
+    return true;
+}
