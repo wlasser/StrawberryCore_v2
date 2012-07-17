@@ -61,27 +61,27 @@ void WorldSession::HandleBattlefieldJoinQueueOpcode( WorldPacket &recv_data )
         send_data.WriteBit(0);
     }
     send_data.WriteGuidMask(Battlefield->getGuid(),BattlefieldGuidMask,1,5); //correct do not touch!!
-    send_data.FlushBits();
 
     if(Queue)
     {
         send_data.WriteGuidMask(Queue->GetId(),QueueGuidMask,8);
-        send_data.FlushBits();
     }
 
     send_data.WriteGuidMask(Battlefield->getGuid(),BattlefieldGuidMask,2,6);
     send_data.FlushBits();
 
-    /*if(Queue)
+    if(Queue)
     {
         send_data.WriteGuidBytes(Queue->GetId(),QueueGuidBytes,8,0);
-    }*/
-
-    send_data.WriteGuidBytes(Battlefield->getGuid(),BattlefieldBytes,8,0);
+    }
+	send_data << uint8(1);
+    send_data.WriteGuidBytes(Battlefield->getGuid(),BattlefieldBytes,5,0);
+	send_data << uint8(1);
+	send_data.WriteGuidBytes(Battlefield->getGuid(),BattlefieldBytes,3,5);
 
     send_data << uint32(Battlefield->GetZoneId());
 
     SendPacket(&send_data);
 
-    sBattlefieldMgr.SendInvitePlayerToQueue(_player);
+    Queue->AddPlayerToQueue(_player);
 }

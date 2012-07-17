@@ -39,10 +39,10 @@ typedef std::map<uint64,Battlefield* > BattlefieldList;
 
 class BattlefieldQueue
 {
-    friend class BattlefieldMgr;
-
     public:
-        BattlefieldQueue(uint8 battleId) { m_queueId = battleId /*+ urand(battleId,50)*/; }
+        friend class Battlefield;
+
+        BattlefieldQueue(uint8 battleId) { m_queueId = 521142272 + battleId; }
         uint64 GetId() { return m_queueId; }
         bool HasEnoughSpace() { return m_inQueue.size() <= 40 ? true : false ; }
         void AddPlayerToQueue(Player * plr) { m_inQueue.push_back(plr); }
@@ -70,6 +70,7 @@ class BattlefieldMgr
         BattlefieldQueue * GetQueueForBattlefield(ObjectGuid guid) { return m_queueMap[guid]; }
 
         void SendInvitePlayerToQueue(Player * player);
+        void ChangeState(Battlefield * battlefield);
 
     private:
         BattlefieldQueueMap     m_queueMap;

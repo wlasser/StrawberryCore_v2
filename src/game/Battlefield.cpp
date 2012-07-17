@@ -44,7 +44,12 @@ void Battlefield::Update(uint32 uiDiff)
 {
     if(m_battleInProgress)
     {
+        if(m_battleDurationTimer <= uiDiff)
+        {
 
+        }
+        else
+            m_battleDurationTimer -= uiDiff;
     }
     else
     {
@@ -54,6 +59,29 @@ void Battlefield::Update(uint32 uiDiff)
         }
         else 
             m_nextBattleTimer -= uiDiff;
+
+        if(m_preBattleTimer <= uiDiff)
+        {
+            WorldPacket send_data(SMSG_BATTLEFIELD_MGR_ENTRY_INVITE,23);
+
+            uint8 guidMask[] = { 5, 3, 7, 2, 6, 1, 0, 4 };
+            uint8 guidBytes[] = { 1, 2, 5, 4, 7, 0, 3, 6 };
+
+            send_data.WriteGuidMask(getGuid(),guidMask,8);
+            send_data.FlushBits();
+
+            send_data.WriteGuidBytes(getGuid(),guidBytes,2,0);
+            send_data << uint32(20); // unk1
+            send_data.WriteGuidBytes(getGuid(),guidBytes,6,2);
+
+            BattlefieldQueue * queue = sBattlefieldMgr.GetQueueForBattlefield(getGuid());
+            for(PlayerQueue::iterator itr = queue->m_inQueue.begin(); itr != queue->m_inQueue.end(); ++itr)
+            {
+                (*itr)->GetSession()->SendPacket(&send_data);
+            }
+        }
+        else
+            m_preBattleTimer -= uiDiff;
     }
 
     OnUpdate(uiDiff);
