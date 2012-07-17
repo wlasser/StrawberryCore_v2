@@ -33,6 +33,7 @@
 #include "MapPersistentStateMgr.h"
 #include "ObjectMgr.h"
 #include "MovementStructures.h"
+#include <G3D/Vector3.h>
 
 void WorldSession::HandleMoveWorldportAckOpcode( WorldPacket & /*recv_data*/ )
 {
@@ -309,14 +310,14 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
     bool HaveTransportData = false,
         HaveTransportTime2 = false,
         HaveTransportTime3 = false,
-        HaveMovementFlags = true,
-        HaveMovementFlags2 = true,
-        HaveOrientation = true,
-        HaveTimeStamp = true,
-        HavePitch = true,
+        HaveMovementFlags = false,
+        HaveMovementFlags2 = false,
+        HaveOrientation = false,
+        HaveTimeStamp = false,
+        HavePitch = false,
         HaveFallData = false,
         HaveFallDirection = false,
-        HaveSplineElevation = true,
+        HaveSplineElevation = false,
         HaveUnknownBit = false,
         HaveSpline = false;
 
@@ -331,6 +332,8 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
     for(uint32 i=0; i < MSE_COUNT; i++)
     {
         MovementStatusElements element = sequence[i];
+        if (element == MSEEnd)
+            break;
 
         if (element >= MSEGuidByte0 && element <= MSEGuidByte7)
         {
@@ -363,18 +366,18 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
         switch (element)
         {
             case MSEFlags:
-                if (MSEHaveMovementFlags)
+                if (HaveMovementFlags)
                     mi->moveFlags = data.ReadBits(30);
                 break;
             case MSEFlags2:
-                if (MSEHaveMovementFlags2)
+                if (HaveMovementFlags2)
                     mi->moveFlags2 = data.ReadBits(12);
                 break;
             case MSEHaveUnknownBit:
                 HaveUnknownBit = data.ReadBit();
                 break;
             case MSETimestamp:
-                if (MSEHaveTimeStamp)
+                if (HaveTimeStamp)
                     data >> mi->time;
                 break;
             case MSEHaveTimeStamp:
@@ -435,7 +438,7 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                 break;;
             case MSEFallTime:
                 if (HaveFallData)
-                    sLog.outDebug("mi->fallTime: %u", mi->fallTime);
+                    data >> mi->fallTime;
                 break;
             case MSESplineElev:
                 if (HaveSplineElevation)
@@ -482,11 +485,11 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                     data >> mi->t_time;
                 break;
             case MSETransportTime2:
-                if (HaveTransportTime2)
+                if (HaveTransportData && HaveTransportTime2)
                     data >> mi->t_time2;
                 break;
             case MSETransportTime3:
-                if (HaveTransportTime3)
+                if (HaveTransportData && HaveTransportTime3)
                     data >> mi->fallTime;
                 break;
             default:
@@ -504,13 +507,14 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
 
 void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
 {
-    bool HaveTransportData = mi->HasMovementFlag(MOVEFLAG_ONTRANSPORT),
+    bool HaveTransportData = mi->t_guid,
         HaveTransportTime2 = (mi->moveFlags2 & MOVEFLAG2_INTERP_MOVEMENT) != 0,
         HaveTransportTime3 = false,
-        HaveTime = true,
+        HaveTime = mi->time,
+        HaveOrientation = !G3D::fuzzyEq(mi->pos.o, 0.0f),
         HavePitch = (mi->HasMovementFlag(MovementFlags(MOVEFLAG_SWIMMING | MOVEFLAG_FLYING))) || (mi->moveFlags2 & MOVEFLAG2_ALLOW_PITCHING),
         HaveFallData = mi->HasMovementFlag2(MOVEFLAG2_INTERP_TURNING),
-        HaveFallDirection = mi->HasMovementFlag(MOVEFLAG_SAFE_FALL),
+        HaveFallDirection = mi->HasMovementFlag(MOVEFLAG_FALLING),
         HaveSplineElevation = mi->HasMovementFlag(MOVEFLAG_SPLINE_ELEVATION),
         HaveSpline = false;
 
@@ -522,6 +526,9 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
     for(uint32 i=0; i < MSE_COUNT; i++)
     {
         MovementStatusElements element = sequence[i];
+
+        if (element == MSEEnd)
+            break;
 
         if (element >= MSEGuidByte0 && element <= MSEGuidByte7)
         {
@@ -573,8 +580,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
                 data.WriteBit(!HavePitch);
                 break;
             case MSEHaveTimeStamp:
-                if (HaveFallData)
-                    data.WriteBit(HaveTime);
+                data.WriteBit(!HaveTime);
                 break;
             case MSEHaveUnknownBit:
                 data.WriteBit(false);
@@ -613,14 +619,15 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
                 data << mi->pos.z;
                 break;
             case MSEPositionO:
-                data << mi->pos.o;
+                if (HaveOrientation)
+                    data << mi->pos.o;
                 break;
             case MSEPitch:
                 if (HavePitch)
                     data << mi->s_pitch;
                 break;
             case MSEHaveOrientation:
-                data.WriteBit(false);
+                data.WriteBit(!HaveOrientation);
                 break;
             case MSEFallTime:
                 if (HaveFallData)
@@ -671,11 +678,11 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
                     data << mi->t_time;
                 break;
             case MSETransportTime2:
-                if (HaveTransportTime2)
+                if (HaveTransportData && HaveTransportTime2)
                     data << mi->t_time2;
                 break;
             case MSETransportTime3:
-                if (HaveTransportTime3)
+                if (HaveTransportData && HaveTransportTime3)
                     data << mi->fallTime;
                 break;
             default:
@@ -918,7 +925,7 @@ bool WorldSession::VerifyMovementInfo(MovementInfo const& movementInfo, ObjectGu
     if (!Strawberry::IsValidMapCoord(movementInfo.GetPos()->x, movementInfo.GetPos()->y, movementInfo.GetPos()->z, movementInfo.GetPos()->o))
         return false;
 
-    if (movementInfo.HasMovementFlag(MOVEFLAG_ONTRANSPORT))
+    if (movementInfo.t_guid)
     {
         // transports size limited
         // (also received at zeppelin/lift leave by some reason with t_* as absolute in continent coordinates, can be safely skipped)
@@ -943,11 +950,11 @@ void WorldSession::HandleMoverRelocation(MovementInfo& movementInfo)
 
     if (Player *plMover = mover->GetTypeId() == TYPEID_PLAYER ? (Player*)mover : NULL)
     {
-        if (movementInfo.HasMovementFlag(MOVEFLAG_ONTRANSPORT))
+        if (movementInfo.t_guid)
         {
             if (!plMover->GetTransport())
             {
-                // elevators also cause the client to send MOVEFLAG_ONTRANSPORT - just unmount if the guid can be found in the transport list
+                // elevators also cause the client to send transport guid - just unmount if the guid can be found in the transport list
                 for (MapManager::TransportSet::const_iterator iter = sMapMgr.m_Transports.begin(); iter != sMapMgr.m_Transports.end(); ++iter)
                 {
                     if ((*iter)->GetObjectGuid() == movementInfo.GetTransportGuid())
