@@ -72,7 +72,6 @@ class Battlefield
         uint32          m_preBattleTimer;
         uint32          m_zoneId;
         bool            m_battleInProgress;
-        PlayerList      m_queuedPlayers[MAX_TEAM];
         Group*          m_raidGroup[MAX_TEAM];
         Map*            m_map;
         ObjectGuid      m_battlefiledGuid;

@@ -98,7 +98,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalOptions>/MP /Zm210 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/MP /Zm218 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src\game;..\..\src\game\ScriptBase\Basic;..\..\src\game\ScriptBase\Texts;..\..\src\game\ScriptBase\AI;..\..\src\game\ScriptBase;..\..\src\game\ScriptBase\Event;..\..\dep\include;..\..\src\framework;..\..\src\shared;..\..\src\game\vmap;..\..\dep\ACE_wrappers;..\..\dep\include\g3dlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;STRAWBERRY_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -133,7 +133,7 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalOptions>/MP /bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/MP /bigobj /Zm218 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src\game;..\..\src\game\ScriptBase\Basic;..\..\src\game\ScriptBase\Texts;..\..\src\game\ScriptBase\AI;..\..\src\game\ScriptBase;..\..\src\game\ScriptBase\Event;..\..\dep\include;..\..\src\framework;..\..\src\shared;..\..\src\game\vmap;..\..\dep\ACE_wrappers;..\..\dep\include\g3dlite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;STRAWBERRY_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -304,6 +304,7 @@
     <ClCompile Include="..\..\src\game\Battlefield.cpp" />
     <ClCompile Include="..\..\src\game\BattlefieldHandler.cpp" />
     <ClCompile Include="..\..\src\game\BattlefieldMgr.cpp" />
+    <ClCompile Include="..\..\src\game\BattlefieldTB.cpp" />
     <ClCompile Include="..\..\src\game\BattlefieldWG.cpp" />
     <ClCompile Include="..\..\src\game\BattleGround.cpp" />
     <ClCompile Include="..\..\src\game\BattleGroundAA.cpp" />
@@ -1000,6 +1001,7 @@
     <ClInclude Include="..\..\src\game\AchievementMgr.h" />
     <ClInclude Include="..\..\src\game\Battlefield.h" />
     <ClInclude Include="..\..\src\game\BattlefieldMgr.h" />
+    <ClInclude Include="..\..\src\game\BattlefieldTB.h" />
     <ClInclude Include="..\..\src\game\BattlefieldWG.h" />
     <ClInclude Include="..\..\src\game\BattleGround.h" />
     <ClInclude Include="..\..\src\game\BattleGroundAA.h" />
