@@ -10826,10 +10826,8 @@ void Unit::ExitVehicle()
 
 void MovementInfo::BuildMovementPacket(ByteBuffer *data) const
 {
-    Unit *unit = ((Unit*)this);
-
     // Update movement info time
-    unit->m_movementInfo.UpdateTime(WorldTimer::getMSTime());
+    const_cast<MovementInfo*>(this)->UpdateTime(WorldTimer::getMSTime());
 
     bool onTransport = t_guid;
     bool hasInterpolatedMovement = moveFlags2 & MOVEFLAG2_INTERP_MOVEMENT;
@@ -10860,7 +10858,7 @@ void MovementInfo::BuildMovementPacket(ByteBuffer *data) const
 
     data->FlushBits(); // reset bit stream
 
-    *data << t_guid.GetRawValue();
+    *data << guid;
     *data << time;
     *data << pos.x;
     *data << pos.y;
@@ -10869,7 +10867,7 @@ void MovementInfo::BuildMovementPacket(ByteBuffer *data) const
 
     if (onTransport)
     {
-        *data << t_guid.GetRawValue();
+        *data << t_guid;
         *data << t_pos.x;
         *data << t_pos.y;
         *data << t_pos.z;

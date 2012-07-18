@@ -325,11 +325,9 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
     if(sequence == NULL)
         return;
 
-    uint8 guid[8];
-    uint8 tguid[8];
-    *(uint64*)guid = 0;
-    *(uint64*)tguid = 0;
-    for(uint32 i=0; i < MSE_COUNT; i++)
+    ByteBuffer guidBytes(8, true);
+    ByteBuffer tGuidBytes(8, true);
+    for(uint32 i = 0; i < MSE_COUNT; ++i)
     {
         MovementStatusElements element = sequence[i];
         if (element == MSEEnd)
@@ -337,28 +335,28 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
 
         if (element >= MSEGuidByte0 && element <= MSEGuidByte7)
         {
-            data.ReadByteMask(guid[element - MSEGuidByte0]);
+            data.ReadByteMask(guidBytes[element - MSEGuidByte0]);
             continue;
         }
 
         if (element >= MSETransportGuidByte0 && element <= MSETransportGuidByte7)
         {
             if (HaveTransportData)
-                data.ReadByteMask(tguid[element - MSETransportGuidByte0]);
+                data.ReadByteMask(tGuidBytes[element - MSETransportGuidByte0]);
 
             continue;
         }
 
         if (element >= MSEGuidByte0_2 && element <= MSEGuidByte7_2)
         {
-            data.ReadByteSeq(guid[element - MSEGuidByte0_2]);
+            data.ReadByteSeq(guidBytes[element - MSEGuidByte0_2]);
             continue;
         }
 
         if (element >= MSETransportGuidByte0_2 && element <= MSETransportGuidByte7_2)
         {
             if (HaveTransportData)
-                data.ReadByteSeq(tguid[element - MSETransportGuidByte0_2]);
+                data.ReadByteSeq(tGuidBytes[element - MSETransportGuidByte0_2]);
 
             continue;
         }
@@ -497,8 +495,8 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
         }
     }
 
-    mi->guid = *(ObjectGuid*)guid;
-    mi->t_guid = *(ObjectGuid*)tguid;
+    mi->guid = ObjectGuid(BitConverter::ToUInt64(guidBytes));
+    mi->t_guid = ObjectGuid(BitConverter::ToUInt64(tGuidBytes));
 
     if (HaveTransportData && mi->pos.x != mi->t_pos.x)
         if (GetPlayer()->GetTransport())
@@ -521,9 +519,13 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
     MovementStatusElements *sequence = GetMovementStatusElementsSequence(data.GetOpcodeEnum());
     if(!sequence)
         return;
-    uint8 *guid = (uint8 *)&mi->guid;
-    uint8 *tguid = (uint8 *)&mi->t_guid;
-    for(uint32 i=0; i < MSE_COUNT; i++)
+
+    ByteBuffer guidBytes(8, true);
+    ByteBuffer tGuidBytes(8, true);
+    guidBytes << mi->guid;
+    tGuidBytes << mi->t_guid;
+
+    for(uint32 i = 0; i < MSE_COUNT; ++i)
     {
         MovementStatusElements element = sequence[i];
 
@@ -532,27 +534,27 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
 
         if (element >= MSEGuidByte0 && element <= MSEGuidByte7)
         {
-            data.WriteByteMask(guid[element - MSEGuidByte0]);
+            data.WriteByteMask(guidBytes[element - MSEGuidByte0]);
             continue;
         }
 
         if (element >= MSETransportGuidByte0 && element <= MSETransportGuidByte7)
         {
             if (HaveTransportData)
-                data.WriteByteMask(tguid[element - MSETransportGuidByte0]);
+                data.WriteByteMask(tGuidBytes[element - MSETransportGuidByte0]);
             continue;
         }
 
         if (element >= MSEGuidByte0_2 && element <= MSEGuidByte7_2)
         {
-            data.WriteByteSeq(guid[element - MSEGuidByte0_2]);
+            data.WriteByteSeq(guidBytes[element - MSEGuidByte0_2]);
             continue;
         }
 
         if (element >= MSETransportGuidByte0_2 && element <= MSETransportGuidByte7_2)
         {
             if (HaveTransportData)
-                data.WriteByteSeq(tguid[element - MSETransportGuidByte0_2]);
+                data.WriteByteSeq(tGuidBytes[element - MSETransportGuidByte0_2]);
             continue;
         }
 
