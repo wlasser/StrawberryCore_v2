@@ -443,7 +443,7 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                     data >> mi->splineElevation;
                 break;
             case MSEFallHorizontalSpeed:
-                if (HaveFallDirection)
+                if (HaveFallData && HaveFallDirection)
                     data >> mi->jump.xyspeed;
                 break;
             case MSEFallVerticalSpeed:
@@ -451,11 +451,11 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
                     data >> mi->jump.velocity;
                 break;
             case MSEFallCosAngle:
-                if (HaveFallDirection)
+                if (HaveFallData && HaveFallDirection)
                     data >> mi->jump.cosAngle;
                 break;
             case MSEFallSinAngle:
-                if (HaveFallDirection)
+                if (HaveFallData && HaveFallDirection)
                     data >> mi->jump.sinAngle;
                 break;
             case MSETransportSeat:
@@ -640,7 +640,7 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
                     data << mi->splineElevation;
                 break;
             case MSEFallHorizontalSpeed:
-                if (HaveFallDirection)
+                if (HaveFallData && HaveFallDirection)
                     data << mi->jump.xyspeed;
                 break;
             case MSEFallVerticalSpeed:
@@ -648,11 +648,11 @@ void WorldSession::WriteMovementInfo(WorldPacket &data, MovementInfo *mi)
                     data << mi->jump.velocity;
                 break;
             case MSEFallCosAngle:
-                if (HaveFallDirection)
+                if (HaveFallData && HaveFallDirection)
                     data << mi->jump.cosAngle;
                 break;
             case MSEFallSinAngle:
-                if (HaveFallDirection)
+                if (HaveFallData && HaveFallDirection)
                     data << mi->jump.sinAngle;
                 break;
             case MSETransportSeat:
