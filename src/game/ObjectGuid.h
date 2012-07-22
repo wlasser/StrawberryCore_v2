@@ -90,7 +90,7 @@ class ObjectGuid
     public:                                                 // constructors
         ObjectGuid() : m_guid(0) {}
         explicit ObjectGuid(uint64 guid) : m_guid(guid) {}
-        ObjectGuid(HighGuid hi, uint32 entry, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 52) : 0) {}
+        ObjectGuid(HighGuid hi, uint32 entry, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(entry) << 32) | (uint64(hi) << 52) : 0) {}
         ObjectGuid(HighGuid hi, uint32 counter) : m_guid(counter ? uint64(counter) | (uint64(hi) << 52) : 0) {}
 
         operator uint64() const { return m_guid; }
@@ -109,19 +109,19 @@ class ObjectGuid
     public:                                                 // accessors
         uint64   GetRawValue() const { return m_guid; }
         HighGuid GetHigh() const { return HighGuid((m_guid >> 52) & 0x00000FFF); }
-        uint32   GetEntry() const { return HasEntry() ? uint32((m_guid >> 24) & UI64LIT(0x0000000000FFFFFF)) : 0; }
+        uint32   GetEntry() const { return HasEntry() ? uint32((m_guid >> 32) & UI64LIT(0x0000000000FFFFFF)) : 0; }
         uint32   GetCounter()  const
         {
             return HasEntry()
-                ? uint32(m_guid & UI64LIT(0x0000000000FFFFFF))
-                : uint32(m_guid & UI64LIT(0x00000000FFFFFFFF));
+                ? uint32(m_guid & UI64LIT(0x00000000FFFFFFFF))
+                : uint32(m_guid & UI64LIT(0x000000FFFFFFFFFF));
         }
 
         static uint32 GetMaxCounter(HighGuid high)
         {
             return HasEntry(high)
-                ? uint32(0x00FFFFFF)
-                : uint32(0xFFFFFFFF);
+                ? uint32(0x00FFFFFFFF)
+                : uint32(0xFFFFFFFFFF);
         }
 
         uint32 GetMaxCounter() const { return GetMaxCounter(GetHigh()); }

@@ -512,6 +512,9 @@ enum Opcodes
     MSG_MOVE_START_PITCH_DOWN,
     MSG_MOVE_START_PITCH_UP,
     MSG_MOVE_STOP_PITCH,
+    SMSG_TRANSFER_PENDING,
+    SMSG_TRANSFER_ABORTED,
+    MSG_MOVE_WORLDPORT_ACK,
 
     MAX_OPCODE_VALUE
 };
@@ -572,8 +575,6 @@ enum Opcodes335a
     CMSG_AUTH_SRP6_RECODE                           = 0x035,
     CMSG_CHAR_DELETE                                = 0x038,
     SMSG_AUTH_SRP6_RESPONSE                         = 0x039,
-    SMSG_TRANSFER_PENDING                           = 0x03F,
-    SMSG_TRANSFER_ABORTED                           = 0x040,
     SMSG_CHARACTER_LOGIN_FAILED                     = 0x041,
     CMSG_GAMETIME_SET                               = 0x044,
     CMSG_GAMESPEED_SET                              = 0x046,
@@ -648,7 +649,6 @@ enum Opcodes335a
     MSG_MOVE_SET_TURN_RATE_CHEAT                    = 0x0D7,
     MSG_MOVE_SET_TURN_RATE                          = 0x0D8,
     MSG_MOVE_TOGGLE_COLLISION_CHEAT                 = 0x0D9,
-    MSG_MOVE_WORLDPORT_ACK                          = 0x0DC,
     SMSG_MOVE_WATER_WALK                            = 0x0DE,
     SMSG_MOVE_LAND_WALK                             = 0x0DF,
     CMSG_MOVE_CHARM_PORT_CHEAT                      = 0x0E0,
