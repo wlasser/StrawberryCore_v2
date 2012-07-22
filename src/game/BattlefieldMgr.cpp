@@ -71,11 +71,11 @@ void BattlefieldMgr::ChangeState(Battlefield * battlefield)
     send_data.FlushBits();
 
     send_data.WriteGuidBytes(battlefield->getGuid(),guidBytes,1,0);
-    send_data << uint32(1); //unk
+    send_data << uint32(battlefield->GetZoneId()); //unk
     send_data.WriteGuidBytes(battlefield->getGuid(),guidBytes,5,1);
-    send_data << uint32(1); //unk
+    send_data << uint32(2404674048); //unk
     send_data.WriteGuidBytes(battlefield->getGuid(),guidBytes,2,7);
-    
+    sWorld.SendGlobalMessage(&send_data);
 }
 
 Battlefield * BattlefieldMgr::FindBattlefield(ObjectGuid guid)
@@ -87,3 +87,19 @@ Battlefield * BattlefieldMgr::FindBattlefield(ObjectGuid guid)
         return NULL;
 }
 
+Battlefield * BattlefieldMgr::FindBattlefield(uint8 battleId)
+{
+    BattlefieldList::const_iterator itr = m_battlefieldList.find(ObjectGuid(HIGHGUID_BATTLEFIELD,uint32(131072 + battleId)));
+    if(itr != m_battlefieldList.end())
+        return itr->second;
+    else
+        return NULL;
+}
+
+void BattlefieldMgr::UpdateWorldState(uint32 stateId, uint32 value)
+{
+    WorldPacket send_data(SMSG_UPDATE_WORLD_STATE, 4+4);
+    send_data << uint32(stateId);
+    send_data << uint32(value);
+    sWorld.SendGlobalMessage(&send_data);
+}

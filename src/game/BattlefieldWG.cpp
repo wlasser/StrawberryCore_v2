@@ -22,19 +22,26 @@ BattlefieldWG::BattlefieldWG() : Battlefield(BATTLEFIELD_WG)
 {
     m_map = sMapMgr.FindMap(571);
     m_zoneId = 4197;
+    m_preBattleTimer = 12 * MINUTE * IN_MILLISECONDS;
+    m_nextBattleTimer = 20 * MINUTE * IN_MILLISECONDS;
+    m_battleDurationTimer = 8 * MINUTE * IN_MILLISECONDS;
 }
 
 void BattlefieldWG::OnUpdate(uint32 uiDiff)
 {
-
+    if(m_preBattleTimer <= uiDiff)
+    {
+        //make avalaible to join queue
+    }
 }
 
 void BattlefieldWG::BeforeBattleStarted()
 {
-
+    m_preBattleTimer = 12 * MINUTE * IN_MILLISECONDS;
+    m_nextBattleTimer = 20 * MINUTE * IN_MILLISECONDS;
 }
 
 void BattlefieldWG::AfterBattleEnded()
 {
-
+    m_battleDurationTimer = 8 * MINUTE * IN_MILLISECONDS;
 }

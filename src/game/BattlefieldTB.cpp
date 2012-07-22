@@ -22,7 +22,9 @@ BattlefieldTB::BattlefieldTB() : Battlefield(BATTLEFIELD_TB)
 {
     m_map = sMapMgr.FindMap(708);
     m_zoneId = 5095;
-    m_preBattleTimer = 3 * 60 * IN_MILLISECONDS;
+    m_preBattleTimer = 4 * 60 * IN_MILLISECONDS;
+    m_nextBattleTimer = 8 * 60 * IN_MILLISECONDS;
+    m_battleDurationTimer = 5 * 60 * IN_MILLISECONDS;
 }
 
 void BattlefieldTB::OnUpdate(uint32 uiDiff)
@@ -32,10 +34,11 @@ void BattlefieldTB::OnUpdate(uint32 uiDiff)
 
 void BattlefieldTB::BeforeBattleStarted()
 {
-
+    m_preBattleTimer = 4 * 60 * IN_MILLISECONDS;
+    m_nextBattleTimer = 8 * 60 * IN_MILLISECONDS;
 }
 
 void BattlefieldTB::AfterBattleEnded()
 {
-
+    m_battleDurationTimer = 5 * 60 * IN_MILLISECONDS;
 }

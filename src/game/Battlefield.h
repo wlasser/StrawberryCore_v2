@@ -57,10 +57,12 @@ class Battlefield
 
         void PlayerJoin(Player* player);
         void PlayerLeave(Player* player);
-        bool IsBattleInProgress() const { return m_battleInProgress; } ;
+        bool IsBattleInProgress() const { return m_battleInProgress; }
+        bool AddPlayerToGroup(Player * player);
 
         ObjectGuid getGuid() const { return m_battlefiledGuid;}
         uint32 GetZoneId() { return m_zoneId; }
+        uint32 GetTimeToNextBattle() { return m_nextBattleTimer; }
 
     protected:
         uint8           m_defenderTeam;
@@ -72,6 +74,7 @@ class Battlefield
         uint32          m_preBattleTimer;
         uint32          m_zoneId;
         bool            m_battleInProgress;
+        bool            m_invitationSent;
         Group*          m_raidGroup[MAX_TEAM];
         Map*            m_map;
         ObjectGuid      m_battlefiledGuid;

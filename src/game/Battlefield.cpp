@@ -19,6 +19,7 @@
 #include "Battlefield.h"
 #include "BattlefieldMgr.h"
 #include "DBCStores.h"
+#include "SharedDefines.h"
 
 Battlefield::Battlefield(uint8 BattleId)
 {
@@ -31,6 +32,7 @@ Battlefield::Battlefield(uint8 BattleId)
     }
 
     m_battleInProgress = false;
+    m_invitationSent = false;
 }
 Battlefield::~Battlefield()
 {
@@ -46,7 +48,8 @@ void Battlefield::Update(uint32 uiDiff)
     {
         if(m_battleDurationTimer <= uiDiff)
         {
-
+            BattleEnd();
+            m_battleInProgress = false;
         }
         else
             m_battleDurationTimer -= uiDiff;
@@ -55,14 +58,19 @@ void Battlefield::Update(uint32 uiDiff)
     {
         if(m_nextBattleTimer <= uiDiff)
         {
-
+            BattleStart();
+            m_battleInProgress = true;
         }
         else 
             m_nextBattleTimer -= uiDiff;
 
-        if(m_preBattleTimer <= uiDiff)
+        if(m_preBattleTimer <= uiDiff && !m_invitationSent)
         {
-            WorldPacket send_data(SMSG_BATTLEFIELD_MGR_ENTRY_INVITE,23);
+            sBattlefieldMgr.ChangeState(this);
+
+            sLog.outDebug("Inviting players in queue to battle");
+
+            WorldPacket send_data(SMSG_BATTLEFIELD_MGR_ENTRY_INVITE,13);
 
             uint8 guidMask[] = { 5, 3, 7, 2, 6, 1, 0, 4 };
             uint8 guidBytes[] = { 1, 2, 5, 4, 7, 0, 3, 6 };
@@ -71,7 +79,7 @@ void Battlefield::Update(uint32 uiDiff)
             send_data.FlushBits();
 
             send_data.WriteGuidBytes(getGuid(),guidBytes,2,0);
-            send_data << uint32(20); // unk1
+            send_data << uint32(time(NULL) + 20); // unk1
             send_data.WriteGuidBytes(getGuid(),guidBytes,6,2);
 
             BattlefieldQueue * queue = sBattlefieldMgr.GetQueueForBattlefield(getGuid());
@@ -79,6 +87,7 @@ void Battlefield::Update(uint32 uiDiff)
             {
                 (*itr)->GetSession()->SendPacket(&send_data);
             }
+            m_invitationSent = true;
         }
         else
             m_preBattleTimer -= uiDiff;
@@ -86,3 +95,38 @@ void Battlefield::Update(uint32 uiDiff)
 
     OnUpdate(uiDiff);
 }
+
+void Battlefield::BattleStart()
+{
+    BeforeBattleStarted();
+}
+
+void Battlefield::BattleEnd()
+{
+    AfterBattleEnded();
+}
+
+bool Battlefield::AddPlayerToGroup(Player * player)
+{
+    Group* grp;
+    if(player->GetTeam() == ALLIANCE)
+        grp = m_raidGroup[TEAM_ALLIANCE];
+    else
+        grp = m_raidGroup[TEAM_HORDE];
+
+    if(!grp->IsCreated())
+    {
+        grp->Create(player->GetObjectGuid(),player->GetName());
+        grp->ConvertToRaid();
+        grp->AddMember(player->GetObjectGuid(),player->GetName());
+    }
+    else if(!grp->IsFull())
+    {
+        grp->AddMember(player->GetObjectGuid(),player->GetName());
+    }
+    else
+        return false;
+
+    return true;
+}
+

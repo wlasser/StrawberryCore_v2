@@ -249,6 +249,8 @@ void InitOpcodeTable()
     OPCODE(SMSG_BATTLEFIELD_MGR_QUEUE_INVITE, STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
     OPCODE(SMSG_BATTLEFIELD_MGR_STATE_CHANGED,STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
     OPCODE(SMSG_BATTLEFIELD_MGR_ENTRY_INVITE, STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(SMSG_BATTLEFIELD_MGR_ENTERING,     STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleServerSide              );
+    OPCODE(CMSG_BATTLEFIELD_MGR_ENTRY_INVITE_RESP, STATUS_LOGGEDIN, PROCESS_THREADUNSAFE,&WorldSession::HandleBattlefieldEntryInviteResponseOpcode);
     OPCODE(CMSG_TRAINER_LIST,                 STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerListOpcode       );
     OPCODE(SMSG_TRAINER_LIST,                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::HandleServerSide              );
     OPCODE(CMSG_BUY_TRAINER_SERVICE,          STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleTrainerBuySpellOpcode   );

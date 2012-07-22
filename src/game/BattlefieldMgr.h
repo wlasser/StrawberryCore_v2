@@ -29,6 +29,7 @@
 #include "SharedDefines.h"
 #include "Policies/Singleton.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "World.h"
 #include <map>
 
 class Player;
@@ -67,10 +68,12 @@ class BattlefieldMgr
         void Update(uint32 uiDiff);
 
         Battlefield * FindBattlefield(ObjectGuid guid);
+        Battlefield * FindBattlefield(uint8 battleId);
         BattlefieldQueue * GetQueueForBattlefield(ObjectGuid guid) { return m_queueMap[guid]; }
 
         void SendInvitePlayerToQueue(Player * player);
         void ChangeState(Battlefield * battlefield);
+        void UpdateWorldState(uint32 stateId, uint32 value);
 
     private:
         BattlefieldQueueMap     m_queueMap;
