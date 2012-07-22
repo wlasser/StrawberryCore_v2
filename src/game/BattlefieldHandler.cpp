@@ -123,7 +123,7 @@ void WorldSession::HandleBattlefieldEntryInviteResponseOpcode( WorldPacket &recv
         send_data << uint32(1);
         send_data.WriteGuidBytes(battlefieldGuid,guidBytes,2,0);
         send_data << uint32(battlefield->GetZoneId());
-        send_data << uint32(_player->isAFK ? 1 : 0);
+        send_data << uint32(_player->isAFK() ? 1 : 0);
         send_data.WriteGuidBytes(battlefieldGuid,guidBytes,6,2);
 
         battlefield->AddPlayerToGroup(_player);
