@@ -36,50 +36,47 @@ namespace Movement
     public:
         enum eFlags
         {
-            None             = 0x00000000,
-            Forward          = 0x00000001,
-            Backward         = 0x00000002,
-            StrafeLeft       = 0x00000004,
-            Straferight      = 0x00000008,
-            TurnLeft         = 0x00000010,
-            TurnRight        = 0x00000020,
-            Falling          = 0x00000040,
-            NoSpline         = 0x00000080,
-            Trajectory       = 0x00000100,
-            Walking          = 0x00000200,
-            Flying           = 0x00000400,
-            FixedOrientation = 0x00000800,
-            FinalPoint       = 0x00001000,
-            FinalTarget      = 0x00002000,
-            FinalOrientation = 0x00004000,
-            CatmullRom       = 0x00008000,
-            Cyclic           = 0x00010000,
-            EnterCicle       = 0x00020000,
-            AnimationTier    = 0x00040000,
-            Frozen           = 0x00080000,
-            Unknown5         = 0x00100000,
-            Unknown6         = 0x00200000,
-            Unknown7         = 0x00400000,
-            Unknown8         = 0x00800000,
-            Unknown9         = 0x01000000,
-            Unknown10        = 0x02000000,
-            MovingBackwards  = 0x04000000,
-            UsePathSmoothing = 0x08000000,
-            Animation        = 0x10000000,
-            UncompressedPath = 0x20000000,
-            Unknown11        = 0x40000000,
-            Unknown12        = 0x80000000,
+            None                = 0x00000000,
+                                                        // x00-xF(first byte) used as animation Ids storage in pair with Animation flag
+            Unknown1            = 0x00000010,           // NOT VERIFIED
+            Done                = 0x00000020,
+            Falling             = 0x00000040,           // Affects elevation computation, can't be combined with Trajectory flag
+            NoSpline            = 0x00000080,
+            Unknown2            = 0x00000100,           // NOT VERIFIED
+            Flying              = 0x00000200,           // Smooth movement(Catmullrom interpolation mode), flying animation
+            FixedOrientation    = 0x00000400,           // Model orientation fixed
+            CatmullRom          = 0x00000800,           // Used Catmullrom interpolation mode
+            Cyclic              = 0x00001000,           // Movement by cycled spline
+            EnterCycle          = 0x00002000,           // Everytimes appears with cyclic flag in monster move packet, erases first spline vertex after first cycle done
+            Frozen              = 0x00004000,           // Will never arrive
+            TransportEnter      = 0x00008000,
+            TransportExit       = 0x00010000,
+            Unknown3            = 0x00020000,           // NOT VERIFIED
+            Unknown4            = 0x00040000,           // NOT VERIFIED
+            OrientationInversed = 0x00080000,
+            Unknown5            = 0x00100000,           // NOT VERIFIED
+            Walkmode            = 0x00200000,
+            UncompressedPath    = 0x00400000,
+            Unknown6            = 0x00800000,           // NOT VERIFIED
+            Animation           = 0x01000000,           // Plays animation after some time passed
+            Trajectory           = 0x02000000,           // Affects elevation computation, can't be combined with Falling flag
+            FinalPoint          = 0x04000000,
+            FinalTarget         = 0x08000000,
+            FinalOrientation    = 0x10000000,
+            Unknown7            = 0x20000000,           // NOT VERIFIED
+            Unknown8            = 0x40000000,           // NOT VERIFIED
+            Unknown9            = 0x80000000,           // NOT VERIFIED
 
             // Masks
             Mask_Final_Facing = FinalPoint | FinalTarget | FinalOrientation,
             // animation ids stored here, see AnimType enum, used with Animation flag
-            Mask_Animations = 0xFF,
+            Mask_Animations = 0xF,
             // flags that shouldn't be appended into SMSG_MONSTER_MOVE\SMSG_MONSTER_MOVE_TRANSPORT packet, should be more probably
-            Mask_No_Monster_Move = Mask_Final_Facing | Mask_Animations,// | Done,
+            Mask_No_Monster_Move = Mask_Final_Facing | Mask_Animations | Done,
             // CatmullRom interpolation mode used
-            Mask_CatmullRom = Flying | CatmullRom,
+            Mask_CatmullRom = CatmullRom,
             // Unused, not suported flags
-            Mask_Unused = NoSpline|EnterCicle|Frozen|Unknown5|Unknown6|Unknown7|Unknown8|Unknown10|Unknown11|Unknown12,
+            Mask_Unused         = NoSpline|EnterCycle|Frozen|UncompressedPath|Unknown1|Unknown2|Unknown3|Unknown4|Unknown5|Unknown6|Unknown7|Unknown8|Unknown9,
         };
 
         inline uint32& raw() { return (uint32&)*this;}
@@ -115,32 +112,38 @@ namespace Movement
         void EnableFacingPoint() { raw() = raw() & ~Mask_Final_Facing | FinalPoint;}
         void EnableFacingAngle() { raw() = raw() & ~Mask_Final_Facing | FinalOrientation;}
         void EnableFacingTarget() { raw() = raw() & ~Mask_Final_Facing | FinalTarget;}
+        void EnableTransportEnter() { raw() = (raw() & ~TransportExit) | TransportEnter; }
+        void EnableTransportExit() { raw() = (raw() & ~TransportEnter) | TransportExit; }
 
-        uint8 animId       : 8;
-        bool done          : 1;
-        bool falling       : 1;
-        bool no_spline     : 1;
-        bool parabolic     : 1;
-        bool walkmode      : 1;
-        bool flying        : 1;
-        bool orientationFixed : 1;
-        bool final_point   : 1;
-        bool final_target  : 1;
-        bool final_angle   : 1;
-        bool catmullrom    : 1;
-        bool cyclic        : 1;
-        bool enter_cycle   : 1;
-        bool animation     : 1;
-        bool frozen        : 1;
-        bool unknown5      : 1;
-        bool unknown6      : 1;
-        bool unknown7      : 1;
-        bool unknown8      : 1;
+        uint8 animId             : 4;
+        bool unknown1            : 1;
+        bool done                : 1;
+        bool falling             : 1;
+        bool no_spline           : 1;
+        bool unknown2            : 1;
+        bool flying              : 1;
+        bool orientationFixed    : 1;
+        bool catmullrom          : 1;
+        bool cyclic              : 1;
+        bool enter_cycle         : 1;
+        bool frozen              : 1;
+        bool transportEnter      : 1;
+        bool transportExit       : 1;
+        bool unknown3            : 1;
+        bool unknown4            : 1;
         bool orientationInversed : 1;
-        bool unknown10     : 1;
-        bool unknown11     : 1;
-        bool unknown12     : 1;
-        bool unknown13     : 1;
+        bool unknown5            : 1;
+        bool walkmode            : 1;
+        bool uncompressedPath    : 1;
+        bool unknown6            : 1;
+        bool animation           : 1;
+        bool parabolic           : 1;
+        bool final_point         : 1;
+        bool final_target        : 1;
+        bool final_angle         : 1;
+        bool unknown7            : 1;
+        bool unknown8            : 1;
+        bool unknown9            : 1;
     };
 #if defined( __GNUC__ )
 #pragma pack()

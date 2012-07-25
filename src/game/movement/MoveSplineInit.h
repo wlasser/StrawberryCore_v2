@@ -99,6 +99,12 @@ namespace Movement
         /* Enables falling mode. Disabled by default
          */
         void SetFall();
+        /* Enters transport. Disabled by default
+         */
+        void SetTransportEnter();
+        /* Exits transport. Disabled by default
+         */
+        void SetTransportExit();
         /* Inverses unit model orientation. Disabled by default
          */
         void SetOrientationInversed();
@@ -128,6 +134,8 @@ namespace Movement
     inline void MoveSplineInit::SetFall() { args.flags.EnableFalling();}
     inline void MoveSplineInit::SetVelocity(float vel){  args.velocity = vel;}
     inline void MoveSplineInit::SetOrientationInversed() { args.flags.orientationInversed = true;}
+    inline void MoveSplineInit::SetTransportEnter() { args.flags.EnableTransportEnter(); }
+    inline void MoveSplineInit::SetTransportExit() { args.flags.EnableTransportExit(); }
     inline void MoveSplineInit::SetOrientationFixed(bool enable) { args.flags.orientationFixed = enable;}
 
     inline void MoveSplineInit::MovebyPath(const PointsArray& controls, int32 path_offset)
