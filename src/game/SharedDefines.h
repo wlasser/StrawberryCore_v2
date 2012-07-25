@@ -3036,9 +3036,9 @@ enum TradeStatus
     TRADE_STATUS_CURRENCY_NOT_TRADEABLE     = 19,   // guessed
     TRADE_STATUS_WRONG_FACTION              = 20,
     TRADE_STATUS_BUSY                       = 21,
-    TRADE_STATUS_BACK_TO_TRADE              = 22,
     TRADE_STATUS_TRADE_CANCELED             = 23,
     TRADE_STATUS_CLOSE_WINDOW               = 24,   // guessed
+    TRADE_STATUS_BACK_TO_TRADE              = 25, 
     TRADE_STATUS_ONLY_CONJURED              = 26,   // You can only trade conjured items to players from other realms
     TRADE_STATUS_YOU_STUNNED                = 27,
     TRADE_STATUS_TARGET_STUNNED             = 29,
