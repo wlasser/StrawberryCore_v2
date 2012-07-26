@@ -56,7 +56,6 @@ void WorldSession::SendTradeStatus(TradeStatus status)
             uint8 guidBytes[8] = { 4, 1, 2, 3, 0, 7, 6, 5 };
             data.WriteGuidMask(0, guidMask, 8, 0);
             data.WriteGuidBytes(0, guidBytes, 8, 0);
-            data << uint32(0);
             break;
         }
         case TRADE_STATUS_CURRENCY_NOT_TRADEABLE:
